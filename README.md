@@ -1,4 +1,4 @@
-  <a align="center"># Aquitano.github.io<a>
+# Aquitano.github.io
 <p align="center">
   <img src="images/iconmonstr-info-8-240.png" alt="Logo: Information" width="80" height="80">
 
