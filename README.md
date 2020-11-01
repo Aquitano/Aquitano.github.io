@@ -1,6 +1,6 @@
 # Aquitano.github.io
 <p align="center">
-  <img src="img/iconmonstr-note-19-48.png" alt="Logo" width="80" height="80">
+  <img src="iconmonstr-info-8-240.png" alt="Logo: Information" width="80" height="80">
 
   <h3 align="center">Readme of Portfolio</h3>
 
