@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 -form .field.error .selectric-wrapper .selectric .label {
   color: #ff5959;
 }
@@ -183,6 +187,10 @@ html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  /* Firefox Fix */
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 body {
   margin: 0;
