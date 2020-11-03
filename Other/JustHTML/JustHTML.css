@@ -1,0 +1,32 @@
+/*!
+ * JustHTML v.1.0-alpha
+ * Copyright 2020 Aquitano.
+ * Licensed under MIT (https://github.com/Aquitano/JustHTML/blob/main/LICENSE)
+ */
+
+/* Animations */
+html {
+  overflow-x: hidden;
+}
+.fade-in {
+  position: relative;
+  opacity: 0;
+}
+.fade-in.appear {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+.from-left {
+  transform: translateX(-50%);
+  opacity: 0;
+}
+.from-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.from-right.appear,
+.from-left.appear {
+  transform: translateX(0);
+  transition: opacity 500ms ease-in, transform 400ms ease-in;
+  opacity: 1;
+}
