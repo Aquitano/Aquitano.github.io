@@ -5269,7 +5269,6 @@ section.home-top a.toggle {
 }
 section.home-top .bg-image {
   margin-top: 70px;
-  background: url(../assets/images/bg_home.png) no-repeat;
   background-size: auto 100%;
   background-position: top 0 center;
   position: absolute;
@@ -5384,12 +5383,6 @@ section.home-top .main-copy {
   }
   section.home-top.keep-arrow a.toggle {
     display: block;
-  }
-}
-@media (-webkit-min-device-pixel-ratio: 2) and (min-width: 768px) and (min-height: 620px),
-  (min-resolution: 192dpi) and (min-width: 768px) and (min-height: 620px) {
-  section.home-top .bg-image {
-    background-image: url(../assets/images/bg_home_%402x.png);
   }
 }
 @media (min-width: 834px) {
