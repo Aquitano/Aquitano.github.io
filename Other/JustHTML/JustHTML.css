@@ -8,25 +8,213 @@
 html {
   overflow-x: hidden;
 }
-.fade-in {
-  position: relative;
+/* Fade-In */
+.Fade-in {
+  animation-name: Fade-in;
+  animation-duration: 400ms;
+}
+@keyframes Fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transition: opacity 250ms ease-in;
+  }
+}
+.Fade-in.AppearOnScroll {
   opacity: 0;
 }
-.fade-in.appear {
+.Fade-in.AppearOnScroll.appear {
   opacity: 1;
   transition: opacity 250ms ease-in;
 }
-.from-left {
-  transform: translateX(-50%);
+/* Fly-In */
+.Fly-in-left {
+  animation-name: Fly-in-left;
+  animation-duration: 400ms;
+}
+.Fly-in-right {
+  animation-name: Fly-in-right;
+  animation-duration: 400ms;
+}
+.Fly-in-up {
+  animation-name: Fly-in-up;
+  animation-duration: 400ms;
+}
+.Fly-in-down {
+  animation-name: Fly-in-down;
+  animation-duration: 400ms;
+}
+@keyframes Fly-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes Fly-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes Fly-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(-250%);
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes Fly-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(250%);
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.Fly-in-left.AppearOnScroll {
+  transform: translateX(-100%);
   opacity: 0;
 }
-.from-right {
+.Fly-in-right.AppearOnScroll {
   transform: translateX(100%);
   opacity: 0;
 }
-.from-right.appear,
-.from-left.appear {
+.Fly-in-right.AppearOnScroll.appear,
+.Fly-in-left.AppearOnScroll.appear {
   transform: translateX(0);
   transition: opacity 500ms ease-in, transform 400ms ease-in;
   opacity: 1;
+}
+.Fly-in-up.AppearOnScroll {
+  transform: translateY(-250%);
+  opacity: 0;
+}
+.Fly-in-down.AppearOnScroll {
+  transform: translateY(250%);
+  opacity: 0;
+}
+.Fly-in-up.AppearOnScroll.appear,
+.Fly-in-down.AppearOnScroll.appear {
+  transform: translateY(0);
+  transition: opacity 500ms ease-in, transform 400ms ease-in;
+  opacity: 1;
+}
+/* Zoom-In */
+.Zoom-in {
+  animation-duration: 600ms;
+  animation-name: Zoom-In;
+}
+@keyframes Zoom-In {
+  0% {
+    opacity: 0;
+    font-size: 0%;
+  }
+  100% {
+    opacity: 1;
+    font-size: 100%;
+  }
+}
+
+/* Entrance Side */
+
+.Entrance-left {
+  animation-name: Entrance-left;
+  animation-duration: 800ms;
+}
+.Entrance-right {
+  animation-name: Entrance-right;
+  animation-duration: 800ms;
+}
+.Entrance-up {
+  animation-name: Entrance-up;
+  animation-duration: 730ms;
+}
+.Entrance-down {
+  animation-name: Entrance-down;
+  animation-duration: 730ms;
+}
+@keyframes Entrance-right {
+  0% {
+    transform: translateX(2000px);
+    opacity: 0;
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+    font-size: 75%;
+  }
+  80% {
+    transform: translateX(25px);
+    font-size: 75%;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    font-size: 100%;
+  }
+}
+@keyframes Entrance-left {
+  0% {
+    transform: translateX(-2000px);
+    opacity: 0;
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+    font-size: 75%;
+  }
+  80% {
+    transform: translateX(25px);
+    font-size: 75%;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+    font-size: 100%;
+  }
+}
+@keyframes Entrance-up {
+  0% {
+    transform: translateY(-2000px) translateX(50px);
+    opacity: 0;
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+    font-size: 60%;
+  }
+  80% {
+    font-size: 60%;
+  }
+  100% {
+    transform: translateY(0) translateX(0px);
+    opacity: 1;
+    font-size: 100%;
+  }
+}
+@keyframes Entrance-down {
+  0% {
+    transform: translateY(2000px) translateX(50px);
+    opacity: 0;
+    transition: opacity 500ms ease-in, transform 400ms ease-in;
+    font-size: 60%;
+  }
+  80% {
+    font-size: 60%;
+  }
+  100% {
+    transform: translateY(0) translateX(0px);
+    opacity: 1;
+    font-size: 100%;
+  }
 }
