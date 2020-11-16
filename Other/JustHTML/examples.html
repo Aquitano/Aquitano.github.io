@@ -8,6 +8,9 @@
   </head>
   <body>
     <h1>Welcome to the example page of JustHTML.</h1>
+    <h1>Usage</h1>
+    <h2>CSS-Tag: <a id="myInput">&lt;link href=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.css&quot; rel=&quot;stylesheet&quot; /&gt;</a></h2> 
+    <h2>JS-Tag: <a id="myInput2">&lt;script src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.js&quot;&lt;/script&gt; </a></h2>
     <h2>Fade-In</h2>
     <div class="Fade-in">This text just flew in.</div>
     <h2>Fly-In from left</h2>
@@ -31,5 +34,35 @@
     <div class="Entrance-down">This text just flew in from the down.</div>
 
     <script src="JustHTML.js"></script>
+    <script>
+      function myFunction() {
+        /* Get the text field */
+        var copyText = document.getElementById("myInput");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+      }
+            function myFunction2() {
+        /* Get the text field */
+        var copyText = document.getElementById("myInput2");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+      }
+    </script>
   </body>
 </html>
