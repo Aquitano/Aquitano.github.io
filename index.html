@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="home">
+<html class="home" lang="de">
   <head>
     <title>Breindl Thomas | Portfolio</title>
     <meta charset="UTF-8" />
@@ -33,17 +33,17 @@
     <script src="js/main.js"></script>
   </head>
   <body>
-    <nav id="nav">
+    <nav id="nav" aria-label="loader">
       <div class="loader-background"></div>
       <a href="#" class="close">
         <span>Close</span>
-        <b>
+        <strong>
           <i></i>
           <i></i>
-        </b>
+        </strong>
       </a>
     </nav>
-    <nav id="nav-content">
+    <nav id="nav-content" aria-label="menu">
       <div>
         <div class="content">
           <h5>Menu</h5>
@@ -107,7 +107,7 @@
     <div class="container" id="Welcome">
       <section class="home-top landingpage">
         <div class="bg-image">
-          <img />
+          <img alt="loader" />
         </div>
         <div class="wrapper">
           <div class="row">
@@ -135,7 +135,7 @@
                 Hallo, ich bin Programmierer, Designer und Schüler.
                 <br />
               </h3>
-              <nav class="links">
+              <nav class="links" aria-label="Project-Link">
                 <h4 style="font-family: 'Poppins', sans-serif">
                   <a href="#portfolio" class="scroll-to special"
                     >Meine Projekte</a
@@ -143,9 +143,7 @@
                 </h4>
                 <span style="font-family: 'Poppins', sans-serif">oder</span>
                 <h4 style="font-family: 'Poppins', sans-serif">
-                  <a href="about" class="internal special"
-                    >Mehr Über Mich</a
-                  >
+                  <a href="about" class="internal special">Mehr Über Mich</a>
                 </h4>
               </nav>
             </div>
@@ -172,7 +170,7 @@
                   <img
                     alt="Griffin Energy"
                     class="lazy"
-                    src="images/Griffin.png"
+                    src="images/Griffin.jpg"
                   />
                 </div>
                 <strong class="regular white-bg">
@@ -210,9 +208,7 @@
       <section class="quick-contact">
         <div class="wrapper text-left-center animate--me">
           <h1 class="large">
-            <a href="contact" class="internal with-icon"
-              >Kontaktiere mich!</a
-            >
+            <a href="contact" class="internal with-icon">Kontaktiere mich!</a>
           </h1>
         </div>
         <br />
@@ -226,6 +222,7 @@
                   href="https://www.github.com/Aquitano"
                   class="special"
                   target="_blank"
+                  rel="noopener noreferrer"
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -255,7 +252,7 @@
         "
       >
         <a class="copyright-text" href="#">
-          <img src="images/Credit.png" />
+          <img src="images/Credit.jpg" alt="Inspiration" />
         </a>
       </div>
     </footer>
