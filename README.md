@@ -9,3 +9,14 @@
     In this repositorie you can find the code of <a href=https://aquitano.github.io/>my portfolio website.</a>
   </p>
 </p>
+
+<p align="center">
+  <h3 align="center">
+    Used tools und frameworks
+    </h3>
+    
+<p align="center">
+    PurgeCSS
+</p>
+
+  </p>
