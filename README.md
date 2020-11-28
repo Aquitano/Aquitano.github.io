@@ -10,13 +10,13 @@
   </p>
 </p>
 
-<p align="center">
+<p>
   <h3 align="center">
     Used tools und frameworks
     </h3>
     
-<p align="center">
-    PurgeCSS
-</p>
-
+  <p align="center">
+  PurgeCSS
   </p>
+
+</p>
