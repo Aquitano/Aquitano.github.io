@@ -19,6 +19,6 @@
   <a href="https://purgecss.com"> PurgeCSS </a>
   </p>
  <p align="center">
-  GoogleDevTools
+  <a href="https://developers.google.com/web/tools/chrome-devtools/">GoogleDevTools</a>
   </p>
 </p>
