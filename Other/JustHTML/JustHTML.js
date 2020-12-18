@@ -3,7 +3,6 @@
  * Copyright 2020 Aquitano.
  * Licensed under MIT (https://github.com/Aquitano/JustHTML/blob/main/LICENSE)
  */
-
 const appear = document.querySelectorAll(".AppearOnScroll");
 
 const appearOptions = {
