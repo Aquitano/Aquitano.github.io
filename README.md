@@ -6,7 +6,7 @@
   <h3 align="center">Readme of Portfolio</h3>
 
   <p align="center">
-    In this repositorie you can find the code of <a href=https://aquitano.github.io/>my portfolio website.</a>
+    In this repository you can find the code of <a href=https://aquitano.github.io/>my portfolio website.</a>
   </p>
 </p>
 
