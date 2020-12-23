@@ -7,9 +7,7 @@
 </p>
 
 <p>
-  <h3 align="center">
-    Used tools und frameworks
-  </h3> 
+  <h3 align="center">Used tools und frameworks</h3> 
   <p align="center">
   <a href="https://purgecss.com"> PurgeCSS </a>
   </p>
