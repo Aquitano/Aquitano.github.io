@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="case-study" lang="de">
+  <head>
+    <title>JustHTML | Framework</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,user-scalable=0,initial-scale=1"
+    />
+    <base />
+    <meta
+      name="keywords"
+      content="Thomas Breindl, Thomas, Breindl, Portfolio, Portfolio of Thomas Breindl, Portfolio von Thomas Breindl, Griffin Energy"
+    />
+    <link rel="shortcut icon" href="../images/favicon.ico" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+ .wrapper{width:100%;min-height:100vh;height:100%;font:normal 16px/26px Open Sans Condensed, sans-serif;color:rgb(90, 90, 90);padding:100px 20px 200px;box-sizing:border-box}.block{z-index:1;position:relative}.block:before{content:"";position:absolute;height:calc(100% - 40px);width:1px;background-color:#353535;left:50%;margin-top:90px}.title{font:bold 42px/52px Open Sans Condensed, sans-serif;text-align:center;padding:20px;transition:all 0.8s ease-in-out}.each-event{background-color:#c2c2c277;color:#777;padding:15px;margin:80px 20px;width:300px;position:relative;border-radius:10px;box-sizing:border-box;transition:all 0.3s ease-in-out}.each-event:before{content:"";position:absolute;top:calc(50% - 8px);left:-27px;width:16px;height:16px;border-radius:50%;background-color:rgb(80, 80, 80);box-shadow:0 4px 20px -4px rgba(0, 0, 0, 0.8)}.each-event:nth-child(odd){margin-left:calc(50% + 20px)}.each-event:nth-child(even){margin-left:calc(50% - 321px)}.each-event:nth-child(even):before{left:calc(100% + 14px)}.title.non-focus{font-size:24px;line-height:34px;transition:all 0.8s ease-in-out}.each-event.non-focus{color:#000000;background:#000000;margin-top:90px;transform:rotateZ(45deg);transition:all 0.8s ease-in-out}.each-event.non-focus:before{opacity:0;background-color:#aaa}
+    </style>
+    <script>
+var $element=$(".each-event, .title");var $window=$(window);$window.on("scroll resize",check_for_fade);$window.trigger("scroll");function check_for_fade(){var window_height=$window.height();$.each($element,function(event){var $element=$(this);var element_height=$element.outerHeight();var element_offset=$element.offset().top;space=window_height-(element_height+element_offset-$(window).scrollTop());if(space<60){$element.addClass("non-focus")}else{$element.removeClass("non-focus")}})}ript>
+  </script>
+</head>
+  <body>
+    <nav id="nav" aria-label="loader">
+      <div class="loader-background"></div>
+      <a href="#" class="close"
+        ><span>Close</span> <b><i></i> <i></i></b
+      ></a>
+    </nav>
+    <nav id="nav-content" aria-label="menu">
+      <div>
+        <div class="content">
+          <h5>Menu</h5>
+          <ul>
+            <li><a href="../index">Home</a></li>
+            <li><a href="../about">Über mich</a></li>
+            <li><a href="../contact">Kontakt</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="nav-scroll"></div>
+    <div class="loader on first-loading">
+      <div class="loader-preloader">
+        <div class="swiper-lazy-preloader"></div>
+      </div>
+    </div>
+    <header id="header">
+      <a href="../index" class="logo scroll-to"
+        ><p
+          style="
+            font-size: 175%;
+            font-family: Satisfy, cursive;
+            text-decoration-color: #000;
+          "
+        >
+          Thomas Breindl
+        </p></a
+      ><a href="#" class="menu"
+        ><span>Menu</span> <b><i></i> <i></i> <i></i></b
+      ></a>
+    </header>
+    <a href="#" class="scroll-top"
+      ><svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        width="20px"
+        height="20px"
+        viewBox="0 0 20 20"
+        enable-background="new 0 0 20 20"
+        space="preserve"
+      >
+        <path
+          fill="#ffffff"
+          d="M18.008,7.667L16.606,9,11,3.627V20H9V3.627L3.392,9l-1.4-1.336L10-.012Z"
+        /></svg
+    ></a>
+    <div class="container">
+      <div class="scroll-container">
+        <div class="wrapper">
+          <section class="block">
+            <div class="each-year">
+              <div class="title">2019</div>
+
+              <div class="each-event">
+                <div class="event-description">
+                  Mit der 3D-Grafiksuite
+                  <a href="https://www.blender.org/" target="_blank">Blender</a>
+                  angefangen.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="block">
+            <div class="each-year">
+              <div class="title">2018</div>
+              <div class="each-event">
+                <div class="event-description">
+                  In der Schule mit Java und der Game Engine
+                  <a
+                    href="https://github.com/engine-alpha/engine-alpha"
+                    target="_blank"
+                    >Engine Alpha</a
+                  >
+                  angefangen.
+                </div>
+              </div>
+              <div class="each-event">
+                <div class="event-description">
+                  Mit Kurs
+                  <a
+                    href="https://www.udemy.com/course/der-komplette-webentwickler-2/"
+                    target="_blank"
+                    >Der komplette Web-Entwickler von Udemy</a
+                  >
+                  gestartet, HTML, CSS, JS, Phython & Wordpress zu lernen.
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="document-overlay"></div>
+    <script src="../js/typed.js" type="text/javascript"></script>
+    <script src="../js/loader.js" type="text/javascript"></script>
+  </body>
+</html>
