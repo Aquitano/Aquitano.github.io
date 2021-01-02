@@ -77,7 +77,6 @@
         <h2>Zoom-In</h2>
         <div id="6">This text just zoomed in.</div>
       </div>
-
       <div>
         <h2>Entrance from left</h2>
         <div id="7">This text just flew in from the left.</div>
@@ -92,10 +91,11 @@
       </div>
       <div>
         <h2>Entrance from down</h2>
-        <div id="10">This text just flew in from the down.</div>
+        <a class="D10">This text just flew in from the down.</a>
       </div>
     </div>
     <button class="prev">Prev</button>
+    <button class="replay">Replay animation</button>
     <button class="next">Next</button>
     <p>The current slide imdex is: <span class="js-index"></span></p>
     <span class="Slider"></span>
@@ -103,92 +103,92 @@
     <script src="https://aquitano.github.io/Other/JustHTML/JustHTML.min.js"></script>
     <script src="../../js/siema.min.js"></script>
     <script>
-            var slider;
-            function printSlideIndex() {
-              var delay = (function () {
-                var timer = 0;
-                return function (callback, ms) {
-                  clearTimeout(timer);
-                  timer = setTimeout(callback, ms);
-                };
-              })(); // Delay Function
+      var slider;
+      function printSlideIndex() {
+        var delay = (function () {
+          var timer = 0;
+          return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+          };
+        })(); // Delay Function
 
-              document.querySelector(".js-index").innerHTML = this.currentSlide;
-              slider = this.currentSlide;
-              document.querySelector(".Slider").innerHTML = slider;
-              // Add classes for animation
-              if (slider == 0) {
-                delay(function () {
-                  var element = document.getElementById("1");
-                  element.classList.add("Fade-in");
-                }, 600); // end delay
-              }
-              if (slider == 1) {
-                delay(function () {
-                  var element = document.getElementById("2");
-                  element.classList.add("Fly-in-left");
-                }, 600); // end delay
-              }
-              if (slider == 2) {
-                delay(function () {
-                  var element = document.getElementById("3");
-                  element.classList.add("Fly-in-right");
-                }, 600); // end delay
-              }
-              if (slider == 3) {
-                delay(function () {
-                  var element = document.getElementById("4");
-                  element.classList.add("Fly-in-up");
-                }, 600); // end delay
-              }
-              if (slider == 4) {
-                delay(function () {
-                  var element = document.getElementById("5");
-                  element.classList.add("Fly-in-down");
-                }, 600); // end delay
-              }
-              if (slider == 5) {
-                delay(function () {
-                  var element = document.getElementById("6");
-                  element.classList.add("Zoom-in");
-                }, 600); // end delay
-              }
-              if (slider == 6) {
-                delay(function () {
-                  var element = document.getElementById("7");
-                  element.classList.add("Entrance-left");
-                }, 600); // end delay
-              }
-              if (slider == 7) {
-                delay(function () {
-                  var element = document.getElementById("8");
-                  element.classList.add("Entrance-right");
-                }, 600); // end delay
-              }
-              if (slider == 8) {
-                delay(function () {
-                  var element = document.getElementById("9");
-                  element.classList.add("Entrance-up");
-                }, 600); // end delay
-              }
-              if (slider == 9) {
-                delay(function () {
-                  var element = document.getElementById("10");
-                  element.classList.add("Entrance-down");
-                }, 600); // end delay
-            }
-                    }
-            const mySiema = new Siema({
-              duration: 200,
-              loop: true,
-              onInit: printSlideIndex,
-              onChange: printSlideIndex,
-            });
-            const prev = document.querySelector(".prev");
-            const next = document.querySelector(".next");
+        document.querySelector(".js-index").innerHTML = this.currentSlide;
+        slider = this.currentSlide;
+        document.querySelector(".Slider").innerHTML = slider;
+        // Add classes for animation
+        if (slider == 0) {
+          delay(function () {
+            var element = document.getElementById("1");
+            element.classList.add("Fade-in");
+          }, 600); // end delay
+        }
+        if (slider == 1) {
+          delay(function () {
+            var element = document.getElementById("2");
+            element.classList.add("Fly-in-left");
+          }, 600); // end delay
+        }
+        if (slider == 2) {
+          delay(function () {
+            var element = document.getElementById("3");
+            element.classList.add("Fly-in-right");
+          }, 600); // end delay
+        }
+        if (slider == 3) {
+          delay(function () {
+            var element = document.getElementById("4");
+            element.classList.add("Fly-in-up");
+          }, 600); // end delay
+        }
+        if (slider == 4) {
+          delay(function () {
+            var element = document.getElementById("5");
+            element.classList.add("Fly-in-down");
+          }, 600); // end delay
+        }
+        if (slider == 5) {
+          delay(function () {
+            var element = document.getElementById("6");
+            element.classList.add("Zoom-in");
+          }, 600); // end delay
+        }
+        if (slider == 6) {
+          delay(function () {
+            var element = document.getElementById("7");
+            element.classList.add("Entrance-left");
+          }, 600); // end delay
+        }
+        if (slider == 7) {
+          delay(function () {
+            var element = document.getElementById("8");
+            element.classList.add("Entrance-right");
+          }, 600); // end delay
+        }
+        if (slider == 8) {
+          delay(function () {
+            var element = document.getElementById("9");
+            element.classList.add("Entrance-up");
+          }, 600); // end delay
+        }
+        if (slider == 9) {
+          delay(function () {
+            var x = document.querySelectorAll(".D10");
+            x[1].classList.add("Entrance-down");
+         }, 600); // end delay
+        }
+      }
+      const mySiema = new Siema({
+        duration: 200,
+        loop: true,
+        onInit: printSlideIndex,
+        onChange: printSlideIndex,
+      });
+      const prev = document.querySelector(".prev");
+      const next = document.querySelector(".next");
 
-            prev.addEventListener("click", () => mySiema.prev());
-            next.addEventListener("click", () => mySiema.next());
+      prev.addEventListener("click", () => mySiema.prev());
+      next.addEventListener("click", () => mySiema.next());
     </script>
 
     <!-- Copyright 2020 Aquitano. -->
