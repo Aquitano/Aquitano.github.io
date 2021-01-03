@@ -21,7 +21,30 @@
       }
     </style>
     <style>
-
+      body {
+        background: #e3e3d8;
+        font-family: "Raleway", sans-serif;
+        color: #3b3b3b;
+      }
+      .success {
+        animation-name: success;
+        animation-duration: 3s;
+      }
+      @keyframes success {
+        0%{color: blue;}
+        100%{color: #3b3b3b;}
+      }
+      .siema .card {
+        position: static;
+        box-sizing: initial;
+        border: 5px solid #bfc0c0;
+        width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 86.813px;
+        min-height: 86.813px;
+        padding-bottom: 20px;
+      }
 
       /* Layout Styling */
 
@@ -35,19 +58,18 @@
         justify-content: center;
       }
 
-
       /* Button Styles */
 
       .button {
         display: inline-flex;
         height: 40px;
         width: 150px;
-        border: 2px solid #BFC0C0;
+        border: 2px solid #bfc0c0;
         margin: 20px 20px 20px 20px;
-        color: #BFC0C0;
+        color: #bfc0c0;
         text-transform: uppercase;
         text-decoration: none;
-        font-size: .8em;
+        font-size: 0.8em;
         letter-spacing: 1.5px;
         justify-content: center;
         overflow: hidden;
@@ -61,9 +83,10 @@
         cursor: pointer;
       }
 
-      a {
+      .button a {
         position: relative;
-        transition: all .45s ease-Out;
+        transition: all 0.45s ease-Out;
+        color: #3b3b3b;
       }
 
       #circle {
@@ -72,9 +95,9 @@
         opacity: 0;
         line-height: 40px;
         border-radius: 50%;
-        background: #BFC0C0;
+        background: #bfc0c0;
         position: absolute;
-        transition: all .5s ease-Out;
+        transition: all 0.5s ease-Out;
         top: 20px;
         left: 70px;
       }
@@ -88,82 +111,204 @@
       }
 
       #button-3:hover a {
-        color: #2D3142;
+        color: #2d3142;
+      }
+
+      :root {
+        --bg: #fdfdfd;
+        --highlight1: #ed4264;
+        --highlight2: #ffedbc;
+        --color: #1a1e24;
+        --font-number: Montserrat, Roboto, Helvetica, Arial, sans-serif;
+        --font-head: "Space Mono", Consolas, Menlo, Monaco, "Courier New",
+          monospace;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+      }
+
+      .list {
+        width: 1000px;
+        text-align: left;
+      }
+      .list span {
+        margin-left: -13px;
+      }
+
+      .item {
+        display: block;
+        clear: both;
+        counter-increment: list;
+        padding-bottom: 4rem;
+        font-size: 1.1rem;
+        line-height: 1.375;
+        position: relative;
+      }
+
+      .item:before {
+        font: bold 2.25rem/1 var(--font-number);
+        content: counter(list);
+        width: 5rem;
+        height: 5rem;
+        float: left;
+        margin: 0 1.5rem 0.75rem 0;
+        color: var(--bg);
+        background: var(--highlight1)
+          linear-gradient(
+            to bottom right,
+            var(--highlight1) 25%,
+            var(--highlight2)
+          );
+        text-shadow: 0 0 2px var(--highlight1);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        shape-outside: ellipse();
+        z-index: 1;
+      }
+
+      .item:after {
+        width: 2.5rem;
+        height: 2.5rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "";
+        background: var(--highlight1);
+        z-index: -1;
+        border-top-left-radius: 3px;
+      }
+
+      .headline {
+        padding: 0rem 0 0 0;
+        margin: 0 0 1rem 0;
+        font: normal 2rem var(--font-head);
       }
     </style>
   </head>
   <body align="center">
     <h1>Welcome to the example page of JustHTML.</h1>
     <h1>Usage</h1>
-    <h2 style="border-style: groove; border-width: 5px; border-radius: 10px">
-      CSS-Tag:
-      <a id="myInput"
-        >&lt;link
-        href=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.css&quot;
-        rel=&quot;stylesheet&quot; /&gt;</a
-      >
-    </h2>
-    <h2 style="border-style: groove; border-width: 5px; border-radius: 10px">
-      CSS-Min--Tag:
-      <a id="myInput"
-        >&lt;link
-        href=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.min.css&quot;
-        rel=&quot;stylesheet&quot; /&gt;</a
-      >
-    </h2>
-    <h2 style="border-style: groove; border-width: 5px; border-radius: 10px">
-      JS-Tag:
-      <a id="myInput2"
-        >&lt;script
-        src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.js&quot;&lt;/script&gt;
-      </a>
-    </h2>
-    <h2 style="border-style: groove; border-width: 5px; border-radius: 10px">
-      JS-Min-Tag:
-      <a id="myInput2"
-        >&lt;script
-        src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.min.js&quot;&lt;/script&gt;
-      </a>
-    </h2>
+    <div>
+      <ol class="list">
+        <li class="item">
+          <h2 class="headline">CSS</h2>
+          <span
+            >CSS-Tag:
+            <a id="A1"
+              >&lt;link
+              href=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.css&quot;
+              rel=&quot;stylesheet&quot; /&gt;</a
+            >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              class="copy1"
+            >
+              <path
+                d="M9 1v7.5c0 1.933-1.566 3.5-3.5 3.5s-3.5-1.567-3.5-3.5v-6c0-1.381 1.119-2.5 2.5-2.5s2.5 1.119 2.5 2.5v4.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-4h1v4c0 .275.225.5.5.5s.5-.225.5-.5v-4.5c0-.827-.673-1.5-1.5-1.5s-1.5.673-1.5 1.5v6c0 1.378 1.121 2.5 2.5 2.5s2.5-1.122 2.5-2.5v-7.5h1zm2 0v2c3.282 0 3.772 2.946 3 6 0 0 6-1.65 6 2.457v10.543h-15v-8.025c-.715-.065-1.39-.269-2-.582v10.607h19v-13.386c0-1.843-5.583-9.614-11-9.614zm6 13h-9v1h9v-1zm0 3h-9v-1h9v1zm0 2h-9v-1h9v1z"
+              />
+            </svg>
+            <br />
+            Minified CSS-Tag:
+            <a id="A2"
+              >&lt;link
+              href=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.min.css&quot;
+              rel=&quot;stylesheet&quot; /&gt;</a
+            >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              class="copy2"
+            >
+              <path
+                d="M9 1v7.5c0 1.933-1.566 3.5-3.5 3.5s-3.5-1.567-3.5-3.5v-6c0-1.381 1.119-2.5 2.5-2.5s2.5 1.119 2.5 2.5v4.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-4h1v4c0 .275.225.5.5.5s.5-.225.5-.5v-4.5c0-.827-.673-1.5-1.5-1.5s-1.5.673-1.5 1.5v6c0 1.378 1.121 2.5 2.5 2.5s2.5-1.122 2.5-2.5v-7.5h1zm2 0v2c3.282 0 3.772 2.946 3 6 0 0 6-1.65 6 2.457v10.543h-15v-8.025c-.715-.065-1.39-.269-2-.582v10.607h19v-13.386c0-1.843-5.583-9.614-11-9.614zm6 13h-9v1h9v-1zm0 3h-9v-1h9v1zm0 2h-9v-1h9v1z"
+              />
+            </svg>
+          </span>
+        </li>
+        <li class="item">
+          <h2 class="headline">JS</h2>
+          <span
+            >JS-Tag:
+            <a id="A3"
+              >&lt;script
+              src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.js&quot;&lt;/script&gt;
+            </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              class="copy3"
+            >
+              <path
+                d="M9 1v7.5c0 1.933-1.566 3.5-3.5 3.5s-3.5-1.567-3.5-3.5v-6c0-1.381 1.119-2.5 2.5-2.5s2.5 1.119 2.5 2.5v4.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-4h1v4c0 .275.225.5.5.5s.5-.225.5-.5v-4.5c0-.827-.673-1.5-1.5-1.5s-1.5.673-1.5 1.5v6c0 1.378 1.121 2.5 2.5 2.5s2.5-1.122 2.5-2.5v-7.5h1zm2 0v2c3.282 0 3.772 2.946 3 6 0 0 6-1.65 6 2.457v10.543h-15v-8.025c-.715-.065-1.39-.269-2-.582v10.607h19v-13.386c0-1.843-5.583-9.614-11-9.614zm6 13h-9v1h9v-1zm0 3h-9v-1h9v1zm0 2h-9v-1h9v1z"
+              />
+            </svg>
+            <br />
+            Minified JS-Tag:
+            <a id="A4"
+              >&lt;script
+              src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.min.js&quot;&lt;/script&gt; </a
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              class="copy4"
+            >
+              <path
+                d="M9 1v7.5c0 1.933-1.566 3.5-3.5 3.5s-3.5-1.567-3.5-3.5v-6c0-1.381 1.119-2.5 2.5-2.5s2.5 1.119 2.5 2.5v4.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5v-4h1v4c0 .275.225.5.5.5s.5-.225.5-.5v-4.5c0-.827-.673-1.5-1.5-1.5s-1.5.673-1.5 1.5v6c0 1.378 1.121 2.5 2.5 2.5s2.5-1.122 2.5-2.5v-7.5h1zm2 0v2c3.282 0 3.772 2.946 3 6 0 0 6-1.65 6 2.457v10.543h-15v-8.025c-.715-.065-1.39-.269-2-.582v10.607h19v-13.386c0-1.843-5.583-9.614-11-9.614zm6 13h-9v1h9v-1zm0 3h-9v-1h9v1zm0 2h-9v-1h9v1z"
+              /></svg
+          ></span>
+        </li>
+      </ol>
+    </div>
 
     <div class="siema" style="margin: 35px">
-      <div>
+      <div class="card">
         <h2>Fade-In</h2>
         <div id="D0">This text just flew in.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Fly-In from left</h2>
         <div id="D1">This text just flew in from the left.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Fly-In from right</h2>
         <div id="D2">This text just flew in from the right.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Fly-In from up</h2>
         <div id="D3">This text just flew in from the up.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Fly-In from down</h2>
         <div id="D4">This text just flew in from the down.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Zoom-In</h2>
         <div id="D5">This text just zoomed in.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Entrance from left</h2>
         <div id="D6">This text just flew in from the left.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Entrance from right</h2>
         <div id="D7">This text just flew in from the right.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Entrance from up</h2>
         <div id="D8">This text just flew in from the up.</div>
       </div>
-      <div>
+      <div class="card">
         <h2>Entrance from down</h2>
         <a id="D9">This text just flew in from the down.</a>
       </div>
@@ -194,6 +339,7 @@
           text-align: center;
           font-weight: 300;
           letter-spacing: 1px;
+          margin-top: 2px;
         "
         >Replay animation</a
       >
@@ -215,7 +361,30 @@
     </div>
 
     <p>Aktuelle Seite: <span class="js-index"></span></p>
-    <span class="Classes"></span>
+    <span style="opacity: 0;">
+      <input
+        id="Text1"
+        type="text"
+        value='&lt;link href="https://aquitano.github.io/Other/JustHTML/JustHTML.css" rel="stylesheet" /&gt;'
+      />
+      <input
+        id="Text2"
+        type="text"
+        value='&lt;link href=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.min.css&quot; rel=&quot;stylesheet&quot; /&gt;'
+      />
+
+      <input
+        id="Text3"
+        type="text"
+        value='&lt;script src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.js&quot;&gt;/script&gt;'
+      />
+
+      <input
+        id="Text4"
+        type="text"
+        value='&lt;script src=&quot;https://aquitano.github.io/Other/JustHTML/JustHTML.min.js&quot;&gt;/script&gt;'
+      />
+    </span>
 
     <script src="https://aquitano.github.io/Other/JustHTML/JustHTML.min.js"></script>
     <script src="../../js/siema.min.js"></script>
@@ -282,6 +451,12 @@
           }, 100);
         }
       }
+      // Copy
+      function copy(x) {
+        document.getElementById("Text" + x).select();
+        document.execCommand("copy");
+        document.getElementById("A"+x).classList.add("success");
+      }
       // Create "cards"
       const mySiema = new Siema({
         duration: 200,
@@ -293,12 +468,19 @@
       const prev = document.querySelector(".prev");
       const next = document.querySelector(".next");
       const replay = document.querySelector(".replay");
+      const copy1 = document.querySelector(".copy1");
+      const copy2 = document.querySelector(".copy2");
+      const copy3 = document.querySelector(".copy3");
+      const copy4 = document.querySelector(".copy4");
 
       prev.addEventListener("click", () => mySiema.prev());
       next.addEventListener("click", () => mySiema.next());
       replay.addEventListener("click", () => this.replayA());
+      copy1.addEventListener("click", () => this.copy(1));
+      copy2.addEventListener("click", () => this.copy(2));
+      copy3.addEventListener("click", () => this.copy(3));
+      copy4.addEventListener("click", () => this.copy(4));
     </script>
-
     <!-- Copyright 2020 Aquitano. -->
   </body>
 </html>
