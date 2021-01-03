@@ -20,6 +20,77 @@
         opacity: 0;
       }
     </style>
+    <style>
+
+
+      /* Layout Styling */
+
+      #container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 50px 0 150px 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+
+      /* Button Styles */
+
+      .button {
+        display: inline-flex;
+        height: 40px;
+        width: 150px;
+        border: 2px solid #BFC0C0;
+        margin: 20px 20px 20px 20px;
+        color: #BFC0C0;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: .8em;
+        letter-spacing: 1.5px;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      /* Third Button */
+
+      #button-3 {
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      a {
+        position: relative;
+        transition: all .45s ease-Out;
+      }
+
+      #circle {
+        width: 0%;
+        height: 0%;
+        opacity: 0;
+        line-height: 40px;
+        border-radius: 50%;
+        background: #BFC0C0;
+        position: absolute;
+        transition: all .5s ease-Out;
+        top: 20px;
+        left: 70px;
+      }
+
+      #button-3:hover #circle {
+        width: 200%;
+        height: 500%;
+        opacity: 1;
+        top: -70px;
+        left: -70px;
+      }
+
+      #button-3:hover a {
+        color: #2D3142;
+      }
+    </style>
   </head>
   <body align="center">
     <h1>Welcome to the example page of JustHTML.</h1>
@@ -97,9 +168,52 @@
         <a id="D9">This text just flew in from the down.</a>
       </div>
     </div>
-    <button class="prev">Prev</button>
-    <button class="replay">Replay animation</button>
-    <button class="next">Next</button>
+
+    <div class="button prev bt" id="button-3">
+      <div id="circle"></div>
+      <a
+        style="
+          text-decoration: none;
+          letter-spacing: 1px;
+          font-size: 1.2em;
+          font-weight: 300;
+          letter-spacing: 1px;
+          align-content: right;
+          margin-top: 10px;
+        "
+        >Prev</a
+      >
+    </div>
+    <div class="button replay" id="button-3" style="top: -10px">
+      <div id="circle"></div>
+      <a
+        style="
+          text-decoration: none;
+          letter-spacing: 1px;
+          font-size: 1.2em;
+          text-align: center;
+          font-weight: 300;
+          letter-spacing: 1px;
+        "
+        >Replay animation</a
+      >
+    </div>
+    <div class="button next" id="button-3">
+      <div id="circle"></div>
+      <a
+        style="
+          text-decoration: none;
+          letter-spacing: 1px;
+          font-size: 1.2em;
+          text-align: center;
+          font-weight: 300;
+          letter-spacing: 1px;
+          margin-top: 10px;
+        "
+        >Next</a
+      >
+    </div>
+
     <p>Aktuelle Seite: <span class="js-index"></span></p>
     <span class="Classes"></span>
 
