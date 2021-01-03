@@ -16,6 +16,9 @@
       ::-webkit-scrollbar {
         display: none;
       }
+      .invisible {
+        opacity: 0;
+      }
     </style>
   </head>
   <body align="center">
@@ -97,87 +100,57 @@
     <button class="prev">Prev</button>
     <button class="replay">Replay animation</button>
     <button class="next">Next</button>
-    <p>The current slide imdex is: <span class="js-index"></span></p>
-    <span class="Slider"></span>
+    <p>Aktuelle Seite: <span class="js-index"></span></p>
     <span class="Classes"></span>
 
     <script src="https://aquitano.github.io/Other/JustHTML/JustHTML.min.js"></script>
     <script src="../../js/siema.min.js"></script>
     <script>
       var slider;
+      // Delay Function
       var delay = (function () {
         var timer = 0;
         return function (callback, ms) {
           clearTimeout(timer);
           timer = setTimeout(callback, ms);
         };
-      })(); // Delay Function
+      })();
       function printSlideIndex() {
-        document.querySelector(".js-index").innerHTML = this.currentSlide;
+        document.querySelector(".js-index").innerHTML = this.currentSlide + 1;
         slider = this.currentSlide;
-        document.querySelector(".Slider").innerHTML = slider;
-        // Add classes for animation
-        if (slider == 0) {
+        let classes = [
+          "Fade-in",
+          "Fly-in-left",
+          "Fly-in-right",
+          "Fly-in-up",
+          "Fly-in-down",
+          "Zoom-in",
+          "Entrance-left",
+          "Entrance-right",
+          "Entrance-up",
+          "Entrance-down",
+        ];
+        // Add animation
+        if (slider != 9) {
+          var element = document.getElementById("D" + slider);
+          element.classList.remove(classes[slider]);
+          element.classList.add("invisible");
           delay(function () {
-            var element = document.getElementById("D0");
-            element.classList.add("Fade-in");
-          }, 600); // end delay
-        }
-        if (slider == 1) {
+            element.classList.add(classes[slider]);
+            element.classList.remove("invisible");
+          }, 600);
+        } else {
+          var x = document.querySelectorAll("#D9");
+          x[1].classList.remove(classes[slider]);
+          x[1].classList.add("invisible");
           delay(function () {
-            var element = document.getElementById("D1");
-            element.classList.add("Fly-in-left");
-          }, 600); // end delay
-        }
-        if (slider == 2) {
-          delay(function () {
-            var element = document.getElementById("D2");
-            element.classList.add("Fly-in-right");
-          }, 600); // end delay
-        }
-        if (slider == 3) {
-          delay(function () {
-            var element = document.getElementById("D3");
-            element.classList.add("Fly-in-up");
-          }, 600); // end delay
-        }
-        if (slider == 4) {
-          delay(function () {
-            var element = document.getElementById("D4");
-            element.classList.add("Fly-in-down");
-          }, 600); // end delay
-        }
-        if (slider == 5) {
-          delay(function () {
-            var element = document.getElementById("D5");
-            element.classList.add("Zoom-in");
-          }, 600); // end delay
-        }
-        if (slider == 6) {
-          delay(function () {
-            var element = document.getElementById("D6");
-            element.classList.add("Entrance-left");
-          }, 600); // end delay
-        }
-        if (slider == 7) {
-          delay(function () {
-            var element = document.getElementById("D7");
-            element.classList.add("Entrance-right");
-          }, 600); // end delay
-        }
-        if (slider == 8) {
-          delay(function () {
-            var element = document.getElementById("D8");
-            element.classList.add("Entrance-up");
-          }, 600); // end delay
-        }
-        if (slider == 9) {
-          delay(function () {
-            var x = document.querySelectorAll("#D9");
-            x[1].classList.add("Entrance-down");
-          }, 600); // end delay
+            x[1].classList.add(classes[slider]);
+            x[0].classList.add(classes[slider]);
+            x[1].classList.remove("invisible");
+          }, 600);
         }
       }
+      // Replay function
       function replayA() {
         if (slider != 9) {
           var element = document.getElementById("D" + slider);
@@ -185,23 +158,24 @@
           element.classList.remove(gotclass);
           delay(function () {
             element.classList.add(gotclass);
-          }, 100); // end delay
+          }, 100);
         } else {
           var x = document.querySelectorAll("#D9");
           var gotclass = x[1].classList.item(0);
           x[1].classList.remove(gotclass);
           delay(function () {
             x[1].classList.add(gotclass);
-          }, 100); // end delay
+          }, 100);
         }
       }
+      // Create "cards"
       const mySiema = new Siema({
         duration: 200,
         loop: true,
         onInit: printSlideIndex,
         onChange: printSlideIndex,
       });
-
+      // Buttons
       const prev = document.querySelector(".prev");
       const next = document.querySelector(".next");
       const replay = document.querySelector(".replay");
