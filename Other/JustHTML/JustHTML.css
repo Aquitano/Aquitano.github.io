@@ -154,68 +154,66 @@ html {
   animation-duration: 730ms;
 }
 @keyframes Entrance-right {
-  0% {
-    transform: translateX(2000px);
-    opacity: 0;
-    transition: opacity 500ms ease-in, transform 400ms ease-in;
-    font-size: 75%;
+0% {
+    transform: translateX(900px) scale(0.7);
+    opacity: 0.7;
   }
+
   80% {
-    transform: translateX(25px);
-    font-size: 75%;
+    transform: translateX(0px) scale(0.7);
+    opacity: 0.7;
   }
+
   100% {
-    transform: translateX(0);
+    transform: scale(1);
     opacity: 1;
-    font-size: 100%;
   }
 }
 @keyframes Entrance-left {
-  0% {
-    transform: translateX(-2000px);
-    opacity: 0;
-    transition: opacity 500ms ease-in, transform 400ms ease-in;
-    font-size: 75%;
+0% {
+    transform: translateX(-900px) scale(0.7);
+    opacity: 0.7;
   }
+
   80% {
-    transform: translateX(25px);
-    font-size: 75%;
+    transform: translateX(0px) scale(0.7);
+    opacity: 0.7;
   }
+
   100% {
-    transform: translateX(0);
+    transform: scale(1);
     opacity: 1;
-    font-size: 100%;
   }
 }
 @keyframes Entrance-up {
-  0% {
-    transform: translateY(-2000px) translateX(50px);
-    opacity: 0;
-    transition: opacity 500ms ease-in, transform 400ms ease-in;
-    font-size: 60%;
+0% {
+    transform: translateY(-1200px) scale(0.7);
+    opacity: 0.7;
   }
+
   80% {
-    font-size: 60%;
+    transform: translateY(0px) scale(0.7);
+    opacity: 0.7;
   }
+
   100% {
-    transform: translateY(0) translateX(0px);
+    transform: scale(1);
     opacity: 1;
-    font-size: 100%;
   }
 }
 @keyframes Entrance-down {
-  0% {
-    transform: translateY(2000px) translateX(50px);
-    opacity: 0;
-    transition: opacity 500ms ease-in, transform 400ms ease-in;
-    font-size: 60%;
+0% {
+    transform: translateY(1200px) scale(0.7);
+    opacity: 0.7;
   }
+
   80% {
-    font-size: 60%;
+    transform: translateY(0px) scale(0.7);
+    opacity: 0.7;
   }
+
   100% {
-    transform: translateY(0) translateX(0px);
+    transform: scale(1);
     opacity: 1;
-    font-size: 100%;
   }
 }
