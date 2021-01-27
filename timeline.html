@@ -23,9 +23,85 @@
       rel="stylesheet"
     />
     <style>
- .wrapper{width:100%;min-height:100vh;height:100%;font:normal 16px/26px Open Sans Condensed, sans-serif;color:rgb(90, 90, 90);padding:100px 20px 200px;box-sizing:border-box}.block{z-index:1;position:relative}.block:before{content:"";position:absolute;height:calc(100% - 40px);width:1px;background-color:#353535;left:50%;margin-top:90px}.title{font:bold 42px/52px Open Sans Condensed, sans-serif;text-align:center;padding:20px;transition:all 0.8s ease-in-out}.each-event{background-color:#c2c2c277;color:#777;padding:15px;margin:80px 20px;width:300px;position:relative;border-radius:10px;box-sizing:border-box;transition:all 0.3s ease-in-out}.each-event:before{content:"";position:absolute;top:calc(50% - 8px);left:-27px;width:16px;height:16px;border-radius:50%;background-color:rgb(80, 80, 80);box-shadow:0 4px 20px -4px rgba(0, 0, 0, 0.8)}.each-event:nth-child(odd){margin-left:calc(50% + 20px)}.each-event:nth-child(even){margin-left:calc(50% - 321px)}.each-event:nth-child(even):before{left:calc(100% + 14px)}.title.non-focus{font-size:24px;line-height:34px;transition:all 0.8s ease-in-out}.each-event.non-focus{color:#000000;background:#000000;margin-top:90px;transform:rotateZ(45deg);transition:all 0.8s ease-in-out}.each-event.non-focus:before{opacity:0;background-color:#aaa}
+      .wrapper {
+        width: 100%;
+        min-height: 100vh;
+        height: 100%;
+        font: normal 16px/26px Open Sans Condensed, sans-serif;
+        color: rgb(90, 90, 90);
+        padding: 100px 20px 200px;
+        box-sizing: border-box;
+      }
+      .block {
+        z-index: 1;
+        position: relative;
+      }
+      .block:before {
+        content: "";
+        position: absolute;
+        height: calc(100% - 40px);
+        width: 1px;
+        background-color: #353535;
+        left: 50%;
+        margin-top: 90px;
+      }
+      .title {
+        font: bold 42px/52px Open Sans Condensed, sans-serif;
+        text-align: center;
+        padding: 20px;
+        transition: all 0.8s ease-in-out;
+      }
+      @media screen and (min-width: 240px) {
+      .each-event {
+        background-color: #c2c2c277;
+        color: #777;
+        padding: 15px;
+        margin: 80px 0px;
+        width: 170px;
+        position: relative;
+        border-radius: 10px;
+        box-sizing: border-box;
+        transition: all 0.3s ease-in-out;
+      }
+      .each-event:nth-child(even) {
+        margin-left: calc(50% - 191px);
+      }
+      }
+      @media screen and (min-width: 650px) {
+      .each-event {
+        background-color: #c2c2c277;
+        color: #777;
+        padding: 15px;
+        margin: 80px 0px;
+        width: 300px;
+        position: relative;
+        border-radius: 10px;
+        box-sizing: border-box;
+        transition: all 0.3s ease-in-out;
+      }
+      .each-event:nth-child(even) {
+        margin-left: calc(50% - 321px);
+      }
+      }
+      .each-event:before {
+        content: "";
+        position: absolute;
+        top: calc(50% - 8px);
+        left: -27px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: rgb(80, 80, 80);
+        box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.8);
+      }
+      .each-event:nth-child(odd) {
+        margin-left: calc(50% + 20px);
+      }
+      .each-event:nth-child(even):before {
+        left: calc(100% + 14px);
+      }
     </style>
-</head>
+  </head>
   <body>
     <nav id="nav" aria-label="loader">
       <div class="loader-background"></div>
@@ -54,8 +130,8 @@
     <header id="header">
       <a href="../index" class="logo scroll-to"
         ><p
-                lass="large"
-                style="font-family: Poppins, sans-serif; font-size: 185%;"
+          lass="large"
+          style="font-family: Poppins, sans-serif; font-size: 185%"
         >
           Thomas Breindl
         </p></a
@@ -84,26 +160,33 @@
     <div class="container">
       <div class="scroll-container">
         <div class="wrapper">
-                    <section class="block">
+          <section class="block">
             <div class="each-year">
               <div class="title animate--me">2020</div>
               <div class="each-event animate--me">
                 <div class="event-description">
                   Das Framework
                   <a href="project/JustHTML">JustHTML</a>
-                  ,das helfen soll Webseiten nur mit HTMl zu erstellen, wurde erstellt.
+                  ,das helfen soll Webseiten nur mit HTMl zu erstellen, wurde
+                  erstellt.
                 </div>
               </div>
-                            <div class="each-event animate--me">
+              <div class="each-event animate--me">
                 <div class="event-description">
-                  Das Projekt, ein Getränk mit der imaginären "Brummselbeere" zu gestalten, hat mit einem Produktdesign, Verpackungsdesign, Marketingstrategie und einer Webseite begonnen: 
+                  Das Projekt, ein Getränk mit der imaginären "Brummselbeere" zu
+                  gestalten, hat mit einem Produktdesign, Verpackungsdesign,
+                  Marketingstrategie und einer Webseite begonnen:
                   <a href="project/Griffin">Griffin Energy</a>.
                 </div>
               </div>
               <div class="each-event animate--me">
                 <div class="event-description">
                   Angefangen mit dem Grafiktablett
-                  <a href="https://www.wacom.com/de-de/products/pen-tablets/wacom-intuos" target="_blank">Wacom Intuos</a>
+                  <a
+                    href="https://www.wacom.com/de-de/products/pen-tablets/wacom-intuos"
+                    target="_blank"
+                    >Wacom Intuos</a
+                  >
                   zu zeichnen.
                 </div>
               </div>
