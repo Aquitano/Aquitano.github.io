@@ -7,7 +7,6 @@ var delay = (function () {
   };
 })();
 function printSlideIndex() {
-  document.querySelector(".js-index").innerHTML = this.currentSlide + 1;
   slider = this.currentSlide;
   let classes = [
     "Fade-in",
@@ -20,8 +19,14 @@ function printSlideIndex() {
     "Entrance-right",
     "Entrance-up",
     "Entrance-down",
+    "Bounce-In",
+    "Bounce-In-right",
+    "Bounce-In-left",
+    "Bounce-In-up",
+    "Bounce-In-down",
+    "Rotate-In",
   ];
-  if (slider != 9) {
+  if (slider != 15) {
     var element = document.getElementById("D" + slider);
     element.classList.remove(classes[slider]);
     element.classList.add("invisible");
@@ -30,7 +35,7 @@ function printSlideIndex() {
       element.classList.remove("invisible");
     }, 600);
   } else {
-    var x = document.querySelectorAll("#D9");
+    var x = document.querySelectorAll("#D15");
     x[1].classList.remove(classes[slider]);
     x[1].classList.add("invisible");
     delay(function () {
@@ -41,7 +46,7 @@ function printSlideIndex() {
   }
 }
 function replayA() {
-  if (slider != 9) {
+  if (slider != 15) {
     var element = document.getElementById("D" + slider);
     var gotclass = element.classList.item(0);
     element.classList.remove(gotclass);
@@ -49,11 +54,11 @@ function replayA() {
       element.classList.add(gotclass);
     }, 100);
   } else {
-    var x = document.querySelectorAll("#D9");
-    var gotclass = x[1].classList.item(0);
-    x[1].classList.remove(gotclass);
+    var x = document.querySelectorAll("#D15");
+    var gotclasses = x[1].classList.item(0);
+    x[1].classList.remove(gotclasses);
     delay(function () {
-      x[1].classList.add(gotclass);
+      x[1].classList.add(gotclasses);
     }, 100);
   }
 }
