@@ -1,5 +1,5 @@
 /*!
- * JustHTML v.1.1-alpha
+ * JustHTML v.1.2-alpha
  * Copyright 2021 Aquitano.
  * Licensed under MIT (https://github.com/Aquitano/JustHTML/blob/main/LICENSE)
  */
