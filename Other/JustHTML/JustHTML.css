@@ -1,22 +1,63 @@
 /*!
- * JustHTML v.1.2-alpha
+ * JustHTML v0.2-alpha
  * Copyright 2021 Aquitano.
  * Licensed under MIT (https://github.com/Aquitano/JustHTML/blob/main/LICENSE)
  */
 
+/* */
+/* General */
+/* */
+
+.center {
+  text-align: center;
+  margin: auto;
+  display: block;
+}
+.center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+}
+.center-transform {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.split {
+  float: left;
+  width: 50%;
+}
+.bold {
+  font-weight: bold;
+}
+.top {
+  vertical-align: top;
+}
+.bottom {
+  vertical-align: bottom;
+}
+/* */
 /* Animations */
+/* */
 html {
   overflow-x: hidden;
   overflow-y: auto;
 }
-/* Rotate In */
+/* Rotate */
 .Rotate-In {
   animation-name: rotate-In;
   animation-duration: 800ms;
 }
-  
+
 @keyframes rotate-In {
-   0% {
+  0% {
     transform: rotate3d(0, 0, 1, 250deg);
     opacity: 0;
   }
@@ -24,6 +65,23 @@ html {
   100% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
+  }
+}
+
+.Rotate-Out {
+  animation-name: rotate-Out;
+  animation-duration: 800ms;
+}
+
+@keyframes rotate-Out {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate3d(0, 0, 1, 250deg);
+    opacity: 0;
   }
 }
 /* Bounce */
