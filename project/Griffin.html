@@ -15,11 +15,11 @@
     <link rel="shortcut icon" href="../images/favicon.ico" />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <nav id="nav" aria-label="loader">
-      <div class="loader-background"></div>
-      <a href="#" class="close"
-        ><span>Close</span> <b><i></i> <i></i></b
+  <body onload="Project();">
+  <nav id="nav" aria-label="loader">
+      <div class="menu-bg"></div>
+      <a class="close" onclick="closeNav()" style="margin-top: 40px;cursor: pointer" 
+        ><span id="a">Close</span> <b id="b"><i></i> <i></i></b
       ></a>
     </nav>
     <nav id="nav-content" aria-label="menu">
@@ -27,19 +27,19 @@
         <div class="content">
           <h5>Menu</h5>
           <ul>
-            <li><a href="../index">Home</a></li>
-            <li><a href="../about">Über mich</a></li>
-            <li><a href="../contact">Kontakt</a></li>
+            <li><a href="../index" id="mi">Home</a></li>
+            <li><a href="timeline" id="mi">Über mich</a></li>
+            <li><a href="contact" id="mi">Kontakt</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <div id="nav-scroll"></div>
-    <div class="loader on first-loading">
+     <div class="loader on" id="loader">
       <div class="loader-preloader">
         <div class="swiper-lazy-preloader"></div>
       </div>
-    </div>
+    </div> 
     <header id="header">
       <a href="../index" class="logo scroll-to"
         ><p
@@ -48,7 +48,7 @@
         >
           Thomas Breindl
         </p></a
-      ><a href="#" class="menu"
+      ><a class="menu" onclick="openNav()" style="cursor: pointer;"
         ><span>Menu</span> <b><i></i> <i></i> <i></i></b
       ></a>
     </header>
@@ -80,13 +80,15 @@
                   class="col-sm-6-6 col-md-9-12 col-smd-5-12 col-lg-4-12 info"
                 >
                   <div>
-                    <h1>Griffin Energy - Produktdesign</h1>
+                    <h1 id="Titel">Griffin Energy - Produktdesign</h1>
+                    <div id="Desc">
                     <h5>Aufgabe</h5>
                     <h4 class="header-dark">
                       Produkt<br />3D Model<br />Webseite<br />
                     </h4>
                     <h5>Jahr</h5>
                     <h4 class="header-dark">2020</h4>
+                  </div>
                   </div>
                 </div>
                 <div
@@ -95,7 +97,7 @@
                   <h3 class="header-light" align="justify">
                     Da ich in der Schule ein eigenes Produkt entwickeln, vermarkten und verkaufen sollte, habe ich das Projekt Griffin Energy geschaffen. Zuerst habe ich Konzept erstellt, wie das Produkt aussehen soll. Dazu habe ich dann eine Verpackung in Photoshop erstellt. Daraufhin habe ich die Energy Dose mit der zuvor gemachten Verpackung in Blender als 3D-Model umgesetzt. Dann begann ich mit der Webseite zu diesem Produkt bei dem ich dann Renders des 3D-Models in die Webseitengestaltung einfließen hab lassen.<br /><a
                       href="Griffin-Website/index"
-                      class="internal with-icon"
+                      class="with-icon"
                       >Zur Webseite!</a
                     >
                   </h3>
@@ -103,7 +105,7 @@
               </div>
             </div>
           </section>
-          <section class="case-study-photos animate--me">
+          <section class="case-study-photos">
             <div class="wrapper">
               <div class="row">
                 <div class="col-sm-6-6 col-md-12-12 col-smd-12-12 col-lg-12-12">
@@ -122,7 +124,6 @@
       <div style="margin-bottom: 75px;"></div>
     </div>
     <div class="document-overlay"></div>
-    <script src="../js/typed.js" type="text/javascript"></script>
-    <script src="../js/loader.js" type="text/javascript"></script>
+    <script src="../js/main.js" type="text/javascript"></script>
   </body>
 </html>

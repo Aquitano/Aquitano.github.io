@@ -12,8 +12,8 @@
       name="keywords"
       content="Thomas Breindl, Thomas, Breindl, Portfolio, Portfolio of Thomas Breindl, Portfolio von Thomas Breindl, Griffin Energy"
     />
-    <link rel="shortcut icon" href="../images/favicon.ico" />
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="css/style.css" />
     <style>
       .wrapper {
         width: 100%;
@@ -96,9 +96,9 @@
   </head>
   <body>
     <nav id="nav" aria-label="loader">
-      <div class="loader-background"></div>
-      <a href="#" class="close"
-        ><span>Close</span> <b><i></i> <i></i></b
+      <div class="menu-bg"></div>
+      <a class="close" onclick="closeNav()" style="margin-top: 40px;cursor: pointer" 
+        ><span id="a">Close</span> <b id="b"><i></i> <i></i></b
       ></a>
     </nav>
     <nav id="nav-content" aria-label="menu">
@@ -106,19 +106,19 @@
         <div class="content">
           <h5>Menu</h5>
           <ul>
-            <li><a href="../index">Home</a></li>
-            <li><a href="../about">Über mich</a></li>
-            <li><a href="../contact">Kontakt</a></li>
+            <li><a href="index" id="mi">Home</a></li>
+            <li><a href="#" class="active" id="mi">Über mich</a></li>
+            <li><a href="contact" id="mi">Kontakt</a></li>
           </ul>
         </div>
       </div>
     </nav>
     <div id="nav-scroll"></div>
-    <div class="loader on first-loading">
+     <div class="loader on" id="loader">
       <div class="loader-preloader">
         <div class="swiper-lazy-preloader"></div>
       </div>
-    </div>
+    </div> 
     <header id="header">
       <a href="../index" class="logo scroll-to"
         ><p
@@ -127,7 +127,7 @@
         >
           Thomas Breindl
         </p></a
-      ><a href="#" class="menu"
+      ><a class="menu" onclick="openNav()" style="cursor: pointer;"
         ><span>Menu</span> <b><i></i> <i></i> <i></i></b
       ></a>
     </header>
@@ -154,8 +154,8 @@
         <div class="wrapper">
           <section class="block">
             <div class="each-year">
-              <div class="title animate--me">2020</div>
-              <div class="each-event animate--me">
+              <div class="title i-v">2020</div>
+              <div class="each-event i-v">
                 <div class="event-description">
                   Das Framework
                   <a href="project/JustHTML">JustHTML</a>
@@ -163,7 +163,7 @@
                   erstellt.
                 </div>
               </div>
-              <div class="each-event animate--me">
+              <div class="each-event i-v">
                 <div class="event-description">
                   Das Projekt, ein Getränk mit der imaginären "Brummselbeere" zu
                   gestalten, hat mit einem Produktdesign, Verpackungsdesign,
@@ -171,7 +171,7 @@
                   <a href="project/Griffin">Griffin Energy</a>.
                 </div>
               </div>
-              <div class="each-event animate--me">
+              <div class="each-event i-v">
                 <div class="event-description">
                   Angefangen mit dem Grafiktablett
                   <a
@@ -186,9 +186,9 @@
           </section>
           <section class="block">
             <div class="each-year">
-              <div class="title animate--me">2019</div>
+              <div class="title i-v">2019</div>
 
-              <div class="each-event animate--me">
+              <div class="each-event i-v">
                 <div class="event-description">
                   Mit der 3D-Grafiksuite
                   <a href="https://www.blender.org/" target="_blank">Blender</a>
@@ -200,8 +200,8 @@
 
           <section class="block">
             <div class="each-year">
-              <div class="title animate--me">2018</div>
-              <div class="each-event animate--me">
+              <div class="title i-v">2018</div>
+              <div class="each-event i-v">
                 <div class="event-description">
                   In der Schule mit Java und der Game Engine
                   <a
@@ -212,7 +212,7 @@
                   angefangen.
                 </div>
               </div>
-              <div class="each-event animate--me">
+              <div class="each-event i-v">
                 <div class="event-description">
                   Mit Kurs
                   <a
@@ -229,7 +229,6 @@
       </div>
     </div>
     <div class="document-overlay"></div>
-    <script src="../js/typed.js" type="text/javascript"></script>
-    <script src="../js/loader.js" type="text/javascript"></script>
+    <script src="js/main.js" type="text/javascript"></script>
   </body>
 </html>
