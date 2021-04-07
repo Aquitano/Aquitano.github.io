@@ -132,20 +132,9 @@ function scrollFunction() {
 
             if (true === isInViewport(element, scrollTop, viewportTop, viewportBottom)) {
                 if (!hasClass(element, IN_VIEWPORT_CLASS)) {
-                    addClass(element, IN_VIEWPORT_CLASS);
                     addClass(element, FADE);
 
-                    if (!hasClass(element, ONCE_IN_VIEWPORT_CLASS)) {
-                        addClass(element, ONCE_IN_VIEWPORT_CLASS);
-                    }
-                }
-            } else {
-                if (hasClass(element, IN_VIEWPORT_CLASS)) {
-                    removeClass(element, IN_VIEWPORT_CLASS);
 
-                    if (!hasClass(element, WAS_IN_VIEWPORT)) {
-                        addClass(element, WAS_IN_VIEWPORT);
-                    }
                 }
             }
         }
