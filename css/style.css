@@ -19,15 +19,6 @@
     url(../fonts/poppins-v15-latin-ext_latin_devanagari-500.woff) format("woff");
   font-display: swap;
 }
-@font-face {
-  font-family: "Amatic SC";
-  font-style: normal;
-  font-weight: 400;
-  src: local(""),
-    url(../fonts/amatic-sc-v16-latin-regular.woff2) format("woff2"),
-    url(../fonts/amatic-sc-v16-latin-regular.woff) format("woff");
-  font-display: swap;
-}
 ::-webkit-scrollbar {
   display: none;
 }
@@ -3393,7 +3384,7 @@ section.home-top .main-copy {
 }
 @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
   section.home-top {
-    padding-top: 140px;
+    padding-top: 690px;
   }
   section.home-top .bg-image {
     margin-top: 0;
@@ -3641,12 +3632,13 @@ section.home-portfolio .list .list-item-portfolio + .list-item-portfolio {
   margin-top: 30px;
 }
 section.home-portfolio .list .list-item-portfolio > a {
+  background: rgba(249, 249, 249, 0.9);
   height: 100%;
   position: relative;
   display: block;
   overflow: hidden;
   padding-top: 130px;
-  border: 0 none;
+  border: 0;
   border-radius: 25px;
 }
 section.home-portfolio .list .list-item-portfolio > a:before {
@@ -3663,6 +3655,10 @@ section.home-portfolio .list .list-item-portfolio > a:before {
   box-sizing: border-box;
   border-radius: 25px;
   transition: opacity 0.2s linear;
+}
+section.home-portfolio .list .list-item-portfolio a div > img {
+  box-sizing: border-box;
+  border-radius: 25px;
 }
 section.home-portfolio .list .list-item-portfolio > a strong {
   position: absolute;
@@ -4838,10 +4834,14 @@ section.case-study-next-project > div {
 .landingpage {
   top: -250px;
 }
+.TB {
+  font-family: "Poppins";
+  font-size: 60px;
+}
 @media screen and (max-width: 399px) {
   .landingpage {
     top: -100px;
-    margin-bottom: 400px;
+    margin-bottom: 200px;
     margin-left: -5px;
   }
   .TB {
@@ -4882,7 +4882,7 @@ section.case-study-next-project > div {
     margin-bottom: 0;
   }
   .TB {
-    font-size: 100px;
+    font-size: 80px;
   }
 }
 .Fly-in-up {
