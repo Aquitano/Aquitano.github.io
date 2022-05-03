@@ -1424,6 +1424,14 @@ header#header .logo > svg path {
 header#header .logo:active > svg path {
   fill: #878a8f;
 }
+header#header .logo p {
+  font-family: Poppins, sans-serif;
+  font-size: 185%;
+  transition: 0.5s cubic-bezier(0.22, 0.58, 0.62, 0.7);
+}
+header#header .logo p:hover {
+  color: var(--lt-color-gray-700);
+}
 header#header .menu {
   position: relative;
   display: block;

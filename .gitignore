@@ -1,2 +1,5 @@
-
-.vscode/settings.json
+.vscode
+node_modules
+package-lock.json
+package.json
+postcss.config.js
