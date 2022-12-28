@@ -3,7 +3,7 @@
     "build": "postcss ./css/style.css -o ./css/style-min.css"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.12",
+    "autoprefixer": "^10.4.13",
     "cssnano": "^5.1.13",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0"
