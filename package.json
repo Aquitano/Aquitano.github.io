@@ -6,6 +6,6 @@
     "autoprefixer": "^10.4.12",
     "cssnano": "^5.1.13",
     "postcss": "^8.4.16",
-    "postcss-cli": "^10.0.0"
+    "postcss-cli": "^10.1.0"
   }
 }
