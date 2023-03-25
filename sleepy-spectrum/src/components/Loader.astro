@@ -1,0 +1,205 @@
+<div class="loader on" id="loader">
+  <div class="loader-preloader">
+    <div class="swiper-lazy-preloader"></div>
+  </div>
+</div>
+
+<style lang="scss">
+  div.loader {
+    background: #0f141e center center;
+    position: fixed;
+    min-width: 320px;
+    width: 100%;
+    height: 0;
+    top: 0;
+    bottom: auto;
+    left: 0;
+    z-index: 30;
+    overflow: hidden;
+    transition: height 0.5s cubic-bezier(0.3, 0, 0.5, 1);
+  }
+  div.loader.fully-closed .swiper-lazy-preloader {
+    animation: none;
+  }
+  div.loader:not(.on) .swiper-lazy-preloader {
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  div.loader .loader-preloader {
+    position: fixed;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    transition-property: visibility, opacity;
+    height: 80px;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin-top: -40px;
+  }
+  div.loader .loader-preloader .swiper-lazy-preloader {
+    background: #fff;
+    opacity: 1;
+  }
+  div.loader .logo.set {
+    opacity: 1;
+    transition: opacity 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  }
+  div.loader .logo > svg {
+    width: auto;
+    height: 46px;
+    float: left;
+  }
+  div.loader .logo > svg:first-child {
+    display: none;
+  }
+  div.loader .logo > svg:last-child {
+    width: 167px;
+  }
+  div.loader .text {
+    position: absolute;
+    left: 14px;
+    bottom: 15px;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  div.loader .text.reset > h1,
+  div.loader .text.reset > h5 {
+    animation: none;
+  }
+  div.loader .text > h1,
+  div.loader .text > h5 {
+    color: #e7e8e9;
+    opacity: 1;
+    animation: loader-progress-on 0.4s cubic-bezier(0.3, 0, 0.5, 1);
+  }
+  div.loader .text > .progress {
+    display: block;
+    height: 100px;
+    font-size: 8rem;
+    line-height: 90px;
+    padding-top: 3px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #fff;
+    opacity: 1;
+    animation: loader-progress-on 0.4s cubic-bezier(0.3, 0, 0.5, 1);
+  }
+  div.loader .text > .progress.reset {
+    animation: none;
+  }
+  div.loader .text > .progress i {
+    font-style: normal;
+    font-size: 3.75rem;
+  }
+  div.loader .text.off {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+    transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  }
+  div.loader.on {
+    top: auto;
+    bottom: 0;
+    height: 100%;
+  }
+  div.loader.on .loader-preloader {
+    opacity: 1;
+    visibility: visible;
+  }
+  div.loader.on .logo {
+    top: auto;
+  }
+  @media (min-width: 360px) {
+    div.loader .logo {
+      min-width: 220px;
+    }
+    div.loader .logo > svg:first-child {
+      display: block;
+      width: 46px;
+    }
+    div.loader .logo > svg:last-child {
+      margin-left: 12px;
+    }
+  }
+  @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+    div.loader .logo {
+      left: 30px;
+      top: 30px;
+    }
+    div.loader .text {
+      left: 40px;
+      bottom: 35px;
+    }
+    div.loader .text > .progress {
+      height: 150px;
+      font-size: 12.25rem;
+      line-height: 140px;
+      padding-top: 3px;
+    }
+    div.loader .text > .progress i {
+      font-size: 5rem;
+    }
+    div.loader.on .logo {
+      top: auto;
+    }
+  }
+  @media (min-width: 1280px) {
+    div.loader .logo {
+      left: 40px;
+      top: 40px;
+    }
+    div.loader .text {
+      left: 60px;
+      bottom: 55px;
+    }
+    div.loader .text > .progress {
+      height: 210px;
+      font-size: 17.5rem;
+      line-height: 200px;
+      padding-top: 2px;
+    }
+    div.loader .text > .progress i {
+      font-size: 7.5rem;
+    }
+  }
+  #nav-content:not(.loading) + #nav-scroll + .loader.on .loader-preloader {
+    transition: 0.3s 0.2s;
+    transition-property: visibility, opacity;
+  }
+
+  .swiper-lazy-preloader {
+    background-color: #878a8f;
+    border-radius: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+    transform-origin: 50%;
+    animation: sk-scaleout 1s infinite ease-in-out;
+    width: 40px;
+    height: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+  }
+  @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+    .swiper-lazy-preloader {
+      width: 60px;
+      height: 60px;
+      margin-left: -30px;
+      margin-top: -30px;
+    }
+  }
+</style>
+
+<script>
+  const $: (selector: string) => Element | null = (selector: string) => {
+    document.querySelector(selector);
+    return document.querySelector(selector);
+  };
+
+  window.addEventListener('load', () => {
+    const element = $('#loader');
+    element?.classList.remove('on');
+    element?.classList.add('fully-closed');
+  });
+</script>

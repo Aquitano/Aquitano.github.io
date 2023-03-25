@@ -1,0 +1,142 @@
+---
+import { SEO } from 'astro-seo';
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <SEO
+      title={title}
+      description="Herzlich Willkommen zu dem Portfolio von Thomas Breindl!"
+      openGraph={{
+        basic: {
+          title: title,
+          type: 'website',
+          image: '',
+        },
+      }}
+      twitter={{
+        creator: '@BreindlThomas',
+      }}
+      extend={{
+        meta: [
+          {
+            name: 'keywords',
+            content:
+              'Thomas Breindl, Thomas, Breindl, Portfolio, Portfolio of Thomas Breindl, Portfolio von Thomas Breindl, Aquitano, Deutschland, Germany',
+          },
+        ],
+      }}
+    />
+  </head>
+  <body>
+    <slot />
+    <style is:global>
+      :root {
+        --accent: 124, 58, 237;
+        --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+      }
+      html {
+        font-family: system-ui, sans-serif;
+        overflow: auto;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+      }
+      code {
+        font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+          Courier New, monospace;
+      }
+      * {
+        box-sizing: border-box;
+        font-variant-ligatures: none;
+      }
+
+      /* Default overrides */
+      footer,
+      header,
+      main,
+      menu,
+      nav,
+      section {
+        display: block;
+      }
+      audio,
+      canvas,
+      progress,
+      video {
+        display: inline-block;
+      }
+      b,
+      strong {
+        font-weight: inherit;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        margin: 0;
+      }
+      hr {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        box-sizing: content-box;
+        height: 0;
+        overflow: visible;
+      }
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+      img {
+        border-style: none;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+        margin: 0;
+      }
+      optgroup {
+        font-weight: 700;
+      }
+      button,
+      input,
+      select {
+        overflow: visible;
+      }
+      button,
+      select {
+        text-transform: none;
+      }
+      fieldset {
+        border: 1px solid silver;
+        margin: 0 2px;
+        padding: 0.35em 0.625em 0.75em;
+      }
+      legend {
+        box-sizing: border-box;
+        color: inherit;
+        display: table;
+        max-width: 100%;
+        padding: 0;
+        white-space: normal;
+      }
+      textarea {
+        overflow: auto;
+      }
+    </style>
+  </body>
+</html>
