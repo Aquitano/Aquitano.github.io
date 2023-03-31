@@ -1,65 +1,56 @@
-<a href="#" class="scroll-top" id="scroll-top" aria-label="Scroll back to top button"
-    ><svg
-        version="1.1"
-        x="0px"
-        y="0px"
-        width="20px"
-        height="20px"
-        viewBox="0 0 20 20"
-        enable-background="new 0 0 20 20"
-    >
-        <path fill="#ffffff" d="M18.008,7.667L16.606,9,11,3.627V20H9V3.627L3.392,9l-1.4-1.336L10-.012Z"></path></svg
-    >
-</a>
+<!-- Tailwind: centered, fixed on the bottom right, with a shadow -->
+<button
+    id="scroll-to-top"
+    title="Go To Top"
+    class="scroll-top fixed z-50 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md text-white text-3xl font-bold"
+    >&uarr;</button
+>
 
 <style lang="scss">
-    a.scroll-top {
-        background: rgba(15, 20, 30, 0.3);
-        display: block;
-        position: fixed;
+    .scroll-top {
+        background: rgba(15, 20, 30, 0.5);
+        opacity: 0;
         width: 46px;
         height: 46px;
-        right: -46px;
         bottom: 14px;
-        z-index: 20;
-        opacity: 0;
-        padding: 13px;
         border: 0 none;
         border-radius: 23px;
-        transform: translate3d(0, -10px, 0);
-        transition: transform 0.4s linear, opacity 0.4s linear, right 0s linear 0.4s;
     }
-    a.scroll-top.on {
-        right: 14px;
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-        transition: transform 0.4s linear, opacity 0.4s linear, background 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-    }
-    a.scroll-top svg {
-        display: block;
-        width: 20px;
-        height: 20px;
-    }
-    a.scroll-top:active {
+    .scroll-top:active {
         background: #0f141e;
     }
-    @media (min-width: 768px) and (min-height: 620px) {
-        a.scroll-top {
-            bottom: 30px;
-        }
-        a.scroll-top.on {
-            right: 30px;
-        }
+    .Fly-in-up,
+    .Fly-in-down {
+        animation: none;
+        transition: none;
     }
-    @media (min-width: 1280px) {
-        a.scroll-top {
-            bottom: 40px;
+    @media (prefers-reduced-motion: no-preference) {
+        // Fly-in-up animation
+        .Fly-in-up {
+            animation-name: Fly-in-down;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
         }
-        a.scroll-top.on {
-            right: 40px;
+
+        // Fly-in-down animation
+        .Fly-out-down {
+            animation-name: Fly-out-down;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
         }
-        a.scroll-top:hover {
-            background: #0f141e;
+        @keyframes Fly-out-down {
+            0% {
+                opacity: 1;
+                filter: blur(2px);
+                transform: translateY(0);
+                transition: opacity 0.5s ease-out, transform 0.4s ease-out;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(25%);
+                filter: blur(0);
+            }
         }
     }
 </style>
@@ -68,11 +59,25 @@
     window.addEventListener('scroll', () => {
         // Distance from top of page
         const scroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const scrollButton = document.querySelector('#scroll-to-top');
 
         if (scroll > 1000) {
-            document.querySelector('#scroll-top')?.classList.add('on');
+            scrollButton?.classList.add('Fly-in-up');
+            scrollButton?.classList.remove('Fly-out-down');
         } else {
-            document.querySelector('#scroll-top')?.classList.remove('on');
+            if (scrollButton?.classList.contains('Fly-in-up')) {
+                scrollButton?.classList.add('Fly-out-down');
+                scrollButton?.classList.remove('Fly-in-up');
+            }
         }
     });
+
+    document.querySelector('#scroll-to-top')?.addEventListener('click', goToTop);
+
+    function goToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }
 </script>
