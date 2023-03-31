@@ -15,7 +15,7 @@
                 <a href="timeline" class="link link-underline">Über Mich</a>
             </nav>
         </div>
-        <a href="#portfolio" class="scroll-to toggle animate" aria-label="Scroll to projects/#portfolio"
+        <a class="scroll-to toggle animate" aria-label="Scroll to projects/#portfolio"
             ><div class="scroll-to-icon"></div></a
         >
     </div>
@@ -45,27 +45,6 @@
     }
 
     // IDK
-    .wrapper {
-        width: 100%;
-        padding: 0 14px;
-    }
-    @media (min-width: 768px) and (min-height: 620px) {
-        .wrapper {
-            padding: 0 30px;
-        }
-    }
-    @media (min-width: 1280px) {
-        .wrapper {
-            position: relative;
-            padding: 0 40px;
-        }
-    }
-    @media (min-width: 1480px) {
-        .wrapper {
-            max-width: 1480px;
-            margin: 0 auto;
-        }
-    }
     @media (min-width: 1280px) {
         .scroll-container {
             position: relative;
@@ -76,7 +55,11 @@
     // IDK
 
     section.home-top {
-        padding-top: 370px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* vertical */
+        justify-content: center; /* horizontal */
+        min-height: 100vh;
     }
 
     section.home-top .bg-image {
@@ -99,22 +82,22 @@
         opacity: 0;
         visibility: hidden;
     }
-    section.home-top .wrapper {
+    section.home-top {
         position: relative;
         z-index: 2;
     }
     @media (min-width: 568px) {
-        section.home-top {
-            padding-top: 100px;
-        }
+        // section.home-top {
+        //     padding-top: 100px;
+        // }
         section.home-top .bg-image {
             background-position: top 0 right 0;
         }
     }
     @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        section.home-top {
-            padding-top: 690px;
-        }
+        // section.home-top {
+        //     padding-top: 690px;
+        // }
         section.home-top .bg-image {
             margin-top: 0;
             background-position: top 20px right -120px;
@@ -277,9 +260,6 @@
             animation: none;
         }
     }
-    .landingpage {
-        top: -250px;
-    }
     .TB {
         font-family: 'Poppins';
         font-size: 60px;
@@ -289,48 +269,27 @@
         font-size: 1.375rem;
     }
     @media screen and (max-width: 399px) {
-        .landingpage {
-            top: -100px;
-            margin-bottom: 200px;
-            margin-left: -5px;
-        }
         .TB {
             font-size: 50px;
             text-align: center;
         }
     }
     @media screen and (min-width: 400px) {
-        .landingpage {
-            top: 50px;
-            margin-bottom: 500px;
-        }
         .TB {
             font-size: 85px;
         }
     }
     @media screen and (min-width: 568px) {
-        .landingpage {
-            top: 250px;
-            margin-bottom: 550px;
-        }
         .TB {
             font-size: 75px;
         }
     }
     @media screen and (min-width: 768px) {
-        .landingpage {
-            top: -250px;
-            margin-bottom: 500px;
-        }
         .TB {
             font-size: 70px;
         }
     }
     @media screen and (min-width: 800px) {
-        .landingpage {
-            top: -250px;
-            margin-bottom: 0;
-        }
         .TB {
             font-size: 80px;
         }
@@ -385,4 +344,16 @@
     }
 </style>
 
-<script></script>
+<script>
+    document.querySelector('.toggle')?.addEventListener('click', scrollToPortfolio);
+
+    function scrollToPortfolio() {
+        let portfolio: HTMLElement | null = document.querySelector('.home-portfolio');
+        if (!portfolio) {
+            return;
+        }
+
+        // Scroll to the portfolio section but stop 100px before the top
+        window.scrollBy({ top: portfolio?.offsetTop - 150, behavior: 'smooth' });
+    }
+</script>

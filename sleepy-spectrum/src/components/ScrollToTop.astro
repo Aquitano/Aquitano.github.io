@@ -2,7 +2,7 @@
 <button
     id="scroll-to-top"
     title="Go To Top"
-    class="scroll-top fixed z-50 bottom-8 right-8 border-0 w-16 h-16 rounded-full drop-shadow-md text-white text-3xl font-bold"
+    class="scroll-top fixed z-50 bottom-8 right-8 border-0 w-11 h-11 rounded-full text-white text-3xl font-bold"
     >&uarr;</button
 >
 
@@ -10,20 +10,16 @@
     .scroll-top {
         background: rgba(15, 20, 30, 0.5);
         opacity: 0;
-        width: 46px;
-        height: 46px;
         bottom: 14px;
         border: 0 none;
         border-radius: 23px;
+        transition: background 0.2s ease-in-out;
+
+        &:hover {
+            background: rgba(15, 20, 30, 0.65);
+        }
     }
-    .scroll-top:active {
-        background: #0f141e;
-    }
-    .Fly-in-up,
-    .Fly-in-down {
-        animation: none;
-        transition: none;
-    }
+
     @media (prefers-reduced-motion: no-preference) {
         // Fly-in-up animation
         .Fly-in-up {
@@ -56,10 +52,11 @@
 </style>
 
 <script>
+    const scrollButton = document.querySelector('#scroll-to-top');
+
     window.addEventListener('scroll', () => {
         // Distance from top of page
         const scroll = document.documentElement.scrollTop || document.body.scrollTop;
-        const scrollButton = document.querySelector('#scroll-to-top');
 
         if (scroll > 1000) {
             scrollButton?.classList.add('Fly-in-up');
@@ -72,7 +69,7 @@
         }
     });
 
-    document.querySelector('#scroll-to-top')?.addEventListener('click', goToTop);
+    scrollButton?.addEventListener('click', goToTop);
 
     function goToTop() {
         window.scrollTo({
