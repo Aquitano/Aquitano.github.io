@@ -1,7 +1,7 @@
 ---
 import { SEO } from 'astro-seo';
 export interface Props {
-  title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
@@ -9,134 +9,547 @@ const { title } = Astro.props;
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
 
-    <SEO
-      title={title}
-      description="Herzlich Willkommen zu dem Portfolio von Thomas Breindl!"
-      openGraph={{
-        basic: {
-          title: title,
-          type: 'website',
-          image: '',
-        },
-      }}
-      twitter={{
-        creator: '@BreindlThomas',
-      }}
-      extend={{
-        meta: [
-          {
-            name: 'keywords',
-            content:
-              'Thomas Breindl, Thomas, Breindl, Portfolio, Portfolio of Thomas Breindl, Portfolio von Thomas Breindl, Aquitano, Deutschland, Germany',
-          },
-        ],
-      }}
-    />
-  </head>
-  <body>
-    <slot />
-    <style is:global>
-      :root {
-        --accent: 124, 58, 237;
-        --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
-      }
-      html {
-        font-family: system-ui, sans-serif;
-        overflow: auto;
-        scrollbar-width: none;
-        scroll-behavior: smooth;
-      }
-      code {
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
-          Courier New, monospace;
-      }
-      * {
-        box-sizing: border-box;
-        font-variant-ligatures: none;
-      }
+        <SEO
+            title={title}
+            description="Herzlich Willkommen zu dem Portfolio von Thomas Breindl!"
+            openGraph={{
+                basic: {
+                    title: title,
+                    type: 'website',
+                    image: '',
+                },
+            }}
+            twitter={{
+                creator: '@BreindlThomas',
+            }}
+            extend={{
+                meta: [
+                    {
+                        name: 'keywords',
+                        content:
+                            'Thomas Breindl, Thomas, Breindl, Portfolio, Portfolio of Thomas Breindl, Portfolio von Thomas Breindl, Aquitano, Deutschland, Germany',
+                    },
+                ],
+            }}
+        />
+    </head>
+    <body>
+        <slot />
+        <style is:global>
+            @font-face {
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 400;
+                src: local(''), url(/fonts/poppins-v15-latin-ext_latin_devanagari-regular.woff2) format('woff2'),
+                    url(/fonts/poppins-v15-latin-ext_latin_devanagari-regular.woff) format('woff');
+                font-display: swap;
+            }
+            @font-face {
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 500;
+                src: local(''), url(/fonts/poppins-v15-latin-ext_latin_devanagari-500.woff2) format('woff2'),
+                    url(/fonts/poppins-v15-latin-ext_latin_devanagari-500.woff) format('woff');
+                font-display: swap;
+            }
 
-      /* Default overrides */
-      footer,
-      header,
-      main,
-      menu,
-      nav,
-      section {
-        display: block;
-      }
-      audio,
-      canvas,
-      progress,
-      video {
-        display: inline-block;
-      }
-      b,
-      strong {
-        font-weight: inherit;
-      }
-      h1,
-      h2,
-      h3,
-      h4,
-      h5 {
-        margin: 0;
-      }
-      hr {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        box-sizing: content-box;
-        height: 0;
-        overflow: visible;
-      }
-      ul {
-        margin: 0;
-        padding: 0;
-      }
-      img {
-        border-style: none;
-      }
-      button,
-      input,
-      select,
-      textarea {
-        font: inherit;
-        margin: 0;
-      }
-      optgroup {
-        font-weight: 700;
-      }
-      button,
-      input,
-      select {
-        overflow: visible;
-      }
-      button,
-      select {
-        text-transform: none;
-      }
-      fieldset {
-        border: 1px solid silver;
-        margin: 0 2px;
-        padding: 0.35em 0.625em 0.75em;
-      }
-      legend {
-        box-sizing: border-box;
-        color: inherit;
-        display: table;
-        max-width: 100%;
-        padding: 0;
-        white-space: normal;
-      }
-      textarea {
-        overflow: auto;
-      }
-    </style>
-  </body>
+            :root {
+                --accent: 124, 58, 237;
+                --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+            }
+            html {
+                font-family: system-ui, sans-serif;
+                overflow: auto;
+                scrollbar-width: none;
+                scroll-behavior: smooth;
+            }
+            code {
+                font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
+                    Courier New, monospace;
+            }
+            * {
+                box-sizing: border-box;
+                font-variant-ligatures: none;
+            }
+
+            /* Default overrides */
+            footer,
+            header,
+            main,
+            menu,
+            nav,
+            section {
+                display: block;
+            }
+            audio,
+            canvas,
+            progress,
+            video {
+                display: inline-block;
+            }
+            b,
+            strong {
+                font-weight: inherit;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5 {
+                margin: 0;
+            }
+            hr {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                box-sizing: content-box;
+                height: 0;
+                overflow: visible;
+            }
+            ul {
+                margin: 0;
+                padding: 0;
+            }
+            img {
+                border-style: none;
+            }
+            button,
+            input,
+            select,
+            textarea {
+                font: inherit;
+                margin: 0;
+            }
+            optgroup {
+                font-weight: 700;
+            }
+            button,
+            input,
+            select {
+                overflow: visible;
+            }
+            button,
+            select {
+                text-transform: none;
+            }
+            fieldset {
+                border: 1px solid silver;
+                margin: 0 2px;
+                padding: 0.35em 0.625em 0.75em;
+            }
+            legend {
+                box-sizing: border-box;
+                color: inherit;
+                display: table;
+                max-width: 100%;
+                padding: 0;
+                white-space: normal;
+            }
+            textarea {
+                overflow: auto;
+            }
+
+            h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                margin: 0;
+            }
+
+            h1,
+            h1.large,
+            h2,
+            h3 {
+                font-family: 'Helvetica Now Display DW', sans-serif;
+                font-weight: 800;
+                letter-spacing: -0.01em;
+                color: #0f141e;
+            }
+            .h2 .header-light,
+            .h2.header-light,
+            h1 .header-light,
+            h1.header-light,
+            h1.large .header-light,
+            h1.large.header-light,
+            h2 .header-light,
+            h2.header-light,
+            h3 .header-light,
+            h3.header-light {
+                font-weight: 500;
+                color: #54595f;
+                letter-spacing: normal;
+            }
+            .h2 .header-dark,
+            .h2.header-dark,
+            h1 .header-dark,
+            h1.header-dark,
+            h1.large .header-dark,
+            h1.large.header-dark,
+            h2 .header-dark,
+            h2.header-dark,
+            h3 .header-dark,
+            h3.header-dark {
+                font-weight: 500;
+                color: #0f141e;
+                letter-spacing: normal;
+            }
+            .h5,
+            h4,
+            h5 {
+                font-family: 'Helvetica Now Display DW', sans-serif;
+            }
+            h4 {
+                font-weight: 800;
+                letter-spacing: normal;
+                color: #0f141e;
+            }
+            h4 .header-light,
+            h4.header-light {
+                font-weight: 500;
+                color: #878a8f;
+                letter-spacing: normal;
+            }
+            h4 .header-dark,
+            h4.header-dark {
+                font-weight: 500;
+                color: #0f141e;
+                letter-spacing: normal;
+            }
+            .h5,
+            h5 {
+                font-weight: 400;
+                letter-spacing: 0.4em;
+                color: #878a8f;
+            }
+            h1,
+            h1.large {
+                font-size: 2.125rem;
+                line-height: 2.5rem;
+                padding-top: 2px;
+                padding-bottom: 3px;
+            }
+            h1 .icon,
+            h1.large .icon {
+                width: 26px;
+                height: 26px;
+            }
+            h1 .icon svg,
+            h1.large .icon svg {
+                top: 0.0588em;
+            }
+            h1 .icon--on-right,
+            h1.large .icon--on-right {
+                margin-left: 10px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h1,
+                h1.large {
+                    font-size: 2.75rem;
+                    line-height: 3.125rem;
+                    padding-top: 4px;
+                    padding-bottom: 1px;
+                }
+                h1 .icon,
+                h1.large .icon {
+                    width: 32px;
+                    height: 32px;
+                }
+                h1 .icon svg,
+                h1.large .icon svg {
+                    top: 0.04545em;
+                }
+                h1.large,
+                h1.large.large {
+                    font-size: 3.875rem;
+                    line-height: 4.0625rem;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+                h1.large .icon,
+                h1.large.large .icon {
+                    width: 42px;
+                    height: 42px;
+                }
+                h1.large .icon svg,
+                h1.large.large .icon svg {
+                    top: 0.0161em;
+                }
+                h1.large .icon--on-right,
+                h1.large.large .icon--on-right {
+                    margin-left: 20px;
+                }
+            }
+            @media (min-width: 1280px) {
+                h1.large,
+                h1.large.large {
+                    font-size: 4.5rem;
+                    line-height: 4.6875rem;
+                    padding-top: 1px;
+                    padding-bottom: 4px;
+                }
+                h1.large .icon,
+                h1.large.large .icon {
+                    width: 48px;
+                    height: 48px;
+                }
+                h1.large .icon svg,
+                h1.large.large .icon svg {
+                    top: 0.01389em;
+                }
+                h1 a.special:after,
+                h1 a.with-icon:after,
+                h1.large a.special:after,
+                h1.large a.with-icon:after {
+                    border-width: 5px;
+                }
+                h1.large a.special:after,
+                h1.large a.with-icon:after,
+                h1.large.large a.special:after,
+                h1.large.large a.with-icon:after {
+                    border-width: 6px;
+                }
+            }
+            .h2,
+            h2 {
+                font-size: 1.75rem;
+                line-height: 2.1875rem;
+                padding-top: 2px;
+                padding-bottom: 3px;
+            }
+            .h2 .icon,
+            h2 .icon {
+                width: 22px;
+                height: 22px;
+            }
+            .h2 .icon svg,
+            h2 .icon svg {
+                top: 0.0714em;
+            }
+            .h2 .icon--on-right,
+            h2 .icon--on-right {
+                margin-left: 10px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                .h2,
+                h2 {
+                    font-size: 2rem;
+                    line-height: 2.5rem;
+                    padding-top: 3px;
+                    padding-bottom: 2px;
+                }
+                .h2 .icon,
+                h2 .icon {
+                    width: 26px;
+                    height: 26px;
+                }
+                .h2 .icon svg,
+                h2 .icon svg {
+                    top: 0.0625em;
+                }
+                .h2 .icon--on-right,
+                h2 .icon--on-right {
+                    margin-left: 10px;
+                }
+            }
+            @media (min-width: 1280px) {
+                .h2 a.special:after,
+                .h2 a.with-icon:after,
+                h2 a.special:after,
+                h2 a.with-icon:after {
+                    border-width: 3px;
+                }
+            }
+            h3 {
+                font-size: 1.125rem;
+                line-height: 1.5625rem;
+                padding-top: 1px;
+                padding-bottom: 4px;
+            }
+            h3 em {
+                font-weight: 500;
+                color: #cfd0d2;
+                margin: 0 0.625rem;
+                font-style: normal;
+            }
+            @media (min-width: 1024px) {
+                h3 em {
+                    margin: 0 0.9375rem;
+                }
+            }
+            h3 .icon {
+                width: 16px;
+                height: 16px;
+            }
+            h3 .icon svg {
+                top: 0;
+            }
+            h3 .icon--on-right {
+                margin-left: 10px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h3 {
+                    font-size: 1.375rem;
+                    line-height: 1.875rem;
+                    padding-top: 2px;
+                    padding-bottom: 3px;
+                }
+            }
+            @media (min-width: 1280px) {
+                h3 a.special:after,
+                h3 a.with-icon:after {
+                    border-width: 2px;
+                }
+            }
+            h4 {
+                font-size: 1.125rem;
+                line-height: 1.5625rem;
+                padding-top: 1px;
+                padding-bottom: 4px;
+            }
+            h4 .icon {
+                width: 16px;
+                height: 16px;
+            }
+            h4 .icon svg {
+                top: 0.1111em;
+            }
+            h4 .icon--on-right {
+                margin-left: 10px;
+            }
+            @media (min-width: 1280px) {
+                h4 a.special:after,
+                h4 a.with-icon:after {
+                    border-width: 2px;
+                }
+            }
+            .h5,
+            h5 {
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                text-transform: uppercase;
+                padding-top: 5px;
+                padding-bottom: 5px;
+            }
+            .h5 .icon,
+            h5 .icon {
+                width: 16px;
+                height: 16px;
+            }
+            .h5 .icon svg,
+            h5 .icon svg {
+                top: 0.1333em;
+            }
+            .h5 .icon--on-right,
+            h5 .icon--on-right {
+                margin-left: 5px;
+            }
+            @media (min-width: 1280px) {
+                .h5 a.special:after,
+                .h5 a.with-icon:after,
+                h5 a.special:after,
+                h5 a.with-icon:after {
+                    border-width: 1px;
+                }
+            }
+            p + h5 {
+                margin-top: 30px;
+            }
+            p + p {
+                margin-top: 20px;
+            }
+            h1.large + h3 {
+                margin-top: 10px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h1.large + h3 {
+                    margin-top: 20px;
+                }
+            }
+            h1.large + p {
+                margin-top: 5px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h1.large + p {
+                    margin-top: 25px;
+                }
+            }
+            h1 + h3 {
+                margin-top: 10px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h1 + h3 {
+                    margin-top: 25px;
+                }
+            }
+            h1 + h5 {
+                margin-top: 20px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h1 + h5 {
+                    margin-top: 30px;
+                }
+            }
+            h1 + h4 {
+                margin-top: 30px;
+            }
+            h1 + p {
+                margin-top: 10px;
+            }
+            h2 + h4 {
+                margin-top: 20px;
+            }
+            h3 + h3 {
+                margin-top: 15px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h3 + h3 {
+                    margin-top: 25px;
+                }
+            }
+            h3 + h4 {
+                margin-top: 20px;
+            }
+            h4 + h5 {
+                margin-top: 20px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h4 + h5 {
+                    margin-top: 30px;
+                }
+            }
+            h3 + p {
+                margin-top: 10px;
+            }
+            h5 + h1.large {
+                margin-top: 0;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h5 + h1.large {
+                    margin-top: 15px;
+                }
+            }
+            h5 + h1 {
+                margin-top: 5px;
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h5 + h1 {
+                    margin-top: 5px;
+                }
+            }
+            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+                h5 + h2,
+                i + h2 {
+                    margin-top: 5px;
+                }
+            }
+            h5 + h3 {
+                margin-top: 5px;
+            }
+        </style>
+    </body>
 </html>

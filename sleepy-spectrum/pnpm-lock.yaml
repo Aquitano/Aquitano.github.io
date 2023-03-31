@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@astrojs/partytown': ^1.1.1
   '@astrojs/sitemap': ^1.2.1
   '@astrojs/tailwind': ^3.1.1
   astro: ^2.1.7
@@ -15,6 +16,7 @@ specifiers:
   tailwindcss: ^3.0.24
 
 dependencies:
+  '@astrojs/partytown': 1.1.1
   '@astrojs/sitemap': 1.2.1
   '@astrojs/tailwind': 3.1.1_xwlinsvcxfu6nyuevlo4g7jv7y
   astro: 2.1.7_sass@1.60.0
@@ -85,6 +87,13 @@ packages:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@astrojs/partytown/1.1.1:
+    resolution: {integrity: sha512-IaKzYieiuxnSRGSuAivV92kDTa0ENbei4Y0yEAowhyzV6MxJJImYEUKycSo/HUJwPQQmsPmBbp/IA4pyoL1Wxg==}
+    dependencies:
+      '@builder.io/partytown': 0.7.6
+      mrmime: 1.0.1
     dev: false
 
   /@astrojs/prism/2.1.1:
@@ -379,6 +388,11 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+    dev: false
+
+  /@builder.io/partytown/0.7.6:
+    resolution: {integrity: sha512-snXIGNiZpqjno3XYQN2lbBB+05hsQR/LSttbtIW1c0gmZ7Kh/DIo0YrxlDxCDulAMFPFM8J+4voLwvYepSj3sw==}
+    hasBin: true
     dev: false
 
   /@emmetio/abbreviation/2.2.3:
@@ -3072,6 +3086,11 @@ packages:
   /mri/1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
+    dev: false
+
+  /mrmime/1.0.1:
+    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
+    engines: {node: '>=10'}
     dev: false
 
   /ms/2.1.2:

@@ -1,0 +1,408 @@
+<section class="home-top landingpage">
+    <!-- center via tailwind -->
+    <div class="wrapper flex flex-col justify-center items-center">
+        <div class="row">
+            <div
+                class="main-copy"
+                style="
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      "
+            >
+                <h1 class="TB font-extrabold">Thomas Breindl</h1>
+                <h2 class="header-light TB-sub" style="font-family: Poppins, sans-serif">
+                    <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
+                </h2>
+                <nav class="links" aria-label="Project-Link" style="font-family: Poppins, sans-serif">
+                    <a href="#portfolio" class="scroll-to special main-link">Meine Projekte</a>
+                    <span style="font-family: Poppins, sans-serif" class="mx-4">oder</span>
+
+                    <a href="timeline" class="special main-link">Über Mich</a>
+                </nav>
+            </div>
+        </div>
+        <a href="#portfolio" class="scroll-to toggle animate special" aria-label="Scroll to projects/#portfolio"
+            ><div class="scroll-to-icon"></div></a
+        >
+    </div>
+</section>
+
+<style lang="scss">
+    // IDK
+    .wrapper {
+        width: 100%;
+        padding: 0 14px;
+    }
+    @media (min-width: 768px) and (min-height: 620px) {
+        .wrapper {
+            padding: 0 30px;
+        }
+    }
+    @media (min-width: 1280px) {
+        .wrapper {
+            position: relative;
+            padding: 0 40px;
+        }
+    }
+    @media (min-width: 1480px) {
+        .wrapper {
+            max-width: 1480px;
+            margin: 0 auto;
+        }
+    }
+    @media (min-width: 1280px) {
+        .scroll-container {
+            position: relative;
+            height: auto;
+            padding-bottom: 0;
+        }
+    }
+    // IDK
+
+    section.home-top {
+        padding-top: 370px;
+    }
+    section.home-top .bg-image {
+        display: none;
+    }
+    section.home-top a.toggle {
+        display: none;
+    }
+    section.home-top .bg-image {
+        margin-top: 70px;
+        background-size: auto 100%;
+        background-position: top 0 center;
+        position: absolute;
+        display: block;
+        width: 100%;
+        max-height: 460px;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        visibility: hidden;
+    }
+    section.home-top .bg-image img {
+        max-width: 100%;
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+    }
+    section.home-top .wrapper {
+        position: relative;
+        z-index: 2;
+    }
+    section.home-top .main-copy {
+        width: 100%;
+    }
+    @media (min-width: 568px) {
+        section.home-top {
+            padding-top: 100px;
+        }
+        section.home-top .bg-image {
+            background-position: top 0 right 0;
+        }
+        section.home-top .main-copy {
+            width: 58.333333333%;
+        }
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        section.home-top {
+            padding-top: 690px;
+        }
+        section.home-top .bg-image {
+            margin-top: 0;
+            background-position: top 20px right -120px;
+            min-height: 950px;
+        }
+        section.home-top a.toggle {
+            background: 0 0;
+            display: none;
+            width: 20px;
+            margin: 30px auto 20px auto;
+        }
+        section.home-top a.toggle:after {
+            display: none;
+        }
+        section.home-top a.toggle svg {
+            width: 20px;
+            height: 20px;
+            margin: 20px;
+        }
+        section.home-top a.toggle svg path {
+            transition: fill 0.2s linear;
+        }
+        section.home-top a.toggle:active svg path {
+            fill: #878a8f;
+        }
+        section.home-top a.toggle:active .scroll-to-icon {
+            box-shadow: inset 0 0 0 2px #878a8f;
+        }
+        section.home-top a.toggle:active .scroll-to-icon:after {
+            background: #878a8f;
+        }
+        section.home-top .scroll-to-icon {
+            width: 20px;
+            height: 30px;
+            box-shadow: inset 0 0 0 2px #0f141e;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out 0s;
+            transform: translateY(0);
+        }
+        section.home-top .scroll-to-icon:after {
+            content: '';
+            width: 4px;
+            height: 6px;
+            background: #0f141e;
+            margin-left: 8px;
+            top: 8px;
+            border-radius: 2px;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-name: scroll;
+            position: absolute;
+        }
+        section.home-top.keep-arrow a.toggle {
+            display: block;
+        }
+    }
+    @media (min-width: 834px) {
+        section.home-top .bg-image {
+            max-height: none;
+            background-position: top 0 right -110px;
+        }
+        section.home-top .main-copy {
+            width: 58.333333333%;
+        }
+    }
+    @media (min-width: 1024px) {
+        section.home-top .bg-image {
+            background-position: top -30px right -50px;
+        }
+        section.home-top .main-copy {
+            width: 58.333333333%;
+        }
+    }
+    @media (min-width: 1194px) {
+        section.home-top .bg-image {
+            background-position: top -30px right 0;
+        }
+        section.home-top .main-copy {
+            width: 50%;
+        }
+    }
+    @media (min-width: 1280px) {
+        section.home-top .bg-image {
+            background-position: top -20px right -20px;
+        }
+        section.home-top .main-copy {
+            width: 58.333333333%;
+        }
+    }
+    @media (min-width: 1366px) {
+        section.home-top .bg-image {
+            background-position: top -20px right 0;
+        }
+    }
+    @media (min-width: 1480px) {
+        section.home-top .bg-image {
+            background-position: top 0 right 80px;
+        }
+        section.home-top .main-copy {
+            width: 45%;
+        }
+    }
+    @media (min-width: 1600px) {
+        section.home-top .bg-image {
+            background-position: top 0 right 100px;
+        }
+        section.home-top .main-copy {
+            width: 45%;
+        }
+    }
+    @media (min-width: 1680px) {
+        section.home-top .bg-image {
+            background-position: top 0 right 100px;
+            min-height: 1120px;
+        }
+    }
+    @media (min-width: 1920px) {
+        section.home-top .bg-image {
+            background-position: top 0 right 180px;
+        }
+    }
+    @media (min-width: 2400px) {
+        section.home-top .bg-image {
+            background-position: top 0 right 320px;
+        }
+    }
+    @media (min-height: 1120px) {
+        section.home-top .bg-image {
+            background-image: url(../assets/images/bg_home_%402x.png);
+        }
+    }
+    @media (min-width: 1280px) {
+        section.home-top a.toggle {
+            margin-top: 30px;
+        }
+        section.home-top a.toggle:hover svg path {
+            fill: #878a8f;
+        }
+        section.home-top a.toggle:hover .scroll-to-icon {
+            box-shadow: inset 0 0 0 2px #878a8f;
+        }
+        section.home-top a.toggle:hover .scroll-to-icon:after {
+            background: #878a8f;
+        }
+    }
+    .container section.home-top .loaded {
+        visibility: visible;
+    }
+    .container.loaded section.home-top h5 {
+        animation: animation-1st 0.6s linear;
+    }
+    .container.loaded section.home-top h1 {
+        animation: animation-2nd 0.8s linear;
+    }
+    .container.loaded section.home-top h3 {
+        animation: animation-3rd 1s linear;
+    }
+    .container.loaded section.home-top nav {
+        animation: animation-4th 1.2s linear;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        .container.loaded section.home-top .bg-image.loaded {
+            visibility: visible;
+            animation-name: fadeIn;
+            animation-duration: 1s;
+            animation-timing-function: linear;
+        }
+        .container.loaded section.home-top a.toggle {
+            animation: home-scroll-to-loaded 1.4s linear;
+        }
+        .container.loaded section.home-top a.toggle.animate svg {
+            animation: home-scroll-to-bounce 3s infinite;
+        }
+        .container.loaded section.home-top a.toggle.animate:hover svg {
+            animation: none;
+        }
+    }
+    .landingpage {
+        top: -250px;
+    }
+    .TB {
+        font-family: 'Poppins';
+        font-size: 60px;
+    }
+    .TB-sub {
+        font-family: 'Poppins';
+        font-size: 1.375rem;
+    }
+    @media screen and (max-width: 399px) {
+        .landingpage {
+            top: -100px;
+            margin-bottom: 200px;
+            margin-left: -5px;
+        }
+        .TB {
+            font-size: 50px;
+            text-align: center;
+        }
+    }
+    @media screen and (min-width: 400px) {
+        .landingpage {
+            top: 50px;
+            margin-bottom: 500px;
+        }
+        .TB {
+            font-size: 85px;
+        }
+    }
+    @media screen and (min-width: 568px) {
+        .landingpage {
+            top: 250px;
+            margin-bottom: 550px;
+        }
+        .TB {
+            font-size: 75px;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .landingpage {
+            top: -250px;
+            margin-bottom: 500px;
+        }
+        .TB {
+            font-size: 70px;
+        }
+    }
+    @media screen and (min-width: 800px) {
+        .landingpage {
+            top: -250px;
+            margin-bottom: 0;
+        }
+        .TB {
+            font-size: 80px;
+        }
+    }
+
+    // Animation
+    .Lading-animation {
+        animation: none;
+        transition: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        // Landing page animation
+        .Lading-animation {
+            z-index: 2;
+            opacity: 0;
+            animation-name: Lading-animation;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
+
+            &:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+            &:nth-child(2) {
+                animation-delay: 1s;
+            }
+            &:nth-child(3) {
+                animation-delay: 1.5s;
+            }
+            &:nth-child(4) {
+                animation-delay: 2s;
+            }
+            &:nth-child(5) {
+                animation-delay: 2.5s;
+            }
+        }
+        @keyframes Lading-animation {
+            from {
+                opacity: 0;
+                filter: blur(2px);
+                transform: translateY(50%);
+                transition: opacity 0.5s ease-in, transform 0.4s ease-in;
+            }
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        .main-link {
+            font-weight: 800;
+            letter-spacing: normal;
+            text-transform: uppercase;
+        }
+        .main-link:hover {
+            text-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3);
+        }
+    }
+</style>
+
+<script></script>
