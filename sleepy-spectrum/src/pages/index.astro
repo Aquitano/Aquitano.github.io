@@ -249,11 +249,6 @@ import Layout from '../layouts/IndexLayout.astro';
     }
 
     /* New */
-    .container {
-        background: #fff;
-        position: relative;
-        min-width: 320px;
-    }
     section {
         position: relative;
         width: 100%;
@@ -1819,44 +1814,6 @@ import Layout from '../layouts/IndexLayout.astro';
         transition: none;
     }
     @media (prefers-reduced-motion: no-preference) {
-        // Landing page animation
-        .Lading-animation {
-            z-index: 2;
-            opacity: 0;
-            animation-name: Lading-animation;
-            animation-duration: 1.2s;
-            animation-fill-mode: forwards;
-
-            &:nth-child(1) {
-                animation-delay: 0.5s;
-            }
-            &:nth-child(2) {
-                animation-delay: 1s;
-            }
-            &:nth-child(3) {
-                animation-delay: 1.5s;
-            }
-            &:nth-child(4) {
-                animation-delay: 2s;
-            }
-            &:nth-child(5) {
-                animation-delay: 2.5s;
-            }
-        }
-        @keyframes Lading-animation {
-            from {
-                opacity: 0;
-                filter: blur(2px);
-                transform: translateY(50%);
-                transition: opacity 0.5s ease-in, transform 0.4s ease-in;
-            }
-            to {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateY(0);
-            }
-        }
-
         // Fly-in-up animation
         .Fly-in-up {
             animation-name: Fly-in-up;
@@ -1950,11 +1907,7 @@ import Layout from '../layouts/IndexLayout.astro';
         $('.TB')?.classList.add('Lading-animation');
         $('.header-light')?.classList.add('Lading-animation');
         $('.links')?.classList.add('Lading-animation');
-        $('.scroll-to-icon')?.classList.add('Lading-animation');
-
-        setTimeout(function () {
-            $('.home-top')?.classList.add('keep-arrow');
-        }, 1500);
+        $('.animate')?.classList.add('Lading-animation');
     });
 
     $('.Fly-in-down')?.classList.remove('Fly-in-down');

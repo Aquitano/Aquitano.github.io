@@ -1,35 +1,49 @@
 <section class="home-top landingpage">
     <!-- center via tailwind -->
     <div class="wrapper flex flex-col justify-center items-center">
-        <div class="row">
-            <div
-                class="main-copy"
-                style="
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-      "
-            >
-                <h1 class="TB font-extrabold">Thomas Breindl</h1>
-                <h2 class="header-light TB-sub" style="font-family: Poppins, sans-serif">
-                    <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
-                </h2>
-                <nav class="links" aria-label="Project-Link" style="font-family: Poppins, sans-serif">
-                    <a href="#portfolio" class="scroll-to special main-link">Meine Projekte</a>
-                    <span style="font-family: Poppins, sans-serif" class="mx-4">oder</span>
+        <div class="text-center">
+            <h1 class="TB font-extrabold">Thomas Breindl</h1>
+            <h2 class="header-light TB-sub" style="font-family: Poppins, sans-serif">
+                <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
+            </h2>
+            <nav class="links" aria-label="Project-Link" style="font-family: Poppins, sans-serif">
+                <!-- @apply transition-all duration-300 ease-in-out;
+            @apply underline; -->
+                <a href="#portfolio" class="scroll-to link link-underline">Meine Projekte</a>
+                <span style="font-family: Poppins, sans-serif" class="mx-4">oder</span>
 
-                    <a href="timeline" class="special main-link">Über Mich</a>
-                </nav>
-            </div>
+                <a href="timeline" class="link link-underline">Über Mich</a>
+            </nav>
         </div>
-        <a href="#portfolio" class="scroll-to toggle animate special" aria-label="Scroll to projects/#portfolio"
+        <a href="#portfolio" class="scroll-to toggle animate" aria-label="Scroll to projects/#portfolio"
             ><div class="scroll-to-icon"></div></a
         >
     </div>
 </section>
 
 <style lang="scss">
+    // Underline animation
+    .link {
+        font-weight: 800;
+        letter-spacing: normal;
+        text-transform: uppercase;
+    }
+    .link:hover {
+    }
+    .link-underline {
+        border-bottom-width: 0;
+        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.25s ease-in-out;
+    }
+    .link-underline:hover {
+        background-size: 100% 3px;
+        background-position: 0 100%;
+        text-shadow: 0 0 0.25px #0f141e80;
+    }
+
     // IDK
     .wrapper {
         width: 100%;
@@ -64,12 +78,7 @@
     section.home-top {
         padding-top: 370px;
     }
-    section.home-top .bg-image {
-        display: none;
-    }
-    section.home-top a.toggle {
-        display: none;
-    }
+
     section.home-top .bg-image {
         margin-top: 70px;
         background-size: auto 100%;
@@ -94,18 +103,12 @@
         position: relative;
         z-index: 2;
     }
-    section.home-top .main-copy {
-        width: 100%;
-    }
     @media (min-width: 568px) {
         section.home-top {
             padding-top: 100px;
         }
         section.home-top .bg-image {
             background-position: top 0 right 0;
-        }
-        section.home-top .main-copy {
-            width: 58.333333333%;
         }
     }
     @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
@@ -119,7 +122,8 @@
         }
         section.home-top a.toggle {
             background: 0 0;
-            display: none;
+            // display: none;
+            visibility: hidden;
             width: 20px;
             margin: 30px auto 20px auto;
         }
@@ -166,7 +170,8 @@
             position: absolute;
         }
         section.home-top.keep-arrow a.toggle {
-            display: block;
+            // display: block;
+            visibility: visible;
         }
     }
     @media (min-width: 834px) {
@@ -174,32 +179,20 @@
             max-height: none;
             background-position: top 0 right -110px;
         }
-        section.home-top .main-copy {
-            width: 58.333333333%;
-        }
     }
     @media (min-width: 1024px) {
         section.home-top .bg-image {
             background-position: top -30px right -50px;
-        }
-        section.home-top .main-copy {
-            width: 58.333333333%;
         }
     }
     @media (min-width: 1194px) {
         section.home-top .bg-image {
             background-position: top -30px right 0;
         }
-        section.home-top .main-copy {
-            width: 50%;
-        }
     }
     @media (min-width: 1280px) {
         section.home-top .bg-image {
             background-position: top -20px right -20px;
-        }
-        section.home-top .main-copy {
-            width: 58.333333333%;
         }
     }
     @media (min-width: 1366px) {
@@ -211,16 +204,10 @@
         section.home-top .bg-image {
             background-position: top 0 right 80px;
         }
-        section.home-top .main-copy {
-            width: 45%;
-        }
     }
     @media (min-width: 1600px) {
         section.home-top .bg-image {
             background-position: top 0 right 100px;
-        }
-        section.home-top .main-copy {
-            width: 45%;
         }
     }
     @media (min-width: 1680px) {
@@ -369,38 +356,31 @@
             }
             &:nth-child(2) {
                 animation-delay: 1s;
+
+                // .scroll-to weirdly is the second child and not the fourth
+                // Therefore, we need to add the following to make it work
+                &.animate {
+                    animation-delay: 2s;
+                }
             }
             &:nth-child(3) {
                 animation-delay: 1.5s;
-            }
-            &:nth-child(4) {
-                animation-delay: 2s;
-            }
-            &:nth-child(5) {
-                animation-delay: 2.5s;
             }
         }
         @keyframes Lading-animation {
             from {
                 opacity: 0;
+                visibility: hidden;
                 filter: blur(2px);
                 transform: translateY(50%);
                 transition: opacity 0.5s ease-in, transform 0.4s ease-in;
             }
             to {
                 opacity: 1;
+                visibility: visible;
                 filter: blur(0);
                 transform: translateY(0);
             }
-        }
-
-        .main-link {
-            font-weight: 800;
-            letter-spacing: normal;
-            text-transform: uppercase;
-        }
-        .main-link:hover {
-            text-shadow: 0 0 0.5em rgba(0, 0, 0, 0.3);
         }
     }
 </style>
