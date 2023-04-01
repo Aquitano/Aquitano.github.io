@@ -2,7 +2,7 @@
 (function (window, document) {
     let WATCH_CLASS = 'i-v';
     let IN_VIEWPORT_CLASS = 'in-viewport';
-    let FADE = 'Fly-in-down';
+    let FADE = 'is-visible';
     let elements = [];
     function hasClass(element, className) {
         if (element.classList) {

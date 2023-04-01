@@ -80,6 +80,39 @@ const { title } = Astro.props;
                 /* outline: 3px solid limegreen !important; */
             }
 
+            section {
+                position: relative;
+                width: 100%;
+            }
+            .wrapper {
+                width: 100%;
+                padding: 0 14px;
+            }
+            @media (min-width: 768px) and (min-height: 620px) {
+                .wrapper {
+                    padding: 0 30px;
+                }
+            }
+            @media (min-width: 1280px) {
+                .wrapper {
+                    position: relative;
+                    padding: 0 40px;
+                }
+            }
+            @media (min-width: 1480px) {
+                .wrapper {
+                    max-width: 1480px;
+                    margin: 0 auto;
+                }
+            }
+            @media (min-width: 1280px) {
+                .scroll-container {
+                    position: relative;
+                    height: auto;
+                    padding-bottom: 0;
+                }
+            }
+
             /* Default overrides */
             footer,
             header,
