@@ -147,31 +147,33 @@ const { active } = Astro.props;
     }
     header#header .menu:active > b > i {
         background: #878a8f;
+
+        &:nth-of-type(1) {
+            bottom: 5;
+        }
     }
-    header#header .menu:active > b > i:nth-of-type(3) {
-        bottom: 5;
-    }
+
     @media (min-width: 360px) {
         header#header .logo {
             min-width: 220px;
-        }
-        header#header .logo > svg:first-child {
-            display: block;
-        }
-        header#header .logo > svg:last-child {
-            margin-left: 12px;
+            > svg:first-child {
+                display: block;
+            }
+            > svg:last-child {
+                margin-left: 12px;
+            }
         }
     }
     @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
         header#header {
             background: 0 0;
             height: 0;
-        }
-        header#header .logo {
-            margin: 30px 0 0 30px;
-        }
-        header#header .menu {
-            margin: 30px 30px 0 0;
+            .logo {
+                margin: 30px 0 0 30px;
+            }
+            .menu {
+                margin: 30px 30px 0 0;
+            }
         }
     }
     @media (min-width: 1280px) {
@@ -267,55 +269,59 @@ const { active } = Astro.props;
                 fill: #fff;
             }
         }
+
+        .close {
+            position: absolute;
+            display: block;
+            height: 46px;
+            bottom: auto;
+            top: 20px;
+            right: 14px;
+            z-index: 1;
+            border: 0 none;
+
+            > span {
+                display: none;
+            }
+            &:hover > b {
+                transform: rotate(90deg);
+            }
+            > b {
+                position: absolute;
+                display: block;
+                height: 22px;
+                width: 22px;
+                top: 50%;
+                right: 0;
+                margin-top: -11px;
+
+                > i {
+                    position: absolute;
+                    background: #878a8f;
+                    display: block;
+                    width: 28px;
+                    height: 3px;
+                }
+                > i:nth-of-type(1) {
+                    top: -1px;
+                    transform: rotate(45deg);
+                    transform-origin: 0 100%;
+                }
+                > i:nth-of-type(2) {
+                    bottom: -1px;
+                    transform: rotate(-45deg);
+                    transform-origin: 0 0;
+                }
+            }
+            &:active > span {
+                color: #fff;
+            }
+            &:active > b > i {
+                background: #fff;
+            }
+        }
     }
-    nav#nav .close {
-        position: absolute;
-        display: block;
-        height: 46px;
-        bottom: auto;
-        top: 20px;
-        right: 14px;
-        z-index: 1;
-        border: 0 none;
-    }
-    nav#nav .close > span {
-        display: none;
-    }
-    nav#nav .close:hover > b {
-        transform: rotate(90deg);
-    }
-    nav#nav .close > b {
-        position: absolute;
-        display: block;
-        height: 22px;
-        width: 22px;
-        top: 50%;
-        right: 0;
-        margin-top: -11px;
-    }
-    nav#nav .close > b > i {
-        position: absolute;
-        background: #878a8f;
-        display: block;
-        width: 28px;
-        height: 3px;
-    }
-    nav#nav .close > b > i:nth-of-type(1) {
-        top: -1px;
-        transform: rotate(45deg);
-        transform-origin: 0 100%;
-    }
-    nav#nav .close > b > i:nth-of-type(2) {
-        bottom: -1px;
-        transform: rotate(-45deg);
-        transform-origin: 0 0;
-    }
-    nav#nav .close:active > span {
-        color: #fff;
-    }
-    nav#nav .close:active > b > i {
-        background: #fff;
-    }
+
     nav#nav + #nav-content .content {
         position: fixed;
         width: 100%;

@@ -7,5 +7,5 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
     site: 'https://aquitano.github.io',
-    integrations: [tailwind(), sitemap(), compress(), astroImageTools],
+    integrations: [tailwind(), sitemap(), astroImageTools, compress()],
 });
