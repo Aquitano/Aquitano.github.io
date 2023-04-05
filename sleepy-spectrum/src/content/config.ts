@@ -6,8 +6,8 @@ export const collections = {
             title: z.string(),
             description: z.string(),
             featured: z.boolean(),
-            tags: z.array(z.string()).optional(),
-            category: z.string().default('Project'),
+            tags: z.array(z.string().default('Project')),
+            tasks: z.array(z.string()),
             year: z.number(),
             share: z
                 .object({

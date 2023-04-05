@@ -33,36 +33,42 @@ const { Content } = await project.render();
                         <div class="grid grid-cols-3 gap-4">
                             <div class="info">
                                 <div>
-                                    <h1>BetterGaming - Onlineshop</h1>
+                                    <h1>{project.data.title}</h1>
                                     <div id="Desc">
                                         <p class="pre-header">Aufgabe</p>
                                         <h4 class="header-dark">
-                                            Frontend<br />Backend (PHP & MySQL)<br />
+                                            {
+                                                project.data.tasks.map((task) => (
+                                                    <span>
+                                                        {task}
+                                                        <br />
+                                                    </span>
+                                                ))
+                                            }
                                         </h4>
                                         <p class="pre-header">Jahr</p>
-                                        <h4 class="header-dark">2021</h4>
+                                        <h4 class="header-dark">{project.data.year}</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-span-2 content">
                                 <h3 class="header-light" align="justify">
-                                    BetterGaming ist ein Onlineshop, der Videospiele verkauft. Der Onlineshop ist, außer
-                                    die Einbindung eines Bezahldienstes, voll funktionsfähig. Alle Seiten, die
-                                    Videospiele zeigen, werden dynamisch mit den neusten Datenbank-Informationen durch
-                                    PHP erstellt. Alle Webseiten-Inhalte sind ebenfalls animiert - dies geschieht mit
-                                    JavaScript und dem Framework PaceJS + Scroll-Out. Die Suchfunktion ist eine "live
-                                    search" - somit werden sofort beim Eintippen die Suchinhalte gezeigt. Auch wird die
-                                    Suche sofort nach Sortierung-Optionen angepasst. Für diese Suchfunktion wird
-                                    JavaScript Ajax verwendet. Der Login bzw. Registrierung funktioniert problemlos und
-                                    dabei wird viel Wert auf Sicherheit gelegt: nur gehashed und gesaltete Passwörter
-                                    werden gespeichert und es werden Mindestvoraussetzungen für das Passwort gesetzt.<br
-                                    />
-                                    <a
-                                        href="https://github.com/Aquitano/Projects/tree/main/BetterGaming"
-                                        class="with-icon">GitHub-Link</a
-                                    ><br /><a href="https://aquitano.ga/bettergaming/?i=1" class="with-icon"
-                                        >Zur Webseite!</a
-                                    >
+                                    <Content />
+                                    {
+                                        project.data.links?.github && (
+                                            <a href={project.data.links.github} class="with-icon">
+                                                GitHub-Link
+                                            </a>
+                                        )
+                                    }
+                                    |
+                                    {
+                                        project.data.links?.website && (
+                                            <a href={project.data.links.website} class="with-icon">
+                                                Zur Webseite!
+                                            </a>
+                                        )
+                                    }
                                 </h3>
                             </div>
                         </div>
@@ -245,14 +251,9 @@ const { Content } = await project.render();
             &:nth-child(2) {
                 animation-delay: 1s;
 
-                // .scroll-to weirdly is the second child and not the fourth
-                // Therefore, we need to add the following to make it work
-                &.animate {
-                    animation-delay: 2s;
+                &.case-study-photo {
+                    animation-delay: 2.5s;
                 }
-            }
-            &:nth-child(3) {
-                animation-delay: 1.5s;
             }
         }
         @keyframes Lading-animation {
@@ -280,14 +281,8 @@ const { Content } = await project.render();
         return document.querySelector(selector);
     };
 
-    setTimeout(function () {
-        $('.info h1')?.classList.add('Lading-animation');
-        $('#Desc')?.classList.add('Lading-animation');
-        setTimeout(function () {
-            $('.content')?.classList.add('Lading-animation');
-        }, 500);
-        setTimeout(function () {
-            $('.case-study-photos')?.classList.add('Lading-animation');
-        }, 1000);
-    }, 500);
+    $('.info h1')?.classList.add('Lading-animation');
+    $('#Desc')?.classList.add('Lading-animation');
+    $('section.case-study-top> div > div > div.col-span-2.content')?.classList.add('Lading-animation');
+    $('.case-study-photos')?.classList.add('Lading-animation');
 </script>
