@@ -1,8 +1,8 @@
 <section class="home-top landingpage poppins">
     <!-- center via tailwind -->
-    <div class="wrapper flex flex-col items-center justify-center">
+    <div class="wrapper flex flex-col items-center">
         <div class="text-center">
-            <h1 class="TB font-extrabold poppins">Thomas Breindl</h1>
+            <h1 class="TB poppins font-extrabold">Thomas Breindl</h1>
             <h2 class="header-light TB-sub poppins">
                 <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
             </h2>
@@ -42,16 +42,6 @@
             text-shadow: 0 0 0.25px #0f141e80;
         }
     }
-
-    // IDK
-    @media (min-width: 1280px) {
-        .scroll-container {
-            position: relative;
-            height: auto;
-            padding-bottom: 0;
-        }
-    }
-    // IDK
 
     section.home-top {
         display: flex;
@@ -225,7 +215,6 @@
             return;
         }
 
-        // Scroll to the portfolio section but stop 100px before the top
         window.scrollBy({ top: portfolio?.offsetTop - 150, behavior: 'smooth' });
     }
 </script>

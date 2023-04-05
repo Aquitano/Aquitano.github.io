@@ -1,64 +1,65 @@
 ---
+import { Icon } from 'astro-icon';
 import AllProducts from '../components/AllProducts.astro';
-import Header from '../components/Header.astro';
 import HomeTop from '../components/HomeTop.astro';
-import Loader from '../components/Loader.astro';
-import ScrollToTop from '../components/ScrollToTop.astro';
 import Layout from '../layouts/IndexLayout.astro';
+
+const socials = [
+    {
+        name: 'GitHub',
+        icon: 'mdi:github',
+        link: 'https://www.github.com/Aquitano',
+    },
+    {
+        name: 'Twitter',
+        icon: 'mdi:twitter',
+        link: 'https://www.twitter.com/BreindlThomas',
+    },
+];
 ---
 
-<Layout title="Breindl Thomas | Portfolio">
+<Layout title="Breindl Thomas | Portfolio" active="Home">
     <body>
-        <!-- Loader -->
-        <Loader />
-        <!-- Header -->
-        <Header active="Home" />
-
-        <!-- Scroll to top button -->
-        <ScrollToTop />
-
         <div id="Welcome">
             <HomeTop />
 
             <AllProducts />
 
             <!-- Contact -->
-            <section class="quick-contact">
-                <div class="wrapper i-v">
-                    <span style="text-align: center"
-                        ><h1>Kontaktiere mich!</h1>
-                        <br />
-                        <ul class="social-links" style="list-style-type: none">
-                            <li>
-                                <a
-                                    href="https://www.github.com/Aquitano"
-                                    class="special"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    ><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
-                                        <path
-                                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-                                        ></path>
-                                    </svg>
-                                    GitHub</a
-                                >
-                            </li>
-                        </ul></span
-                    >
+            <section class="mt-24">
+                <div class="wrapper">
+                    <span style="text-align: center">
+                        <h1 class="i-v Fly-in-down mb-4">Kontaktiere mich!</h1>
+                        <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
+                            {
+                                socials.map((social) => (
+                                    <a href={social.link} class="special" target="_blank" rel="noopener noreferrer">
+                                        <button class="i-v Fly-in-down flex items-center justify-center rounded-xl bg-black px-4 py-2 transition-all duration-300 hover:bg-gray-800">
+                                            <div>
+                                                <Icon name={social.icon} />
+                                            </div>
+                                            <div class="mx-3 h-4 border-l border-gray-300" />
+                                            <div class="text-white">{social.name}</div>
+                                        </button>
+                                    </a>
+                                ))
+                            }
+                        </div>
+                    </span>
                 </div>
             </section>
         </div>
-        <footer id="footer">
-            <div class="wrapper" style="text-align: center; opacity: 25%; margin-bottom: -35px">
-                <a class="copyright-text" href="#"
-                    ><img src="images/Credit.jpg" alt="Inspiration" width="170" height="29" loading="lazy" /></a
-                >
-            </div>
-        </footer>
     </body>
 </Layout>
 
 <style lang="scss">
+    [astro-icon='mdi:github'],
+    [astro-icon='mdi:twitter'] {
+        color: #fff;
+        // svg size 18px
+        width: 2rem;
+        height: 2rem;
+    }
     main {
         margin: auto;
         padding: 1.5rem;
@@ -98,7 +99,6 @@ import Layout from '../layouts/IndexLayout.astro';
     }
 
     /* New */
-
     ::selection {
         background-color: #878a8f;
         color: #fff;
@@ -177,33 +177,7 @@ import Layout from '../layouts/IndexLayout.astro';
         display: inline-block;
         line-height: 1;
     }
-    @media (min-width: 1280px) {
-        a:hover {
-            color: #0f141e;
-            border-color: #0f141e;
-        }
-        a.special:after,
-        a.with-icon:after {
-            height: 1px;
-            border-bottom: 1px solid #0f141e;
-            background: 0 0;
-            position: absolute;
-            display: block;
-            top: 100%;
-            right: 0;
-            width: 100%;
-            content: '';
-            transition: opacity 0.2s linear;
-            opacity: 0;
-            transform: translate(0, 100%);
-        }
-        a.special:active:after,
-        a.special:hover:after,
-        a.with-icon:active:after,
-        a.with-icon:hover:after {
-            opacity: 1;
-        }
-    }
+
     p {
         color: #878a8f;
         font-weight: 500;
@@ -321,116 +295,6 @@ import Layout from '../layouts/IndexLayout.astro';
         opacity: 0;
     }
 
-    footer#footer {
-        min-width: 320px;
-    }
-    footer#footer .row {
-        padding-top: 74px;
-        border-top: 1px solid #e7e8e9;
-    }
-    footer#footer .row > div {
-        margin-top: 40px;
-    }
-    footer#footer .row > div:first-child {
-        margin-top: 0;
-    }
-    @media (min-width: 768px) and (min-height: 620px) {
-        footer#footer .row > div:nth-child(2),
-        footer#footer .row > div:nth-child(3),
-        footer#footer .row > div:nth-child(4) {
-            padding-right: 30px;
-        }
-    }
-    @media (min-width: 1280px) {
-        footer#footer .row > div {
-            margin-top: 0;
-        }
-        footer#footer .row > div:first-child {
-            padding-right: 40px;
-        }
-        footer#footer .row > div:last-child {
-            margin-top: 40px;
-        }
-    }
-    footer#footer h3 br {
-        display: none;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        footer#footer h3 br {
-            display: inline;
-        }
-    }
-    @media (min-width: 768px) and (min-height: 620px) {
-        footer#footer .contact {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        footer#footer .contact h3 {
-            width: 100%;
-            margin: 0;
-        }
-        footer#footer .contact h3 br {
-            display: none;
-        }
-        footer#footer .contact p {
-            width: 50%;
-            padding-right: 40px;
-        }
-    }
-    @media (min-width: 1280px) {
-        footer#footer .contact {
-            display: block;
-        }
-        footer#footer .contact h3 br {
-            display: inline;
-        }
-        footer#footer .contact p {
-            width: 100%;
-            padding-right: 0;
-        }
-    }
-    footer#footer ul {
-        margin-top: 10px;
-        padding-top: 2px;
-        padding-bottom: 3px;
-    }
-    footer#footer ul > li {
-        list-style-type: none;
-        font-weight: 500;
-        color: #878a8f;
-    }
-    footer#footer ul.social-links {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    footer#footer ul.social-links > li {
-        width: 50%;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        footer#footer ul.social-links {
-            display: block;
-        }
-        footer#footer ul.social-links > li {
-            width: 100%;
-        }
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        footer#footer ul {
-            margin-top: 10px;
-        }
-    }
-    @media (min-width: 1280px) {
-        footer#footer ul.social-links {
-            display: block;
-        }
-        footer#footer ul.social-links > li {
-            width: 100%;
-        }
-    }
-    footer#footer {
-        position: relative;
-        padding-bottom: 76px;
-    }
     html.case-study footer#footer {
         display: none;
     }
@@ -664,20 +528,6 @@ import Layout from '../layouts/IndexLayout.astro';
             opacity: 1;
         }
     }
-    @keyframes swiper-preloader-spin {
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-    @keyframes sk-scaleout {
-        0% {
-            transform: scale(0);
-        }
-        100% {
-            transform: scale(1);
-            opacity: 0;
-        }
-    }
 
     @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
         header#header .logo {
@@ -759,128 +609,7 @@ import Layout from '../layouts/IndexLayout.astro';
             stroke-dashoffset: 0;
         }
     }
-    section.case-study-top {
-        padding-top: 100px;
-    }
-    section.case-study-top .info > div {
-        margin-top: 43px;
-    }
-    section.case-study-top .info > div:first-child {
-        margin-top: 0;
-    }
-    section.case-study-top .content {
-        margin-top: 20px;
-    }
-    section.case-study-top .content .data {
-        margin-top: 30px;
-    }
-    @media (min-width: 768px) and (min-height: 620px) {
-        section.case-study-top {
-            padding-top: 140px;
-        }
-    }
-    @media (min-width: 1024px) {
-        section.case-study-top .content {
-            margin-top: 55px;
-        }
-    }
-    @media (min-width: 1280px) {
-        section.case-study-top {
-            padding-top: 180px;
-        }
-    }
-    @media (min-width: 1480px) {
-        section.case-study-top {
-            padding-top: 200px;
-        }
-    }
-    .container.loaded section.case-study-top .info h5:nth-child(1) {
-        animation: animation-1st 0.6s linear;
-    }
-    .container.loaded section.case-study-top .info h5:nth-child(3),
-    .container.loaded section.case-study-top .info h5:nth-child(5),
-    .container.loaded section.case-study-top .info h5:nth-child(7) {
-        animation: animation-2nd 0.8s linear;
-    }
-    .container.loaded section.case-study-top .info h1 {
-        animation: animation-1st 0.6s linear;
-    }
-    .container.loaded section.case-study-top .info h4 {
-        animation: animation-2nd 0.8s linear;
-    }
-    .container.loaded section.case-study-top .content h3 {
-        animation: animation-3rd 1s linear;
-    }
-    .container.loaded section.case-study-top .content h3 + h3,
-    .container.loaded section.case-study-top .content h3 + h4,
-    .container.loaded section.case-study-top .content h3 + p {
-        animation: animation-4th 1.2s linear;
-    }
-    .container.loaded section.case-study-top .content h3 + h3 + h3,
-    .container.loaded section.case-study-top .content h3 + h3 + h4,
-    .container.loaded section.case-study-top .content h3 + h3 + p {
-        animation: animation-4th 1.4s linear;
-    }
-    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3,
-    .container.loaded section.case-study-top .content h3 + h3 + h3 + h4,
-    .container.loaded section.case-study-top .content h3 + h3 + h3 + p {
-        animation: animation-4th 1.6s linear;
-    }
-    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + h3,
-    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + h4,
-    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + p {
-        animation: animation-5th 1.8s linear;
-    }
-    section.case-study-photos .first {
-        animation: animation-6th 1.4s linear;
-    }
-    section.case-study-photos {
-        padding-top: 70px;
-    }
-    section.case-study-photos .row {
-        margin-top: -40px;
-    }
-    section.case-study-photos .row > div {
-        padding-top: 20px;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        section.case-study-photos {
-            padding-top: 130px;
-        }
-        section.case-study-photos .row {
-            margin-top: -30px;
-        }
-        section.case-study-photos .row > div {
-            padding-top: 30px;
-        }
-    }
-    section.case-study-photos img {
-        display: block;
-        max-width: 100%;
-        opacity: 1;
-        margin: 0 auto;
-        width: 100%;
-    }
-    section.case-study-photos video {
-        display: block;
-        width: 100%;
-    }
-    @media (min-width: 768px) and (min-height: 620px) {
-        section.case-study-photos .row {
-            margin: -30px -15px 0 -15px;
-        }
-        section.case-study-photos .row > div {
-            padding: 30px 15px 0 15px;
-        }
-    }
-    @media (min-width: 1280px) {
-        section.case-study-photos .row {
-            margin: -60px -30px 0 -30px;
-        }
-        section.case-study-photos .row > div {
-            padding: 60px 30px 0 30px;
-        }
-    }
+
     .video-wrapper {
         width: 100%;
         position: relative;
@@ -936,7 +665,7 @@ import Layout from '../layouts/IndexLayout.astro';
     }
     @media (prefers-reduced-motion: no-preference) {
         // Fly-in-up animation
-        .Fly-in-up {
+        .Fly-in-up.is-visible {
             animation-name: Fly-in-up;
             animation-duration: 1.2s;
         }
@@ -955,11 +684,10 @@ import Layout from '../layouts/IndexLayout.astro';
         }
 
         // Fly-in-down animation
-        .Fly-in-down {
+        .Fly-in-down.is-visible {
             opacity: 0;
             animation-name: Fly-in-down;
             animation-duration: 2s;
-            animation-delay: 0.25s;
             animation-fill-mode: forwards;
         }
         @keyframes Fly-in-down {

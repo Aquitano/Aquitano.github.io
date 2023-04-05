@@ -1,10 +1,45 @@
 ---
 import { SEO } from 'astro-seo';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Loader from '../components/Loader.astro';
+import ScrollToTop from '../components/ScrollToTop.astro';
+
+const defaultKeywords = [
+    'Thomas Breindl',
+    'Thomas',
+    'Breindl',
+    'Portfolio',
+    'Portfolio of Thomas Breindl',
+    'Portfolio von Thomas Breindl',
+    'Aquitano',
+    'Deutschland',
+    'Germany',
+];
+
 export interface Props {
     title: string;
+    SEO?: {
+        title?: string;
+        description?: string;
+        openGraph?: {
+            title?: string;
+            type?: string;
+            image?: string;
+        };
+        twitter?: {
+            creator?: string;
+        };
+        extend?: {
+            meta?: {
+                keywords?: string[];
+            };
+        };
+    };
+    active: string;
 }
 
-const { title } = Astro.props;
+const { title, SEO: SEOData, active } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -16,31 +51,40 @@ const { title } = Astro.props;
         <meta name="generator" content={Astro.generator} />
 
         <SEO
-            title={title}
-            description="Herzlich Willkommen zu dem Portfolio von Thomas Breindl!"
+            title={title || 'Thomas Breindl | Portfolio'}
+            description={SEOData?.description || 'Herzlich Willkommen zu dem Portfolio von Thomas Breindl!'}
             openGraph={{
                 basic: {
-                    title: title,
-                    type: 'website',
-                    image: '',
+                    title: SEOData?.openGraph?.title || title || 'Thomas Breindl | Portfolio',
+                    type: SEOData?.openGraph?.type || 'website',
+                    image: SEOData?.openGraph?.image || '',
                 },
             }}
             twitter={{
-                creator: '@BreindlThomas',
+                creator: SEOData?.twitter?.creator || '@breindlthomas',
             }}
             extend={{
                 meta: [
                     {
                         name: 'keywords',
                         content:
-                            'Thomas Breindl, Thomas, Breindl, Portfolio, Portfolio of Thomas Breindl, Portfolio von Thomas Breindl, Aquitano, Deutschland, Germany',
+                            // Add all keywords here and separate them with a comma
+                            SEOData?.extend?.meta?.keywords?.join(',')?.concat(',', defaultKeywords.join(',')) ||
+                            defaultKeywords.join(','),
                     },
                 ],
             }}
         />
     </head>
     <body>
+        <Loader />
+        <Header active={active} />
+        <ScrollToTop />
+
         <slot />
+
+        <Footer />
+
         <style is:global>
             @font-face {
                 font-family: Poppins;

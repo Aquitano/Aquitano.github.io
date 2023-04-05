@@ -3,7 +3,17 @@ export interface Props {
     active: string;
 }
 
-const { active } = Astro.props;
+const menus = [
+    { name: 'Home', href: '/' },
+    { name: 'Über mich', href: 'timeline' },
+    { name: 'Projekte', href: 'projects' },
+    { name: 'Kontakt', href: 'contact' },
+].map((menu) => {
+    return {
+        ...menu,
+        active: Astro.props.active === menu.name,
+    };
+});
 ---
 
 <header id="header">
@@ -30,17 +40,19 @@ const { active } = Astro.props;
         <div class="content">
             <h5>Menu</h5>
             <ul>
-                <li><a href="#" id="Home">Home</a></li>
-                <li><a href="timeline" id="about">Über mich</a></li>
-                <li><a href="contact" id="contact">Kontakt</a></li>
+                {
+                    menus.map((menu) => (
+                        <li>
+                            <a href={menu.href} id={menu.name} class={menu.active ? 'active' : ''}>
+                                {menu.name}
+                            </a>
+                        </li>
+                    ))
+                }
             </ul>
         </div>
     </div>
 </nav>
-
-<prop style="display: none">
-    {active}
-</prop>
 
 <style lang="scss">
     header#header {
@@ -687,14 +699,6 @@ const { active } = Astro.props;
         document.querySelector(selector);
         return document.querySelector(selector);
     };
-    const $$: (selector: string) => NodeListOf<Element> | null = (selector: string) => {
-        document.querySelectorAll(selector);
-        return document.querySelectorAll(selector);
-    };
-
-    // Remove white space
-    const active = $('prop')?.textContent?.replace(/\s/g, '');
-    $('prop')?.remove();
 
     function openNav() {
         //   let Height = window.screen.availHeight;
@@ -721,7 +725,6 @@ const { active } = Astro.props;
     }
 
     $('.menu')?.addEventListener('click', () => {
-        $(`#${active}`)?.classList.add('active');
         openNav();
 
         $('.close')?.addEventListener(

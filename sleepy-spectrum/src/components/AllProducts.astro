@@ -4,47 +4,39 @@ import Card from './Card.astro';
 
 <section class="home-portfolio" id="portfolio">
     <div class="wrapper">
-        <div>
-            <p class="pre-header font-semibold Fly-in-down i-v">Meine</p>
+        <div class="Fly-in-down">
+            <p class="pre-header Fly-in-down i-v font-semibold">Meine</p>
             <h1 class="large Fly-in-down i-v">Projekte</h1>
         </div>
         <div class="list">
             <!-- BetterGaming -->
             <Card
                 name="BetterGaming"
-                year="2021"
+                year={2021}
                 decription="Onlineshop"
-                new="true"
-                url="project/BetterGaming"
+                isNew={true}
+                url="project/bettergaming"
                 animation="Fly-in-left"
             />
             <!-- Griffin -->
             <Card
                 name="Griffin"
-                year="2020"
+                year={2020}
                 decription="Produktdesign"
-                new="true"
-                url="project/Griffin"
+                isNew={true}
+                url="project/griffin"
                 animation="Fly-in-right"
             />
             <!-- Periodensystem -->
             <Card
                 name="Periodensystem"
-                year="2020"
+                year={2020}
                 decription="Online"
-                new="true"
-                url="project/Periodensystem"
+                url="project/periodensystem"
                 animation="Fly-in-left"
             />
             <!-- JustHTML -->
-            <Card
-                name="JustHTML"
-                year="2020"
-                decription="Framework"
-                new="true"
-                url="project/JustHTML"
-                animation="Fly-in-right"
-            />
+            <Card name="JustHTML" year={2020} decription="Framework" url="project/JustHTML" animation="Fly-in-right" />
         </div>
     </div>
 </section>

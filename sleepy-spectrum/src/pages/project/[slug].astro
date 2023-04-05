@@ -1,0 +1,293 @@
+---
+import { CollectionEntry, getCollection } from 'astro:content';
+import Layout from '../../layouts/IndexLayout.astro';
+
+export async function getStaticPaths() {
+    const projects = await getCollection('project');
+    return projects.map((project) => {
+        return {
+            params: {
+                slug: project.slug,
+            },
+            props: {
+                project,
+            },
+        };
+    });
+}
+
+interface Props {
+    project: CollectionEntry<'project'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<Layout title="Breindl Thomas | Portfolio" active="Project">
+    <body>
+        <div class="scroll-container">
+            <div class="">
+                <section class="case-study-top">
+                    <div class="wrapper">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="info">
+                                <div>
+                                    <h1>BetterGaming - Onlineshop</h1>
+                                    <div id="Desc">
+                                        <p class="pre-header">Aufgabe</p>
+                                        <h4 class="header-dark">
+                                            Frontend<br />Backend (PHP & MySQL)<br />
+                                        </h4>
+                                        <p class="pre-header">Jahr</p>
+                                        <h4 class="header-dark">2021</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-2 content">
+                                <h3 class="header-light" align="justify">
+                                    BetterGaming ist ein Onlineshop, der Videospiele verkauft. Der Onlineshop ist, außer
+                                    die Einbindung eines Bezahldienstes, voll funktionsfähig. Alle Seiten, die
+                                    Videospiele zeigen, werden dynamisch mit den neusten Datenbank-Informationen durch
+                                    PHP erstellt. Alle Webseiten-Inhalte sind ebenfalls animiert - dies geschieht mit
+                                    JavaScript und dem Framework PaceJS + Scroll-Out. Die Suchfunktion ist eine "live
+                                    search" - somit werden sofort beim Eintippen die Suchinhalte gezeigt. Auch wird die
+                                    Suche sofort nach Sortierung-Optionen angepasst. Für diese Suchfunktion wird
+                                    JavaScript Ajax verwendet. Der Login bzw. Registrierung funktioniert problemlos und
+                                    dabei wird viel Wert auf Sicherheit gelegt: nur gehashed und gesaltete Passwörter
+                                    werden gespeichert und es werden Mindestvoraussetzungen für das Passwort gesetzt.<br
+                                    />
+                                    <a
+                                        href="https://github.com/Aquitano/Projects/tree/main/BetterGaming"
+                                        class="with-icon">GitHub-Link</a
+                                    ><br /><a href="https://aquitano.ga/bettergaming/?i=1" class="with-icon"
+                                        >Zur Webseite!</a
+                                    >
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="case-study-photos">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-sm-6-6 col-md-12-12 col-smd-12-12 col-lg-12-12">
+                                <div>
+                                    <img
+                                        alt="Website on multiple devices"
+                                        src="../images/BetterGaming-full.jpg"
+                                        style="border-radius: 25px"
+                                        loading="lazy"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
+</Layout>
+
+<style lang="scss">
+    .pre-header {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-transform: uppercase;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        letter-spacing: 0.4em;
+        color: #878a8f;
+    }
+
+    section.case-study-top {
+        padding-top: 100px;
+    }
+    section.case-study-top .info > div {
+        margin-top: 43px;
+    }
+    section.case-study-top .info > div:first-child {
+        margin-top: 0;
+    }
+    section.case-study-top .content {
+        margin-top: 20px;
+    }
+    section.case-study-top .content .data {
+        margin-top: 30px;
+    }
+    @media (min-width: 768px) and (min-height: 620px) {
+        section.case-study-top {
+            padding-top: 140px;
+        }
+    }
+    @media (min-width: 1024px) {
+        section.case-study-top .content {
+            margin-top: 55px;
+        }
+    }
+    @media (min-width: 1280px) {
+        section.case-study-top {
+            padding-top: 180px;
+        }
+    }
+    @media (min-width: 1480px) {
+        section.case-study-top {
+            padding-top: 200px;
+        }
+    }
+    .container.loaded section.case-study-top .info h5:nth-child(1) {
+        animation: animation-1st 0.6s linear;
+    }
+    .container.loaded section.case-study-top .info h5:nth-child(3),
+    .container.loaded section.case-study-top .info h5:nth-child(5),
+    .container.loaded section.case-study-top .info h5:nth-child(7) {
+        animation: animation-2nd 0.8s linear;
+    }
+    .container.loaded section.case-study-top .info h1 {
+        animation: animation-1st 0.6s linear;
+    }
+    .container.loaded section.case-study-top .info h4 {
+        animation: animation-2nd 0.8s linear;
+    }
+    .container.loaded section.case-study-top .content h3 {
+        animation: animation-3rd 1s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h4,
+    .container.loaded section.case-study-top .content h3 + p {
+        animation: animation-4th 1.2s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h3 + h4,
+    .container.loaded section.case-study-top .content h3 + h3 + p {
+        animation: animation-4th 1.4s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h4,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + p {
+        animation: animation-4th 1.6s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + h4,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + p {
+        animation: animation-5th 1.8s linear;
+    }
+
+    section.case-study-photos .first {
+        animation: animation-6th 1.4s linear;
+    }
+    section.case-study-photos {
+        padding-top: 70px;
+    }
+    section.case-study-photos .row {
+        margin-top: -40px;
+    }
+    section.case-study-photos .row > div {
+        padding-top: 20px;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        section.case-study-photos {
+            padding-top: 130px;
+        }
+        section.case-study-photos .row {
+            margin-top: -30px;
+        }
+        section.case-study-photos .row > div {
+            padding-top: 30px;
+        }
+    }
+    section.case-study-photos img {
+        display: block;
+        max-width: 100%;
+        opacity: 1;
+        margin: 0 auto;
+        width: 100%;
+    }
+    section.case-study-photos video {
+        display: block;
+        width: 100%;
+    }
+    @media (min-width: 768px) and (min-height: 620px) {
+        section.case-study-photos .row {
+            margin: -30px -15px 0 -15px;
+        }
+        section.case-study-photos .row > div {
+            padding: 30px 15px 0 15px;
+        }
+    }
+    @media (min-width: 1280px) {
+        section.case-study-photos .row {
+            margin: -60px -30px 0 -30px;
+        }
+        section.case-study-photos .row > div {
+            padding: 60px 30px 0 30px;
+        }
+    }
+
+    // Animation
+    .Lading-animation {
+        animation: none;
+        transition: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        // Landing page animation
+        .Lading-animation {
+            z-index: 2;
+            opacity: 0;
+            animation-name: Lading-animation;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
+
+            &:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+            &:nth-child(2) {
+                animation-delay: 1s;
+
+                // .scroll-to weirdly is the second child and not the fourth
+                // Therefore, we need to add the following to make it work
+                &.animate {
+                    animation-delay: 2s;
+                }
+            }
+            &:nth-child(3) {
+                animation-delay: 1.5s;
+            }
+        }
+        @keyframes Lading-animation {
+            from {
+                opacity: 0;
+                visibility: hidden;
+                filter: blur(2px);
+                transform: translateY(50%);
+                transition: opacity 0.5s ease-in, transform 0.4s ease-in;
+            }
+            to {
+                opacity: 1;
+                visibility: visible;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+    }
+</style>
+
+<script>
+    const $: (selector: string) => Element | null = (selector: string) => {
+        document.querySelector(selector);
+
+        return document.querySelector(selector);
+    };
+
+    setTimeout(function () {
+        $('.info h1')?.classList.add('Lading-animation');
+        $('#Desc')?.classList.add('Lading-animation');
+        setTimeout(function () {
+            $('.content')?.classList.add('Lading-animation');
+        }, 500);
+        setTimeout(function () {
+            $('.case-study-photos')?.classList.add('Lading-animation');
+        }, 1000);
+    }, 500);
+</script>
