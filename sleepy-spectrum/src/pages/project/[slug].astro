@@ -1,5 +1,6 @@
 ---
 import { CollectionEntry, getCollection } from 'astro:content';
+import LinkButton from '../../components/LinkButton.astro';
 import Layout from '../../layouts/IndexLayout.astro';
 
 export async function getStaticPaths() {
@@ -52,24 +53,32 @@ const { Content } = await project.render();
                                 </div>
                             </div>
                             <div class="col-span-2 content">
-                                <h3 class="header-light" align="justify">
-                                    <Content />
-                                    {
-                                        project.data.links?.github && (
-                                            <a href={project.data.links.github} class="with-icon">
-                                                GitHub-Link
-                                            </a>
-                                        )
-                                    }
-                                    |
-                                    {
-                                        project.data.links?.website && (
-                                            <a href={project.data.links.website} class="with-icon">
-                                                Zur Webseite!
-                                            </a>
-                                        )
-                                    }
-                                </h3>
+                                <div class="content-body">
+                                    <Content class="text-xl font-normal text-justify" />
+                                    <br />
+                                    <div class="flex flex-row space-x-4">
+                                        {
+                                            project.data.links?.github && (
+                                                <LinkButton
+                                                    text="GitHub-Link"
+                                                    icon="mdi:github"
+                                                    href={project.data.links.github}
+                                                    style={'width: 1.5rem'}
+                                                />
+                                            )
+                                        }
+                                        {
+                                            project.data.links?.website && (
+                                                <LinkButton
+                                                    text="Webseite"
+                                                    icon="mdi:link"
+                                                    href={project.data.links.website}
+                                                    style={'width: 1.5rem'}
+                                                />
+                                            )
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,6 +105,9 @@ const { Content } = await project.render();
 </Layout>
 
 <style lang="scss">
+    .content-body {
+        color: #54595f;
+    }
     .pre-header {
         font-size: 0.875rem;
         line-height: 1.25rem;
@@ -247,6 +259,10 @@ const { Content } = await project.render();
 
             &:nth-child(1) {
                 animation-delay: 0.5s;
+
+                &.content-body {
+                    animation-delay: 1.5s;
+                }
             }
             &:nth-child(2) {
                 animation-delay: 1s;
@@ -261,7 +277,7 @@ const { Content } = await project.render();
                 opacity: 0;
                 visibility: hidden;
                 filter: blur(2px);
-                transform: translateY(50%);
+                transform: translateY(20px);
                 transition: opacity 0.5s ease-in, transform 0.4s ease-in;
             }
             to {
@@ -283,6 +299,6 @@ const { Content } = await project.render();
 
     $('.info h1')?.classList.add('Lading-animation');
     $('#Desc')?.classList.add('Lading-animation');
-    $('section.case-study-top> div > div > div.col-span-2.content')?.classList.add('Lading-animation');
+    $('.content .content-body')?.classList.add('Lading-animation');
     $('.case-study-photos')?.classList.add('Lading-animation');
 </script>

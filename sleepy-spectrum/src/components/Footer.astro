@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon';
+import LinkButton from './LinkButton.astro';
 
 const year = new Date().getFullYear();
 
@@ -27,18 +28,7 @@ const Items = [
                 </div>
                 <!-- Contanct -->
                 <div class="flex flex-col items-center justify-center border-l-4 border-solid border-neutral-400 pl-5">
-                    <!-- contanct button -->
-                    <a href="#" class="special">
-                        <button
-                            class="flex items-center justify-center rounded-xl bg-neutral-800 px-4 py-2 transition-all duration-300 hover:bg-gray-800"
-                        >
-                            <div>
-                                <Icon name="mdi:message" />
-                            </div>
-                            <div class="mx-3 h-4 border-l border-gray-300"></div>
-                            <div class="text-white">Contact</div>
-                        </button>
-                    </a>
+                    <LinkButton text="Contact" icon="mdi:message" href="#" style={'width: 1.5rem'} />
                 </div>
                 <!-- Explore -->
                 <div
@@ -71,12 +61,6 @@ const Items = [
 </footer>
 
 <style lang="scss">
-    [astro-icon='mdi:message'] {
-        color: #fff;
-        width: 1.5rem;
-        height: 1.5rem;
-    }
-
     .link {
         font-weight: 800;
         letter-spacing: normal;

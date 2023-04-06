@@ -6,7 +6,7 @@ tags: ["HTML", "CSS", "JavaScript", "Blender", "3D-Modellierung"]
 tasks: ["Produktdesign", "Frontend", "3D-Modellierung"]
 links: {
     github: "https://github.com/Aquitano/Projects/tree/main/BetterGaming",
-    website: "https://bettergaming.de"
+    website: "Griffin-Website/index.html"
 }
 year: 2020
 ---
