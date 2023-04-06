@@ -1,59 +1,168 @@
 ---
-import AllProducts from '../components/AllProducts.astro';
-import HomeTop from '../components/HomeTop.astro';
 import LinkButton from '../components/LinkButton.astro';
 import Layout from '../layouts/IndexLayout.astro';
-
-const socials = [
-    {
-        name: 'GitHub',
-        icon: 'mdi:github',
-        link: 'https://www.github.com/Aquitano',
-    },
-    {
-        name: 'Twitter',
-        icon: 'mdi:twitter',
-        link: 'https://www.twitter.com/BreindlThomas',
-    },
-];
 ---
 
-<Layout title="Breindl Thomas | Portfolio" active="Home">
+<Layout title="Breindl Thomas | Portfolio" active="Über mich">
     <body>
-        <div id="Welcome">
-            <HomeTop />
-
-            <AllProducts />
-
-            <!-- Contact -->
-            <section class="mt-24">
-                <div class="wrapper">
-                    <span style="text-align: center">
-                        <h1 class="i-v Fly-in-down mb-4">Kontaktiere mich!</h1>
-                        <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
-                            {
-                                socials.map((social) => (
-                                    <div class="i-v Fly-in-down">
-                                        <LinkButton
-                                            text={social.name}
-                                            icon={social.icon}
-                                            href={social.link}
-                                            style={'width: 2rem'}
-                                            target={'_blank'}
-                                            rel={'noopener noreferrer'}
-                                        />
-                                    </div>
-                                ))
-                            }
+        <div class="scroll-container">
+            <div class="wrapper flex flex-col items-center justify-center">
+                <section class="block">
+                    <div class="each-year">
+                        <div class="title Fly-in-down i-v">2020</div>
+                        <div class="each-event i-v Fly-in-down">
+                            <div class="event-description">
+                                Angefangen das Framework
+                                <a href="project/JustHTML">JustHTML</a>, das helfen soll Webseiten nur mit HTML zu
+                                erstellen, zu erstellen.
+                            </div>
                         </div>
-                    </span>
-                </div>
-            </section>
+                        <div class="each-event i-v Fly-in-down">
+                            <div class="event-description">
+                                Projekt, ein Getränk mit der imaginären "Brummselbeere" zu gestalten, hat Produktdesign,
+                                Verpackungsdesign, Marketingstrategie und eine Webseite beinhaltet:
+                                <a href="project/Griffin">Griffin Energy</a>.
+                            </div>
+                        </div>
+                        <div class="each-event i-v Fly-in-down">
+                            <div class="event-description">
+                                Angefangen mit dem Grafiktablett
+                                <a
+                                    href="https://www.wacom.com/de-de/products/pen-tablets/wacom-intuos"
+                                    target="_blank"
+                                    rel="noopener noreferrer">Wacom Intuos</a
+                                >
+                                zu zeichnen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="block">
+                    <div class="each-year">
+                        <div class="title i-v Fly-in-down">2019</div>
+
+                        <div class="each-event i-v Fly-in-down">
+                            <div class="event-description">
+                                Mit der 3D-Grafiksuite
+                                <a href="https://www.blender.org/" target="_blank" rel="noopener noreferrer">Blender</a>
+                                angefangen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block">
+                    <div class="each-year">
+                        <div class="title i-v Fly-in-down">2018</div>
+                        <div class="each-event i-v Fly-in-down">
+                            <div class="event-description">
+                                In der Schule mit Java und der Game Engine
+                                <a
+                                    href="https://github.com/engine-alpha/engine-alpha"
+                                    target="_blank"
+                                    rel="noopener noreferrer">Engine Alpha</a
+                                >
+                                angefangen.
+                            </div>
+                        </div>
+                        <div class="each-event i-v Fly-in-down">
+                            <div class="event-description">
+                                Mit Kurs
+                                <a
+                                    href="https://www.udemy.com/course/der-komplette-webentwickler-2/"
+                                    target="_blank"
+                                    rel="noopener noreferrer">Der komplette Web-Entwickler von Udemy</a
+                                >
+                                gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
     </body>
 </Layout>
 
 <style lang="scss">
+    .wrapper {
+        width: 100%;
+        min-height: 100vh;
+        height: 100%;
+        font: normal 16px/26px Open Sans Condensed, sans-serif;
+        color: rgb(90, 90, 90);
+        padding: 100px 20px 200px;
+        box-sizing: border-box;
+    }
+    .block {
+        z-index: 1;
+        position: relative;
+    }
+    .block:before {
+        content: '';
+        position: absolute;
+        height: calc(100% - 40px);
+        width: 1px;
+        background-color: #353535;
+        left: 50%;
+        margin-top: 65px;
+    }
+    .title {
+        font: bold 42px/52px Open Sans Condensed, sans-serif;
+        text-align: center;
+        padding: 20px;
+        transition: all 0.8s ease-in-out;
+    }
+    @media screen and (min-width: 240px) {
+        .each-event {
+            background-color: #c2c2c277;
+            color: #777;
+            padding: 15px;
+            margin: 80px 0px;
+            width: 170px;
+            position: relative;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: all 0.3s ease-in-out;
+        }
+        .each-event:nth-child(even) {
+            margin-left: calc(50% - 191px);
+        }
+    }
+    @media screen and (min-width: 650px) {
+        .each-event {
+            background-color: #c2c2c277;
+            color: #777;
+            padding: 15px;
+            margin: 80px 0px;
+            width: 300px;
+            position: relative;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: all 0.3s ease-in-out;
+        }
+        .each-event:nth-child(even) {
+            margin-left: calc(50% - 321px);
+        }
+    }
+    .each-event:before {
+        content: '';
+        position: absolute;
+        top: calc(50% - 8px);
+        left: -27px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: rgb(80, 80, 80);
+        box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.8);
+    }
+    .each-event:nth-child(odd) {
+        margin-left: calc(50% + 20px);
+    }
+    .each-event:nth-child(even):before {
+        left: calc(100% + 14px);
+    }
+
+    // From index.html
     main {
         margin: auto;
         padding: 1.5rem;
@@ -739,19 +848,3 @@ const socials = [
 </style>
 
 <script src="./appearOnScroll.js" defer></script>
-
-<script>
-    const $: (selector: string) => Element | null = (selector: string) => {
-        document.querySelector(selector);
-        return document.querySelector(selector);
-    };
-
-    window.addEventListener('load', () => {
-        $('.TB')?.classList.add('Lading-animation');
-        $('.header-light')?.classList.add('Lading-animation');
-        $('.links')?.classList.add('Lading-animation');
-        $('.animate')?.classList.add('Lading-animation');
-    });
-
-    $('.Fly-in-down')?.classList.remove('Fly-in-down');
-</script>
