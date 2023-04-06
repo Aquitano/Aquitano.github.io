@@ -81,9 +81,7 @@ import Card from './Card.astro';
     }
 
     // Animation
-    .Fly-in-down,
-    .Fly-in-left,
-    .Fly-in-right {
+    .Fly-in-down {
         animation: none;
         transition: none;
     }
@@ -98,56 +96,14 @@ import Card from './Card.astro';
         @keyframes Fly-in-down {
             0% {
                 opacity: 0;
-                transform: translateY(25%);
+                transform: translate3d(0, 25px, 0);
                 filter: blur(2px);
                 transition: opacity 0.5s ease-in, transform 0.4s ease-in, filter 0.1s ease-in;
             }
             100% {
                 opacity: 1;
                 filter: blur(0);
-                transform: translateY(0);
-            }
-        }
-
-        // Fly-in-left
-        .Fly-in-left.is-visible {
-            animation-name: Fly-in-left;
-            animation-duration: 1.2s;
-            animation-delay: 0.25s;
-            animation-fill-mode: forwards;
-        }
-        @keyframes Fly-in-left {
-            0% {
-                opacity: 0;
-                filter: blur(4px);
-                transform: translateX(-15%);
-                transition: opacity 500ms ease-in, transform 0.4s ease-in, filter 0.1s ease-in;
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateX(0);
-            }
-        }
-
-        // Fly-in-right
-        .Fly-in-right.is-visible {
-            animation-name: Fly-in-right;
-            animation-duration: 1.2s;
-            animation-delay: 0.25s;
-            animation-fill-mode: forwards;
-        }
-        @keyframes Fly-in-right {
-            0% {
-                opacity: 0;
-                filter: blur(4px);
-                transform: translateX(15%);
-                transition: opacity 500ms ease-in, transform 0.4s ease-in, filter 0.1s ease-in;
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateX(0);
+                tranform: translate3d(0, 0, 0);
             }
         }
 

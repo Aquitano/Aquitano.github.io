@@ -37,13 +37,13 @@
             0% {
                 opacity: 1;
                 filter: blur(2px);
-                transform: translateY(0);
+                transform: translate3d(0, 0, 0);
                 transition: opacity 0.5s ease-out, transform 0.4s ease-out;
             }
             100% {
                 opacity: 0;
                 visibility: hidden;
-                transform: translateY(25%);
+                transform: translate3d(0, 25px, 0);
                 filter: blur(0);
             }
         }

@@ -9,29 +9,32 @@ import Layout from '../layouts/IndexLayout.astro';
             <div class="wrapper flex flex-col items-center justify-center">
                 <section class="block">
                     <div class="each-year">
-                        <div class="title Fly-in-down i-v">2020</div>
-                        <div class="each-event i-v Fly-in-down">
+                        <div class="title Fly-in-up i-v">2020</div>
+                        <div class="each-event i-v Fly-in-up">
                             <div class="event-description">
                                 Angefangen das Framework
-                                <a href="project/JustHTML">JustHTML</a>, das helfen soll Webseiten nur mit HTML zu
-                                erstellen, zu erstellen.
+                                <a href="project/JustHTML" class="link-underline">JustHTML</a>, das helfen soll
+                                Webseiten nur mit HTML zu erstellen, zu erstellen.
                             </div>
                         </div>
-                        <div class="each-event i-v Fly-in-down">
+                        <div class="each-event i-v Fly-in-up">
                             <div class="event-description">
                                 Projekt, ein Getränk mit der imaginären "Brummselbeere" zu gestalten, hat Produktdesign,
                                 Verpackungsdesign, Marketingstrategie und eine Webseite beinhaltet:
-                                <a href="project/Griffin">Griffin Energy</a>.
+                                <a href="project/Griffin" class="link-underline">Griffin Energy</a>.
                             </div>
                         </div>
-                        <div class="each-event i-v Fly-in-down">
+                        <div class="each-event i-v Fly-in-up">
                             <div class="event-description">
                                 Angefangen mit dem Grafiktablett
                                 <a
                                     href="https://www.wacom.com/de-de/products/pen-tablets/wacom-intuos"
                                     target="_blank"
-                                    rel="noopener noreferrer">Wacom Intuos</a
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
                                 >
+                                    Wacom Intuos
+                                </a>
                                 zu zeichnen.
                             </div>
                         </div>
@@ -39,12 +42,18 @@ import Layout from '../layouts/IndexLayout.astro';
                 </section>
                 <section class="block">
                     <div class="each-year">
-                        <div class="title i-v Fly-in-down">2019</div>
-
-                        <div class="each-event i-v Fly-in-down">
+                        <div class="title i-v Fly-in-up">2019</div>
+                        <div class="each-event i-v Fly-in-up">
                             <div class="event-description">
                                 Mit der 3D-Grafiksuite
-                                <a href="https://www.blender.org/" target="_blank" rel="noopener noreferrer">Blender</a>
+                                <a
+                                    href="https://www.blender.org/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
+                                >
+                                    Blender
+                                </a>
                                 angefangen.
                             </div>
                         </div>
@@ -53,26 +62,32 @@ import Layout from '../layouts/IndexLayout.astro';
 
                 <section class="block">
                     <div class="each-year">
-                        <div class="title i-v Fly-in-down">2018</div>
-                        <div class="each-event i-v Fly-in-down">
+                        <div class="title i-v Fly-in-up">2018</div>
+                        <div class="each-event i-v Fly-in-up">
                             <div class="event-description">
                                 In der Schule mit Java und der Game Engine
                                 <a
                                     href="https://github.com/engine-alpha/engine-alpha"
                                     target="_blank"
-                                    rel="noopener noreferrer">Engine Alpha</a
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
                                 >
+                                    Engine Alpha
+                                </a>
                                 angefangen.
                             </div>
                         </div>
-                        <div class="each-event i-v Fly-in-down">
+                        <div class="each-event i-v Fly-in-up">
                             <div class="event-description">
                                 Mit Kurs
                                 <a
                                     href="https://www.udemy.com/course/der-komplette-webentwickler-2/"
                                     target="_blank"
-                                    rel="noopener noreferrer">Der komplette Web-Entwickler von Udemy</a
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
                                 >
+                                    "Der komplette Web-Entwickler von Udemy"
+                                </a>
                                 gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
                             </div>
                         </div>
@@ -84,6 +99,22 @@ import Layout from '../layouts/IndexLayout.astro';
 </Layout>
 
 <style lang="scss">
+    .link-underline {
+        font-weight: 600;
+        color: #21468f;
+        border-bottom-width: 0;
+        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.25s ease-in-out;
+
+        &:hover {
+            background-size: 100% 3px;
+            background-position: 0 100%;
+            text-shadow: 0 0 0.25px #0f141e80;
+        }
+    }
     .wrapper {
         width: 100%;
         min-height: 100vh;
@@ -175,25 +206,6 @@ import Layout from '../layouts/IndexLayout.astro';
         background-size: 400%;
         background-position: 0%;
     }
-    .instructions {
-        line-height: 1.6;
-        margin: 1rem 0;
-        border: 1px solid rgba(var(--accent), 25%);
-        background-color: white;
-        padding: 1rem;
-        border-radius: 0.4rem;
-    }
-    .instructions code {
-        font-size: 0.875em;
-        font-weight: bold;
-        background: rgba(var(--accent), 12%);
-        color: rgb(var(--accent));
-        border-radius: 4px;
-        padding: 0.3em 0.45em;
-    }
-    .instructions strong {
-        color: rgb(var(--accent));
-    }
     .link-card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
@@ -213,14 +225,6 @@ import Layout from '../layouts/IndexLayout.astro';
     textarea:focus {
         outline: 0;
     }
-    @keyframes rotate-full {
-        0% {
-            transform: rotate(0);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
     @keyframes loader-progress-on {
         0%,
         50% {
@@ -232,25 +236,7 @@ import Layout from '../layouts/IndexLayout.astro';
             transform: translate3d(0, 0, 0);
         }
     }
-    @keyframes loader-progress-on-first-loading {
-        0% {
-            opacity: 0;
-            transform: translate3d(0, 30px, 0);
-        }
-        100% {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
-    }
 
-    @keyframes fade-in {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
     .icon {
         display: inline-flex;
         align-self: center;
@@ -303,537 +289,29 @@ import Layout from '../layouts/IndexLayout.astro';
         color: #0f141e;
     }
 
-    nav.links {
-        display: block;
-        margin-top: 10px;
-    }
-    nav.links h1,
-    nav.links h2,
-    nav.links h3,
-    nav.links h4,
-    nav.links h5 {
-        display: inline-block;
-    }
-    nav.links span {
-        color: #282a2c;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        nav.links {
-            margin-top: 20px;
-        }
-        nav.links span {
-            margin-left: 15px;
-            margin-right: 15px;
-        }
-    }
-    .row {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-    @media (max-width: 767px), (min-width: 768px) and (max-height: 619px) {
-        .row > .col-sm-6-6 {
-            width: 100%;
-        }
-    }
-    @media (min-width: 768px) and (max-width: 1023px) and (min-height: 620px) {
-        .row > .col-md-9-12 {
-            width: 75%;
-        }
-        .row > .col-md-12-12 {
-            width: 100%;
-        }
-    }
-    @media (min-width: 1024px) and (max-width: 1279px) {
-        .row > .col-smd-5-12 {
-            width: 41.666666667%;
-        }
-        .row > .col-smd-6-12 {
-            width: 50%;
-        }
-        .row > .col-smd-12-12 {
-            width: 100%;
-        }
-        .row > .col-smd-offset-1-12 {
-            margin-left: 8.333333333%;
-        }
-    }
-    @media (min-width: 1280px) {
-        .row > .col-lg-4-12 {
-            width: 33.333333333%;
-        }
-        .row > .col-lg-6-12 {
-            width: 50%;
-        }
-        .row > .col-lg-12-12 {
-            width: 100%;
-        }
-        .row > .col-lg-offset-2-12 {
-            margin-left: 16.666666667%;
-        }
-    }
-
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    @keyframes fadeInView {
-        0% {
-            transform: translate3d(0, 30px, 0);
-            opacity: 0;
-        }
-        100% {
-            transform: translate3d(0, 0, 0);
-            opacity: 1;
-        }
-    }
-    .video-wrapper:not(.first) {
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    html.case-study footer#footer {
-        display: none;
-    }
-
-    form {
-        display: block;
-        position: relative;
-    }
-    form .notifications > div {
-        display: none;
-        background-repeat: no-repeat;
-        background-position: top 5px left 0;
-        background-size: 20px 20px;
-        font-weight: 500;
-        line-height: 1.875rem;
-        padding-left: 25px;
-        margin-bottom: 20px;
-        margin-top: 10px;
-    }
-    form .notifications > div.error {
-        background-image: url(../assets/images/icon_notification_error.svg);
-        color: #ff5959;
-    }
-    form .notifications > div.on {
-        display: block;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        form .notifications > div {
-            float: right;
-            margin-bottom: 0;
-            margin-top: 0;
-        }
-        form .notifications > div.on {
-            display: inline-block;
-        }
-    }
-    form .field {
-        display: block;
-        position: relative;
-        margin-bottom: 30px;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        form .field {
-            margin-bottom: 45px;
-        }
-    }
-    form .field label {
-        display: block;
-        cursor: text;
-        font-weight: 400;
-        font-size: 0.8123rem;
-        line-height: 1.25rem;
-        letter-spacing: 0.03em;
-        padding-top: 1px;
-        padding-bottom: 4px;
-        color: #878a8f;
-    }
-    form .field label + select {
-        margin-top: 5px;
-    }
-    form .field:after {
-        display: table;
-        clear: both;
-        content: '';
-    }
-    form .field.error select {
-        color: #ff5959;
-        border-color: #ff5959;
-    }
-    form .field.error select:focus {
-        color: #0f141e;
-        border-color: #e7e8e9;
-    }
-    form .field.error input[type='number'],
-    form .field.error input[type='password'],
-    form .field.error input[type='text'],
-    form .field.error textarea {
-        color: #ff5959;
-        border-color: #ff5959;
-    }
-    form .field.error input[type='number']:focus,
-    form .field.error input[type='password']:focus,
-    form .field.error input[type='text']:focus,
-    form .field.error textarea:focus {
-        color: #0f141e;
-        border-color: #0f141e;
-    }
-    form input,
-    form select,
-    form textarea {
-        font-family: 'Helvetica Now Display DW', sans-serif;
-        outline: 0;
-        appearance: none;
-        border-radius: 0;
-    }
-    form input[type='number'],
-    form input[type='password'],
-    form input[type='text'],
-    form textarea {
-        background: #fff;
-        width: 100%;
-        height: 45px;
-        font-size: 1.125rem;
-        line-height: 1.875rem;
-        font-weight: 500;
-        color: #0f141e;
-        padding: 8px 0 6px 0;
-        border: 1px solid #e7e8e9;
-        border-width: 0 0 1px 0;
-    }
-    form textarea {
-        padding: 8px 0 6px 0;
-    }
-    form textarea {
-        display: block;
-        height: auto;
-        min-height: 45px;
-        resize: none;
-        overflow-y: hidden;
-        overflow-x: hidden;
-    }
-    form select {
-        background: #fff url(../assets/images/icon_select_gray.svg) no-repeat top 15px right 15px;
-        background-size: 20px 20px;
-        width: 100%;
-        height: 50px;
-        font-size: 1.125rem;
-        line-height: 50px;
-        font-weight: 500;
-        color: #0f141e;
-        cursor: pointer;
-        padding: 1px 50px 0 20px;
-        border: 1px solid #e7e8e9;
-        transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-    }
-    form select:active,
-    form select:focus {
-        background-color: #f3f3f4;
-    }
-    form select option {
-        padding-left: 20px;
-        padding-right: 50px;
-    }
-    form button {
-        background: #fff;
-        position: relative;
-        display: block;
-        width: auto;
-        height: 30px;
-        font-family: 'Helvetica Now Display DW', sans-serif;
-        font-size: 1.125rem;
-        font-weight: 800;
-        line-height: 1.5625rem;
-        margin-top: 10px;
-        text-align: left;
-        color: #0f141e;
-        cursor: pointer;
-        padding: 0;
-        border: 0 none;
-        transition: background 0.2s linear;
-    }
-    form button:disabled {
-        cursor: default;
-    }
-    form button > span {
-        position: relative;
-        display: none;
-        padding-left: 28px;
-        padding-top: 1px;
-        padding-bottom: 4px;
-    }
-    form button > span .icon {
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        top: 3px;
-        left: 0;
-    }
-    form button > span:before {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 20px 20px;
-        position: absolute;
-        display: block;
-        width: 20px;
-        height: 20px;
-        top: 2px;
-        left: 0;
-        content: '';
-    }
-    form button > span.sending .icon {
-        animation: rotate-full 0.6s linear infinite;
-    }
-    form button.regular > span.regular {
-        display: block;
-    }
-    form button.sending {
-        background: #fff;
-    }
-    form button.sending > span.sending {
-        display: block;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        form button {
-            margin-top: 0;
-        }
-    }
-    @media (min-width: 1280px) {
-        form button {
-            cursor: default;
-        }
-        form button .regular {
-            cursor: pointer;
-        }
-        form button .regular:after {
-            border-bottom: 2px solid #0f141e;
-            background: 0 0;
-            position: absolute;
-            display: block;
-            top: 100%;
-            margin-top: -2px;
-            left: 0;
-            width: 100%;
-            height: 0;
-            content: '';
-            transition: opacity 0.2s linear;
-            opacity: 0;
-        }
-        form button:active .regular:after,
-        form button:hover .regular:after {
-            opacity: 1;
-        }
-    }
-
-    @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
-        header#header .logo {
-            margin-left: calc(env(safe-area-inset-left) + 14px);
-        }
-        header#header .menu {
-            margin-right: calc(env(safe-area-inset-left) + 14px);
-        }
-        .wrapper {
-            padding-left: calc(env(safe-area-inset-left) + 14px);
-            padding-right: calc(env(safe-area-inset-right) + 14px);
-        }
-        div.loader .text {
-            bottom: calc(env(safe-area-inset-bottom) + 14px);
-        }
-        div.loader .logo,
-        div.loader .text {
-            left: calc(env(safe-area-inset-left) + 14px);
-        }
-        a.scroll-top.on {
-            right: calc(env(safe-area-inset-right) + 14px);
-        }
-        nav#nav .logo {
-            left: calc(env(safe-area-inset-left) + 14px);
-        }
-        nav#nav .close {
-            right: calc(env(safe-area-inset-right) + 14px);
-        }
-    }
-    @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (min-width: 768px) and (min-height: 620px) {
-        header#header .logo {
-            margin-left: calc(env(safe-area-inset-left) + 30px);
-        }
-        header#header .menu {
-            margin-right: calc(env(safe-area-inset-left) + 30px);
-        }
-        .wrapper {
-            padding-left: calc(env(safe-area-inset-left) + 30px);
-            padding-right: calc(env(safe-area-inset-right) + 30px);
-        }
-        div.loader .logo,
-        div.loader .text {
-            left: calc(env(safe-area-inset-left) + 30px);
-        }
-        a.scroll-top.on {
-            right: calc(env(safe-area-inset-right) + 30px);
-        }
-        nav#nav .logo {
-            left: calc(env(safe-area-inset-left) + 30px);
-        }
-        nav#nav .close {
-            right: calc(env(safe-area-inset-right) + 30px);
-        }
-    }
-    @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {
-        div.loader .text {
-            bottom: calc(env(safe-area-inset-bottom) + 34px);
-        }
-    }
-
-    @keyframes scroll {
-        0% {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        50% {
-            opacity: 1;
-            transform: translateY(7px);
-        }
-    }
-
-    @keyframes newBadge {
-        from {
-            stroke-dashoffset: 295.16;
-            stroke-dasharray: 295.16;
-        }
-        to {
-            stroke-dasharray: 295.16;
-            stroke-dashoffset: 0;
-        }
-    }
-
-    .video-wrapper {
-        width: 100%;
-        position: relative;
-    }
-    .video-wrapper video {
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        opacity: 0;
-    }
-    .video-wrapper > div {
-        position: relative;
-    }
-    .video-wrapper.loaded {
-        overflow: hidden;
-    }
-    .video-wrapper.loaded video {
-        opacity: 1;
-        position: relative;
-    }
-    .video-wrapper.paused > div:before,
-    .video-wrapper:not(.loaded) > div:before {
-        content: '';
-        background-color: #878a8f;
-        border-radius: 100%;
-        display: block;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        z-index: 1;
-        transform-origin: 50%;
-        animation: sk-scaleout 1s infinite ease-in-out;
-        width: 40px;
-        height: 40px;
-        margin-left: -20px;
-        margin-top: -20px;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        .video-wrapper.paused > div:before,
-        .video-wrapper:not(.loaded) > div:before {
-            width: 60px;
-            height: 60px;
-            margin-left: -30px;
-            margin-top: -30px;
-        }
-    }
-
-    .Fly-in-up,
-    .Fly-in-down {
+    .Fly-in-up {
         animation: none;
         transition: none;
     }
     @media (prefers-reduced-motion: no-preference) {
         // Fly-in-up animation
         .Fly-in-up.is-visible {
+            opacity: 0;
             animation-name: Fly-in-up;
-            animation-duration: 1.2s;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
         }
         @keyframes Fly-in-up {
             0% {
                 opacity: 0;
                 filter: blur(2px);
-                transform: translateY(-25%);
+                transform: translate3d(0, 25px, 0);
                 transition: opacity 500ms ease-in, transform 0.4s ease-in;
             }
             100% {
                 opacity: 1;
                 filter: blur(0);
-                transform: translateY(0);
-            }
-        }
-
-        // Fly-in-down animation
-        .Fly-in-down.is-visible {
-            opacity: 0;
-            animation-name: Fly-in-down;
-            animation-duration: 2s;
-            animation-fill-mode: forwards;
-        }
-        @keyframes Fly-in-down {
-            0% {
-                opacity: 0;
-                transform: translateY(25%);
-                filter: blur(2px);
-                transition: opacity 0.5s ease-in, transform 0.4s ease-in;
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateY(0);
-            }
-        }
-
-        // Fade-in
-        .Fade-in {
-            animation-name: Fade-in;
-            animation-duration: 0.4s;
-        }
-        @keyframes Fade-in {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-                transition: opacity 250ms ease-in;
-            }
-        }
-
-        // Fade-out
-        .Fade-out {
-            animation-name: Fade-out;
-            animation-duration: 1s;
-        }
-        @keyframes Fade-out {
-            100% {
-                opacity: 0;
-            }
-            0% {
-                opacity: 1;
-                transition: opacity 250ms ease-in;
+                transform: translate3d(0, 0, 0);
             }
         }
     }

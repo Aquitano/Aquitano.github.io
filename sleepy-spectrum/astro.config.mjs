@@ -4,8 +4,10 @@ import compress from 'astro-compress';
 import { astroImageTools } from 'astro-imagetools';
 import { defineConfig } from 'astro/config';
 
+import purgecss from 'astro-purgecss';
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://aquitano.github.io',
-    integrations: [tailwind(), sitemap(), astroImageTools, compress()],
+    integrations: [tailwind(), sitemap(), astroImageTools, purgecss({ keyframes: true }), compress()],
 });
