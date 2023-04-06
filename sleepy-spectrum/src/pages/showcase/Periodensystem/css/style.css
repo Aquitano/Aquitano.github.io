@@ -1,0 +1,98 @@
+body {
+    background: #1c2b2d;
+    font-family: 'Poppins', sans-serif;
+    margin: 100px;
+}
+a {
+    text-decoration: none;
+}
+.periodic-table {
+    display: grid;
+    grid-template-columns: repeat(9, 120px);
+    grid-template-rows: repeat(7, 130);
+    grid-gap: 10px;
+    margin: auto;
+    max-width: 1200px;
+    justify-content: center;
+}
+.periodic-element {
+    padding: 4px;
+    position: relative;
+    z-index: 1;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+.periodic-element .periodic-element-inner {
+    background: #202e38;
+    padding: 10px 15px;
+    width: 100%;
+    height: 100%;
+    transition: inherit;
+}
+.period .periodic-element-inner {
+    background: #1c2b2d;
+    font: 700 50px 'Poppins', sans-serif;
+    color: white;
+}
+.periodic-element .title {
+    font: 700 26.1538px 'Poppins', sans-serif;
+    margin: 0.3em 0 0;
+    transition: 0.8s ease 600ms;
+}
+.periodic-element .desc {
+    font: 500 12px 'Poppins', sans-serif;
+    margin-top: -0.2em;
+}
+.periodic-element:hover {
+    transform: scale(1.12);
+    z-index: 10;
+}
+.periodic-element:hover .periodic-element-inner {
+    background: transparent;
+}
+.periodic-element:hover .title,
+.periodic-element:hover .desc {
+    -webkit-text-fill-color: #222;
+}
+.periodic-element:hover:after {
+    top: 105%;
+    opacity: 1;
+}
+.periodic-element {
+    cursor: pointer;
+}
+.one {
+    background: linear-gradient(to bottom right, #f3f9a6 0%, #cbc634 100%);
+}
+.one .title,
+.one .desc {
+    background: -webkit-linear-gradient(#f3f9a6, #cbc634);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.two {
+    background: linear-gradient(to bottom right, #b4f9a6 0%, #239e5b 100%);
+}
+.two .title,
+.two .desc {
+    background: -webkit-linear-gradient(#b4f9a6, #1d9955);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.three {
+    background: linear-gradient(to bottom right, #a6c7f9 0%, #23639e 100%);
+}
+.three .title,
+.three .desc {
+    background: -webkit-linear-gradient(#a6c7f9, #23639e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.empty-space-1 {
+    grid-column: 3 / span 6;
+    grid-row: 2;
+}
+.empty-space-2 {
+    grid-column: 1;
+    grid-row: 1;
+}

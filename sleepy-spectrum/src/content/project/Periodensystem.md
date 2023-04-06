@@ -1,12 +1,10 @@
 ---
-title: "Periodensystem"
-description: "Ein interaktives Periodensystem für alle"
+title: 'Periodensystem'
+description: 'Ein interaktives Periodensystem für alle'
 featured: false
-tags: ["HTML", "CSS", "JavaScript"]
-tasks: ["Frontend"]
-links: {
-    github: "https://github.com/aquitano/periodensystem",
-}
+tags: ['HTML', 'CSS', 'JavaScript']
+tasks: ['Frontend']
+links: { github: 'https://github.com/aquitano/periodensystem' }
 year: 2020
 ---
 

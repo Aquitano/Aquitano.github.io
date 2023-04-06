@@ -1,13 +1,10 @@
 ---
-title: "BetterGaming - Onlineshop"
-description: "Hochmoderne und funktionsfähige E-Commerce-Plattform für Videospiele"
+title: 'BetterGaming - Onlineshop'
+description: 'Hochmoderne und funktionsfähige E-Commerce-Plattform für Videospiele'
 featured: false
-tags: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"]
-tasks: ["Frontend", "Backend (PHP & MySQL)"]
-links: {
-    github: "https://github.com/Aquitano/Projects/tree/main/BetterGaming",
-    website: "https://bettergaming.de"
-}
+tags: ['PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript']
+tasks: ['Frontend', 'Backend (PHP & MySQL)']
+links: { github: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming', website: 'https://bettergaming.de' }
 year: 2021
 ---
 

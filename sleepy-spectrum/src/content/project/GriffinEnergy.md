@@ -1,13 +1,10 @@
 ---
-title: "Griffin Energy"
-description: "Akademisches Projekt zur Konzeption eines eigenen Produkts"
+title: 'Griffin Energy'
+description: 'Akademisches Projekt zur Konzeption eines eigenen Produkts'
 featured: false
-tags: ["HTML", "CSS", "JavaScript", "Blender", "3D-Modellierung"]
-tasks: ["Produktdesign", "Frontend", "3D-Modellierung"]
-links: {
-    github: "https://github.com/Aquitano/Projects/tree/main/BetterGaming",
-    website: "Griffin-Website/index.html"
-}
+tags: ['HTML', 'CSS', 'JavaScript', 'Blender', '3D-Modellierung']
+tasks: ['Produktdesign', 'Frontend', '3D-Modellierung']
+links: { github: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming', website: 'Griffin-Website/index.html' }
 year: 2020
 ---
 
