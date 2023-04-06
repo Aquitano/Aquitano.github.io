@@ -1,0 +1,327 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Timeline | Breindl Thomas" active="Über mich">
+    <body>
+        <div class="scroll-container">
+            <div class="wrapper flex flex-col items-center justify-center">
+                <section class="block">
+                    <div class="each-year">
+                        <div class="title Fly-in-up i-v">2020</div>
+                        <div class="each-event i-v Fly-in-up">
+                            <div class="event-description">
+                                Angefangen das Framework
+                                <a href="project/JustHTML" class="link-underline">JustHTML</a>, das helfen soll
+                                Webseiten nur mit HTML zu erstellen, zu erstellen.
+                            </div>
+                        </div>
+                        <div class="each-event i-v Fly-in-up">
+                            <div class="event-description">
+                                Projekt, ein Getränk mit der imaginären "Brummselbeere" zu gestalten, hat Produktdesign,
+                                Verpackungsdesign, Marketingstrategie und eine Webseite beinhaltet:
+                                <a href="project/Griffin" class="link-underline">Griffin Energy</a>.
+                            </div>
+                        </div>
+                        <div class="each-event i-v Fly-in-up">
+                            <div class="event-description">
+                                Angefangen mit dem Grafiktablett
+                                <a
+                                    href="https://www.wacom.com/de-de/products/pen-tablets/wacom-intuos"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
+                                >
+                                    Wacom Intuos
+                                </a>
+                                zu zeichnen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="block">
+                    <div class="each-year">
+                        <div class="title i-v Fly-in-up">2019</div>
+                        <div class="each-event i-v Fly-in-up">
+                            <div class="event-description">
+                                Mit der 3D-Grafiksuite
+                                <a
+                                    href="https://www.blender.org/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
+                                >
+                                    Blender
+                                </a>
+                                angefangen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="block">
+                    <div class="each-year">
+                        <div class="title i-v Fly-in-up">2018</div>
+                        <div class="each-event i-v Fly-in-up">
+                            <div class="event-description">
+                                In der Schule mit Java und der Game Engine
+                                <a
+                                    href="https://github.com/engine-alpha/engine-alpha"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
+                                >
+                                    Engine Alpha
+                                </a>
+                                angefangen.
+                            </div>
+                        </div>
+                        <div class="each-event i-v Fly-in-up">
+                            <div class="event-description">
+                                Mit Kurs
+                                <a
+                                    href="https://www.udemy.com/course/der-komplette-webentwickler-2/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="link-underline"
+                                >
+                                    "Der komplette Web-Entwickler von Udemy"
+                                </a>
+                                gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
+</Layout>
+
+<style lang="scss">
+    .link-underline {
+        font-weight: 600;
+        color: #21468f;
+        border-bottom-width: 0;
+        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.25s ease-in-out;
+
+        &:hover {
+            background-size: 100% 3px;
+            background-position: 0 100%;
+            text-shadow: 0 0 0.25px #0f141e80;
+        }
+    }
+    .wrapper {
+        width: 100%;
+        min-height: 100vh;
+        height: 100%;
+        font: normal 16px/26px Open Sans Condensed, sans-serif;
+        color: rgb(90, 90, 90);
+        padding: 100px 20px 200px;
+        box-sizing: border-box;
+    }
+    .block {
+        z-index: 1;
+        position: relative;
+    }
+    .block:before {
+        content: '';
+        position: absolute;
+        height: calc(100% - 40px);
+        width: 1px;
+        background-color: #353535;
+        left: 50%;
+        margin-top: 65px;
+    }
+    .title {
+        font: bold 42px/52px Open Sans Condensed, sans-serif;
+        text-align: center;
+        padding: 20px;
+        transition: all 0.8s ease-in-out;
+    }
+    @media screen and (min-width: 240px) {
+        .each-event {
+            background-color: #c2c2c277;
+            color: #777;
+            padding: 15px;
+            margin: 80px 0px;
+            width: 170px;
+            position: relative;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: all 0.3s ease-in-out;
+        }
+        .each-event:nth-child(even) {
+            margin-left: calc(50% - 191px);
+        }
+    }
+    @media screen and (min-width: 650px) {
+        .each-event {
+            background-color: #c2c2c277;
+            color: #777;
+            padding: 15px;
+            margin: 80px 0px;
+            width: 300px;
+            position: relative;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: all 0.3s ease-in-out;
+        }
+        .each-event:nth-child(even) {
+            margin-left: calc(50% - 321px);
+        }
+    }
+    .each-event:before {
+        content: '';
+        position: absolute;
+        top: calc(50% - 8px);
+        left: -27px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: rgb(80, 80, 80);
+        box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.8);
+    }
+    .each-event:nth-child(odd) {
+        margin-left: calc(50% + 20px);
+    }
+    .each-event:nth-child(even):before {
+        left: calc(100% + 14px);
+    }
+
+    // From index.html
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 60ch;
+    }
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+    .link-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+        gap: 1rem;
+        padding: 0;
+    }
+
+    /* New */
+    ::selection {
+        background-color: #878a8f;
+        color: #fff;
+    }
+    a:focus,
+    button:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: 0;
+    }
+    @keyframes loader-progress-on {
+        0%,
+        50% {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+        }
+        100% {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .icon {
+        display: inline-flex;
+        align-self: center;
+    }
+    .icon svg {
+        fill: currentColor;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        top: 0.025em;
+    }
+    a {
+        color: #878a8f;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(135, 138, 143, 0.4);
+        transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    }
+    a:active {
+        color: #0f141e;
+        border-color: #0f141e;
+    }
+    a.special,
+    a.with-icon {
+        position: relative;
+        color: #0f141e;
+        border: 0 none;
+        display: inline-block;
+        line-height: 1;
+    }
+
+    p {
+        color: #878a8f;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        padding-top: 2px;
+        padding-bottom: 3px;
+    }
+    p a .icon {
+        width: 16px;
+        height: 16px;
+    }
+    p a .icon svg {
+        top: 0.125em;
+    }
+    p a .icon--on-right {
+        margin-left: 5px;
+    }
+    strong {
+        font-weight: 500;
+        color: #0f141e;
+    }
+
+    .Fly-in-up {
+        animation: none;
+        transition: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        // Fly-in-up animation
+        .Fly-in-up.is-visible {
+            opacity: 0;
+            animation-name: Fly-in-up;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes Fly-in-up {
+            0% {
+                opacity: 0;
+                filter: blur(2px);
+                transform: translate3d(0, 25px, 0);
+                transition: opacity 500ms ease-in, transform 0.4s ease-in;
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+    }
+
+    .i-v {
+        opacity: 0;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+</style>
+
+<script src="./appearOnScroll.js" defer></script>

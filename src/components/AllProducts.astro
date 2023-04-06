@@ -1,0 +1,116 @@
+---
+import Card from './Card.astro';
+---
+
+<section class="home-portfolio" id="portfolio">
+    <div class="wrapper">
+        <div class="Fly-in-down">
+            <p class="pre-header Fly-in-down i-v font-semibold">Meine</p>
+            <h1 class="large Fly-in-down i-v">Projekte</h1>
+        </div>
+        <div class="list">
+            <!-- BetterGaming -->
+            <Card
+                name="BetterGaming"
+                year={2021}
+                decription="Onlineshop"
+                isNew={true}
+                url="project/bettergaming"
+                animation="Fly-in-left"
+            />
+            <!-- Griffin -->
+            <Card
+                name="Griffin"
+                year={2020}
+                decription="Produktdesign"
+                isNew={true}
+                url="project/griffinenergy"
+                animation="Fly-in-right"
+            />
+            <!-- Periodensystem -->
+            <Card
+                name="Periodensystem"
+                year={2020}
+                decription="Online"
+                url="project/periodensystem"
+                animation="Fly-in-left"
+            />
+            <!-- JustHTML -->
+            <Card name="JustHTML" year={2020} decription="Framework" url="project/justhtml" animation="Fly-in-right" />
+        </div>
+    </div>
+</section>
+
+<style lang="scss">
+    .pre-header {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-transform: uppercase;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        letter-spacing: 0.4em;
+        color: #878a8f;
+    }
+
+    section.home-portfolio {
+        z-index: 3;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        section.home-portfolio .list {
+            margin-top: 130px;
+        }
+    }
+
+    @media (min-width: 660px) {
+        section.home-portfolio .list {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 123px -7px -7px -7px;
+        }
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        section.home-portfolio .list {
+            margin: 110px -15px -15px -15px;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        section.home-portfolio .list {
+            margin: 95px -30px -30px -30px;
+        }
+    }
+
+    // Animation
+    .Fly-in-down {
+        animation: none;
+        transition: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        // Fly-in-down animation
+        .Fly-in-down.is-visible {
+            opacity: 0;
+            animation-name: Fly-in-down;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes Fly-in-down {
+            0% {
+                opacity: 0;
+                transform: translate3d(0, 25px, 0);
+                filter: blur(2px);
+                transition: opacity 0.5s ease-in, transform 0.4s ease-in, filter 0.1s ease-in;
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                tranform: translate3d(0, 0, 0);
+            }
+        }
+
+        .i-v {
+            opacity: 0;
+        }
+    }
+</style>
+
+<script></script>
