@@ -1,13 +1,16 @@
 ---
 export interface Props {
     active?: 'Home' | 'Über mich' | 'Projekte' | 'Kontakt';
+    location?: string;
 }
 
+const { location = '/' } = Astro.props;
+
 const menus = [
-    { name: 'Home', href: '/' },
-    { name: 'Über mich', href: 'timeline' },
-    { name: 'Projekte', href: 'projects' },
-    { name: 'Kontakt', href: 'contact' },
+    { name: 'Home', href: location },
+    { name: 'Über mich', href: `${location}timeline` },
+    { name: 'Projekte', href: `${location}projects` },
+    { name: 'Kontakt', href: `${location}contact` },
 ].map((menu) => {
     return {
         ...menu,

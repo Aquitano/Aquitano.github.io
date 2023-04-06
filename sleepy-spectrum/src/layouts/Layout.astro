@@ -37,9 +37,10 @@ export interface Props {
         };
     };
     active: string;
+    location?: string;
 }
 
-const { title, SEO: SEOData, active } = Astro.props;
+const { title, SEO: SEOData, active, location } = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -78,7 +79,7 @@ const { title, SEO: SEOData, active } = Astro.props;
     </head>
     <body>
         <Loader />
-        <Header active={active} />
+        <Header active={active} location={location} />
         <ScrollToTop />
 
         <slot />
