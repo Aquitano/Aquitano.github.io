@@ -12,6 +12,8 @@ const { name, decription, url, animation, isNew = false, year } = Astro.props;
 const newClass = isNew ? 'new' : '';
 
 const cardName = decription.length > 0 ? `${name} - ${decription}` : name;
+
+import { Img } from 'astro-imagetools/components';
 ---
 
 <div class:list={['list-item-portfolio', 'i-v', animation]}>
@@ -28,7 +30,7 @@ const cardName = decription.length > 0 ? `${name} - ${decription}` : name;
             )
         }
         <div>
-            <img
+            <Img
                 alt="BetterGaming - Designed by rawpixel.com / Freepik"
                 width="670px"
                 height="838px"
@@ -94,7 +96,7 @@ const cardName = decription.length > 0 ? `${name} - ${decription}` : name;
                 transition: opacity 0.2s linear;
             }
 
-            a div > img {
+            a div > Img {
                 box-sizing: border-box;
                 border-radius: 25px;
             }
@@ -256,7 +258,7 @@ const cardName = decription.length > 0 ? `${name} - ${decription}` : name;
             z-index: 2;
             pointer-events: none;
         }
-        & > a img {
+        & > a Img {
             position: relative;
             display: block;
             width: 100%;
@@ -402,7 +404,7 @@ const cardName = decription.length > 0 ? `${name} - ${decription}` : name;
         .list-item-portfolio > a:hover:before {
             opacity: 1;
         }
-        .list-item-portfolio > a:hover img {
+        .list-item-portfolio > a:hover Img {
             transform: scale(1.02);
         }
         .list-item-portfolio > a:hover strong.regular {
