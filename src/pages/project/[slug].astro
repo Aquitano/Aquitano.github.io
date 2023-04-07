@@ -1,4 +1,6 @@
 ---
+import type { Attributes } from 'astro-imagetools';
+import { Img } from 'astro-imagetools/components';
 import { CollectionEntry, getCollection } from 'astro:content';
 import LinkButton from '../../components/LinkButton.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -86,12 +88,18 @@ const { Content } = await project.render();
                 <section class="case-study-photos">
                     <div class="wrapper">
                         <div class="row">
-                            <div class="col-sm-6-6 col-md-12-12 col-smd-12-12 col-lg-12-12">
+                            <div>
                                 <div>
-                                    <img
+                                    <Img
                                         alt="Website on multiple devices"
-                                        src="../images/BetterGaming-full.jpg"
-                                        style="border-radius: 25px"
+                                        src="images/BetterGaming-full.jpg"
+                                        height="820px"
+                                        width="1420px"
+                                        attributes={{
+                                            img: {
+                                                class: 'rounded-3xl',
+                                            },
+                                        } as Attributes}
                                         loading="lazy"
                                     />
                                 </div>
@@ -214,7 +222,7 @@ const { Content } = await project.render();
             padding-top: 30px;
         }
     }
-    section.case-study-photos img {
+    section.case-study-photos Img {
         display: block;
         max-width: 100%;
         opacity: 1;
