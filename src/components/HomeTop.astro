@@ -1,0 +1,219 @@
+<section class="home-top landingpage poppins">
+    <div class="wrapper flex flex-col items-center">
+        <div class="text-center">
+            <h1 class="TB poppins font-extrabold">Thomas Breindl</h1>
+            <h2 class="header-light TB-sub poppins">
+                <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
+            </h2>
+            <nav class="links poppins" aria-label="Project-Link">
+                <a href="#portfolio" class="scroll-to link link-underline" rel="prefetch">Meine Projekte</a>
+                <span class="mx-4">oder</span>
+                <a href="timeline" class="link link-underline" rel="prefetch">Über Mich</a>
+            </nav>
+        </div>
+        <btn class="scroll-to toggle animate">
+            <div class="scroll-to-icon"></div>
+        </btn>
+    </div>
+</section>
+
+<style lang="scss">
+    .poppins {
+        font-family: Poppins, sans-serif;
+    }
+    // Underline animation
+    .link {
+        font-weight: 800;
+        letter-spacing: normal;
+        text-transform: uppercase;
+    }
+    .link-underline {
+        border-bottom-width: 0;
+        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.25s ease-in-out;
+
+        &:hover {
+            background-size: 100% 3px;
+            background-position: 0 100%;
+            text-shadow: 0 0 0.25px #0f141e80;
+        }
+    }
+
+    section.home-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* vertical */
+        justify-content: center; /* horizontal */
+        min-height: 100vh;
+        position: relative;
+        z-index: 2;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        section.home-top btn.toggle {
+            background: 0 0;
+            // display: none;
+            visibility: hidden;
+            width: 20px;
+            margin: 30px auto 20px auto;
+        }
+        section.home-top btn.toggle:after {
+            display: none;
+        }
+        section.home-top btn.toggle svg {
+            width: 20px;
+            height: 20px;
+            margin: 20px;
+        }
+        section.home-top btn.toggle svg path {
+            transition: fill 0.2s linear;
+        }
+        section.home-top btn.toggle:active svg path {
+            fill: #878a8f;
+        }
+        section.home-top btn.toggle:active .scroll-to-icon {
+            box-shadow: inset 0 0 0 2px #878a8f;
+        }
+        section.home-top btn.toggle:active .scroll-to-icon:after {
+            background: #878a8f;
+        }
+        section.home-top .scroll-to-icon {
+            width: 20px;
+            height: 30px;
+            box-shadow: inset 0 0 0 2px #0f141e;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out 0s;
+            transform: translateY(0);
+        }
+        section.home-top .scroll-to-icon:after {
+            content: '';
+            width: 4px;
+            height: 6px;
+            background: #0f141e;
+            margin-left: 8px;
+            top: 8px;
+            border-radius: 2px;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+            animation-name: scroll;
+            position: absolute;
+        }
+        section.home-top.keep-arrow btn.toggle {
+            // display: block;
+            visibility: visible;
+        }
+    }
+    @media (min-width: 1280px) {
+        section.home-top btn.toggle {
+            margin-top: 30px;
+        }
+        section.home-top btn.toggle:hover svg path {
+            fill: #878a8f;
+        }
+        section.home-top btn.toggle:hover .scroll-to-icon {
+            box-shadow: inset 0 0 0 2px #878a8f;
+        }
+        section.home-top btn.toggle:hover .scroll-to-icon:after {
+            background: #878a8f;
+        }
+    }
+    .container section.home-top .loaded {
+        visibility: visible;
+    }
+    .TB {
+        font-size: 60px;
+    }
+    .TB-sub {
+        font-size: 1.375rem;
+    }
+    @media screen and (max-width: 399px) {
+        .TB {
+            font-size: 50px;
+            text-align: center;
+        }
+    }
+    @media screen and (min-width: 400px) {
+        .TB {
+            font-size: 85px;
+        }
+    }
+    @media screen and (min-width: 568px) {
+        .TB {
+            font-size: 75px;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        .TB {
+            font-size: 70px;
+        }
+    }
+    @media screen and (min-width: 800px) {
+        .TB {
+            font-size: 80px;
+        }
+    }
+
+    // Animation
+    .Lading-animation {
+        animation: none;
+        transition: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        // Landing page animation
+        .Lading-animation {
+            z-index: 2;
+            opacity: 0;
+            animation-name: Lading-animation;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
+
+            &:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+            &:nth-child(2) {
+                animation-delay: 1s;
+
+                // .scroll-to weirdly is the second child and not the fourth
+                // Therefore, we need to add the following to make it work
+                &.animate {
+                    animation-delay: 2s;
+                }
+            }
+            &:nth-child(3) {
+                animation-delay: 1.5s;
+            }
+        }
+        @keyframes Lading-animation {
+            from {
+                opacity: 0;
+                visibility: hidden;
+                filter: blur(2px);
+                transform: translate3d(0, 25px, 0);
+                transition: opacity 0.5s ease-in, transform 0.4s ease-in;
+            }
+            to {
+                opacity: 1;
+                visibility: visible;
+                filter: blur(0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+    }
+</style>
+
+<script>
+    document.querySelector('.toggle')?.addEventListener('click', scrollToPortfolio);
+
+    function scrollToPortfolio() {
+        let portfolio: HTMLElement | null = document.querySelector('.home-portfolio');
+        if (!portfolio) {
+            return;
+        }
+
+        window.scrollBy({ top: portfolio?.offsetTop - 150, behavior: 'smooth' });
+    }
+</script>

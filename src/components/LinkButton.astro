@@ -1,0 +1,34 @@
+---
+import Icon from 'astro-icon';
+
+export interface Props {
+    text: string;
+    icon: string;
+    href: string;
+    style?: string;
+    target?: string;
+    rel?: string;
+}
+
+const { text, icon, href, style, target, rel } = Astro.props;
+---
+
+<a href={href} class="special" target={target} rel={rel}>
+    <button
+        class="flex items-center justify-center rounded-xl bg-neutral-900 px-4 py-2 transition-all duration-300 hover:bg-gray-800"
+    >
+        <div>
+            <Icon name={icon} style={style} />
+        </div>
+        <div class="mx-3 h-4 border-l border-gray-300"></div>
+        <div class="text-white">{text}</div>
+    </button>
+</a>
+
+<style lang="scss">
+    [astro-icon] {
+        color: #fff;
+        // width: 1.5rem;
+        // height: 1.5rem;
+    }
+</style>

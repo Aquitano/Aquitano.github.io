@@ -1,0 +1,116 @@
+---
+import LinkButton from './LinkButton.astro';
+
+const year = new Date().getFullYear();
+
+const Items = [
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/about' },
+    { name: 'Projects', url: '/projects' },
+    { name: 'Contact', url: '/contact' },
+];
+---
+
+<footer class="-mt-24">
+    <div class="spacer fill-black"></div>
+    <div class="footer-content">
+        <div class="container mx-auto px-4 pb-5">
+            <div class="grid grid-cols-3 gap-4">
+                <!-- Who am I -->
+                <div class="w-full px-4">
+                    <!-- Who am i - student: Thomas Breindl -->
+                    <h1 class="text-4xl font-semibold">Thomas Breindl</h1>
+                    <p class="mt-4 text-xl leading-relaxed text-gray-700">
+                        I'm a student at the Adalbert-Stifter-Gymnasium. <br />Tools Crafter · Focused on TypeScript &
+                        Python
+                    </p>
+                </div>
+                <!-- Contanct -->
+                <div class="flex flex-col items-center justify-center border-l-4 border-solid border-neutral-400 pl-5">
+                    <LinkButton text="Contact" icon="mdi:message" href="#" style={'width: 1.5rem'} />
+                </div>
+                <!-- Explore -->
+                <div
+                    class="flex w-full flex-col justify-center border-l-4 border-solid border-neutral-400 px-4 pl-5 text-right"
+                >
+                    <ul class="text-xl leading-loose text-gray-700">
+                        {
+                            Items.map((item) => {
+                                return (
+                                    <li>
+                                        <a
+                                            href={item.url}
+                                            class="link-underline text-gray-700 transition-colors duration-150 hover:text-gray-900"
+                                        >
+                                            {item.name}
+                                        </a>
+                                    </li>
+                                );
+                            })
+                        }
+                    </ul>
+                </div>
+            </div>
+            <!-- Credit -->
+            <div class="mt-10 flex flex-col items-center justify-center">
+                <div class="text-sm text-gray-700">© {year} Thomas Breindl. All rights reserved.</div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style lang="scss">
+    .link {
+        font-weight: 800;
+        letter-spacing: normal;
+        text-transform: uppercase;
+    }
+    .link-underline {
+        border-bottom-width: 0;
+        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 0.25s ease-in-out;
+
+        &:hover {
+            background-size: 100% 3px;
+            background-position: 0 100%;
+            text-shadow: 0 0 0.25px #0f141e80;
+        }
+    }
+
+    .spacer {
+        aspect-ratio: 960/300;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        background-image: url('/footer-wave.svg');
+    }
+    .footer-content {
+        background-color: #a8a89e;
+    }
+    footer {
+        min-width: 320px;
+    }
+    footer h3 br {
+        display: none;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        footer h3 br {
+            display: inline;
+        }
+    }
+    footer ul {
+        margin-top: 10px;
+        padding-top: 2px;
+        padding-bottom: 3px;
+    }
+    footer ul > li {
+        list-style-type: none;
+        font-weight: 500;
+        color: #878a8f;
+    }
+</style>

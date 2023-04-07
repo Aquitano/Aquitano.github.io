@@ -1,0 +1,312 @@
+---
+import type { Attributes } from 'astro-imagetools';
+import { Img } from 'astro-imagetools/components';
+import { CollectionEntry, getCollection } from 'astro:content';
+import LinkButton from '../../components/LinkButton.astro';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+    const projects = await getCollection('project');
+    return projects.map((project) => {
+        return {
+            params: {
+                slug: project.slug,
+            },
+            props: {
+                project,
+            },
+        };
+    });
+}
+
+interface Props {
+    project: CollectionEntry<'project'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<Layout title={project.data.title + ' | Breindl Thomas'} active="Project">
+    <body>
+        <div class="scroll-container">
+            <div class="">
+                <section class="case-study-top">
+                    <div class="wrapper">
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="info">
+                                <div>
+                                    <h1>{project.data.title}</h1>
+                                    <div id="Desc">
+                                        <p class="pre-header">Aufgabe</p>
+                                        <h4 class="header-dark">
+                                            {
+                                                project.data.tasks.map((task) => (
+                                                    <span>
+                                                        {task}
+                                                        <br />
+                                                    </span>
+                                                ))
+                                            }
+                                        </h4>
+                                        <p class="pre-header">Jahr</p>
+                                        <h4 class="header-dark">{project.data.year}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content col-span-2">
+                                <div class="content-body">
+                                    <Content class="text-justify text-xl font-normal" />
+                                    <br />
+                                    <div class="flex flex-row space-x-4">
+                                        {
+                                            project.data.links?.github && (
+                                                <LinkButton
+                                                    text="GitHub-Link"
+                                                    icon="mdi:github"
+                                                    href={project.data.links.github}
+                                                    style={'width: 1.5rem'}
+                                                />
+                                            )
+                                        }
+                                        {
+                                            project.data.links?.website && (
+                                                <LinkButton
+                                                    text="Webseite"
+                                                    icon="mdi:link"
+                                                    href={project.data.links.website}
+                                                    style={'width: 1.5rem'}
+                                                />
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="case-study-photos">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div>
+                                <div>
+                                    <Img
+                                        alt="Website on multiple devices"
+                                        src="images/BetterGaming-full.jpg"
+                                        height="820px"
+                                        width="1420px"
+                                        attributes={{
+                                            img: {
+                                                class: 'rounded-3xl',
+                                            },
+                                        } as Attributes}
+                                        loading="lazy"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
+</Layout>
+
+<style lang="scss">
+    .content-body {
+        color: #54595f;
+    }
+    .pre-header {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-transform: uppercase;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        letter-spacing: 0.4em;
+        color: #878a8f;
+    }
+
+    section.case-study-top {
+        padding-top: 100px;
+    }
+    section.case-study-top .info > div {
+        margin-top: 43px;
+    }
+    section.case-study-top .info > div:first-child {
+        margin-top: 0;
+    }
+    section.case-study-top .content {
+        margin-top: 20px;
+    }
+    section.case-study-top .content .data {
+        margin-top: 30px;
+    }
+    @media (min-width: 768px) and (min-height: 620px) {
+        section.case-study-top {
+            padding-top: 140px;
+        }
+    }
+    @media (min-width: 1024px) {
+        section.case-study-top .content {
+            margin-top: 55px;
+        }
+    }
+    @media (min-width: 1280px) {
+        section.case-study-top {
+            padding-top: 180px;
+        }
+    }
+    @media (min-width: 1480px) {
+        section.case-study-top {
+            padding-top: 200px;
+        }
+    }
+    .container.loaded section.case-study-top .info h5:nth-child(1) {
+        animation: animation-1st 0.6s linear;
+    }
+    .container.loaded section.case-study-top .info h5:nth-child(3),
+    .container.loaded section.case-study-top .info h5:nth-child(5),
+    .container.loaded section.case-study-top .info h5:nth-child(7) {
+        animation: animation-2nd 0.8s linear;
+    }
+    .container.loaded section.case-study-top .info h1 {
+        animation: animation-1st 0.6s linear;
+    }
+    .container.loaded section.case-study-top .info h4 {
+        animation: animation-2nd 0.8s linear;
+    }
+    .container.loaded section.case-study-top .content h3 {
+        animation: animation-3rd 1s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h4,
+    .container.loaded section.case-study-top .content h3 + p {
+        animation: animation-4th 1.2s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h3 + h4,
+    .container.loaded section.case-study-top .content h3 + h3 + p {
+        animation: animation-4th 1.4s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h4,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + p {
+        animation: animation-4th 1.6s linear;
+    }
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + h3,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + h4,
+    .container.loaded section.case-study-top .content h3 + h3 + h3 + h3 + p {
+        animation: animation-5th 1.8s linear;
+    }
+
+    section.case-study-photos .first {
+        animation: animation-6th 1.4s linear;
+    }
+    section.case-study-photos {
+        padding-top: 70px;
+    }
+    section.case-study-photos .row {
+        margin-top: -40px;
+    }
+    section.case-study-photos .row > div {
+        padding-top: 20px;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        section.case-study-photos {
+            padding-top: 130px;
+        }
+        section.case-study-photos .row {
+            margin-top: -30px;
+        }
+        section.case-study-photos .row > div {
+            padding-top: 30px;
+        }
+    }
+    section.case-study-photos Img {
+        display: block;
+        max-width: 100%;
+        opacity: 1;
+        margin: 0 auto;
+        width: 100%;
+    }
+    section.case-study-photos video {
+        display: block;
+        width: 100%;
+    }
+    @media (min-width: 768px) and (min-height: 620px) {
+        section.case-study-photos .row {
+            margin: -30px -15px 0 -15px;
+        }
+        section.case-study-photos .row > div {
+            padding: 30px 15px 0 15px;
+        }
+    }
+    @media (min-width: 1280px) {
+        section.case-study-photos .row {
+            margin: -60px -30px 0 -30px;
+        }
+        section.case-study-photos .row > div {
+            padding: 60px 30px 0 30px;
+        }
+    }
+
+    // Animation
+    .Lading-animation {
+        animation: none;
+        transition: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        // Landing page animation
+        .Lading-animation {
+            z-index: 2;
+            opacity: 0;
+            animation-name: Lading-animation;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
+
+            &:nth-child(1) {
+                animation-delay: 0.5s;
+
+                &.content-body {
+                    animation-delay: 1.5s;
+                }
+            }
+            &:nth-child(2) {
+                animation-delay: 1s;
+
+                &.case-study-photo {
+                    animation-delay: 2.5s;
+                }
+            }
+        }
+        @keyframes Lading-animation {
+            from {
+                opacity: 0;
+                visibility: hidden;
+                filter: blur(2px);
+                transform: translate3d(0, 20px, 0);
+                transition: opacity 0.5s ease-in, transform 0.4s ease-in;
+            }
+            to {
+                opacity: 1;
+                visibility: visible;
+                filter: blur(0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+    }
+</style>
+
+<script>
+    const $: (selector: string) => Element | null = (selector: string) => {
+        document.querySelector(selector);
+
+        return document.querySelector(selector);
+    };
+
+    $('.info h1')?.classList.add('Lading-animation');
+    $('#Desc')?.classList.add('Lading-animation');
+    $('.content .content-body')?.classList.add('Lading-animation');
+    $('.case-study-photos')?.classList.add('Lading-animation');
+</script>

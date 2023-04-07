@@ -1,0 +1,605 @@
+---
+import AllProducts from '../components/AllProducts.astro';
+import HomeTop from '../components/HomeTop.astro';
+import LinkButton from '../components/LinkButton.astro';
+import Layout from '../layouts/Layout.astro';
+
+const socials = [
+    {
+        name: 'GitHub',
+        icon: 'mdi:github',
+        link: 'https://www.github.com/Aquitano',
+    },
+    {
+        name: 'Twitter',
+        icon: 'mdi:twitter',
+        link: 'https://www.twitter.com/BreindlThomas',
+    },
+];
+---
+
+<Layout title="Breindl Thomas | Portfolio" active="Home">
+    <body>
+        <div id="Welcome">
+            <HomeTop />
+
+            <AllProducts />
+
+            <!-- Contact -->
+            <section class="mt-24">
+                <div class="wrapper">
+                    <span style="text-align: center">
+                        <h1 class="i-v Fly-in-up mb-4">Kontaktiere mich!</h1>
+                        <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
+                            {
+                                socials.map((social) => (
+                                    <div class="i-v Fly-in-up">
+                                        <LinkButton
+                                            text={social.name}
+                                            icon={social.icon}
+                                            href={social.link}
+                                            style={'width: 2rem'}
+                                            target={'_blank'}
+                                            rel={'noopener noreferrer'}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </span>
+                </div>
+            </section>
+        </div>
+    </body>
+</Layout>
+
+<style lang="scss">
+    main {
+        margin: auto;
+        padding: 1.5rem;
+        max-width: 60ch;
+    }
+    .text-gradient {
+        background-image: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 400%;
+        background-position: 0%;
+    }
+    .instructions {
+        line-height: 1.6;
+        margin: 1rem 0;
+        border: 1px solid rgba(var(--accent), 25%);
+        background-color: white;
+        padding: 1rem;
+        border-radius: 0.4rem;
+    }
+    .instructions code {
+        font-size: 0.875em;
+        font-weight: bold;
+        background: rgba(var(--accent), 12%);
+        color: rgb(var(--accent));
+        border-radius: 4px;
+        padding: 0.3em 0.45em;
+    }
+    .instructions strong {
+        color: rgb(var(--accent));
+    }
+    .link-card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+        gap: 1rem;
+        padding: 0;
+    }
+
+    /* New */
+    ::selection {
+        background-color: #878a8f;
+        color: #fff;
+    }
+    a:focus,
+    button:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: 0;
+    }
+    @keyframes loader-progress-on {
+        0%,
+        50% {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+        }
+        100% {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    .icon {
+        display: inline-flex;
+        align-self: center;
+    }
+    .icon svg {
+        fill: currentColor;
+        height: 100%;
+        width: 100%;
+        position: relative;
+        top: 0.025em;
+    }
+    a {
+        color: #878a8f;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(135, 138, 143, 0.4);
+        transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    }
+    a:active {
+        color: #0f141e;
+        border-color: #0f141e;
+    }
+    a.special,
+    a.with-icon {
+        position: relative;
+        color: #0f141e;
+        border: 0 none;
+        display: inline-block;
+        line-height: 1;
+    }
+
+    p {
+        color: #878a8f;
+        font-weight: 500;
+        letter-spacing: 0.01em;
+        padding-top: 2px;
+        padding-bottom: 3px;
+    }
+    p a .icon {
+        width: 16px;
+        height: 16px;
+    }
+    p a .icon svg {
+        top: 0.125em;
+    }
+    p a .icon--on-right {
+        margin-left: 5px;
+    }
+    strong {
+        font-weight: 500;
+        color: #0f141e;
+    }
+
+    nav.links {
+        display: block;
+        margin-top: 10px;
+    }
+    nav.links h1,
+    nav.links h2,
+    nav.links h3,
+    nav.links h4,
+    nav.links h5 {
+        display: inline-block;
+    }
+    nav.links span {
+        color: #282a2c;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        nav.links {
+            margin-top: 20px;
+        }
+        nav.links span {
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+    }
+
+    .video-wrapper:not(.first) {
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    html.case-study footer#footer {
+        display: none;
+    }
+
+    form {
+        display: block;
+        position: relative;
+    }
+    form .notifications > div {
+        display: none;
+        background-repeat: no-repeat;
+        background-position: top 5px left 0;
+        background-size: 20px 20px;
+        font-weight: 500;
+        line-height: 1.875rem;
+        padding-left: 25px;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    form .notifications > div.error {
+        background-image: url(../assets/images/icon_notification_error.svg);
+        color: #ff5959;
+    }
+    form .notifications > div.on {
+        display: block;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        form .notifications > div {
+            float: right;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+        form .notifications > div.on {
+            display: inline-block;
+        }
+    }
+    form .field {
+        display: block;
+        position: relative;
+        margin-bottom: 30px;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        form .field {
+            margin-bottom: 45px;
+        }
+    }
+    form .field label {
+        display: block;
+        cursor: text;
+        font-weight: 400;
+        font-size: 0.8123rem;
+        line-height: 1.25rem;
+        letter-spacing: 0.03em;
+        padding-top: 1px;
+        padding-bottom: 4px;
+        color: #878a8f;
+    }
+    form .field label + select {
+        margin-top: 5px;
+    }
+    form .field:after {
+        display: table;
+        clear: both;
+        content: '';
+    }
+    form .field.error select {
+        color: #ff5959;
+        border-color: #ff5959;
+    }
+    form .field.error select:focus {
+        color: #0f141e;
+        border-color: #e7e8e9;
+    }
+    form .field.error input[type='number'],
+    form .field.error input[type='password'],
+    form .field.error input[type='text'],
+    form .field.error textarea {
+        color: #ff5959;
+        border-color: #ff5959;
+    }
+    form .field.error input[type='number']:focus,
+    form .field.error input[type='password']:focus,
+    form .field.error input[type='text']:focus,
+    form .field.error textarea:focus {
+        color: #0f141e;
+        border-color: #0f141e;
+    }
+    form input,
+    form select,
+    form textarea {
+        font-family: 'Helvetica Now Display DW', sans-serif;
+        outline: 0;
+        appearance: none;
+        border-radius: 0;
+    }
+    form input[type='number'],
+    form input[type='password'],
+    form input[type='text'],
+    form textarea {
+        background: #fff;
+        width: 100%;
+        height: 45px;
+        font-size: 1.125rem;
+        line-height: 1.875rem;
+        font-weight: 500;
+        color: #0f141e;
+        padding: 8px 0 6px 0;
+        border: 1px solid #e7e8e9;
+        border-width: 0 0 1px 0;
+    }
+    form textarea {
+        padding: 8px 0 6px 0;
+    }
+    form textarea {
+        display: block;
+        height: auto;
+        min-height: 45px;
+        resize: none;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+    form select {
+        background: #fff url(../assets/images/icon_select_gray.svg) no-repeat top 15px right 15px;
+        background-size: 20px 20px;
+        width: 100%;
+        height: 50px;
+        font-size: 1.125rem;
+        line-height: 50px;
+        font-weight: 500;
+        color: #0f141e;
+        cursor: pointer;
+        padding: 1px 50px 0 20px;
+        border: 1px solid #e7e8e9;
+        transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+    }
+    form select:active,
+    form select:focus {
+        background-color: #f3f3f4;
+    }
+    form select option {
+        padding-left: 20px;
+        padding-right: 50px;
+    }
+    form button {
+        background: #fff;
+        position: relative;
+        display: block;
+        width: auto;
+        height: 30px;
+        font-family: 'Helvetica Now Display DW', sans-serif;
+        font-size: 1.125rem;
+        font-weight: 800;
+        line-height: 1.5625rem;
+        margin-top: 10px;
+        text-align: left;
+        color: #0f141e;
+        cursor: pointer;
+        padding: 0;
+        border: 0 none;
+        transition: background 0.2s linear;
+    }
+    form button:disabled {
+        cursor: default;
+    }
+    form button > span {
+        position: relative;
+        display: none;
+        padding-left: 28px;
+        padding-top: 1px;
+        padding-bottom: 4px;
+    }
+    form button > span .icon {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        top: 3px;
+        left: 0;
+    }
+    form button > span:before {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        position: absolute;
+        display: block;
+        width: 20px;
+        height: 20px;
+        top: 2px;
+        left: 0;
+        content: '';
+    }
+    form button > span.sending .icon {
+        animation: rotate-full 0.6s linear infinite;
+    }
+    form button.regular > span.regular {
+        display: block;
+    }
+    form button.sending {
+        background: #fff;
+    }
+    form button.sending > span.sending {
+        display: block;
+    }
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        form button {
+            margin-top: 0;
+        }
+    }
+    @media (min-width: 1280px) {
+        form button {
+            cursor: default;
+        }
+        form button .regular {
+            cursor: pointer;
+        }
+        form button .regular:after {
+            border-bottom: 2px solid #0f141e;
+            background: 0 0;
+            position: absolute;
+            display: block;
+            top: 100%;
+            margin-top: -2px;
+            left: 0;
+            width: 100%;
+            height: 0;
+            content: '';
+            transition: opacity 0.2s linear;
+            opacity: 0;
+        }
+        form button:active .regular:after,
+        form button:hover .regular:after {
+            opacity: 1;
+        }
+    }
+
+    @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+        header#header .logo {
+            margin-left: calc(env(safe-area-inset-left) + 14px);
+        }
+        header#header .menu {
+            margin-right: calc(env(safe-area-inset-left) + 14px);
+        }
+        .wrapper {
+            padding-left: calc(env(safe-area-inset-left) + 14px);
+            padding-right: calc(env(safe-area-inset-right) + 14px);
+        }
+        div.loader .text {
+            bottom: calc(env(safe-area-inset-bottom) + 14px);
+        }
+        div.loader .logo,
+        div.loader .text {
+            left: calc(env(safe-area-inset-left) + 14px);
+        }
+        a.scroll-top.on {
+            right: calc(env(safe-area-inset-right) + 14px);
+        }
+        nav#nav .logo {
+            left: calc(env(safe-area-inset-left) + 14px);
+        }
+        nav#nav .close {
+            right: calc(env(safe-area-inset-right) + 14px);
+        }
+    }
+    @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (min-width: 768px) and (min-height: 620px) {
+        header#header .logo {
+            margin-left: calc(env(safe-area-inset-left) + 30px);
+        }
+        header#header .menu {
+            margin-right: calc(env(safe-area-inset-left) + 30px);
+        }
+        .wrapper {
+            padding-left: calc(env(safe-area-inset-left) + 30px);
+            padding-right: calc(env(safe-area-inset-right) + 30px);
+        }
+        div.loader .logo,
+        div.loader .text {
+            left: calc(env(safe-area-inset-left) + 30px);
+        }
+        a.scroll-top.on {
+            right: calc(env(safe-area-inset-right) + 30px);
+        }
+        nav#nav .logo {
+            left: calc(env(safe-area-inset-left) + 30px);
+        }
+        nav#nav .close {
+            right: calc(env(safe-area-inset-right) + 30px);
+        }
+    }
+    @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape) {
+        div.loader .text {
+            bottom: calc(env(safe-area-inset-bottom) + 34px);
+        }
+    }
+
+    @keyframes scroll {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        50% {
+            opacity: 1;
+            transform: translateY(7px);
+        }
+    }
+
+    @keyframes newBadge {
+        from {
+            stroke-dashoffset: 295.16;
+            stroke-dasharray: 295.16;
+        }
+        to {
+            stroke-dasharray: 295.16;
+            stroke-dashoffset: 0;
+        }
+    }
+
+    .Fly-in-up {
+        animation: none;
+        transition: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        // Fly-in-up animation
+        .Fly-in-up.is-visible {
+            opacity: 0;
+            animation-name: Fly-in-up;
+            animation-duration: 2s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes Fly-in-up {
+            0% {
+                opacity: 0;
+                filter: blur(2px);
+                transform: translate3d(0, 25px, 0);
+                transition: opacity 500ms ease-in, transform 0.4s ease-in;
+            }
+            100% {
+                opacity: 1;
+                filter: blur(0);
+                transform: translate3d(0, 0, 0);
+            }
+        }
+
+        // Fade-in
+        .Fade-in {
+            animation-name: Fade-in;
+            animation-duration: 0.4s;
+        }
+        @keyframes Fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+                transition: opacity 250ms ease-in;
+            }
+        }
+
+        // Fade-out
+        .Fade-out {
+            animation-name: Fade-out;
+            animation-duration: 1s;
+        }
+        @keyframes Fade-out {
+            100% {
+                opacity: 0;
+            }
+            0% {
+                opacity: 1;
+                transition: opacity 250ms ease-in;
+            }
+        }
+    }
+
+    .i-v {
+        opacity: 0;
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+</style>
+
+<script src="./appearOnScroll.js" defer></script>
+
+<script>
+    const $: (selector: string) => Element | null = (selector: string) => {
+        document.querySelector(selector);
+        return document.querySelector(selector);
+    };
+
+    window.addEventListener('load', () => {
+        $('.TB')?.classList.add('Lading-animation');
+        $('.header-light')?.classList.add('Lading-animation');
+        $('.links')?.classList.add('Lading-animation');
+        $('.animate')?.classList.add('Lading-animation');
+    });
+</script>

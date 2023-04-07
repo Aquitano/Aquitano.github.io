@@ -1,0 +1,79 @@
+<button
+    id="scroll-to-top"
+    title="Go To Top"
+    class="scroll-top fixed bottom-8 right-8 z-50 h-11 w-11 rounded-full border-0 text-3xl font-bold text-white"
+    >&uarr;</button
+>
+
+<style lang="scss">
+    .scroll-top {
+        background: rgba(15, 20, 30, 0.5);
+        opacity: 0;
+        bottom: 14px;
+        border: 0 none;
+        border-radius: 23px;
+        transition: background 0.2s ease-in-out;
+
+        &:hover {
+            background: rgba(15, 20, 30, 0.65);
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        // Fly-in-up animation
+        .Fly-in-up {
+            animation-name: Fly-in-down;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
+        }
+
+        // Fly-in-down animation
+        .Fly-out-down {
+            animation-name: Fly-out-down;
+            animation-duration: 1.2s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes Fly-out-down {
+            0% {
+                opacity: 1;
+                filter: blur(2px);
+                transform: translate3d(0, 0, 0);
+                transition: opacity 0.5s ease-out, transform 0.4s ease-out;
+            }
+            100% {
+                opacity: 0;
+                visibility: hidden;
+                transform: translate3d(0, 25px, 0);
+                filter: blur(0);
+            }
+        }
+    }
+</style>
+
+<script>
+    const scrollButton = document.querySelector('#scroll-to-top');
+
+    window.addEventListener('scroll', () => {
+        // Distance from top of page
+        const scroll = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (scroll > 1000) {
+            scrollButton?.classList.add('Fly-in-up');
+            scrollButton?.classList.remove('Fly-out-down');
+        } else {
+            if (scrollButton?.classList.contains('Fly-in-up')) {
+                scrollButton?.classList.add('Fly-out-down');
+                scrollButton?.classList.remove('Fly-in-up');
+            }
+        }
+    });
+
+    scrollButton?.addEventListener('click', goToTop);
+
+    function goToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }
+</script>
