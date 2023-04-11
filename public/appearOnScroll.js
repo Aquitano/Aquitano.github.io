@@ -29,7 +29,6 @@
             let element = elements[i];
             if (true === isInViewport(element, scrollTop, viewportTop, viewportBottom)) {
                 if (!hasClass(element, IN_VIEWPORT_CLASS)) {
-                    console.log('in viewport');
                     addClass(element, FADE);
                 }
             }
