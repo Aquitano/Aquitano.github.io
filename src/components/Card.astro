@@ -1,5 +1,6 @@
 ---
 export interface Props {
+    title: string;
     name: string;
     decription: string;
     url: string;
@@ -8,10 +9,8 @@ export interface Props {
     animation: 'Fly-in-right' | 'Fly-in-left';
 }
 
-const { name, decription, url, animation, isNew = false, year } = Astro.props;
+const { name, title, url, animation, isNew = false, year } = Astro.props;
 const newClass = isNew ? 'new' : '';
-
-const cardName = decription.length > 0 ? `${name} - ${decription}` : name;
 
 import { Img } from 'astro-imagetools/components';
 ---
@@ -40,7 +39,7 @@ import { Img } from 'astro-imagetools/components';
         </div>
         <strong class="regular white-bg">
             <span class="h5">{year}</span>
-            <span class="h2 with-badge font-extrabold">{cardName}</span>
+            <span class="h2 with-badge font-extrabold">{title}</span>
             <span class="more with-icon">
                 <p>
                     Mehr erfahren!
@@ -52,7 +51,7 @@ import { Img } from 'astro-imagetools/components';
         </strong>
         <strong class="action"
             ><span class="h5">{year}</span>
-            <span class="h2 with-badge font-extrabold">{cardName}</span>
+            <span class="h2 with-badge font-extrabold">{title}</span>
             <span class="more with-icon">
                 <p>
                     Mehr erfahren!<span class="icon icon-arrow-link-thin icon--on-right"

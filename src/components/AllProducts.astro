@@ -1,5 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import Card from './Card.astro';
+
+const allProducts = await getCollection('project');
+const allFeaturedProducts = allProducts.filter((product) => product.data.featured === true);
+const currentYear = new Date().getFullYear();
 ---
 
 <section class="home-portfolio" id="portfolio">
@@ -9,34 +14,19 @@ import Card from './Card.astro';
             <h1 class="large Fly-in-down i-v">Projekte</h1>
         </div>
         <div class="list">
-            <!-- BetterGaming -->
-            <Card
-                name="BetterGaming"
-                year={2021}
-                decription="Onlineshop"
-                isNew={true}
-                url="project/bettergaming"
-                animation="Fly-in-left"
-            />
-            <!-- Griffin -->
-            <Card
-                name="Griffin"
-                year={2020}
-                decription="Produktdesign"
-                isNew={true}
-                url="project/griffinenergy"
-                animation="Fly-in-right"
-            />
-            <!-- Periodensystem -->
-            <Card
-                name="Periodensystem"
-                year={2020}
-                decription="Online"
-                url="project/periodensystem"
-                animation="Fly-in-left"
-            />
-            <!-- JustHTML -->
-            <Card name="JustHTML" year={2020} decription="Framework" url="project/justhtml" animation="Fly-in-right" />
+            {
+                allFeaturedProducts.map((product, index) => (
+                    <Card
+                        title={product.data.title}
+                        name={product.data.name}
+                        year={product.data.year}
+                        decription={product.data.description}
+                        isNew={product.data.year === currentYear}
+                        url={`project/${product.slug}`}
+                        animation={index % 2 === 1 ? 'Fly-in-right' : 'Fly-in-left'}
+                    />
+                ))
+            }
         </div>
     </div>
 </section>

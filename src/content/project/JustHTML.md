@@ -1,7 +1,8 @@
 ---
 title: 'JustHTML - Framework'
+name: 'JustHTML'
 description: 'Innovatives Framework zur Vereinfachung der Webseiten-Erstellung'
-featured: false
+featured: true
 tags: ['HTML', 'CSS', 'JavaScript']
 tasks: ['Frontend', 'Framework']
 links: { github: 'https://github.com/Aquitano/JustHTML' }

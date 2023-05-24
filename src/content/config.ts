@@ -4,6 +4,7 @@ export const collections = {
     project: defineCollection({
         schema: z.object({
             title: z.string(),
+            name: z.string(),
             description: z.string(),
             featured: z.boolean(),
             tags: z.array(z.string().default('Project')),
