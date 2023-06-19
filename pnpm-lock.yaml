@@ -29,8 +29,8 @@ dependencies:
     specifier: ^2.1.0
     version: 2.1.0(astro@2.6.4)
   astro-seo:
-    specifier: ^0.7.2
-    version: 0.7.2
+    specifier: ^0.7.4
+    version: 0.7.4
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.23)
@@ -1362,8 +1362,8 @@ packages:
       purgecss: 5.0.0
     dev: false
 
-  /astro-seo@0.7.2:
-    resolution: {integrity: sha512-YnSqj4E6vbF7wRk3gcxOPHBjenhfgaINEJlTsnu4sovAyfyGEdQksbioYKoZ+vERRDaYvEricfSzC6fc9lieww==}
+  /astro-seo@0.7.4:
+    resolution: {integrity: sha512-E+wJmxOnvBRjgzVctdGk/VdwoEqeQ6Q/KgVW2wRBXZWJVDgOweB32Da/UiH0/FpGncPzo2daOrc08DNn5wTanw==}
     dev: false
 
   /astro@2.6.4(sass@1.63.3):
