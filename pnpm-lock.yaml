@@ -18,8 +18,8 @@ dependencies:
     specifier: ^2.7.3
     version: 2.7.3(sass@1.63.6)
   astro-compress:
-    specifier: ^1.1.48
-    version: 1.1.48
+    specifier: ^1.1.49
+    version: 1.1.49
   astro-critters:
     specifier: ^1.1.38
     version: 1.1.38
@@ -1312,8 +1312,8 @@ packages:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
     dev: false
 
-  /astro-compress@1.1.48:
-    resolution: {integrity: sha512-oQVCAcJ0/A+8iX1l8ozrpkCZKihX+1tPAJ1cKTqAHpljMNqgVYJsR3b3rw05U9KFsYOF2sNugKoFM0OLu5fZdg==}
+  /astro-compress@1.1.49:
+    resolution: {integrity: sha512-AesUqim8kYslKmZqacAo3W422eVT7hWDrVaA4tXdWH8fpBI3qRbukl7+OO0dWmLIf6ubukMZiqg3THmSCEl5ow==}
     dependencies:
       '@types/csso': 5.0.0
       '@types/html-minifier-terser': 7.0.0
