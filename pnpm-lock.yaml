@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.1.49
     version: 1.1.49
   astro-critters:
-    specifier: ^1.1.38
-    version: 1.1.38
+    specifier: ^1.1.39
+    version: 1.1.39
   astro-icon:
     specifier: ^0.8.1
     version: 0.8.1
@@ -1325,10 +1325,10 @@ packages:
       terser: 5.18.2
     dev: false
 
-  /astro-critters@1.1.38:
-    resolution: {integrity: sha512-hU2XTAxJg3KIq6u5H6VJCJBr120uG8YbTJOqeB/0VP8ufmPCkBcvQs6HzSP1g5qgPjkX9572lZdbSjmrkVjqvQ==}
+  /astro-critters@1.1.39:
+    resolution: {integrity: sha512-Y4sqVwIAqEdpABEbf4mO0sB1KuibAjng7vxw66qrOrCkZuOoozqf3lbGWiB9PDqR6vQHTMr9zjcDcpxb1GRg0Q==}
     dependencies:
-      critters: 0.0.18
+      critters: 0.0.19
       files-pipe: 0.0.7
     dev: false
 
@@ -1791,8 +1791,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /critters@0.0.18:
-    resolution: {integrity: sha512-I7t/da29EIWXgxx2RSW1md1DvenEgEuLlki6nHE5+Nc0e3eib5AuGIGbPVuI8q+erCKkSP9T/NqYfvasAy7x7A==}
+  /critters@0.0.19:
+    resolution: {integrity: sha512-Fm4ZAXsG0VzWy1U30rP4qxbaWGSsqXDgSupJW1OUJGDAs0KWC+j37v7p5a2kZ9BPJvhRzWm3be+Hc9WvQOBUOw==}
     dependencies:
       chalk: 4.1.2
       css-select: 5.1.0
