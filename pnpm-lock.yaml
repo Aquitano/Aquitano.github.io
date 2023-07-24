@@ -30,8 +30,8 @@ dependencies:
     specifier: ^0.8.1
     version: 0.8.1(astro@2.8.5)
   astro-purgecss:
-    specifier: ^2.2.0
-    version: 2.2.0(astro@2.8.5)
+    specifier: ^2.3.0
+    version: 2.3.0(astro@2.8.5)
   astro-seo:
     specifier: ^0.7.5
     version: 0.7.5
@@ -1353,8 +1353,8 @@ packages:
       imagetools-core: 3.0.2
     dev: false
 
-  /astro-purgecss@2.2.0(astro@2.8.5):
-    resolution: {integrity: sha512-FQMtQr8HCeHZOFJBltcRLceRFu8xQRk/dYyp8r6WEL4OmuNgkrqG1tJbBlkcBHeNf+gogiHYtQXuFanUOzsimA==}
+  /astro-purgecss@2.3.0(astro@2.8.5):
+    resolution: {integrity: sha512-HeIhTFjNupoPP7w8rQpadAmc1Y7zrUOq2jbF6z66DwZ5+bshh/jNf5pviz6JsSQrNviiIL/mLw4EyVK69krz+w==}
     peerDependencies:
       astro: ^2.0.0
     dependencies:
