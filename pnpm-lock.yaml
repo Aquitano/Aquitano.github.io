@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.1.49
     version: 1.1.49
   astro-critters:
-    specifier: ^1.1.39
-    version: 1.1.39
+    specifier: ^1.1.40
+    version: 1.1.40
   astro-icon:
     specifier: ^0.8.1
     version: 0.8.1
@@ -1321,11 +1321,11 @@ packages:
       terser: 5.18.2
     dev: false
 
-  /astro-critters@1.1.39:
-    resolution: {integrity: sha512-Y4sqVwIAqEdpABEbf4mO0sB1KuibAjng7vxw66qrOrCkZuOoozqf3lbGWiB9PDqR6vQHTMr9zjcDcpxb1GRg0Q==}
+  /astro-critters@1.1.40:
+    resolution: {integrity: sha512-82fDfSvL+z1Zv+Tl+576HO2AQknhfAnDM0nxQU1KULtwnDMBunteK1FKC2jSwVCUDyAGwLySLS8vz3V2VTv98Q==}
     dependencies:
       critters: 0.0.19
-      files-pipe: 0.0.7
+      files-pipe: 0.0.8
     dev: false
 
   /astro-icon@0.8.1:
@@ -2226,6 +2226,17 @@ packages:
       micromatch: 4.0.5
     dev: false
 
+  /fast-glob@3.3.1:
+    resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
+    engines: {node: '>=8.6.0'}
+    dependencies:
+      '@nodelib/fs.stat': 2.0.5
+      '@nodelib/fs.walk': 1.2.8
+      glob-parent: 5.1.2
+      merge2: 1.4.1
+      micromatch: 4.0.5
+    dev: false
+
   /fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
     dependencies:
@@ -2259,6 +2270,13 @@ packages:
     dependencies:
       deepmerge-ts: 5.1.0
       fast-glob: 3.2.12
+    dev: false
+
+  /files-pipe@0.0.8:
+    resolution: {integrity: sha512-c/hf3Kuhrlpn92sbe7HifJ4DOHrOPw7b7nR+4VIzqcuSXgkICwBicw6qDKoEjzEXCi6sjcL0CxBpYyikwf7KvQ==}
+    dependencies:
+      deepmerge-ts: 5.1.0
+      fast-glob: 3.3.1
     dev: false
 
   /fill-range@7.0.1:
