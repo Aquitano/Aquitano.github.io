@@ -539,7 +539,9 @@ const socials = [
                 opacity: 0;
                 filter: blur(2px);
                 transform: translate3d(0, 25px, 0);
-                transition: opacity 500ms ease-in, transform 0.4s ease-in;
+                transition:
+                    opacity 500ms ease-in,
+                    transform 0.4s ease-in;
             }
             100% {
                 opacity: 1;
@@ -588,7 +590,63 @@ const socials = [
     }
 </style>
 
-<script src="./appearOnScroll.js" defer></script>
+<script>
+    type ElementList = HTMLCollectionOf<Element>;
+
+    const WATCH_CLASS: string = 'i-v';
+    const IN_VIEWPORT_CLASS: string = 'in-viewport';
+    const FADE: string = 'is-visible';
+    let elements: ElementList;
+
+    function hasClass(element: Element, className: string): boolean {
+        if (element.classList) {
+            return element.classList.contains(className);
+        } else {
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+        }
+    }
+
+    function addClass(element: Element, className: string): void {
+        element.classList.add(className);
+    }
+
+    function storeElements(): void {
+        elements = document.getElementsByClassName(WATCH_CLASS) as ElementList;
+    }
+
+    function update(): void {
+        const viewportTop: number = window.scrollY || document.documentElement.scrollTop;
+        const viewportBottom: number =
+            viewportTop + (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+        const scrollTop: number = window.scrollY || document.documentElement.scrollTop;
+
+        for (let i = 0, len = elements.length; i < len; i += 1) {
+            const element: Element = elements[i];
+            if (true === isInViewport(element, scrollTop, viewportTop, viewportBottom)) {
+                if (!hasClass(element, IN_VIEWPORT_CLASS)) {
+                    addClass(element, FADE);
+                }
+            }
+        }
+    }
+
+    function isInViewport(element: Element, scrollTop: number, viewportTop: number, viewportBottom: number): boolean {
+        const elementRect: DOMRect = element.getBoundingClientRect();
+        const elementTop: number = elementRect.top + scrollTop;
+        const elementBottom: number = elementTop + (element as HTMLElement).offsetHeight;
+
+        return !!(elementBottom >= viewportTop && elementTop < viewportBottom);
+    }
+
+    document.addEventListener('DOMContentLoaded', function (event) {
+        if (document.readyState === 'interactive') {
+            storeElements();
+            document.addEventListener('scroll', update);
+            document.addEventListener('resize', update);
+            update();
+        }
+    });
+</script>
 
 <script>
     const $: (selector: string) => Element | null = (selector: string) => {

@@ -1,3 +1,13 @@
 {
-    "extends": "astro/tsconfigs/strict"
+    "extends": "astro/tsconfigs/strict",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "moduleResolution": "NodeNext",
+        "paths": {
+            "@components/*": ["src/components/*"],
+            "@assets/*": ["src/assets/*"],
+            "@src/*": ["src/*"]
+        }
+    },
+    "include": ["src/**/*", "public/showcase/griffin/js"]
 }

@@ -91,7 +91,9 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 font-family: Poppins;
                 font-style: normal;
                 font-weight: 400;
-                src: local(''), url(/fonts/poppins-v15-latin-ext_latin_devanagari-regular.woff2) format('woff2'),
+                src:
+                    local(''),
+                    url(/fonts/poppins-v15-latin-ext_latin_devanagari-regular.woff2) format('woff2'),
                     url(/fonts/poppins-v15-latin-ext_latin_devanagari-regular.woff) format('woff');
                 font-display: swap;
             }
@@ -99,7 +101,9 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 font-family: Poppins;
                 font-style: normal;
                 font-weight: 500;
-                src: local(''), url(/fonts/poppins-v15-latin-ext_latin_devanagari-500.woff2) format('woff2'),
+                src:
+                    local(''),
+                    url(/fonts/poppins-v15-latin-ext_latin_devanagari-500.woff2) format('woff2'),
                     url(/fonts/poppins-v15-latin-ext_latin_devanagari-500.woff) format('woff');
                 font-display: swap;
             }
@@ -115,8 +119,15 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 scroll-behavior: smooth;
             }
             code {
-                font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono,
-                    Courier New, monospace;
+                font-family:
+                    Menlo,
+                    Monaco,
+                    Lucida Console,
+                    Liberation Mono,
+                    DejaVu Sans Mono,
+                    Bitstream Vera Sans Mono,
+                    Courier New,
+                    monospace;
             }
             * {
                 box-sizing: border-box;

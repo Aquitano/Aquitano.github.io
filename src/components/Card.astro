@@ -266,7 +266,9 @@ import { Img } from 'astro-imagetools/components';
             pointer-events: none;
 
             &.loaded {
-                transition: transform 0.2s linear, opacity 0.2s linear;
+                transition:
+                    transform 0.2s linear,
+                    opacity 0.2s linear;
             }
         }
     }
@@ -481,7 +483,10 @@ import { Img } from 'astro-imagetools/components';
                 opacity: 0;
                 filter: blur(4px);
                 transform: translate3d(-35px, 0, 0);
-                transition: opacity 500ms ease-in, transform 0.4s ease-in, filter 0.1s ease-in;
+                transition:
+                    opacity 500ms ease-in,
+                    transform 0.4s ease-in,
+                    filter 0.1s ease-in;
             }
             100% {
                 opacity: 1;
@@ -502,7 +507,10 @@ import { Img } from 'astro-imagetools/components';
                 opacity: 0;
                 filter: blur(4px);
                 transform: translate3d(35px, 0, 0);
-                transition: opacity 500ms ease-in, transform 0.4s ease-in, filter 0.1s ease-in;
+                transition:
+                    opacity 500ms ease-in,
+                    transform 0.4s ease-in,
+                    filter 0.1s ease-in;
             }
             100% {
                 opacity: 1;

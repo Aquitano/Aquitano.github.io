@@ -338,7 +338,9 @@ const menus = [
         width: 100%;
         z-index: 26;
         visibility: hidden;
-        transition: visibility 0s linear 0.4s, height 0.3s;
+        transition:
+            visibility 0s linear 0.4s,
+            height 0.3s;
         transform: translate3d(0, 0, 0);
         will-change: visibility;
         top: 66px;
@@ -371,22 +373,34 @@ const menus = [
         opacity: 0;
     }
     nav#nav + #nav-content .content ul > li:nth-child(1) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav + #nav-content .content ul > li:nth-child(2) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav + #nav-content .content ul > li:nth-child(3) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav + #nav-content .content ul > li:nth-child(4) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav + #nav-content .content ul > li:nth-child(5) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav + #nav-content .content ul > li:nth-child(6) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav + #nav-content .content ul > li a {
         position: relative;
@@ -424,7 +438,9 @@ const menus = [
     }
     nav#nav.on + #nav-content .content {
         visibility: visible;
-        transition: visibility 0s, height 0.3s;
+        transition:
+            visibility 0s,
+            height 0.3s;
     }
     nav#nav.on + #nav-content .content h5 {
         opacity: 1;
@@ -459,7 +475,9 @@ const menus = [
     }
     nav#nav.on.loading {
         background: #0f141e;
-        transition: height 0.5s cubic-bezier(0.3, 0, 0.5, 1), background 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+        transition:
+            height 0.5s cubic-bezier(0.3, 0, 0.5, 1),
+            background 0.2s cubic-bezier(0.3, 0, 0.5, 1);
     }
     nav#nav.on.loading .close {
         opacity: 0;
@@ -473,26 +491,40 @@ const menus = [
         opacity: 0;
     }
     nav#nav.on.loading + #nav-content .content ul > li:nth-child(1) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav.on.loading + #nav-content .content ul > li:nth-child(2) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav.on.loading + #nav-content .content ul > li:nth-child(3) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav.on.loading + #nav-content .content ul > li:nth-child(4) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav.on.loading + #nav-content .content ul > li:nth-child(5) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav.on.loading + #nav-content .content ul > li:nth-child(6) {
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s, transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0s,
+            transform 0s linear 0.4s;
     }
     nav#nav.on.loading footer {
         opacity: 0;
-        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1), transform 0s linear 0.4s;
+        transition:
+            opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1),
+            transform 0s linear 0.4s;
     }
     @media (min-width: 360px) {
         nav#nav .logo {
@@ -731,7 +763,7 @@ const menus = [
             () => {
                 closeNav();
             },
-            { once: true }
+            { once: true },
         );
     });
 </script>

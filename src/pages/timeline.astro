@@ -34,7 +34,7 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     Wacom Intuos
                                 </a>
-                                zu zeichnen.
+                                 zu zeichnen.
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     Blender
                                 </a>
-                                angefangen.
+                                 angefangen.
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     Engine Alpha
                                 </a>
-                                angefangen.
+                                 angefangen.
                             </div>
                         </div>
                         <div class="each-event i-v Fly-in-up">
@@ -87,7 +87,7 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     "Der komplette Web-Entwickler von Udemy"
                                 </a>
-                                gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
+                                 gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,9 @@ import Layout from '../layouts/Layout.astro';
         width: 100%;
         min-height: 100vh;
         height: 100%;
-        font: normal 16px/26px Open Sans Condensed, sans-serif;
+        font:
+            normal 16px/26px Open Sans Condensed,
+            sans-serif;
         color: rgb(90, 90, 90);
         padding: 100px 20px 200px;
         box-sizing: border-box;
@@ -137,7 +139,9 @@ import Layout from '../layouts/Layout.astro';
         margin-top: 65px;
     }
     .title {
-        font: bold 42px/52px Open Sans Condensed, sans-serif;
+        font:
+            bold 42px/52px Open Sans Condensed,
+            sans-serif;
         text-align: center;
         padding: 20px;
         transition: all 0.8s ease-in-out;
@@ -305,7 +309,9 @@ import Layout from '../layouts/Layout.astro';
                 opacity: 0;
                 filter: blur(2px);
                 transform: translate3d(0, 25px, 0);
-                transition: opacity 500ms ease-in, transform 0.4s ease-in;
+                transition:
+                    opacity 500ms ease-in,
+                    transform 0.4s ease-in;
             }
             100% {
                 opacity: 1;
@@ -324,4 +330,60 @@ import Layout from '../layouts/Layout.astro';
     }
 </style>
 
-<script src="./appearOnScroll.js" defer></script>
+<script>
+    type ElementList = HTMLCollectionOf<Element>;
+
+    const WATCH_CLASS: string = 'i-v';
+    const IN_VIEWPORT_CLASS: string = 'in-viewport';
+    const FADE: string = 'is-visible';
+    let elements: ElementList;
+
+    function hasClass(element: Element, className: string): boolean {
+        if (element.classList) {
+            return element.classList.contains(className);
+        } else {
+            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
+        }
+    }
+
+    function addClass(element: Element, className: string): void {
+        element.classList.add(className);
+    }
+
+    function storeElements(): void {
+        elements = document.getElementsByClassName(WATCH_CLASS) as ElementList;
+    }
+
+    function update(): void {
+        const viewportTop: number = window.scrollY || document.documentElement.scrollTop;
+        const viewportBottom: number =
+            viewportTop + (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
+        const scrollTop: number = window.scrollY || document.documentElement.scrollTop;
+
+        for (let i = 0, len = elements.length; i < len; i += 1) {
+            const element: Element = elements[i];
+            if (true === isInViewport(element, scrollTop, viewportTop, viewportBottom)) {
+                if (!hasClass(element, IN_VIEWPORT_CLASS)) {
+                    addClass(element, FADE);
+                }
+            }
+        }
+    }
+
+    function isInViewport(element: Element, scrollTop: number, viewportTop: number, viewportBottom: number): boolean {
+        const elementRect: DOMRect = element.getBoundingClientRect();
+        const elementTop: number = elementRect.top + scrollTop;
+        const elementBottom: number = elementTop + (element as HTMLElement).offsetHeight;
+
+        return !!(elementBottom >= viewportTop && elementTop < viewportBottom);
+    }
+
+    document.addEventListener('DOMContentLoaded', function (event) {
+        if (document.readyState === 'interactive') {
+            storeElements();
+            document.addEventListener('scroll', update);
+            document.addEventListener('resize', update);
+            update();
+        }
+    });
+</script>

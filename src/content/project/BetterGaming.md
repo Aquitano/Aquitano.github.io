@@ -5,7 +5,11 @@ description: 'Hochmoderne und funktionsfähige E-Commerce-Plattform für Videosp
 featured: true
 tags: ['PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript']
 tasks: ['Frontend', 'Backend (PHP & MySQL)']
-links: { github: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming', website: 'https://bettergaming.de' }
+links:
+    {
+        github: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming',
+        website: 'https://bettergaming.thomasbreindl.me',
+    }
 year: 2021
 ---
 

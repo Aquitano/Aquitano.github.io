@@ -1,0 +1,545 @@
+---
+import '@assets/griffin/css/preloader.css';
+import '@assets/griffin/css/slider-pro.css';
+import '@assets/griffin/css/slick.css';
+import '@assets/griffin/css/style.css';
+import '@assets/griffin/css/magnific-popup.css';
+
+import { Img } from 'astro-imagetools/components';
+---
+
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
+        <link rel="shortcut icon" type="image/x-icon" href="/showcase/griffin/favicon.jpg" />
+        <meta
+            name="keywords"
+            content="Brummselbeere, Griffin, GreenGriffin, Griffin Energy, ASG, ASG Passau, GriffinEnergy, Onlineshop, Energy Drink"
+        />
+        <title>Griffin Energy</title>
+        <!-- font-awesome CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+            integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <!-- Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css?family=Yantramanav:300,400,500,700,900"
+            rel="stylesheet"
+            type="text/css"
+        />
+    </head>
+    <body>
+        <!-- ==== Start header --><!-- header-desktop -->
+        <header class="header home2">
+            <!-- header-main -->
+            <div class="header-main pb-30">
+                <div class="container">
+                    <nav id="nav" class="navbar">
+                        <div class="nav-collapse"><span></span></div>
+                        <div class="navbar-header">
+                            <!-- Logo -->
+                            <div class="navbar-brand">
+                                <a class="logo" href="index.html">
+                                    <Img
+                                        src="/showcase/griffin/images/2logo.png"
+                                        alt="Griffin Energy Drink"
+                                        attributes={{
+                                            img: {
+                                                style: 'width: 73%;',
+                                            },
+                                        }}
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+                            <!-- /Logo -->
+                        </div>
+                        <!-- Main navigation -->
+                        <div class="otf-flex-item"></div>
+                        <ul class="main-nav nav navbar-nav navbar-right">
+                            <li class="dropdown active"><a href="index.html" rel="prefetch">Home</a></li>
+                            <li class="dropdown"><a href="Product" rel="prefetch">Product</a></li>
+                            <li class="dropdown">
+                                <a href="Donation-Code" rel="prefetch">Donation-Code</a>
+                            </li>
+                        </ul>
+                        <!-- /Main navigation -->
+                        <div class="otf-flex-item"></div>
+                        <div class="site-header -icon">
+                            <!-- cart -->
+                            <div class="site-header__cart item-dropdown">
+                                <a href="#" class="site-header__cart-toggle"
+                                    ><span class="cartcount">0</span>
+                                    <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+                                    <span class="cartcost"
+                                        ><span class="money" data-currency-usd="0.00€">0.00€</span></span
+                                    ></a
+                                >
+                                <div class="widget_shopping_cart_content content-dropdown">
+                                    <p class="buttons clearfix">
+                                        <a
+                                            href="#"
+                                            class="btn view-cart btn-default btn-normal"
+                                            style="right: 0; left: 48px">Zum Einkaufswagen</a
+                                        >
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <!-- /header-main -->
+        </header>
+        <!-- /header-desktop -->
+        <!-- header-mobile -->
+        <div class="header-mobile home2">
+            <nav class="navbar">
+                <div class="navbar-header">
+                    <button
+                        type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false"
+                    >
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span></button
+                    ><!-- logo -->
+                    <div class="navbar-brand">
+                        <a class="logo" href="index.html"
+                            ><Img src="/showcase/griffin/images/2logo.png" alt="" loading="lazy" /></a
+                        >
+                    </div>
+                    <!-- logo -->
+                </div>
+                <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active">
+                            <a href="index.html" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                                >Home</a
+                            >
+                        </li>
+                        <li class="">
+                            <a href="Product" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                                >Product</a
+                            >
+                        </li>
+                        <li class="">
+                            <a
+                                href="Donation-Code"
+                                role="button"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                rel="prefetch">Donation-Code</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- /header-mobile -->
+        <!-- ===== End header -->
+        <main>
+            <!-- ==== Start slider -->
+            <section class="section-main-slider">
+                <div
+                    class="main-slider my-slider slider-pro skin2"
+                    id="my-slider-1"
+                    data-slider-width="100%"
+                    data-slider-height="925"
+                >
+                    <div class="sp-slides text-white">
+                        <div
+                            class="sp-slide section-bg"
+                            style="
+                            background-image: url(/showcase/griffin/images/Callicarpa_acuminata_Woodlanders_2_1_1024x1024@2x.jpg);
+                        "
+                        >
+                            <div class="container">
+                                <h2
+                                    class="sp-layer main-slider__title"
+                                    data-horizontal="0"
+                                    data-vertical="300"
+                                    data-show-transition="up"
+                                    data-hide-transition="left"
+                                    data-show-duration="800"
+                                    data-show-delay="800"
+                                    data-hide-delay="800"
+                                >
+                                    The Original*
+                                </h2>
+                                <h2
+                                    class="sp-layer main-slider__title font-bold"
+                                    data-horizontal="0"
+                                    data-vertical="380"
+                                    data-show-transition="up"
+                                    data-hide-transition="left"
+                                    data-show-duration="800"
+                                    data-show-delay="800"
+                                    data-hide-delay="800"
+                                >
+                                    Brummselbeeren Drink
+                                </h2>
+                                <div
+                                    class="sp-layer main-slider__text"
+                                    data-horizontal="0"
+                                    data-vertical="500"
+                                    data-show-transition="up"
+                                    data-hide-transition="left"
+                                    data-show-duration="800"
+                                    data-show-delay="1200"
+                                    data-hide-delay="1200"
+                                >
+                                    <div class="main-slider__btn-group">
+                                        <a class="btn btn-features btn-primary mt-60" href="Product"
+                                            >Jetzt kaufen <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a
+                                        >
+                                    </div>
+                                </div>
+                                <span
+                                    class="sp-layer main-slider__img"
+                                    data-horizontal="600"
+                                    data-vertical="120"
+                                    data-width="45%"
+                                    data-show-transition="up"
+                                    data-hide-transition="left"
+                                    data-show-duration="800"
+                                    data-show-delay="400"
+                                    data-hide-delay="400"
+                                    ><Img
+                                        src="/showcase/griffin/images/untitled2.png"
+                                        alt=""
+                                        loading="lazy"
+                                        attributes={{
+                                            img: {
+                                                class: 'img-responsive',
+                                            },
+                                        }}
+                                    /></span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end main-slider -->
+            </section>
+            <!-- ==== End slider --><!-- ==== Start feature-icon-absolute -->
+            <section class="features feature-icon-absolute clearfix text-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 features_content">
+                            <div class="features_list">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature2.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Energiespender</h4>
+                                    <p>Durch die Brummselbeere maximaler Schub</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 features_content">
+                            <div class="features_list">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature1.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Bio-Zutaten</h4>
+                                    <p>Nur sorgfältig ausgewählte Bio-Zutaten</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 features_content">
+                            <div class="features_list">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature3.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Verpackungsgröße</h4>
+                                    <p>250ML</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 features_content">
+                            <div class="features_list">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature9.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Recycling</h4>
+                                    <p>Aluminium-Dosen sind zu 100% recycelbar</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==== End feature-icon-absolute -->
+            <div class="container"><p style="padding-top: 118px"></p></div>
+            <!-- ==== Start features-taste -->
+            <section
+                class="features skin1 features-taste section-bg clearfix pt-100 pb-100 text-white"
+                style="background-image: url(/showcase/griffin/images/home2_bg2.png)"
+            >
+                <div class="container">
+                    <div class="features-heading">
+                        <h2 class="features-heading__title">Warum Griffin Energy?</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="features_list pt-50 pb-50">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature5.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Koffein</h4>
+                                    <p>
+                                        Das enthaltene Koffein hilft dir zu einem wach zu bleiben, aber auch lindert es
+                                        Kopfschmerzen oder Migräne.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="features_list pt-50 pb-50" style="margin-top: 60px">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature10.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Nachhaltigkeit</h4>
+                                    <p>
+                                        Durch verschiedene Methoden, wie umweltfreundliche Transportlogistik oder
+                                        recycelbare Aluminium-Dosen, stoßen wir 40% weniger CO2 als andere Hersteller
+                                        aus.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <div class="features_list pt-50 pb-50">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature2.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Vitamine und Minerale</h4>
+                                    <p>
+                                        Durch lebensnotwendige Vitamine und Tiefsee-Minerale, die in einer Dose
+                                        enthalten sind, wird nicht nur die Leistungsfähigkeit gesteigert, sondern auch
+                                        u.a. Erschöpfung vorgebeugt.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="features_list pt-50 pb-50">
+                                <div class="features-images">
+                                    <Img src="/showcase/griffin/images/icon-feature11.png" alt="" loading="lazy" />
+                                </div>
+                                <div class="features-description">
+                                    <h4>Spenden</h4>
+                                    <p>
+                                        Du kannst pro Dose ein wohltätiges Projekt mit 5 Cent unterstützen, indem du den
+                                        auf der Dose abgedrückten QR-Code einscannst.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==== End features-taste --><!-- ==== Start product -->
+            <section class="products pb-100 pt-60">
+                <div class="container">
+                    <div class="features-heading skin2">
+                        <h2 class="features-heading__title">Produkte</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pt-40">
+                            <div class="text-center">
+                                <div class="product_deal">
+                                    <div class="product-block">
+                                        <div class="product-image">
+                                            <div class="product-thumbnail">
+                                                <a href="Product"
+                                                    ><Img
+                                                        class="product-featured-image"
+                                                        src="/showcase/griffin/images/untitled5-min.png"
+                                                        alt=""
+                                                        loading="lazy"
+                                                    /></a
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="product-meta">
+                                            <h4 class="product-name">
+                                                <a href="./Product">Griffin Energy</a>
+                                            </h4>
+                                            <div class="product-price">
+                                                <span class="amout"
+                                                    ><span class="money" data-currency-usd="$13.80">1.19€</span></span
+                                                >
+                                            </div>
+                                            <div class="product-footer">
+                                                <a href="Product" class="btn btn-primary"
+                                                    >Kaufen<i class="fa fa-shopping-bag" aria-hidden="true"></i></a
+                                                >
+                                            </div>
+                                        </div>
+                                        <!-- /.product-meta -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pt-40">
+                            <div class="text-center">
+                                <div class="product_deal">
+                                    <div class="product-block">
+                                        <div class="product-image">
+                                            <div class="product-thumbnail">
+                                                <a href="Product2.html" title=""
+                                                    ><Img
+                                                        class="product-featured-image"
+                                                        src="/showcase/griffin/images/untitled5b-min.png"
+                                                        alt=""
+                                                        loading="lazy"
+                                                    /></a
+                                                >
+                                            </div>
+                                        </div>
+                                        <div class="product-meta">
+                                            <h4 class="product-name">
+                                                <a href="Product2.html" title="">Griffin No Caffeine</a>
+                                            </h4>
+                                            <div class="product-price">
+                                                <span class="amout"
+                                                    ><span class="money" data-currency-usd="$13.80">1.19€</span></span
+                                                >
+                                            </div>
+                                            <div class="product-footer">
+                                                <a href="Product2.html" class="btn btn-primary"
+                                                    >Kaufen<i class="fa fa-shopping-bag" aria-hidden="true"></i></a
+                                                >
+                                            </div>
+                                        </div>
+                                        <!-- /.product-meta -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==== End product --><!-- ==== Start newsletter -->
+            <section class="contact-form pt-100 pb-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="contact-form-container">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="contact-form_heading text-uppercase">
+                                    <span>BEKOMME 10% AUF DEINE</span>
+                                    <h4>ERSTE BESTELLUNG</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="newsletter">
+                                    <p class="newsletter-description">
+                                        Als ein Willkommensgeschenk für neue Kunden bieten wir 10% auf den ersten
+                                        Einkauf an!
+                                    </p>
+                                    <form
+                                        action="#"
+                                        method="post"
+                                        id="mc-embedded-subscribe-form"
+                                        name="mc-embedded-subscribe-form"
+                                        target="_blank"
+                                        class="form-horizontal"
+                                    >
+                                        <div class="newsletter-form">
+                                            <div class="input-group">
+                                                <input
+                                                    class="form-control"
+                                                    type="email"
+                                                    name="EMAIL"
+                                                    placeholder="Deine Email-Adresse"
+                                                    required
+                                                />
+                                                <span class="input-group-btn"
+                                                    ><button type="submit" class="search-submit btn">
+                                                        <span class="fa fa-paper-plane-o" aria-hidden="true"
+                                                        ></span></button
+                                                    ></span
+                                                >
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ==== End newsletter --><!-- ==== Start footer -->
+        <footer class="site-footer site-footer-2 clearfix">
+            <div class="site-footer__main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
+                            <Img src="/showcase/griffin/images/logo.png" alt="" loading="lazy" />
+                            <p class="address pt-30">
+                                *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke.<br />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="site-footer__copyright">
+                <div class="container">
+                    <div class="copyright_container">
+                        <div class="col-md-4 col-sm-6">
+                            <ul class="social">
+                                <li>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-google"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="copyright col-md-4 col-sm-6">GreenGriffin © 2021. All rights reserved</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- ==== End footer --><!-- Back to top -->
+        <div id="back-to-top"></div>
+        <!-- /Back to to --><!-- ====Start Preloader -->
+        <div id="preloader">
+            <div class="preloader"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <!-- ====End Preloader -->
+        <script src="/showcase/griffin/js/jquery.min.js" defer></script>
+        <script src="/showcase/griffin/js/bootstrap.min.js" defer></script>
+        <script src="/showcase/griffin/js/slick.min.js" defer></script>
+        <script src="/showcase/griffin/js/jquery-ui.min.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer></script>
+        <script src="/showcase/griffin/js/fastclick.min.js" defer></script>
+        <script src="/showcase/griffin/js/timber.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.waypoints.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.counterup.min.js" defer></script>
+        <script src="/showcase/griffin/js/custom.js" defer></script>
+    </body>
+</html>
