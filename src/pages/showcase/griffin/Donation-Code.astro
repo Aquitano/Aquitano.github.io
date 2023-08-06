@@ -105,336 +105,345 @@ import { Img } from 'astro-imagetools/components';
             <!-- /header-main -->
         </header>
         <!-- /header-main -->
-    </body>
-    <!-- /Headerdesktop -->
-    <div class="header-mobile home2">
-        <nav class="navbar">
-            <div class="navbar-header">
-                <button
-                    type="button"
-                    class="navbar-toggle collapsed"
-                    data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1"
-                    aria-expanded="false"
-                >
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span></button
-                ><!-- logo -->
-                <div class="navbar-brand">
-                    <a class="logo" href="../"
-                        ><Img src="/showcase/griffin/images/2logo.png" alt="Logo" loading="lazy" /></a
+        <!-- /Headerdesktop -->
+        <div class="header-mobile home2">
+            <nav class="navbar">
+                <div class="navbar-header">
+                    <button
+                        type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false"
                     >
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span></button
+                    ><!-- logo -->
+                    <div class="navbar-brand">
+                        <a class="logo" href="../"
+                            ><Img src="/showcase/griffin/images/2logo.png" alt="Logo" loading="lazy" /></a
+                        >
+                    </div>
+                    <!-- logo -->
                 </div>
-                <!-- logo -->
-            </div>
-            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="../" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch">Home</a>
-                    </li>
-                    <li>
-                        <a href="../Product/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
-                            >Product</a
-                        >
-                    </li>
-                    <li class="active">
-                        <a href="/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
-                            >Donation-Code</a
-                        >
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
-    <!-- /header-mobile -->
-    <!-- End header ==== ======================================= -->
-    <!-- ===================================== ==== Start breadcrumb -->
-    <div class="breadcrumb">
-        <!-- container -->
-        <div class="container">
-            <h1>Hier deinen Donation-Code eintragen!</h1>
-            <ol class="item-breadcrumb">
-                <div class="coupon pull-left">
-                    <input
-                        type="text"
-                        name="DC"
-                        class="input-text TTT"
-                        id="DC"
-                        value=""
-                        placeholder="Donation-Code"
-                        required
-                        oninput="this.value = this.value.toUpperCase();"
-                    />
-                    <script defer>
-                        window.onload = function () {
-                            function querySt(ji) {
-                                const hu = window.location.search.substring(1);
-                                const gy = hu.split('&');
-                                for (i = 0; i < gy.length; i++) {
-                                    ft = gy[i].split('=');
-                                    if (ft[0] == ji) {
-                                        return ft[1];
+                <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="../" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                                >Home</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="../Product/"
+                                role="button"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                rel="prefetch">Product</a
+                            >
+                        </li>
+                        <li class="active">
+                            <a href="/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                                >Donation-Code</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- /header-mobile -->
+        <!-- End header ==== ======================================= -->
+        <!-- ===================================== ==== Start breadcrumb -->
+        <div class="breadcrumb">
+            <!-- container -->
+            <div class="container">
+                <h1>Hier deinen Donation-Code eintragen!</h1>
+                <ol class="item-breadcrumb">
+                    <div class="coupon pull-left">
+                        <input
+                            type="text"
+                            name="DC"
+                            class="input-text TTT"
+                            id="DC"
+                            value=""
+                            placeholder="Donation-Code"
+                            required
+                            oninput="this.value = this.value.toUpperCase();"
+                        />
+                        <script defer>
+                            window.onload = function () {
+                                function querySt(ji) {
+                                    const hu = window.location.search.substring(1);
+                                    const gy = hu.split('&');
+                                    for (i = 0; i < gy.length; i++) {
+                                        ft = gy[i].split('=');
+                                        if (ft[0] == ji) {
+                                            return ft[1];
+                                        }
                                     }
                                 }
-                            }
-                            var DC = querySt('DC');
-                            if (DC == null) {
-                            } else {
-                                document.getElementById('DC').value = DC;
-                            }
-                        };
-                    </script>
-                </div>
-            </ol>
+                                var DC = querySt('DC');
+                                if (DC == null) {
+                                } else {
+                                    document.getElementById('DC').value = DC;
+                                }
+                            };
+                        </script>
+                    </div>
+                </ol>
+            </div>
+            <!-- /container -->
         </div>
-        <!-- /container -->
-    </div>
-    <!-- ===================================== ==== End breadcrumb -->
-    <!-- ===================================== ====Start archive-product -->
-    <div class="archive-product">
-        <!-- Container -->
-        <div class="container">
-            <!-- tab-content -->
-            <div class="tab-content">
-                <h3>An wen willst du spenden?</h3>
-                <div id="grid-view" class="tab-pane fade in active">
-                    <div class="product products-grid">
-                        <div class="row row-products">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="product-block" data-publish-date="">
-                                    <div class="product-image product_1">
-                                        <div class="product-thumbnail">
-                                            <a href="https://www.arborday.org/" title=""
-                                                ><Img
-                                                    src="/showcase/griffin/images/ArborDayFoundatiion.png"
-                                                    alt=""
-                                                    attributes={{
-                                                        img: {
-                                                            style: 'width: 132px',
-                                                            class: 'product-featured-image',
-                                                        },
-                                                    }}
-                                                /></a
-                                            >
+        <!-- ===================================== ==== End breadcrumb -->
+        <!-- ===================================== ====Start archive-product -->
+        <div class="archive-product">
+            <!-- Container -->
+            <div class="container">
+                <!-- tab-content -->
+                <div class="tab-content">
+                    <h3>An wen willst du spenden?</h3>
+                    <div id="grid-view" class="tab-pane fade in active">
+                        <div class="product products-grid">
+                            <div class="row row-products">
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="product-block" data-publish-date="">
+                                        <div class="product-image product_1">
+                                            <div class="product-thumbnail">
+                                                <a href="https://www.arborday.org/" title=""
+                                                    ><Img
+                                                        src="/showcase/griffin/images/ArborDayFoundatiion.png"
+                                                        alt=""
+                                                        attributes={{
+                                                            img: {
+                                                                style: 'width: 132px',
+                                                                class: 'product-featured-image',
+                                                            },
+                                                        }}
+                                                    /></a
+                                                >
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- /.product-image -->
-                                    <div class="product-meta">
-                                        <!-- end rating -->
-                                        <h4 class="product-name">
-                                            <a href="https://www.arborday.org/" title="">Arbor Day Foundation |</a><a
-                                                href="#myModal"
-                                                class="trigger-btn"
-                                                data-toggle="modal">Jetzt Spenden</a
-                                            >
-                                            <div id="myModal" class="modal fade">
-                                                <div class="modal-dialog modal-confirm">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header flex-column">
-                                                            <div class="icon-box">
-                                                                <i class="material-icons">help</i>
+                                        <!-- /.product-image -->
+                                        <div class="product-meta">
+                                            <!-- end rating -->
+                                            <h4 class="product-name">
+                                                <a href="https://www.arborday.org/" title="">Arbor Day Foundation |</a
+                                                ><a href="#myModal" class="trigger-btn" data-toggle="modal"
+                                                    >Jetzt Spenden</a
+                                                >
+                                                <div id="myModal" class="modal fade">
+                                                    <div class="modal-dialog modal-confirm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header flex-column">
+                                                                <div class="icon-box">
+                                                                    <i class="material-icons">help</i>
+                                                                </div>
+                                                                <h4 class="modal-title w-100">Bist du dir sicher?</h4>
+                                                                <button
+                                                                    type="button"
+                                                                    class="close"
+                                                                    data-dismiss="modal"
+                                                                    aria-hidden="true"
+                                                                >
+                                                                    &times;
+                                                                </button>
                                                             </div>
-                                                            <h4 class="modal-title w-100">Bist du dir sicher?</h4>
-                                                            <button
-                                                                type="button"
-                                                                class="close"
-                                                                data-dismiss="modal"
-                                                                aria-hidden="true"
-                                                            >
-                                                                &times;
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-center">
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-secondary"
-                                                                data-dismiss="modal"
-                                                            >
-                                                                Nein
-                                                            </button>
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-primary"
-                                                                data-dismiss="modal"
-                                                            >
-                                                                Ja
-                                                            </button>
+                                                            <div class="modal-footer justify-content-center">
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-secondary"
+                                                                    data-dismiss="modal"
+                                                                >
+                                                                    Nein
+                                                                </button>
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-primary"
+                                                                    data-dismiss="modal"
+                                                                >
+                                                                    Ja
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- Modal HTML -->
+                                            </h4>
+                                        </div>
+                                        <!-- /.product-meta -->
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="product-block" data-publish-date="">
+                                        <div class="product-image product_2">
+                                            <div class="product-thumbnail">
+                                                <a href="https://www.ifaw.org/de" title=""
+                                                    ><Img
+                                                        src="/showcase/griffin/images/ifaw.jpg"
+                                                        alt=""
+                                                        attributes={{
+                                                            img: {
+                                                                style: 'width: 250px',
+                                                                class: 'product-featured-image',
+                                                            },
+                                                        }}
+                                                    /></a
+                                                >
                                             </div>
-                                            <!-- Modal HTML -->
-                                        </h4>
-                                    </div>
-                                    <!-- /.product-meta -->
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="product-block" data-publish-date="">
-                                    <div class="product-image product_2">
-                                        <div class="product-thumbnail">
-                                            <a href="https://www.ifaw.org/de" title=""
-                                                ><Img
-                                                    src="/showcase/griffin/images/ifaw.jpg"
-                                                    alt=""
-                                                    attributes={{
-                                                        img: {
-                                                            style: 'width: 250px',
-                                                            class: 'product-featured-image',
-                                                        },
-                                                    }}
-                                                /></a
-                                            >
                                         </div>
-                                    </div>
-                                    <!-- /.product-image -->
-                                    <div class="product-meta">
-                                        <span></span>
-                                        <!-- end rating -->
-                                        <h4 class="product-name">
-                                            <a href="https://www.ifaw.org/de" title="">Fonds for Animal Welfare |</a><a
-                                                href="#myModal"
-                                                class="trigger-btn"
-                                                data-toggle="modal">Jetzt Spenden</a
-                                            >
-                                        </h4>
-                                    </div>
-                                    <!-- /.product-meta -->
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6">
-                                <div class="product-block" data-publish-date="">
-                                    <div class="product-image">
-                                        <div class="product-thumbnail">
-                                            <a href="https://www.savethechildren.org/" title=""
-                                                ><Img
-                                                    src="/showcase/griffin/images/SaveTheChildren.jpg"
-                                                    alt=""
-                                                    attributes={{
-                                                        img: {
-                                                            style: 'width: 130px',
-                                                            class: 'product-featured-image',
-                                                        },
-                                                    }}
-                                                /></a
-                                            >
+                                        <!-- /.product-image -->
+                                        <div class="product-meta">
+                                            <span></span>
+                                            <!-- end rating -->
+                                            <h4 class="product-name">
+                                                <a href="https://www.ifaw.org/de" title="">Fonds for Animal Welfare |</a
+                                                ><a href="#myModal" class="trigger-btn" data-toggle="modal"
+                                                    >Jetzt Spenden</a
+                                                >
+                                            </h4>
                                         </div>
+                                        <!-- /.product-meta -->
                                     </div>
-                                    <!-- /.product-image -->
-                                    <div class="product-meta">
-                                        <!-- end rating -->
-                                        <h4 class="product-name">
-                                            <a href="https://www.savethechildren.org/" title=""
-                                                >Save the Children |
-                                            </a><a href="#myModal" class="trigger-btn" data-toggle="modal"
-                                                >Jetzt Spenden</a
-                                            >
-                                            <div id="myModal" class="modal fade">
-                                                <div class="modal-dialog modal-confirm">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header flex-column">
-                                                            <div class="icon-box">
-                                                                <i class="material-icons">help</i>
+                                </div>
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="product-block" data-publish-date="">
+                                        <div class="product-image">
+                                            <div class="product-thumbnail">
+                                                <a href="https://www.savethechildren.org/" title=""
+                                                    ><Img
+                                                        src="/showcase/griffin/images/SaveTheChildren.jpg"
+                                                        alt=""
+                                                        attributes={{
+                                                            img: {
+                                                                style: 'width: 130px',
+                                                                class: 'product-featured-image',
+                                                            },
+                                                        }}
+                                                    /></a
+                                                >
+                                            </div>
+                                        </div>
+                                        <!-- /.product-image -->
+                                        <div class="product-meta">
+                                            <!-- end rating -->
+                                            <h4 class="product-name">
+                                                <a href="https://www.savethechildren.org/" title=""
+                                                    >Save the Children |
+                                                </a><a href="#myModal" class="trigger-btn" data-toggle="modal"
+                                                    >Jetzt Spenden</a
+                                                >
+                                                <div id="myModal" class="modal fade">
+                                                    <div class="modal-dialog modal-confirm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header flex-column">
+                                                                <div class="icon-box">
+                                                                    <i class="material-icons">help</i>
+                                                                </div>
+                                                                <h4 class="modal-title w-100">Bist du dir sicher?</h4>
+                                                                <button
+                                                                    type="button"
+                                                                    class="close"
+                                                                    data-dismiss="modal"
+                                                                    aria-hidden="true"
+                                                                >
+                                                                    &times;
+                                                                </button>
                                                             </div>
-                                                            <h4 class="modal-title w-100">Bist du dir sicher?</h4>
-                                                            <button
-                                                                type="button"
-                                                                class="close"
-                                                                data-dismiss="modal"
-                                                                aria-hidden="true"
-                                                            >
-                                                                &times;
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-center">
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-secondary"
-                                                                data-dismiss="modal"
-                                                            >
-                                                                Nein
-                                                            </button>
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-primary"
-                                                                data-dismiss="modal"
-                                                            >
-                                                                Ja
-                                                            </button>
+                                                            <div class="modal-footer justify-content-center">
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-secondary"
+                                                                    data-dismiss="modal"
+                                                                >
+                                                                    Nein
+                                                                </button>
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-primary"
+                                                                    data-dismiss="modal"
+                                                                >
+                                                                    Ja
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </h4>
+                                            </h4>
+                                        </div>
+                                        <!-- /.product-meta -->
                                     </div>
-                                    <!-- /.product-meta -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- /tab-content -->
             </div>
-            <!-- /tab-content -->
         </div>
-    </div>
-    <!-- ===================================== ====End archive-product -->
-    <!-- ===================================================================== ==== Start footer -->
-    <footer class="site-footer site-footer-2 clearfix">
-        <div class="site-footer__main">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                        <Img src="/showcase/griffin/images/logo.png" alt="Logo" />
-                        <p class="address pt-30">
-                            *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke. <br />
-                        </p>
+        <!-- ===================================== ====End archive-product -->
+        <!-- ===================================================================== ==== Start footer -->
+        <footer class="site-footer site-footer-2 clearfix">
+            <div class="site-footer__main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
+                            <Img src="/showcase/griffin/images/logo.png" alt="Logo" />
+                            <p class="address pt-30">
+                                *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke. <br />
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="site-footer__copyright">
-            <div class="container">
-                <div class="copyright_container">
-                    <div class="col-md-4 col-sm-6">
-                        <ul class="social">
-                            <li>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-google"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                            </li>
-                        </ul>
+            <div class="site-footer__copyright">
+                <div class="container">
+                    <div class="copyright_container">
+                        <div class="col-md-4 col-sm-6">
+                            <ul class="social">
+                                <li>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-google"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="copyright col-md-4 col-sm-6">GreenGriffin © 2021. All rights reserved</div>
                     </div>
-                    <div class="copyright col-md-4 col-sm-6">GreenGriffin © 2021. All rights reserved</div>
                 </div>
             </div>
+        </footer>
+        <!-- ===================================================================== ==== End footer -->
+        <!-- Back to top -->
+        <div id="back-to-top"></div>
+        <!-- / Back to to -->
+        <!-- ===================================================================== ====Start Preloader -->
+        <div id="preloader">
+            <div class="preloader"><span></span><span></span><span></span><span></span></div>
         </div>
-    </footer>
-    <!-- ===================================================================== ==== End footer -->
-    <!-- Back to top -->
-    <div id="back-to-top"></div>
-    <!-- / Back to to -->
-    <!-- ===================================================================== ====Start Preloader -->
-    <div id="preloader">
-        <div class="preloader"><span></span><span></span><span></span><span></span></div>
-    </div>
-    <!-- ===================================================================== ====End Preloader -->
-    <!-- ====Start all js here -->
-    <script src="/showcase/griffin/js/jquery.min.js" defer></script>
-    <script src="/showcase/griffin/js/bootstrap.min.js" defer></script>
-    <script src="/showcase/griffin/js/slick.min.js" defer></script>
-    <script src="/showcase/griffin/js/jquery-ui.min.js" defer></script>
-    <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer></script>
-    <script src="/showcase/griffin/js/fastclick.min.js" defer></script>
-    <script src="/showcase/griffin/js/timber.js" defer></script>
-    <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer></script>
-    <script src="/showcase/griffin/js/jquery.waypoints.js" defer></script>
-    <script src="/showcase/griffin/js/jquery.counterup.min.js" defer></script>
-    <script src="/showcase/griffin/js/custom.js" defer></script>
-    <!-- ==== End all js here -->
+        <!-- ===================================================================== ====End Preloader -->
+        <!-- ====Start all js here -->
+        <script src="/showcase/griffin/js/jquery.min.js" defer></script>
+        <script src="/showcase/griffin/js/bootstrap.min.js" defer></script>
+        <script src="/showcase/griffin/js/slick.min.js" defer></script>
+        <script src="/showcase/griffin/js/jquery-ui.min.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer></script>
+        <script src="/showcase/griffin/js/fastclick.min.js" defer></script>
+        <script src="/showcase/griffin/js/timber.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.waypoints.js" defer></script>
+        <script src="/showcase/griffin/js/jquery.counterup.min.js" defer></script>
+        <script src="/showcase/griffin/js/custom.js" defer></script>
+        <script defer>
+            document.addEventListener('DOMContentLoaded', () => {
+                $('#preloader').delay(600).fadeOut();
+            });
+        </script>
+        <!-- ==== End all js here -->
+    </body>
 </html>

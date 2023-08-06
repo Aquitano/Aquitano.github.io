@@ -7803,6 +7803,9 @@ input.btn {
 .font-bold {
     font-weight: 700 !important;
 }
+.font-400 {
+    font-weight: 400 !important;
+}
 .bg-overlay {
     position: relative;
     z-index: -2;
@@ -10504,9 +10507,17 @@ ul.columns-4 .product-block:hover .product-actions > a {
         padding-top: 10px;
     }
 }
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 680px) {
     .slider-pro h2.sp-layer {
         font-size: 14vw;
+        line-height: 50px;
+        letter-spacing: -1px;
+        margin-left: 10px;
+    }
+}
+@media only screen and (max-width: 992px) {
+    .slider-pro h2.sp-layer {
+        font-size: 12vw;
         line-height: 50px;
         letter-spacing: -1px;
         margin-left: 10px;

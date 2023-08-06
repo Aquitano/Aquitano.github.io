@@ -173,8 +173,7 @@ import { Img } from 'astro-imagetools/components';
                                             alt="Griffin Energy Drink"
                                             attributes={{
                                                 img: {
-                                                    style: 'margin-left: 100px',
-                                                    class: 'product-featured-image product_selector_1',
+                                                    style: 'margin-left: 40px',
                                                 },
                                             }}
                                         />
@@ -281,7 +280,7 @@ import { Img } from 'astro-imagetools/components';
                                     <div style="font-weight: bold">
                                         <p>Enthaltene Vitamine und Mineralstoffe:</p>
                                     </div>
-                                    <ul class="excerpt">
+                                    <ul class="excerpt" style="list-style: disc">
                                         <li>
                                             Vitamin C: Stärkung des Immunsystems; fängt zellschädigende
                                             Sauerstoffverbindungen ab
@@ -375,6 +374,11 @@ import { Img } from 'astro-imagetools/components';
         <script src="/showcase/griffin/js/jquery.waypoints.js" defer></script>
         <script src="/showcase/griffin/js/jquery.counterup.min.js" defer></script>
         <script src="/showcase/griffin/js/custom.js" defer></script>
+        <script defer>
+            document.addEventListener('DOMContentLoaded', () => {
+                $('#preloader').delay(600).fadeOut();
+            });
+        </script>
         <!-- ==== End all js here -->
     </body>
 </html>

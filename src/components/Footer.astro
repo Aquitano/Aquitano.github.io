@@ -11,50 +11,44 @@ const Items = [
 ];
 ---
 
-<footer class="-mt-24">
-    <div class="spacer fill-black"></div>
-    <div class="footer-content">
-        <div class="container mx-auto px-4 pb-5">
-            <div class="grid grid-cols-3 gap-4">
-                <!-- Who am I -->
-                <div class="w-full px-4">
-                    <!-- Who am i - student: Thomas Breindl -->
-                    <h1 class="text-4xl font-semibold">Thomas Breindl</h1>
-                    <p class="mt-4 text-xl leading-relaxed text-gray-700">
-                        I'm a student at the Adalbert-Stifter-Gymnasium. <br />Tools Crafter · Focused on TypeScript &
-                        Python
-                    </p>
-                </div>
-                <!-- Contanct -->
-                <div class="flex flex-col items-center justify-center border-l-4 border-solid border-neutral-400 pl-5">
-                    <LinkButton text="Contact" icon="mdi:message" href="#" style={'width: 1.5rem'} />
-                </div>
-                <!-- Explore -->
-                <div
-                    class="flex w-full flex-col justify-center border-l-4 border-solid border-neutral-400 px-4 pl-5 text-right"
-                >
-                    <ul class="text-xl leading-loose text-gray-700">
-                        {
-                            Items.map((item) => {
-                                return (
-                                    <li>
-                                        <a
-                                            href={item.url}
-                                            class="link-underline text-gray-700 transition-colors duration-150 hover:text-gray-900"
-                                        >
-                                            {item.name}
-                                        </a>
-                                    </li>
-                                );
-                            })
-                        }
-                    </ul>
-                </div>
+<div class="spacer fill-black md:-mt-24"></div>
+<footer class="bg-[#a8a89e]">
+    <div class="container mx-auto px-4 pb-5">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center md:text-left">
+            <div class="px-4">
+                <h1 class="text-4xl font-semibold">Thomas Breindl</h1>
+                <p class="mt-4 text-xl leading-relaxed text-gray-700 md:hidden">
+                    Ich bin Schüler am Adalbert-Stifter-Gymnasium. <br />Tools Crafter · Fokussiert auf TypeScript &
+                    Python
+                </p>
+                <p class="mt-4 text-xl leading-relaxed text-gray-700 hidden md:block">
+                    Ich bin Schüler am Adalbert-Stifter-Gymnasium. Tools Crafter · Fokussiert auf TypeScript & Python
+                </p>
             </div>
-            <!-- Credit -->
-            <div class="mt-10 flex flex-col items-center justify-center">
-                <div class="text-sm text-gray-700">© {year} Thomas Breindl. All rights reserved.</div>
+            <div class="flex flex-col items-center justify-center md:border-l-4 border-neutral-400 pl-5">
+                <LinkButton text="Contact" icon="mdi:message" href="#" style={'width: 1.5rem'} />
             </div>
+            <div
+                class="flex flex-col justify-center md:border-l-4 border-neutral-400 px-4 pl-5 text-center md:text-right"
+            >
+                <ul class="text-xl leading-loose text-gray-700">
+                    {
+                        Items.map((item) => (
+                            <li>
+                                <a
+                                    href={item.url}
+                                    class="link-underline text-gray-700 transition-all duration-150 hover:text-gray-900"
+                                >
+                                    {item.name}
+                                </a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="mt-10 flex flex-col items-center justify-center">
+            <div class="text-sm text-gray-700">© {year} Thomas Breindl. All rights reserved.</div>
         </div>
     </div>
 </footer>
@@ -71,7 +65,6 @@ const Items = [
         background-size: 0 3px;
         background-position: 0 100%;
         background-repeat: no-repeat;
-        transition: background-size 0.25s ease-in-out;
 
         &:hover {
             background-size: 100% 3px;
@@ -88,29 +81,5 @@ const Items = [
         background-position: center;
 
         background-image: url('/footer-wave.svg');
-    }
-    .footer-content {
-        background-color: #a8a89e;
-    }
-    footer {
-        min-width: 320px;
-    }
-    footer h3 br {
-        display: none;
-    }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        footer h3 br {
-            display: inline;
-        }
-    }
-    footer ul {
-        margin-top: 10px;
-        padding-top: 2px;
-        padding-bottom: 3px;
-    }
-    footer ul > li {
-        list-style-type: none;
-        font-weight: 500;
-        color: #878a8f;
     }
 </style>
