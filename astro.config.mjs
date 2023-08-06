@@ -13,7 +13,7 @@ export default defineConfig({
         tailwind(),
         sitemap(),
         astroImageTools,
-        // purgecss({ keyframes: true }),
+        purgecss({ keyframes: true, fontFace: true }),
         critters({
             exclude: ['./dist/showcase'],
         }),

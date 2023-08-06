@@ -14,7 +14,6 @@ import { Img } from 'astro-imagetools/components';
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="expires" content="0" />
         <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
         <link rel="shortcut icon" type="image/x-icon" href="/showcase/griffin/favicon.jpg" />
 
@@ -26,8 +25,8 @@ import { Img } from 'astro-imagetools/components';
         <!-- font-awesome CSS -->
         <link
             rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-            integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         />
@@ -53,7 +52,7 @@ import { Img } from 'astro-imagetools/components';
                         <div class="navbar-header">
                             <!-- Logo -->
                             <div class="navbar-brand">
-                                <a class="logo" href="index.html">
+                                <a class="logo" href="../">
                                     <Img
                                         src="/showcase/griffin/images/2logo.png"
                                         alt="Griffin Energy Drink"
@@ -71,10 +70,10 @@ import { Img } from 'astro-imagetools/components';
                         <!-- Main navigation -->
                         <div class="otf-flex-item"></div>
                         <ul class="main-nav nav navbar-nav navbar-right">
-                            <li class="dropdown"><a href="index.html" rel="prefetch">Home</a></li>
-                            <li class="dropdown"><a href="Product" rel="prefetch">Product</a></li>
+                            <li class="dropdown"><a href="../" rel="prefetch">Home</a></li>
+                            <li class="dropdown"><a href="../Product/" rel="prefetch">Product</a></li>
                             <li class="dropdown active">
-                                <a href="Donation-Code" rel="prefetch">Donation-Code</a>
+                                <a href="/" rel="prefetch">Donation-Code</a>
                             </li>
                         </ul>
                         <!-- /Main navigation -->
@@ -124,8 +123,8 @@ import { Img } from 'astro-imagetools/components';
                     <span class="icon-bar"></span></button
                 ><!-- logo -->
                 <div class="navbar-brand">
-                    <a class="logo" href="index.html"
-                        ><Img src="/showcase/griffin/images/2logo.png" alt="" loading="lazy" /></a
+                    <a class="logo" href="../"
+                        ><Img src="/showcase/griffin/images/2logo.png" alt="Logo" loading="lazy" /></a
                     >
                 </div>
                 <!-- logo -->
@@ -133,17 +132,15 @@ import { Img } from 'astro-imagetools/components';
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="index.html" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
-                            >Home</a
-                        >
+                        <a href="../" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch">Home</a>
                     </li>
                     <li>
-                        <a href="Product" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                        <a href="../Product/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
                             >Product</a
                         >
                     </li>
                     <li class="active">
-                        <a href="Donation-Code" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                        <a href="/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
                             >Donation-Code</a
                         >
                     </li>
@@ -170,11 +167,11 @@ import { Img } from 'astro-imagetools/components';
                         required
                         oninput="this.value = this.value.toUpperCase();"
                     />
-                    <script>
+                    <script defer>
                         window.onload = function () {
                             function querySt(ji) {
-                                hu = window.location.search.substring(1);
-                                gy = hu.split('&');
+                                const hu = window.location.search.substring(1);
+                                const gy = hu.split('&');
                                 for (i = 0; i < gy.length; i++) {
                                     ft = gy[i].split('=');
                                     if (ft[0] == ji) {
@@ -211,12 +208,12 @@ import { Img } from 'astro-imagetools/components';
                                         <div class="product-thumbnail">
                                             <a href="https://www.arborday.org/" title=""
                                                 ><Img
-                                                    class="product-featured-image"
                                                     src="/showcase/griffin/images/ArborDayFoundatiion.png"
                                                     alt=""
                                                     attributes={{
                                                         img: {
                                                             style: 'width: 132px',
+                                                            class: 'product-featured-image',
                                                         },
                                                     }}
                                                 /></a
@@ -280,12 +277,12 @@ import { Img } from 'astro-imagetools/components';
                                         <div class="product-thumbnail">
                                             <a href="https://www.ifaw.org/de" title=""
                                                 ><Img
-                                                    class="product-featured-image"
                                                     src="/showcase/griffin/images/ifaw.jpg"
                                                     alt=""
                                                     attributes={{
                                                         img: {
                                                             style: 'width: 250px',
+                                                            class: 'product-featured-image',
                                                         },
                                                     }}
                                                 /></a
@@ -313,12 +310,12 @@ import { Img } from 'astro-imagetools/components';
                                         <div class="product-thumbnail">
                                             <a href="https://www.savethechildren.org/" title=""
                                                 ><Img
-                                                    class="product-featured-image"
                                                     src="/showcase/griffin/images/SaveTheChildren.jpg"
                                                     alt=""
                                                     attributes={{
                                                         img: {
                                                             style: 'width: 130px',
+                                                            class: 'product-featured-image',
                                                         },
                                                     }}
                                                 /></a
@@ -389,7 +386,7 @@ import { Img } from 'astro-imagetools/components';
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                        <Img src="//showcase/griffin/images/logo.png" alt="" />
+                        <Img src="/showcase/griffin/images/logo.png" alt="Logo" />
                         <p class="address pt-30">
                             *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke. <br />
                         </p>

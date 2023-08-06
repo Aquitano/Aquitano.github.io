@@ -4,9 +4,12 @@ html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
 }
 body {
     margin: 0;
+    font-weight: 400;
+    line-height: 30px;
 }
 article,
 aside,
@@ -95,7 +98,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
+    font-family: monospace;
     font-size: 1em;
 }
 button,
@@ -118,7 +121,7 @@ button,
 html input[type='button'],
 input[type='reset'],
 input[type='submit'] {
-    -webkit-appearance: button;
+    appearance: button;
     cursor: pointer;
 }
 button[disabled],
@@ -143,7 +146,7 @@ input[type='number']::-webkit-outer-spin-button {
     height: auto;
 }
 input[type='search'] {
-    -webkit-appearance: textfield;
+    appearance: textfield;
     box-sizing: content-box;
 }
 input[type='search']::-webkit-search-cancel-button,
@@ -245,13 +248,14 @@ th {
 }
 @font-face {
     font-family: 'Glyphicons Halflings';
-    src: url(../fonts/bootstrap/glyphicons-halflings-regular.html);
+    src: url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular.html);
     src:
-        url(../fonts/bootstrap/glyphicons-halflings-regulard41d.html?#iefix) format('embedded-opentype'),
-        url(../fonts/bootstrap/glyphicons-halflings-regular-2.html) format('woff2'),
-        url(../fonts/bootstrap/glyphicons-halflings-regular-3.html) format('woff'),
-        url(../fonts/bootstrap/glyphicons-halflings-regular-4.html) format('truetype'),
-        url(../fonts/bootstrap/glyphicons-halflings-regular-5.html#glyphicons_halflingsregular) format('svg');
+        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regulard41d.html?#iefix) format('embedded-opentype'),
+        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-2.html) format('woff2'),
+        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-3.html) format('woff'),
+        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-4.html) format('truetype'),
+        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-5.html#glyphicons_halflingsregular)
+            format('svg');
 }
 .glyphicon {
     position: relative;
@@ -1061,14 +1065,6 @@ th {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-html {
-    font-size: 10px;
-    -webkit-tap-highlight-color: transparent;
-}
-body {
-    font-weight: 400;
-    line-height: 30px;
 }
 button,
 input,
@@ -4691,10 +4687,6 @@ fieldset[disabled] .navbar-inverse .btn-link:focus,
 fieldset[disabled] .navbar-inverse .btn-link:hover {
     color: #444;
 }
-.breadcrumb {
-    padding: 30px 0;
-    margin-bottom: 40px;
-}
 .breadcrumb > li {
     display: inline-block;
 }
@@ -5589,6 +5581,8 @@ button.list-group-item-danger.active:hover {
 }
 .panel-body {
     padding: 15px;
+    padding-left: 50px;
+    border-top-color: #fff;
 }
 .panel-body:after,
 .panel-body:before {
@@ -5603,6 +5597,7 @@ button.list-group-item-danger.active:hover {
     border-bottom: 1px solid transparent;
     border-top-right-radius: 2px;
     border-top-left-radius: 2px;
+    background-color: transparent;
 }
 .panel-heading > .dropdown .dropdown-toggle {
     color: inherit;
@@ -5817,9 +5812,6 @@ button.list-group-item-danger.active:hover {
 }
 .panel-group .panel-footer + .panel-collapse .panel-body {
     border-bottom: 1px solid #ddd;
-}
-.panel-default {
-    border-color: #ddd;
 }
 .panel-default > .panel-heading {
     color: #333;
@@ -7743,22 +7735,6 @@ input.btn-default:hover {
 .swatch-red {
     background-color: #d33;
 }
-.text-capitalize {
-    text-transform: capitalize;
-}
-.initialism,
-.tab-contact .nav li,
-.text-uppercase {
-    text-transform: uppercase;
-}
-.text-lowercase {
-    text-transform: lowercase;
-}
-.ps-search .ps-search__content,
-.tab-contact .nav li,
-.text-center {
-    text-align: center;
-}
 .text-white {
     color: #fff !important;
 }
@@ -7890,23 +7866,10 @@ input.btn {
     border-top: solid 1px #f1f1f1;
     box-shadow: none;
 }
-.panel-heading {
-    background-color: transparent;
-    padding: 0;
-}
-.panel-body {
-    padding-left: 50px;
-    border-top-color: #fff;
-}
 .panel-title {
     font-size: 18px;
     font-weight: 400;
     color: #010101;
-}
-.panel-title > a:before {
-    font-family: FontAwesome;
-    content: '\f056';
-    padding-right: 30px;
 }
 .panel-title > a.collapsed:before {
     content: '\f055';
@@ -7996,7 +7959,6 @@ a[aria-expanded='true'] {
 }
 .features.skin1 .features_list .features-images {
     display: inline-block;
-    float: left;
     width: 60px;
 }
 .features.skin1 .features_list .features-description {
@@ -8224,9 +8186,6 @@ header {
     -ms-transform: translateY(20px);
     -o-transform: translateY(20px);
     transform: translateY(20px);
-    -webkit-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-    -o-transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
     visibility: hidden;
     z-index: 999;
     border: 0;
@@ -8337,8 +8296,7 @@ header {
     width: 400px;
 }
 .button {
-    background-image: -webkit-linear-gradient(top, #f4f1ee, #fff);
-    background-image: linear-gradient(top, #000, #fff);
+    background-image: linear-gradient(45deg, #000, #fff);
     border-radius: 50%;
     float: left;
     height: 70px;
@@ -8425,7 +8383,6 @@ header {
     min-width: 120px;
     border: none;
     min-height: 40px;
-    border-radius: 3px;
     margin: 0 5px;
 }
 .modal-confirm .btn-secondary {
@@ -8467,8 +8424,7 @@ header {
     top: 19px;
 }
 .button:hover {
-    background-image: -webkit-linear-gradient(top, #fff, #f4f1ee);
-    background-image: linear-gradient(top, #fff, #f4f1ee);
+    background-image: linear-gradient(45deg, #fff, #f4f1ee);
     color: #08c;
 }
 .heart:hover:after {
@@ -8488,8 +8444,7 @@ header {
     text-shadow: 0 0 6px #eb2f2f;
 }
 .button:active {
-    background-image: -webkit-linear-gradient(top, #efedec, #f7f4f4);
-    background-image: linear-gradient(top, #efedec, #f7f4f4);
+    background-image: linear-gradient(45deg, #efedec, #f7f4f4);
     box-shadow:
         0 3px 5px 0 rgba(0, 0, 0, 0.4),
         inset 0 -3px 1px 1px rgba(204, 198, 197, 0.5);
@@ -8658,6 +8613,8 @@ header {
 }
 .breadcrumb {
     border-bottom: solid 1px #f1f1f1;
+    padding: 30px 0;
+    margin-bottom: 40px;
 }
 .breadcrumb h1 {
     font-size: 24px;
@@ -9576,7 +9533,7 @@ header {
     top: 0;
     left: 0;
     bottom: 0;
-    background: url(../images/arrow.png) no-repeat center;
+    background: url(/showcase/griffin/images/arrow.png) no-repeat center;
 }
 .page-cart .coupon {
     position: relative;
@@ -10052,9 +10009,6 @@ h4.grand-totall-title span {
     -ms-transform: scale(1.25);
     -o-transform: scale(1.25);
     transform: scale(1.25);
-}
-.pagination {
-    display: block;
 }
 .pagination ul.page-numbers {
     padding: 10px 0;
