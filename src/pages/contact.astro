@@ -100,6 +100,7 @@ import Layout from '../layouts/Layout.astro';
                             data-netlify="true"
                             method="POST"
                         >
+                            <input type="hidden" name="form-name" value="contact" />
                             <div class="flex flex-col">
                                 <label for="name" class="hidden">Vollständiger Name</label>
                                 <input

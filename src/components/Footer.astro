@@ -17,21 +17,19 @@ const Items = [
         <div class="grid grid-cols-1 gap-4 text-center md:grid-cols-3 md:text-left">
             <div class="px-4">
                 <h1 class="text-4xl font-semibold">Thomas Breindl</h1>
-                <p class="mt-4 text-xl leading-relaxed text-gray-700 md:hidden">
+                <p class="mt-4 text-xl leading-relaxed text-gray-800 md:hidden">
                     Ich bin Schüler am Adalbert-Stifter-Gymnasium. <br />Tools Crafter · Fokussiert auf TypeScript &
                     Python
                 </p>
-                <p class="mt-4 hidden text-xl leading-relaxed text-gray-700 md:block">
+                <p class="mt-4 hidden text-xl leading-relaxed text-gray-800 md:block">
                     Ich bin Schüler am Adalbert-Stifter-Gymnasium. Tools Crafter · Fokussiert auf TypeScript & Python
                 </p>
             </div>
-            <div class="flex flex-col items-center justify-center border-neutral-400 pl-5 md:border-l-4">
+            <div class="flex flex-col items-center justify-center pl-5">
                 <LinkButton text="Contact" icon="mdi:message" href="#" style={'width: 1.5rem'} />
             </div>
-            <div
-                class="flex flex-col justify-center border-neutral-400 px-4 pl-5 text-center md:border-l-4 md:text-right"
-            >
-                <ul class="text-xl leading-loose text-gray-700">
+            <div class="flex flex-col justify-center px-4 pl-5 text-center md:text-right">
+                <ul class="text-xl leading-loose text-gray-800">
                     {
                         Items.map((item) => (
                             <li>
@@ -48,7 +46,7 @@ const Items = [
             </div>
         </div>
         <div class="mt-10 flex flex-col items-center justify-center">
-            <div class="text-sm text-gray-700">© {year} Thomas Breindl. All rights reserved.</div>
+            <div class="text-sm text-gray-800">© {year} Thomas Breindl. All rights reserved.</div>
         </div>
     </div>
 </footer>
@@ -84,6 +82,6 @@ const Items = [
     }
 
     footer {
-        background-color: #a8a89e;
+        background-color: #c2c2b4;
     }
 </style>
