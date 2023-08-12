@@ -5,21 +5,23 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Kontact | Breindl Thomas" active="Kontakt">
     <body>
-        <div class="relative flex items-center justify-center min-h-screen bg-white sm:items-center sm:pt-0">
-            <div class="w-full max-w-6xl mx-auto sm:px-6 lg:px-8">
+        <div
+            class="relative mt-11 flex min-h-screen items-center justify-center bg-white sm:mt-0 sm:items-center sm:pt-0"
+        >
+            <div class="mx-auto w-full max-w-6xl sm:px-6 lg:px-8">
                 <div class="mt-8 overflow-hidden">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="p-6 bg-gray-100 dark:bg-gray-800 sm:rounded-lg">
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div class="bg-gray-100 p-6 dark:bg-gray-800 sm:rounded-lg">
                             <h1
-                                class="text-4xl sm:text-5xl text-gray-800 dark:text-white font-extrabold tracking-tight mb-4"
+                                class="mb-4 text-4xl font-extrabold tracking-tight text-gray-800 dark:text-white sm:text-5xl"
                             >
                                 Kontaktieren Sie mich
                             </h1>
-                            <p class="text-normal text-lg sm:text-2xl font-medium text-gray-600 dark:text-gray-400">
+                            <p class="text-normal text-lg font-medium text-gray-600 dark:text-gray-400 sm:text-2xl">
                                 Füllen Sie das Formular aus, um ein Gespräch zu beginnen
                             </p>
 
-                            <div class="flex items-center mt-8 text-gray-600 dark:text-gray-400">
+                            <div class="mt-8 flex items-center text-gray-600 dark:text-gray-400">
                                 <svg
                                     fill="none"
                                     stroke="currentColor"
@@ -27,7 +29,7 @@ import Layout from '../layouts/Layout.astro';
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
                                     viewBox="0 0 24 24"
-                                    class="w-8 h-8 text-gray-500"
+                                    class="h-8 w-8 text-gray-500"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -41,14 +43,14 @@ import Layout from '../layouts/Layout.astro';
                                         stroke-width="1.5"
                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
-                                <div class="ml-4 text-md tracking-wide font-semibold w-40">Passau, Deutschland</div>
+                                <div class="text-md ml-4 w-40 font-semibold tracking-wide">Passau, Deutschland</div>
                             </div>
 
-                            <div class="flex items-center mt-4 text-gray-600 dark:text-gray-400">
-                                <svg class="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                            <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
+                                <svg class="h-8 w-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
                                     <Icon name="mdi:twitter" style={'width: 2rem'} />
                                 </svg>
-                                <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                <div class="text-md ml-4 w-40 font-semibold tracking-wide">
                                     <a
                                         href="https://twitter.com/BreindlThomas"
                                         target="_blank"
@@ -57,18 +59,18 @@ import Layout from '../layouts/Layout.astro';
                                 </div>
                             </div>
 
-                            <div class="flex items-center mt-4 text-gray-600 dark:text-gray-400">
-                                <svg class="w-8 h-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                            <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
+                                <svg class="h-8 w-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
                                     <Icon name="mdi:github" style={'width: 2rem'} />
                                 </svg>
-                                <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                <div class="text-md ml-4 w-40 font-semibold tracking-wide">
                                     <a href="https://github.com/Aquitano" target="_blank" rel="noopener noreferrer"
                                         >Aquitano</a
                                     >
                                 </div>
                             </div>
 
-                            <div class="flex items-center mt-4 text-gray-600 dark:text-gray-400">
+                            <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
                                 <svg
                                     fill="none"
                                     stroke="currentColor"
@@ -76,7 +78,7 @@ import Layout from '../layouts/Layout.astro';
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
                                     viewBox="0 0 24 24"
-                                    class="w-8 h-8 text-gray-500"
+                                    class="h-8 w-8 text-gray-500"
                                 >
                                     <path
                                         stroke-linecap="round"
@@ -85,16 +87,18 @@ import Layout from '../layouts/Layout.astro';
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                     ></path>
                                 </svg>
-                                <div class="ml-4 text-md tracking-wide font-semibold w-40">
+                                <div class="text-md ml-4 w-40 font-semibold tracking-wide">
                                     <a href="mailto:ThomasBreindl@proton.me">ThomasBreindl@proton.me</a>
                                 </div>
                             </div>
                         </div>
 
                         <form
-                            class="p-6 flex flex-col justify-center space-y-4"
+                            class="flex flex-col justify-center space-y-4 p-6"
+                            name="contact"
                             data-netlify-recaptcha="true"
                             data-netlify="true"
+                            method="POST"
                         >
                             <div class="flex flex-col">
                                 <label for="name" class="hidden">Vollständiger Name</label>
@@ -103,7 +107,7 @@ import Layout from '../layouts/Layout.astro';
                                     name="name"
                                     id="name"
                                     placeholder="Vollständiger Name"
-                                    class="w-full py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 dark:text-white font-semibold focus:border-indigo-500 focus:outline-none"
+                                    class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                 />
                             </div>
 
@@ -114,7 +118,7 @@ import Layout from '../layouts/Layout.astro';
                                     name="email"
                                     id="email"
                                     placeholder="E-Mail"
-                                    class="w-full py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 dark:text-white font-semibold focus:border-indigo-500 focus:outline-none"
+                                    class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                 />
                             </div>
 
@@ -125,7 +129,7 @@ import Layout from '../layouts/Layout.astro';
                                     name="tel"
                                     id="tel"
                                     placeholder="Telefonnummer"
-                                    class="w-full py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 dark:text-white font-semibold focus:border-indigo-500 focus:outline-none"
+                                    class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                 />
                             </div>
 
@@ -136,7 +140,7 @@ import Layout from '../layouts/Layout.astro';
                                     id="message"
                                     placeholder="Ihre Nachricht"
                                     rows="4"
-                                    class="w-full py-3 px-3 rounded-lg bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700 text-gray-800 dark:text-white font-semibold focus:border-indigo-500 focus:outline-none"
+                                    class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                                 ></textarea>
                             </div>
 
@@ -144,7 +148,7 @@ import Layout from '../layouts/Layout.astro';
 
                             <button
                                 type="submit"
-                                class="w-full md:w-auto bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6 rounded-lg mt-3 hover:bg-indigo-500 transition ease-in-out duration-300"
+                                class="hover:bg-blue-dark mt-3 w-full rounded-lg bg-indigo-600 px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:bg-indigo-500 md:w-auto"
                             >
                                 Absenden
                             </button>

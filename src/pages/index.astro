@@ -1,7 +1,7 @@
 ---
-import AllProducts from '../components/AllProducts.astro';
 import HomeTop from '../components/HomeTop.astro';
 import LinkButton from '../components/LinkButton.astro';
+import Projects from '../components/Projects.jsx';
 import Layout from '../layouts/Layout.astro';
 
 const socials = [
@@ -23,13 +23,15 @@ const socials = [
         <div id="Welcome">
             <HomeTop />
 
-            <AllProducts />
+            <Projects client:load />
 
             <!-- Contact -->
             <section class="mt-24">
                 <div class="wrapper">
                     <span style="text-align: center">
-                        <h1 class="i-v Fly-in-up mb-4">Kontaktiere mich!</h1>
+                        <h1 class="i-v Fly-in-up mb-4" data-aos="fade-up" data-aos-delay="100" data-aos-offset="200">
+                            Kontaktiere mich!
+                        </h1>
                         <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
                             {
                                 socials.map((social) => (
@@ -589,61 +591,29 @@ const socials = [
 </style>
 
 <script>
-    type ElementList = HTMLCollectionOf<Element>;
+    import 'solid-devtools';
+    const WATCH_CLASS = 'i-v';
+    const FADE = 'is-visible';
 
-    const WATCH_CLASS: string = 'i-v';
-    const IN_VIEWPORT_CLASS: string = 'in-viewport';
-    const FADE: string = 'is-visible';
-    let elements: ElementList;
+    const elements: NodeListOf<Element> = document.querySelectorAll(`.${WATCH_CLASS}`);
 
-    function hasClass(element: Element, className: string): boolean {
-        if (element.classList) {
-            return element.classList.contains(className);
-        } else {
-            return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
-        }
-    }
-
-    function addClass(element: Element, className: string): void {
-        element.classList.add(className);
-    }
-
-    function storeElements(): void {
-        elements = document.getElementsByClassName(WATCH_CLASS) as ElementList;
-    }
-
-    function update(): void {
-        const viewportTop: number = window.scrollY || document.documentElement.scrollTop;
-        const viewportBottom: number =
-            viewportTop + (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight);
-        const scrollTop: number = window.scrollY || document.documentElement.scrollTop;
-
-        for (let i = 0, len = elements.length; i < len; i += 1) {
-            const element: Element = elements[i];
-            if (true === isInViewport(element, scrollTop, viewportTop, viewportBottom)) {
-                if (!hasClass(element, IN_VIEWPORT_CLASS)) {
-                    addClass(element, FADE);
-                }
+    const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add(FADE);
+                observer.unobserve(entry.target);
             }
-        }
-    }
+        });
+    };
 
-    function isInViewport(element: Element, scrollTop: number, viewportTop: number, viewportBottom: number): boolean {
-        const elementRect: DOMRect = element.getBoundingClientRect();
-        const elementTop: number = elementRect.top + scrollTop;
-        const elementBottom: number = elementTop + (element as HTMLElement).offsetHeight;
+    const observerOptions: IntersectionObserverInit = {
+        root: null, // viewport
+        threshold: 0.1, // at least 10% of the target is visible
+    };
 
-        return !!(elementBottom >= viewportTop && elementTop < viewportBottom);
-    }
+    const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
 
-    document.addEventListener('DOMContentLoaded', function (event) {
-        if (document.readyState === 'interactive') {
-            storeElements();
-            document.addEventListener('scroll', update);
-            document.addEventListener('resize', update);
-            update();
-        }
-    });
+    elements.forEach((element) => observer.observe(element));
 </script>
 
 <script>

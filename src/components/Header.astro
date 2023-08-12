@@ -9,7 +9,7 @@ const { location = '/' } = Astro.props;
 const menus = [
     { name: 'Home', href: location },
     { name: 'Über mich', href: `${location}timeline` },
-    { name: 'Projekte', href: `${location}projects` },
+    { name: 'Projekte', href: `${location}#portfolio` },
     { name: 'Kontakt', href: `${location}contact` },
 ].map((menu) => {
     return {
