@@ -32,8 +32,8 @@ dependencies:
     specifier: ^2.10.7
     version: 2.10.7(sass@1.65.1)
   astro-compress:
-    specifier: ^2.0.5
-    version: 2.0.5
+    specifier: ^2.0.8
+    version: 2.0.8
   astro-critters:
     specifier: ^2.0.4
     version: 2.0.4
@@ -1603,6 +1603,10 @@ packages:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: false
 
+  /@types/node@20.5.0:
+    resolution: {integrity: sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==}
+    dev: false
+
   /@types/parse5@6.0.3:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: false
@@ -1725,13 +1729,13 @@ packages:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
     dev: false
 
-  /astro-compress@2.0.5:
-    resolution: {integrity: sha512-DBWvNkPRt8N9ou76vXwsDtgl4RKSltHjCdSttuWB3MUF87fNkAFsi1Ve6UdXFGvS7YCIcWDCdN5nVRiKdfDOSw==}
+  /astro-compress@2.0.8:
+    resolution: {integrity: sha512-LY6bexsurw/1lKfTgvBKiKAXmfOZ2v3p/xFAmsnnGCviJdyrIa9t3bq4sqR209VLxGKU9eJ2Vuf813FA3ysRCQ==}
     dependencies:
       '@types/csso': 5.0.0
       '@types/html-minifier-terser': 7.0.0
       csso: 5.0.5
-      files-pipe: 2.0.8
+      files-pipe: 2.0.12
       html-minifier-terser: 7.2.0
       sharp: 0.32.4
       svgo: 3.0.2
@@ -2729,6 +2733,14 @@ packages:
   /file-type@9.0.0:
     resolution: {integrity: sha512-Qe/5NJrgIOlwijpq3B7BEpzPFcgzggOTagZmkXQY4LA6bsXKTUstK7Wp12lEJ/mLKTpvIZxmIuRcLYWT6ov9lw==}
     engines: {node: '>=6'}
+    dev: false
+
+  /files-pipe@2.0.12:
+    resolution: {integrity: sha512-j71KGMZZeJad8kFVhiHVZdWVVn4MC7oC+h6Uoi8SYU3QHKv52QsCmKRgAK1fj3th3Acs8O3nqQpVocKXJVS27A==}
+    dependencies:
+      '@types/node': 20.5.0
+      deepmerge-ts: 5.1.0
+      fast-glob: 3.3.1
     dev: false
 
   /files-pipe@2.0.8:
