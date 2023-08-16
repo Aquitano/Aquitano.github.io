@@ -35,8 +35,8 @@ dependencies:
     specifier: ^2.0.5
     version: 2.0.5
   astro-critters:
-    specifier: ^2.0.4
-    version: 2.0.4
+    specifier: ^2.0.10
+    version: 2.0.10
   astro-icon:
     specifier: ^0.8.1
     version: 0.8.1
@@ -1603,6 +1603,10 @@ packages:
     resolution: {integrity: sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw==}
     dev: false
 
+  /@types/node@20.5.0:
+    resolution: {integrity: sha512-Mgq7eCtoTjT89FqNoTzzXg2XvCi5VMhRV6+I2aYanc6kQCBImeNaAYRs/DyoVqk1YEUJK5gN9VO7HRIdz4Wo3Q==}
+    dev: false
+
   /@types/parse5@6.0.3:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
     dev: false
@@ -1738,11 +1742,11 @@ packages:
       terser: 5.19.2
     dev: false
 
-  /astro-critters@2.0.4:
-    resolution: {integrity: sha512-hfDuhGYnNMx633fEnynvd58pmwDmWWhtKVCZ0O7D7dGv16koAnNMa3TA/6ShUScwj8bJIaEXHXJVcPJjCgIbJg==}
+  /astro-critters@2.0.10:
+    resolution: {integrity: sha512-sXY4aJ8NbjGJyOQGMhQti7xMfg0LN0zR8UZw4T7IWMlOYpY1ugYfDgkIzCeJzECiJ5uEPpA3jYj5WatJx7ePcw==}
     dependencies:
       critters: 0.0.20
-      files-pipe: 2.0.8
+      files-pipe: 2.0.15
     dev: false
 
   /astro-icon@0.8.1:
@@ -2729,6 +2733,14 @@ packages:
   /file-type@9.0.0:
     resolution: {integrity: sha512-Qe/5NJrgIOlwijpq3B7BEpzPFcgzggOTagZmkXQY4LA6bsXKTUstK7Wp12lEJ/mLKTpvIZxmIuRcLYWT6ov9lw==}
     engines: {node: '>=6'}
+    dev: false
+
+  /files-pipe@2.0.15:
+    resolution: {integrity: sha512-82lnXCqBO3o/iyxZrHhU7ksy1LfRBw0JxbbUKo8+/8SwAFRTj6FPJKekMVINQXMf3dKXgJh5o7YjApLyeSTayw==}
+    dependencies:
+      '@types/node': 20.5.0
+      deepmerge-ts: 5.1.0
+      fast-glob: 3.3.1
     dev: false
 
   /files-pipe@2.0.8:
