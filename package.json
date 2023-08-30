@@ -11,7 +11,7 @@
         "format": "prettier --write ./src/**/*.{astro,js,jsx,ts,tsx,md,mdx,css,scss,sass,less,html,json,graphql,yaml,yml,mdx}"
     },
     "dependencies": {
-        "@astrojs/prefetch": "^0.3.0",
+        "@astrojs/prefetch": "^0.4.0",
         "@astrojs/sitemap": "^2.0.2",
         "@astrojs/solid-js": "^2.2.1",
         "@astrojs/tailwind": "^4.0.0",
