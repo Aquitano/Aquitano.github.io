@@ -27,7 +27,7 @@
         "autoprefixer": "^10.4.15",
         "lodash-es": "^4.17.21",
         "prettier": "^3.0.2",
-        "prettier-plugin-astro": "^0.11.0",
+        "prettier-plugin-astro": "^0.12.0",
         "prettier-plugin-tailwindcss": "^0.5.3",
         "sass": "^1.66.1",
         "solid-js": "^1.7.11",
