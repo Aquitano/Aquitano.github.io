@@ -24,7 +24,7 @@
         "astro-imagetools": "^0.9.0",
         "astro-purgecss": "^2.3.0",
         "astro-seo": "^0.8.0",
-        "autoprefixer": "^10.4.15",
+        "autoprefixer": "^10.4.16",
         "lodash-es": "^4.17.21",
         "prettier": "^3.0.3",
         "prettier-plugin-astro": "^0.12.0",
