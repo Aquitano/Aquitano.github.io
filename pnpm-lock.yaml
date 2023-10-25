@@ -59,11 +59,11 @@ dependencies:
     specifier: ^3.0.3
     version: 3.0.3
   prettier-plugin-astro:
-    specifier: ^0.12.0
-    version: 0.12.0
+    specifier: ^0.12.1
+    version: 0.12.1
   prettier-plugin-tailwindcss:
     specifier: ^0.5.6
-    version: 0.5.6(prettier-plugin-astro@0.12.0)(prettier@3.0.3)
+    version: 0.5.6(prettier-plugin-astro@0.12.1)(prettier@3.0.3)
   sass:
     specifier: ^1.69.4
     version: 1.69.4
@@ -4797,8 +4797,8 @@ packages:
       which-pm: 2.0.0
     dev: false
 
-  /prettier-plugin-astro@0.12.0:
-    resolution: {integrity: sha512-8E+9YQR6/5CPZJs8XsfBw579zrwZkc0Wb7x0fRVm/51JC8Iys4lBw4ecV8fHwpbQnzve86TUa4fJ08BJzqfWnA==}
+  /prettier-plugin-astro@0.12.1:
+    resolution: {integrity: sha512-1mlNIU/cV+25oB4z5wXzOz2fSDcawG3MsVUwgw2i8VSy7voLSENMSpR1juu3U5MAVUo3owuyax11QuylbpuqOQ==}
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       '@astrojs/compiler': 1.8.1
@@ -4816,7 +4816,7 @@ packages:
       synckit: 0.8.5
     dev: false
 
-  /prettier-plugin-tailwindcss@0.5.6(prettier-plugin-astro@0.12.0)(prettier@3.0.3):
+  /prettier-plugin-tailwindcss@0.5.6(prettier-plugin-astro@0.12.1)(prettier@3.0.3):
     resolution: {integrity: sha512-2Xgb+GQlkPAUCFi3sV+NOYcSI5XgduvDBL2Zt/hwJudeKXkyvRS65c38SB0yb9UB40+1rL83I6m0RtlOQ8eHdg==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
@@ -4869,7 +4869,7 @@ packages:
         optional: true
     dependencies:
       prettier: 3.0.3
-      prettier-plugin-astro: 0.12.0
+      prettier-plugin-astro: 0.12.1
     dev: false
 
   /prettier@2.8.8:
@@ -5729,7 +5729,7 @@ packages:
     peerDependencies:
       typedoc: ^0.25.0
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.3.0-dev.20231021)
       typescript: 5.2.2
     dev: false
 
@@ -5738,7 +5738,7 @@ packages:
     peerDependencies:
       typedoc: '>= 0.23.14 || 0.24.x || 0.25.x'
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.3.0-dev.20231021)
     dev: false
 
   /typedoc-plugin-merge-modules@5.1.0(typedoc@0.25.2):
@@ -5746,7 +5746,7 @@ packages:
     peerDependencies:
       typedoc: 0.24.x || 0.25.x
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.3.0-dev.20231021)
     dev: false
 
   /typedoc-plugin-remove-references@0.0.6:
@@ -5758,7 +5758,7 @@ packages:
     peerDependencies:
       typedoc: 0.22.x || 0.23.x || 0.24.x || 0.25.x
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.3.0-dev.20231021)
     dev: false
 
   /typedoc-plugin-zod@1.1.0(typedoc@0.25.2):
@@ -5766,10 +5766,10 @@ packages:
     peerDependencies:
       typedoc: 0.23.x || 0.24.x || 0.25.x
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.3.0-dev.20231021)
     dev: false
 
-  /typedoc@0.25.2(typescript@5.1.6):
+  /typedoc@0.25.2(typescript@5.3.0-dev.20231021):
     resolution: {integrity: sha512-286F7BeATBiWe/qC4PCOCKlSTwfnsLbC/4cZ68oGBbvAqb9vV33quEOXx7q176OXotD+JdEerdQ1OZGJ818lnA==}
     engines: {node: '>= 16'}
     hasBin: true
@@ -5780,7 +5780,7 @@ packages:
       marked: 4.3.0
       minimatch: 9.0.3
       shiki: 0.14.3
-      typescript: 5.1.6
+      typescript: 5.3.0-dev.20231021
     dev: false
 
   /typescript-esbuild@0.2.25:
@@ -5793,7 +5793,7 @@ packages:
       esbuild: 0.19.5
       esbuild-plugin-copy: 2.1.1(esbuild@0.19.5)
       fast-glob: 3.3.1
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.3.0-dev.20231021)
       typedoc-plugin-keywords: 1.5.0(typedoc@0.25.2)
       typedoc-plugin-mdn-links: 3.1.0(typedoc@0.25.2)
       typedoc-plugin-merge-modules: 5.1.0(typedoc@0.25.2)
