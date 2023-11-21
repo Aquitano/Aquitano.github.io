@@ -76,8 +76,8 @@ dependencies:
 
 devDependencies:
   '@types/lodash-es':
-    specifier: ^4.17.10
-    version: 4.17.10
+    specifier: ^4.17.12
+    version: 4.17.12
   solid-devtools:
     specifier: ^0.27.7
     version: 0.27.7(solid-js@1.8.3)(vite@4.4.9)
@@ -1934,8 +1934,8 @@ packages:
     resolution: {integrity: sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==}
     dev: false
 
-  /@types/lodash-es@4.17.10:
-    resolution: {integrity: sha512-YJP+w/2khSBwbUSFdGsSqmDvmnN3cCKoPOL7Zjle6s30ZtemkkqhjVfFqGwPN7ASil5VyjE2GtyU/yqYY6mC0A==}
+  /@types/lodash-es@4.17.12:
+    resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
     dependencies:
       '@types/lodash': 4.14.197
     dev: true
@@ -5814,7 +5814,7 @@ packages:
     peerDependencies:
       typedoc: ^0.25.0
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.2.2)
       typescript: 5.2.2
     dev: false
 
@@ -5823,7 +5823,7 @@ packages:
     peerDependencies:
       typedoc: '>= 0.23.14 || 0.24.x || 0.25.x'
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.2.2)
     dev: false
 
   /typedoc-plugin-merge-modules@5.1.0(typedoc@0.25.2):
@@ -5831,7 +5831,7 @@ packages:
     peerDependencies:
       typedoc: 0.24.x || 0.25.x
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.2.2)
     dev: false
 
   /typedoc-plugin-remove-references@0.0.6:
@@ -5843,7 +5843,7 @@ packages:
     peerDependencies:
       typedoc: 0.22.x || 0.23.x || 0.24.x || 0.25.x
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.2.2)
     dev: false
 
   /typedoc-plugin-zod@1.1.0(typedoc@0.25.2):
@@ -5851,10 +5851,10 @@ packages:
     peerDependencies:
       typedoc: 0.23.x || 0.24.x || 0.25.x
     dependencies:
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.2.2)
     dev: false
 
-  /typedoc@0.25.2(typescript@5.1.6):
+  /typedoc@0.25.2(typescript@5.2.2):
     resolution: {integrity: sha512-286F7BeATBiWe/qC4PCOCKlSTwfnsLbC/4cZ68oGBbvAqb9vV33quEOXx7q176OXotD+JdEerdQ1OZGJ818lnA==}
     engines: {node: '>= 16'}
     hasBin: true
@@ -5865,7 +5865,7 @@ packages:
       marked: 4.3.0
       minimatch: 9.0.3
       shiki: 0.14.3
-      typescript: 5.1.6
+      typescript: 5.2.2
     dev: false
 
   /typescript-esbuild@0.3.1:
@@ -5878,7 +5878,7 @@ packages:
       esbuild: 0.19.5
       esbuild-plugin-copy: 2.1.1(esbuild@0.19.5)
       fast-glob: 3.3.1
-      typedoc: 0.25.2(typescript@5.1.6)
+      typedoc: 0.25.2(typescript@5.2.2)
       typedoc-plugin-keywords: 1.5.0(typedoc@0.25.2)
       typedoc-plugin-mdn-links: 3.1.0(typedoc@0.25.2)
       typedoc-plugin-merge-modules: 5.1.0(typedoc@0.25.2)
