@@ -76,8 +76,8 @@ dependencies:
 
 devDependencies:
   '@types/lodash-es':
-    specifier: ^4.17.10
-    version: 4.17.10
+    specifier: ^4.17.12
+    version: 4.17.12
   solid-devtools:
     specifier: ^0.27.7
     version: 0.27.7(solid-js@1.8.3)(vite@4.5.1)
@@ -1934,8 +1934,8 @@ packages:
     resolution: {integrity: sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==}
     dev: false
 
-  /@types/lodash-es@4.17.10:
-    resolution: {integrity: sha512-YJP+w/2khSBwbUSFdGsSqmDvmnN3cCKoPOL7Zjle6s30ZtemkkqhjVfFqGwPN7ASil5VyjE2GtyU/yqYY6mC0A==}
+  /@types/lodash-es@4.17.12:
+    resolution: {integrity: sha512-0NgftHUcV4v34VhXm8QBSftKVXtbkBG3ViCjs6+eJ5a6y6Mi/jiFGPc1sC7QK+9BFhWrURE3EOggmWaSxL9OzQ==}
     dependencies:
       '@types/lodash': 4.14.197
     dev: true
