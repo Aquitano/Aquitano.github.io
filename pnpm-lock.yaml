@@ -30,7 +30,7 @@ dependencies:
     version: 3.0.0-beta.6
   astro:
     specifier: ^2.10.7
-    version: 2.10.7(sass@1.69.5)
+    version: 2.10.7(sass@1.71.0)
   astro-compress:
     specifier: ^2.2.3
     version: 2.2.3
@@ -65,8 +65,8 @@ dependencies:
     specifier: ^0.5.7
     version: 0.5.7(prettier-plugin-astro@0.12.1)(prettier@3.1.0)
   sass:
-    specifier: ^1.69.5
-    version: 1.69.5
+    specifier: ^1.71.0
+    version: 1.71.0
   solid-js:
     specifier: ^1.8.3
     version: 1.8.3
@@ -132,7 +132,7 @@ packages:
       astro: ^2.5.0
     dependencies:
       '@astrojs/prism': 2.1.2
-      astro: 2.10.7(sass@1.69.5)
+      astro: 2.10.7(sass@1.71.0)
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.2
       rehype-raw: 6.1.1
@@ -188,7 +188,7 @@ packages:
       astro: ^2.6.5
       tailwindcss: ^3.0.24
     dependencies:
-      astro: 2.10.7(sass@1.69.5)
+      astro: 2.10.7(sass@1.71.0)
       autoprefixer: 10.4.16(postcss@8.4.31)
       postcss: 8.4.31
       postcss-load-config: 4.0.1(postcss@8.4.31)
@@ -2140,7 +2140,7 @@ packages:
       astro: '>=0.26 || >=1.0.0-beta'
     dependencies:
       '@astropub/codecs': 0.4.4
-      astro: 2.10.7(sass@1.69.5)
+      astro: 2.10.7(sass@1.71.0)
       file-type: 18.5.0
       find-cache-dir: 3.3.2
       find-up: 6.3.0
@@ -2155,7 +2155,7 @@ packages:
     peerDependencies:
       astro: ^2.0.0
     dependencies:
-      astro: 2.10.7(sass@1.69.5)
+      astro: 2.10.7(sass@1.71.0)
       purgecss: 5.0.0
     dev: false
 
@@ -2163,7 +2163,7 @@ packages:
     resolution: {integrity: sha512-7gq6lhibCM8FuzZIJlbLLWP5EJ9KL2/4XqeFrAg9O6ZK2xMFxJ5ubKf+a0VJwwTu8W8Xr421CmpiXu6Hq7n/7Q==}
     dev: false
 
-  /astro@2.10.7(sass@1.69.5):
+  /astro@2.10.7(sass@1.71.0):
     resolution: {integrity: sha512-R8aF4yphrsbhxW2UxHZ1DslBn8e8vPQ23+Z/OnajNE1Q4HEZCOZ4CAbHJx2PDwq2p+CRWArNalpr3+rTqyOYBQ==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
@@ -2226,7 +2226,7 @@ packages:
       typescript: 5.1.6
       unist-util-visit: 4.1.2
       vfile: 5.3.7
-      vite: 4.5.1(sass@1.69.5)
+      vite: 4.5.1(sass@1.71.0)
       vitefu: 0.2.4(vite@4.5.1)
       which-pm: 2.0.0
       yargs-parser: 21.1.1
@@ -5239,8 +5239,8 @@ packages:
       suf-log: 2.5.3
     dev: false
 
-  /sass@1.69.5:
-    resolution: {integrity: sha512-qg2+UCJibLr2LCVOt3OlPhr/dqVHWOa9XtZf2OjbLs/T4VPSJ00udtgJxH3neXZm+QqX8B+3cU7RaLqp1iVfcQ==}
+  /sass@1.71.0:
+    resolution: {integrity: sha512-HKKIKf49Vkxlrav3F/w6qRuPcmImGVbIXJ2I3Kg0VMA+3Bav+8yE9G5XmP5lMj6nl4OlqbPftGAscNaNu28b8w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -5379,7 +5379,7 @@ packages:
       '@solid-devtools/debugger': 0.22.4(solid-js@1.8.3)
       '@solid-devtools/shared': 0.12.3(solid-js@1.8.3)
       solid-js: 1.8.3
-      vite: 4.5.1(sass@1.69.5)
+      vite: 4.5.1(sass@1.71.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6023,13 +6023,13 @@ packages:
       merge-anything: 5.1.7
       solid-js: 1.8.3
       solid-refresh: 0.5.3(solid-js@1.8.3)
-      vite: 4.5.1(sass@1.69.5)
+      vite: 4.5.1(sass@1.71.0)
       vitefu: 0.2.4(vite@4.5.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /vite@4.5.1(sass@1.69.5):
+  /vite@4.5.1(sass@1.71.0):
     resolution: {integrity: sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -6060,7 +6060,7 @@ packages:
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.27.2
-      sass: 1.69.5
+      sass: 1.71.0
     optionalDependencies:
       fsevents: 2.3.2
 
@@ -6072,7 +6072,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.5.1(sass@1.69.5)
+      vite: 4.5.1(sass@1.71.0)
     dev: false
 
   /vscode-css-languageservice@6.2.6:
