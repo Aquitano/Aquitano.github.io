@@ -222,9 +222,13 @@
         return document.querySelector(selector);
     };
 
-    window.addEventListener('load', () => {
+    function loader() {
         const element = $('#loader');
         element?.classList.remove('on');
         element?.classList.add('fully-closed');
-    });
+    }
+
+    window.addEventListener('load', loader);
+
+    document.addEventListener('astro:after-swap', loader);
 </script>

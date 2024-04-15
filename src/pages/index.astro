@@ -1,8 +1,13 @@
 ---
+import { getCollection } from 'astro:content';
 import HomeTop from '../components/HomeTop.astro';
 import LinkButton from '../components/LinkButton.astro';
 import Projects from '../components/Projects.jsx';
 import Layout from '../layouts/Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+
+const allProducts = await getCollection('project');
+export type product = CollectionEntry<'project'>;
 
 const socials = [
     {
@@ -23,24 +28,21 @@ const socials = [
         <div id="Welcome">
             <HomeTop />
 
-            <Projects client:load />
+            <Projects allProducts={allProducts} client:load />
 
             <!-- Contact -->
             <section class="mt-24">
                 <div class="wrapper">
                     <span style="text-align: center">
-                        <h1 class="i-v Fly-in-up mb-4" data-aos="fade-up" data-aos-delay="100" data-aos-offset="200">
-                            Kontaktiere mich!
-                        </h1>
+                        <h1 class="i-v fly-in-up mb-4 text-4xl font-extrabold">Kontaktiere mich!</h1>
                         <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
                             {
                                 socials.map((social) => (
-                                    <div class="i-v Fly-in-up">
+                                    <div class="i-v fly-in-up">
                                         <LinkButton
                                             text={social.name}
                                             icon={social.icon}
                                             href={social.link}
-                                            style={'width: 2rem'}
                                             target={'_blank'}
                                             rel={'noopener noreferrer'}
                                         />
@@ -56,6 +58,8 @@ const socials = [
 </Layout>
 
 <style lang="scss">
+    @use '@assets/css/animation.scss';
+
     main {
         margin: auto;
         padding: 1.5rem;
@@ -522,98 +526,14 @@ const socials = [
         }
     }
 
-    .Fly-in-up {
-        animation: none;
-        transition: none;
-    }
-    @media (prefers-reduced-motion: no-preference) {
-        // Fly-in-up animation
-        .Fly-in-up.is-visible {
-            opacity: 0;
-            animation-name: Fly-in-up;
-            animation-duration: 2s;
-            animation-fill-mode: forwards;
-        }
-        @keyframes Fly-in-up {
-            0% {
-                opacity: 0;
-                filter: blur(2px);
-                transform: translate3d(0, 25px, 0);
-                transition:
-                    opacity 500ms ease-in,
-                    transform 0.4s ease-in;
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translate3d(0, 0, 0);
-            }
-        }
-
-        // Fade-in
-        .Fade-in {
-            animation-name: Fade-in;
-            animation-duration: 0.4s;
-        }
-        @keyframes Fade-in {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-                transition: opacity 250ms ease-in;
-            }
-        }
-
-        // Fade-out
-        .Fade-out {
-            animation-name: Fade-out;
-            animation-duration: 1s;
-        }
-        @keyframes Fade-out {
-            100% {
-                opacity: 0;
-            }
-            0% {
-                opacity: 1;
-                transition: opacity 250ms ease-in;
-            }
-        }
-    }
-
-    .i-v {
-        opacity: 0;
-    }
-
     .hidden {
         visibility: hidden;
     }
 </style>
 
 <script>
-    import 'solid-devtools';
-    const WATCH_CLASS = 'i-v';
-    const FADE = 'is-visible';
-
-    const elements: NodeListOf<Element> = document.querySelectorAll(`.${WATCH_CLASS}`);
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add(FADE);
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-
-    const observerOptions: IntersectionObserverInit = {
-        root: null, // viewport
-        threshold: 0.1, // at least 10% of the target is visible
-    };
-
-    const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
-
-    elements.forEach((element) => observer.observe(element));
+    // import 'solid-devtools';
+    import('@assets/js/aos.js');
 </script>
 
 <script>

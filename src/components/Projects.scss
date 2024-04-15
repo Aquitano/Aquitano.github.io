@@ -1,3 +1,5 @@
+@use '@assets/css/animation.scss';
+
 .pre-header {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -36,51 +38,6 @@ section.home-portfolio {
     }
 }
 
-// Animation
-.Fly-in-down {
-    animation: none;
-    transition: none;
-}
-@media (prefers-reduced-motion: no-preference) {
-    // Fly-in-down animation
-    .Fly-in-down.is-visible {
-        opacity: 0;
-        animation-name: Fly-in-down;
-        animation-duration: 2s;
-        animation-fill-mode: forwards;
-    }
-
-    @for $i from 1 through 5 {
-        .filterOption:nth-child(#{$i}) {
-            animation-delay: 0.1s * $i;
-        }
-    }
-
-    .is-visible.filterOption:hover {
-        transform: translateY(-0.15rem) !important;
-    }
-
-    @keyframes Fly-in-down {
-        0% {
-            opacity: 0;
-            transform: translate3d(0, 25px, 0);
-            filter: blur(2px);
-            transition:
-                opacity 0.5s ease-in,
-                transform 0.4s ease-in,
-                filter 0.1s ease-in;
-        }
-        100% {
-            opacity: 1;
-            filter: blur(0);
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-    .i-v {
-        opacity: 0;
-    }
-}
 .list-item-portfolio {
     & + & {
         margin-top: 30px;
@@ -481,62 +438,14 @@ section.home-portfolio {
 }
 
 // Animation
-
-.Fly-in-left,
-.Fly-in-right {
-    animation: none;
-    transition: none;
-}
 @media (prefers-reduced-motion: no-preference) {
-    // Fly-in-left
-    .Fly-in-left.is-visible {
-        animation-name: Fly-in-left;
-        animation-duration: 1.2s;
-        animation-delay: 0.25s;
-        animation-fill-mode: forwards;
-    }
-    @keyframes Fly-in-left {
-        0% {
-            opacity: 0;
-            filter: blur(4px);
-            transform: translate3d(-35px, 0, 0);
-            transition:
-                opacity 500ms ease-in,
-                transform 0.4s ease-in,
-                filter 0.1s ease-in;
-        }
-        100% {
-            opacity: 1;
-            filter: blur(0);
-            transform: translate3d(0, 0, 0);
+    @for $i from 1 through 5 {
+        .filterOption:nth-child(#{$i}) {
+            animation-delay: 0.1s * $i;
         }
     }
 
-    // Fly-in-right
-    .Fly-in-right.is-visible {
-        animation-name: Fly-in-right;
-        animation-duration: 1.2s;
-        animation-delay: 0.25s;
-        animation-fill-mode: forwards;
-    }
-    @keyframes Fly-in-right {
-        0% {
-            opacity: 0;
-            filter: blur(4px);
-            transform: translate3d(35px, 0, 0);
-            transition:
-                opacity 500ms ease-in,
-                transform 0.4s ease-in,
-                filter 0.1s ease-in;
-        }
-        100% {
-            opacity: 1;
-            filter: blur(0);
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-    .i-v {
-        opacity: 0;
+    .is-visible.filterOption:hover {
+        transform: translateY(-0.15rem) !important;
     }
 }

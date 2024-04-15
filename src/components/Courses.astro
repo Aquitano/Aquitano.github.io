@@ -1,0 +1,59 @@
+---
+const contents = [
+    ['test/me.js', '🔮Test me', '1000'],
+    ['test/me.js', '🔮Test me', '1000'],
+    ['test/me.js', '🔮Test me', '1000'],
+    ['test/me.js', '🔮Test me', '1000'],
+];
+---
+
+<div class="static sm:p-32 lg:p-24">
+    <div class="group -my-8 grid grid-cols-2 gap-4 pb-40 pt-32 md:py-0">
+        {
+            contents.map(([repo, description, certificate]) => (
+                <article
+                    class="i-v fly-in-up bg-dusk content-item my-1 transform rounded-xl transition group-hover:opacity-80  md:hover:scale-110"
+                    itemscope=""
+                    itemtype="http://schema.org/Course"
+                >
+                    <a class="block p-5" href="#" target="_blank" rel="noopener noreferrer" itemprop="url">
+                        <p class="text-zenith pt-5 text-xs font-bold uppercase tracking-widest">
+                            TypeScript{' '}
+                            {certificate && (
+                                <span class="text-zenith" itemprop="educationalCredentialAwarded">
+                                    • View Certificate
+                                </span>
+                            )}
+                        </p>
+                        <h3 class="text-zenith mt-1 text-lg font-semibold leading-tight" itemprop="headline name">
+                            {repo}
+                        </h3>
+                        <p class="text-zenith my-5" itemprop="description">
+                            {description}
+                        </p>
+                    </a>
+                </article>
+            ))
+        }
+    </div>
+</div>
+
+<style lang="scss">
+    .bg-dusk {
+        --tw-bg-opacity: 1;
+        background-color: rgb(32 32 34 / var(--tw-bg-opacity));
+    }
+    .text-zenith {
+        --tw-text-opacity: 1;
+        color: rgb(255 255 255 / var(--tw-text-opacity));
+    }
+    @for $i from 1 through 4 {
+        .content-item:nth-child(#{$i}) {
+            animation-delay: 0.2s * $i;
+        }
+    }
+    .content-item:hover:not(.i-v) {
+        opacity: 1 !important;
+        z-index: 100;
+    }
+</style>

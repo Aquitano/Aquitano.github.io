@@ -1,29 +1,40 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
-import { CollectionEntry, getCollection } from 'astro:content';
-import { For, Show, createMemo, createSignal, onMount, type Component } from 'solid-js';
+import { For, Show, createSignal, onMount, type Component } from 'solid-js';
 import './Projects.scss';
 
-type Project = CollectionEntry<'project'>;
-
+type Project = {
+    id: string;
+    slug: string;
+    body: string;
+    collection: 'project';
+    data: {
+        featured: boolean;
+        title: string;
+        name: string;
+        description: string;
+        tags: string[];
+        tasks: string[];
+        year: number;
+    };
+};
 export interface ItemProps {
     title: string;
     name: string;
-    description: string;
     url: string;
     isNew?: boolean;
     year: number;
-    animation: 'Fly-in-right' | 'Fly-in-left';
+    animation: 'fly-in-right' | 'fly-in-left';
     observable: any;
 }
 
-function Item(props: ItemProps) {
+function Item(props: Readonly<ItemProps>) {
     const newClass = props.isNew ? 'new' : '';
 
     let ref: HTMLDivElement | undefined;
     props.observable(() => ref);
 
     return (
-        <div class={`list-item-portfolio i-v ${props.animation}`} ref={ref}>
+        <div class={`list-item-portfolio i-v will-change ${props.animation}`} ref={ref}>
             <a href={props.url} class={newClass} rel="prefetch">
                 <Show when={props.isNew}>
                     <div>
@@ -78,8 +89,7 @@ function Item(props: ItemProps) {
 
 type FilterOption = 'all' | 'featured' | 'frontend' | 'backend' | 'product design';
 
-const Projects: Component<{}> = () => {
-    const [allProducts, setAllProducts] = createSignal<Project[]>([]);
+const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
     const [products, setProducts] = createSignal<Project[]>([]);
     const [filter, setFilter] = createSignal<FilterOption>('featured');
     const currentYear = new Date().getFullYear();
@@ -94,6 +104,7 @@ const Projects: Component<{}> = () => {
         withOccurrence((entry, { occurrence }) => {
             if (occurrence === 'Entering') {
                 entry?.target.classList.add('is-visible');
+                entry?.target.classList.remove('will-change');
             }
             return entry.isIntersecting;
         }),
@@ -103,11 +114,9 @@ const Projects: Component<{}> = () => {
 
     onMount(() => {
         (async () => {
-            const allProducts = await getCollection('project');
             const allFeaturedProducts = allProducts.filter((product) => product.data.featured === true);
 
             setProducts(allFeaturedProducts);
-            setAllProducts(allProducts);
         })();
         filterButtons.forEach((button) => {
             useVisibilityObserver(() => button);
@@ -120,19 +129,19 @@ const Projects: Component<{}> = () => {
 
         switch (option) {
             case 'all':
-                setProducts(allProducts());
+                setProducts(allProducts);
                 break;
             case 'featured':
-                setProducts(allProducts().filter((product) => product.data.featured === true));
+                setProducts(allProducts.filter((product) => product.data.featured === true));
                 break;
             case 'frontend':
-                setProducts(allProducts().filter((product) => product.data.tasks.includes('Frontend')));
+                setProducts(allProducts.filter((product) => product.data.tasks.includes('Frontend')));
                 break;
             case 'backend':
-                setProducts(allProducts().filter((product) => product.data.tasks.includes('Backend')));
+                setProducts(allProducts.filter((product) => product.data.tasks.includes('Backend')));
                 break;
             case 'product design':
-                setProducts(allProducts().filter((product) => product.data.tasks.includes('Produktdesign')));
+                setProducts(allProducts.filter((product) => product.data.tasks.includes('Produktdesign')));
                 break;
         }
 
@@ -144,18 +153,18 @@ const Projects: Component<{}> = () => {
     return (
         <section class="home-portfolio" id="portfolio">
             <div class="wrapper">
-                <div class="Fly-in-down">
-                    <p class="pre-header Fly-in-down i-v font-semibold" ref={preHeader}>
+                <div class="fly-in-up">
+                    <p class="pre-header fly-in-up i-v font-semibold" ref={preHeader}>
                         Meine
                     </p>
-                    <h1 class="large Fly-in-down i-v" ref={header}>
+                    <h1 class="large fly-in-up i-v" ref={header}>
                         Projekte
                     </h1>
                 </div>
                 <div class="mb-4 mt-[2rem] flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v Fly-in-down w-full rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption i-v fly-in-up w-full rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('all')}
@@ -164,7 +173,7 @@ const Projects: Component<{}> = () => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v Fly-in-down w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'featured' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('featured')}
@@ -173,7 +182,7 @@ const Projects: Component<{}> = () => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v Fly-in-down w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'frontend' ? ' bg-blue-500 text-white' : 'bg-gray-200  hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('frontend')}
@@ -182,7 +191,7 @@ const Projects: Component<{}> = () => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v Fly-in-down w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'backend' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('backend')}
@@ -191,7 +200,7 @@ const Projects: Component<{}> = () => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v Fly-in-down w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'product design' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('product design')}
@@ -207,10 +216,9 @@ const Projects: Component<{}> = () => {
                                 title={product.data.title}
                                 name={product.data.name}
                                 year={product.data.year}
-                                description={product.data.description}
                                 isNew={product.data.year === currentYear}
                                 url={`project/${product.slug}`}
-                                animation={Number(index()) % 2 === 1 ? 'Fly-in-right' : 'Fly-in-left'}
+                                animation={Number(index()) % 2 === 1 ? 'fly-in-right' : 'fly-in-left'}
                                 observable={useVisibilityObserver}
                             />
                         )}

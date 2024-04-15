@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Loader from '../components/Loader.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
+import { ViewTransitions } from 'astro:transitions';
 
 const defaultKeywords = [
     'Thomas Breindl',
@@ -43,7 +44,7 @@ export interface Props {
 const { title, SEO: SEOData, active, location } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -76,11 +77,13 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 ],
             }}
         />
+        <ViewTransitions />
     </head>
     <body>
-        <Loader />
-        <Header active={active} location={location} />
+        <Loader transition:persist />
+        <Header active={active} location={location} data-astro-reload />
         <ScrollToTop />
+        <ViewTransitions />
 
         <slot />
 

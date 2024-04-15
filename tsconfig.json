@@ -2,7 +2,7 @@
     "extends": "astro/tsconfigs/strict",
     "compilerOptions": {
         "baseUrl": ".",
-        "moduleResolution": "NodeNext",
+        "moduleResolution": "Bundler",
         "paths": {
             "@components/*": ["src/components/*"],
             "@assets/*": ["src/assets/*"],

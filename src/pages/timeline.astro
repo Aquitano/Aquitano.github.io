@@ -1,29 +1,31 @@
 ---
+// import Courses from '@components/Courses.astro';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Timeline | Breindl Thomas" active="Über mich">
+<Layout title="Timeline | Breindl Thomas" active="Über mich" data-astro-reload>
     <body>
+        <!-- <Courses /> -->
         <div class="scroll-container">
             <div class="wrapper flex flex-col items-center justify-center">
                 <section class="block">
                     <div class="each-year">
-                        <div class="title Fly-in-up i-v">2020</div>
-                        <div class="each-event i-v Fly-in-up">
+                        <div class="title fly-in-up i-v">2020</div>
+                        <div class="each-event i-v fly-in-up">
                             <div class="event-description">
                                 Angefangen das Framework
                                 <a href="project/JustHTML" class="link-underline">JustHTML</a>, das helfen soll
                                 Webseiten nur mit HTML zu erstellen, zu erstellen.
                             </div>
                         </div>
-                        <div class="each-event i-v Fly-in-up">
+                        <div class="each-event i-v fly-in-up">
                             <div class="event-description">
                                 Projekt, ein Getränk mit der imaginären "Brummselbeere" zu gestalten, hat Produktdesign,
                                 Verpackungsdesign, Marketingstrategie und eine Webseite beinhaltet:
                                 <a href="project/Griffin" class="link-underline">Griffin Energy</a>.
                             </div>
                         </div>
-                        <div class="each-event i-v Fly-in-up">
+                        <div class="each-event i-v fly-in-up">
                             <div class="event-description">
                                 Angefangen mit dem Grafiktablett
                                 <a
@@ -34,15 +36,15 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     Wacom Intuos
                                 </a>
-                                 zu zeichnen.
+                                zu zeichnen.
                             </div>
                         </div>
                     </div>
                 </section>
                 <section class="block">
                     <div class="each-year">
-                        <div class="title i-v Fly-in-up">2019</div>
-                        <div class="each-event i-v Fly-in-up">
+                        <div class="title i-v fly-in-up">2019</div>
+                        <div class="each-event i-v fly-in-up">
                             <div class="event-description">
                                 Mit der 3D-Grafiksuite
                                 <a
@@ -53,7 +55,7 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     Blender
                                 </a>
-                                 angefangen.
+                                angefangen.
                             </div>
                         </div>
                     </div>
@@ -61,8 +63,8 @@ import Layout from '../layouts/Layout.astro';
 
                 <section class="block">
                     <div class="each-year">
-                        <div class="title i-v Fly-in-up">2018</div>
-                        <div class="each-event i-v Fly-in-up">
+                        <div class="title i-v fly-in-up">2018</div>
+                        <div class="each-event i-v fly-in-up">
                             <div class="event-description">
                                 In der Schule mit Java und der Game Engine
                                 <a
@@ -73,10 +75,10 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     Engine Alpha
                                 </a>
-                                 angefangen.
+                                angefangen.
                             </div>
                         </div>
-                        <div class="each-event i-v Fly-in-up">
+                        <div class="each-event i-v fly-in-up">
                             <div class="event-description">
                                 Mit Kurs
                                 <a
@@ -87,7 +89,7 @@ import Layout from '../layouts/Layout.astro';
                                 >
                                     "Der komplette Web-Entwickler von Udemy"
                                 </a>
-                                 gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
+                                gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
                             </div>
                         </div>
                     </div>
@@ -98,6 +100,7 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style lang="scss">
+    @use '@assets/css/animation.scss';
     .link-underline {
         font-weight: 600;
         color: #21468f;
@@ -291,66 +294,9 @@ import Layout from '../layouts/Layout.astro';
         font-weight: 500;
         color: #0f141e;
     }
-
-    .Fly-in-up {
-        animation: none;
-        transition: none;
-    }
-    @media (prefers-reduced-motion: no-preference) {
-        // Fly-in-up animation
-        .Fly-in-up.is-visible {
-            opacity: 0;
-            animation-name: Fly-in-up;
-            animation-duration: 2s;
-            animation-fill-mode: forwards;
-        }
-        @keyframes Fly-in-up {
-            0% {
-                opacity: 0;
-                filter: blur(2px);
-                transform: translate3d(0, 25px, 0);
-                transition:
-                    opacity 500ms ease-in,
-                    transform 0.4s ease-in;
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translate3d(0, 0, 0);
-            }
-        }
-    }
-
-    .i-v {
-        opacity: 0;
-    }
-
     .hidden {
         visibility: hidden;
     }
 </style>
 
-<script>
-    const WATCH_CLASS = 'i-v';
-    const FADE = 'is-visible';
-
-    const elements: NodeListOf<Element> = document.querySelectorAll(`.${WATCH_CLASS}`);
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add(FADE);
-                observer.unobserve(entry.target);
-            }
-        });
-    };
-
-    const observerOptions: IntersectionObserverInit = {
-        root: null, // viewport
-        threshold: 0.1, // at least 10% of the target is visible
-    };
-
-    const observer: IntersectionObserver = new IntersectionObserver(handleIntersection, observerOptions);
-
-    elements.forEach((element) => observer.observe(element));
-</script>
+<script src="@assets/js/aos.js"></script>

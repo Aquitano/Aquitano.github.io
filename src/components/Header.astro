@@ -755,15 +755,22 @@ const menus = [
         }, 500);
     }
 
-    $('.menu')?.addEventListener('click', () => {
-        openNav();
+    function listener() {
+        $('.menu')?.addEventListener('click', () => {
+            openNav();
 
-        $('.close')?.addEventListener(
-            'click',
-            () => {
-                closeNav();
-            },
-            { once: true },
-        );
+            $('.close')?.addEventListener(
+                'click',
+                () => {
+                    closeNav();
+                },
+                { once: true },
+            );
+        });
+    }
+
+    document.addEventListener('astro:after-swap', () => {
+        listener();
     });
+    listener();
 </script>

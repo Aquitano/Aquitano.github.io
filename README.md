@@ -1,4 +1,5 @@
 # Aquitano.github.io
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/29fa6839-f9b7-4eb4-a066-6a3826c2a775/deploy-status)](https://app.netlify.com/sites/brilliant-paprenjak-868a04/deploys)
 
 <p align="center">
@@ -20,8 +21,8 @@
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                 | Action                                           |
-| :---------------------  | :----------------------------------------------- |
-| `pnpm install`          | Installs dependencies                            |
-| `pnpm dev`              | Starts local dev server at `localhost:3000`      |
-| `pnpm run build`        | Build your production site to `./dist/`          |
+| Command          | Action                                      |
+| :--------------- | :------------------------------------------ |
+| `pnpm install`   | Installs dependencies                       |
+| `pnpm dev`       | Starts local dev server at `localhost:3000` |
+| `pnpm run build` | Build your production site to `./dist/`     |

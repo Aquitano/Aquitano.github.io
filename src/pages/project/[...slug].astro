@@ -1,25 +1,15 @@
 ---
 import { Img } from 'astro-imagetools/components';
-import { CollectionEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 import LinkButton from '../../components/LinkButton.astro';
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
     const projects = await getCollection('project');
-    return projects.map((project) => {
-        return {
-            params: {
-                slug: project.slug,
-            },
-            props: {
-                project,
-            },
-        };
-    });
-}
-
-interface Props {
-    project: CollectionEntry<'project'>;
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+        props: { project },
+    }));
 }
 
 const { project } = Astro.props;
@@ -63,7 +53,6 @@ const { Content } = await project.render();
                                                     text="GitHub-Link"
                                                     icon="mdi:github"
                                                     href={project.data.links.github}
-                                                    style={'width: 1.5rem'}
                                                 />
                                             )
                                         }
@@ -73,7 +62,6 @@ const { Content } = await project.render();
                                                     text="Webseite"
                                                     icon="mdi:link"
                                                     href={project.data.links.website}
-                                                    style={'width: 1.5rem'}
                                                 />
                                             )
                                         }
