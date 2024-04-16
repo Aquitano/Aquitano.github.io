@@ -10,9 +10,8 @@ jobs:
             - uses: pnpm/action-setup@v2
               with:
                   version: 7
-            - uses: actions/setup-node@v3
+            - uses: oven-sh/setup-bun@v1
               with:
-                  node-version: 16
-                  cache: 'pnpm'
-            - run: pnpm install --no-frozen-lockfile
-            - run: pnpm run build
+                  bun-version: latest
+            - run: bun install --no-frozen-lockfile
+            - run: bun run build

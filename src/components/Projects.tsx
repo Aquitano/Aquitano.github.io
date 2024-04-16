@@ -31,7 +31,16 @@ function Item(props: Readonly<ItemProps>) {
     const newClass = props.isNew ? 'new' : '';
 
     let ref: HTMLDivElement | undefined;
-    props.observable(() => ref);
+
+    onMount(() => {
+        const isSafari = /^((?!chrome|android).)*Macintosh/i.test(navigator.userAgent);
+        if (isSafari) {
+            ref?.classList.add('is-visible');
+            ref?.classList.remove(props.animation);
+            ref?.classList.remove('i-v');
+        }
+        if (!isSafari) props.observable(() => ref);
+    });
 
     return (
         <div class={`list-item-portfolio i-v will-change ${props.animation}`} ref={ref}>
@@ -118,9 +127,21 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
 
             setProducts(allFeaturedProducts);
         })();
-        filterButtons.forEach((button) => {
-            useVisibilityObserver(() => button);
-        });
+        const isSafari = /^((?!chrome|android).)*Macintosh/i.test(navigator.userAgent);
+
+        if (isSafari) {
+            console.info('Safari detected, animations had to be disabled due to compatibility issues.');
+            filterButtons.forEach((button) => {
+                button.classList.add('is-visible');
+                button.classList.add('opacity-100');
+                button.classList.remove('will-change');
+                button.classList.remove('opacity-0');
+            });
+        } else {
+            filterButtons.forEach((button) => {
+                useVisibilityObserver(() => button);
+            });
+        }
     });
 
     const handleFilterChange = (option: FilterOption) => {
@@ -146,7 +167,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
         }
 
         filterButtons.forEach((button) => {
-            button.classList.add('is-visible');
+            button.classList.remove('opacity-0');
         });
     };
 
@@ -164,7 +185,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                 <div class="mb-4 mt-[2rem] flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v fly-in-up w-full rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption fly-in-up w-full rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('all')}
@@ -173,7 +194,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'featured' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('featured')}
@@ -182,7 +203,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'frontend' ? ' bg-blue-500 text-white' : 'bg-gray-200  hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('frontend')}
@@ -191,7 +212,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'backend' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('backend')}
@@ -200,7 +221,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption i-v fly-in-up w-full transform rounded-lg px-4 py-2 shadow-md transition-all duration-500 ease-out md:w-auto ${
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
                             filter() === 'product design' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                         } hover:shadow-lg`}
                         onClick={() => handleFilterChange('product design')}

@@ -6,8 +6,11 @@ import critters from 'astro-critters';
 import icon from 'astro-icon';
 import { astroImageTools } from 'astro-imagetools';
 import purgecss from 'astro-purgecss';
-import { defineConfig } from 'astro/config';
-// import devtools from 'solid-devtools/vite';
+import { defineConfig, squooshImageService } from 'astro/config';
+
+import devtools from 'solid-devtools/vite';
+
+// const dev = process.env.NODE_ENV !== 'production';
 
 // https://astro.build/config
 export default defineConfig({
@@ -31,6 +34,9 @@ export default defineConfig({
             Logger: 1,
         }),
     ],
+    image: {
+        service: squooshImageService(),
+    },
     prefetch: {
         prefetchAll: true,
     },

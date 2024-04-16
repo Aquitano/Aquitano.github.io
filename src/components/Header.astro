@@ -42,7 +42,7 @@ const menus = [
     <div>
         <div class="content">
             <h5>Menu</h5>
-            <ul>
+            <ul id="mi">
                 {
                     menus.map((menu) => (
                         <li>
@@ -766,6 +766,12 @@ const menus = [
                 },
                 { once: true },
             );
+        });
+
+        document.querySelectorAll('#mi > li > a').forEach((menu) => {
+            menu.addEventListener('click', () => {
+                closeNav();
+            });
         });
     }
 

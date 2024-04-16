@@ -11,8 +11,10 @@ function isObserverSupported(): boolean {
     return !!getMutationObserver();
 }
 
+const isSafari = /^((?!chrome|android).)*Macintosh/i.test(navigator.userAgent);
+
 function aos() {
-    if (isObserverSupported()) {
+    if (isObserverSupported() && !isSafari) {
         const handleIntersection = (entries: IntersectionObserverEntry[]): void => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
