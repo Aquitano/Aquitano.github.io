@@ -250,7 +250,7 @@ const prepare = (elements: ElementData[], config: typeof defaultOptions): Elemen
 
         elementData.position = {
             in: getPositionIn(elementData.node, config.offset, config.anchorPlacement),
-            out: mirror && getPositionOut(elementData.node, config.offset),
+            out: mirror ? getPositionOut(elementData.node, config.offset) : undefined,
         };
 
         elementData.options = {
@@ -266,7 +266,7 @@ const prepare = (elements: ElementData[], config: typeof defaultOptions): Elemen
 let aosElements: ElementData[] = [];
 let initialized = false;
 
-const isBrowserNotSupported = (): boolean => !!document.all && !window.atob;
+const isBrowserNotSupported = (): boolean => !window.atob;
 
 const initializeScroll = () => {
     aosElements = prepare(aosElements, options);

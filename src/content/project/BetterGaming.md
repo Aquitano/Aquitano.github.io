@@ -6,10 +6,15 @@ featured: true
 tags: ['PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript']
 tasks: ['Frontend', 'Backend']
 links:
-    {
-        github: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming',
-        website: 'https://bettergaming.thomasbreindl.me',
-    }
+    [
+        {
+            text: 'GitHub-Link',
+            icon: 'mdi:github',
+            link: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming',
+        },
+        { text: 'Webseite', icon: 'mdi:link', link: 'https://bettergaming.thomasbreindl.me' },
+    ]
+fullImage: '/BetterGaming-full.jpg'
 year: 2021
 ---
 

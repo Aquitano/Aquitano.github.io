@@ -123,7 +123,13 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
 
     onMount(() => {
         (async () => {
-            const allFeaturedProducts = allProducts.filter((product) => product.data.featured === true);
+            // sort all products according to data.year
+            allProducts.sort((a, b) => b.data.year - a.data.year);
+
+            // sort according to data.year
+            const allFeaturedProducts = allProducts
+                .filter((product) => product.data.featured === true)
+                .sort((a, b) => b.data.year - a.data.year);
 
             setProducts(allFeaturedProducts);
         })();

@@ -9,6 +9,7 @@ export const collections = {
             featured: z.boolean(),
             tags: z.array(z.string().default('Project')),
             tasks: z.array(z.string()),
+            fullImage: z.string().optional(),
             year: z.number(),
             share: z
                 .object({
@@ -18,10 +19,13 @@ export const collections = {
                 })
                 .optional(),
             links: z
-                .object({
-                    github: z.string().optional(),
-                    website: z.string().optional(),
-                })
+                .array(
+                    z.object({
+                        text: z.string(),
+                        icon: z.string(),
+                        link: z.string(),
+                    }),
+                )
                 .optional(),
         }),
     }),

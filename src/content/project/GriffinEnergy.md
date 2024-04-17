@@ -5,7 +5,15 @@ description: 'Akademische Exzellenz in der Produktkonzeption und -präsentation'
 featured: true
 tags: ['HTML', 'CSS', 'JavaScript', 'Blender', '3D-Modellierung']
 tasks: ['Produktdesign', 'Frontend', '3D-Modellierung']
-links: { github: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming', website: '../../showcase/griffin/' }
+links:
+    [
+        {
+            text: 'GitHub-Link',
+            icon: 'mdi:github',
+            link: 'https://github.com/Aquitano/Projects/tree/main/BetterGaming',
+        },
+        { text: 'Webseite', icon: 'mdi:link', link: '../../showcase/griffin/' },
+    ]
 year: 2020
 ---
 

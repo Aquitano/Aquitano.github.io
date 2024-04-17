@@ -57,3 +57,5 @@ document.addEventListener('astro:after-swap', () => {
     elements = document.querySelectorAll(`.${WATCH_CLASS}`);
     aos();
 });
+
+export default aos;

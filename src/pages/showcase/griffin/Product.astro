@@ -8,7 +8,7 @@ import '@assets/griffin/css/magnific-popup.css';
 import { Img } from 'astro-imagetools/components';
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -269,10 +269,10 @@ import { Img } from 'astro-imagetools/components';
                                     <p>
                                         Der auf jeder Dose enthaltene
                                         <span style="font-weight: bold">Donation-Code mit QR-Code</span>
-                                         kann dazu verwendet werden, ein von dir ausgewähltes Projekt zu den Themen
-                                        Kinderhilfe, Tierschutz oder Umweltschutz verwendet werden.<br />Wird kein
-                                        Projekt nach 12 Tagen ab dem Kaufzeitpunkt ausgewählt, werden wir zufällig ein
-                                        Projekt auswählen.
+                                        kann dazu verwendet werden, ein von dir ausgewähltes Projekt zu den Themen Kinderhilfe,
+                                        Tierschutz oder Umweltschutz verwendet werden.<br />Wird kein Projekt nach 12
+                                        Tagen ab dem Kaufzeitpunkt ausgewählt, werden wir zufällig ein Projekt
+                                        auswählen.
                                     </p>
                                 </span>
                                 <span id="Vitamine">
@@ -295,7 +295,7 @@ import { Img } from 'astro-imagetools/components';
                                     <p>
                                         Die zu
                                         <span style="font-weight: bold">100% recyclebare Aluminium-Dosen</span>
-                                         spart bis zu 95% an Energie im Vergleich zur Primärproduktion. <br />Sogar
+                                        spart bis zu 95% an Energie im Vergleich zur Primärproduktion. <br />Sogar
                                         beliebiges Einschmelzen führt zu keinem Qualitätsverlust.
                                     </p>
                                 </span>
@@ -303,7 +303,7 @@ import { Img } from 'astro-imagetools/components';
                                     <p>
                                         Durch
                                         <span style="font-weight: bold">umweltfreundliche Transportlogistik</span>
-                                         vermeiden wir bis zu 40% CO2-Ausstoß.<br />Wir verwenden nur Kühlschränke der
+                                        vermeiden wir bis zu 40% CO2-Ausstoß.<br />Wir verwenden nur Kühlschränke der
                                         höchsten Energieeffizienzklasse<br />Außerdem versuchen wir die Transportwege so
                                         stark wie möglich zu minimieren.<br />Zudem verwenden wir großteils nur Zutaten
                                         aus Deutschland.
@@ -371,18 +371,18 @@ import { Img } from 'astro-imagetools/components';
             <div class="preloader"><span></span> <span></span> <span></span> <span></span></div>
         </div>
         <!-- ====Start all js here -->
-        <script src="/showcase/griffin/js/jquery.min.js" defer></script>
-        <script src="/showcase/griffin/js/bootstrap.min.js" defer></script>
-        <script src="/showcase/griffin/js/slick.min.js" defer></script>
-        <script src="/showcase/griffin/js/jquery-ui.min.js" defer></script>
-        <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer></script>
-        <script src="/showcase/griffin/js/fastclick.min.js" defer></script>
-        <script src="/showcase/griffin/js/timber.js" defer></script>
-        <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer></script>
-        <script src="/showcase/griffin/js/jquery.waypoints.js" defer></script>
-        <script src="/showcase/griffin/js/jquery.counterup.min.js" defer></script>
-        <script src="/showcase/griffin/js/custom.js" defer></script>
-        <script defer>
+        <script src="/showcase/griffin/js/jquery.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/bootstrap.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/slick.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/jquery-ui.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/fastclick.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/timber.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/jquery.waypoints.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/jquery.counterup.min.js" defer is:inline></script>
+        <script src="/showcase/griffin/js/custom.js" defer is:inline></script>
+        <script defer is:inline>
             document.addEventListener('DOMContentLoaded', () => {
                 $('#preloader').delay(600).fadeOut();
             });
