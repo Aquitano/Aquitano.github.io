@@ -28,7 +28,7 @@
         "lodash-es": "^4.17.21",
         "prettier": "^3.2.5",
         "prettier-plugin-astro": "^0.13.0",
-        "prettier-plugin-tailwindcss": "^0.5.14",
+        "prettier-plugin-tailwindcss": "^0.6.0",
         "sass": "^1.75.0",
         "solid-js": "^1.8.16",
         "tailwindcss": "^3.4.3"
