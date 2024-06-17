@@ -84,7 +84,6 @@ function Item(props: Readonly<ItemProps>) {
                             Mehr erfahren!
                             <span class="icon icon-arrow-link-thin icon--on-right">
                                 <svg>
-                                    {' '}
                                     <use href="#icon_arrow_link--thin"></use>
                                 </svg>
                             </span>
@@ -191,45 +190,40 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                 <div class="mb-4 mt-[2rem] flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
-                            filter() === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
-                        } hover:shadow-lg`}
+                        class={`filterOption fly-in-up w-full rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                            } hover:shadow-lg`}
                         onClick={() => handleFilterChange('all')}
                     >
                         All
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
-                            filter() === 'featured' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
-                        } hover:shadow-lg`}
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'featured' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                            } hover:shadow-lg`}
                         onClick={() => handleFilterChange('featured')}
                     >
                         Featured
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
-                            filter() === 'frontend' ? ' bg-blue-500 text-white' : 'bg-gray-200  hover:bg-gray-400'
-                        } hover:shadow-lg`}
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'frontend' ? ' bg-blue-500 text-white' : 'bg-gray-200  hover:bg-gray-400'
+                            } hover:shadow-lg`}
                         onClick={() => handleFilterChange('frontend')}
                     >
                         Frontend
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
-                            filter() === 'backend' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
-                        } hover:shadow-lg`}
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'backend' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                            } hover:shadow-lg`}
                         onClick={() => handleFilterChange('backend')}
                     >
                         Backend
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${
-                            filter() === 'product design' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
-                        } hover:shadow-lg`}
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'product design' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                            } hover:shadow-lg`}
                         onClick={() => handleFilterChange('product design')}
                     >
                         Product Design
