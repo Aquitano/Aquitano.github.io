@@ -56,9 +56,9 @@ function Item(props: Readonly<ItemProps>) {
                 <div>
                     <img
                         alt="BetterGaming - Designed by rawpixel.com / Freepik"
-                        width="703px"
-                        height="838px"
-                        src={`images/${props.name}.jpg`}
+                        width={703}
+                        height={838}
+                        src={`/images/${props.name}.webp`}
                         loading="lazy"
                     />
                 </div>
@@ -198,7 +198,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'featured' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'featured' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                             } hover:shadow-lg`}
                         onClick={() => handleFilterChange('featured')}
                     >
@@ -206,7 +206,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'frontend' ? ' bg-blue-500 text-white' : 'bg-gray-200  hover:bg-gray-400'
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'frontend' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                             } hover:shadow-lg`}
                         onClick={() => handleFilterChange('frontend')}
                     >
@@ -214,7 +214,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'backend' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'backend' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                             } hover:shadow-lg`}
                         onClick={() => handleFilterChange('backend')}
                     >
@@ -222,7 +222,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                     <button
                         ref={(el) => filterButtons.push(el)}
-                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'product design' ? ' bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
+                        class={`filterOption fly-in-up w-full transform rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'product design' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
                             } hover:shadow-lg`}
                         onClick={() => handleFilterChange('product design')}
                     >

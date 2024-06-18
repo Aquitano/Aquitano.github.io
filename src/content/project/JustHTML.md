@@ -6,7 +6,7 @@ featured: true
 tags: ['HTML', 'CSS', 'JavaScript']
 tasks: ['Frontend', 'Framework']
 links: [{ text: 'GitHub-Link', icon: 'mdi:github', link: 'https://github.com/Aquitano/JustHTML' }]
-fullImage: '/JustHTML-full.jpg'
+fullImage: 'JustHTML-full.jpg'
 year: 2020
 ---
 

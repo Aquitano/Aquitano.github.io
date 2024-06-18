@@ -14,7 +14,7 @@ links:
         },
         { text: 'Webseite', icon: 'mdi:link', link: 'https://bettergaming.thomasbreindl.me' },
     ]
-fullImage: '/BetterGaming-full.jpg'
+fullImage: 'BetterGaming-full.jpg'
 year: 2021
 ---
 

@@ -12,7 +12,6 @@ import devtools from 'solid-devtools/vite';
 
 // const dev = process.env.NODE_ENV !== 'production';
 
-// https://astro.build/config
 export default defineConfig({
     site: 'https://aquitano.github.io',
     integrations: [
@@ -40,12 +39,8 @@ export default defineConfig({
     prefetch: {
         prefetchAll: true,
     },
-    // vite: {
-    //     plugins: [
-    //         devtools({
-    //             /* features options - all disabled by default */
-    //             autoname: true, // e.g. enable autoname
-    //         }),
-    //     ],
-    // },
+    i18n: {
+        defaultLocale: 'en',
+        locales: ['en', 'de'],
+    },
 });

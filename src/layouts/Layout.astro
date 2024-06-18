@@ -5,6 +5,10 @@ import Header from '../components/Header.astro';
 import Loader from '../components/Loader.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
 import { ViewTransitions } from 'astro:transitions';
+import '@fontsource-variable/syne';
+// Supports weights 100-900
+import '@fontsource-variable/roboto-slab';
+import '@fontsource/young-serif';
 
 const defaultKeywords = [
     'Thomas Breindl',
@@ -77,19 +81,22 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 ],
             }}
         />
-        <ViewTransitions />
     </head>
-    <body>
-        <Loader transition:persist />
+    <body class="bg-orange-50/20 antialiased">
+        <Loader />
+        <!-- <Loader transition:persist /> -->
         <Header active={active} location={location} data-astro-reload />
         <ScrollToTop />
         <ViewTransitions />
-
         <slot />
 
         <Footer />
 
         <style is:global>
+            @view-transition {
+                navigation: auto;
+            }
+
             @font-face {
                 font-family: Poppins;
                 font-style: normal;
@@ -120,6 +127,10 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 overflow: auto;
                 scrollbar-width: none;
                 scroll-behavior: smooth;
+            }
+
+            body {
+                background-image: url('/images/grainBlack.png');
             }
             code {
                 font-family:

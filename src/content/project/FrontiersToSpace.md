@@ -15,7 +15,7 @@ links:
             link: 'https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html',
         },
     ]
-fullImage: '/FrontiersToSpace-full.jpg'
+fullImage: 'FrontiersToSpace-full.jpg'
 year: 2023
 ---
 

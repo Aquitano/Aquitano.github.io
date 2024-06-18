@@ -12,7 +12,7 @@ export interface Props {
 const { name, title, url, animation, isNew = false, year } = Astro.props;
 const newClass = isNew ? 'new' : '';
 
-import { Img } from 'astro-imagetools/components';
+import { Image } from 'astro:assets';
 ---
 
 <div class:list={['list-item-portfolio', 'i-v', animation]}>
@@ -29,10 +29,10 @@ import { Img } from 'astro-imagetools/components';
             )
         }
         <div>
-            <Img
+            <Image
                 alt="BetterGaming - Designed by rawpixel.com / Freepik"
-                width="703px"
-                height="838px"
+                width={703}
+                height={838}
                 src={`images/${name}.jpg`}
                 loading="lazy"
             />

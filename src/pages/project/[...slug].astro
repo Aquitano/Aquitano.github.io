@@ -1,5 +1,6 @@
 ---
-import { Img } from 'astro-imagetools/components';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { getCollection } from 'astro:content';
 import LinkButton from '../../components/LinkButton.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -14,6 +15,12 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await project.render();
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.jpg');
+const imagePath = `/src/assets/images/${project.data.fullImage}`;
+
+if (project.data.fullImage)
+    if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`);
 ---
 
 <Layout title={project.data.title + ' | Breindl Thomas'} active="Projekte">
@@ -63,16 +70,12 @@ const { Content } = await project.render();
                         <section class="case-study-photos pt-20">
                             <div class="wrapper px-4">
                                 <div>
-                                    <Img
+                                    <Image
                                         alt="Website on multiple devices"
-                                        src={'images/' + project.data.fullImage}
-                                        height="820px"
-                                        width="1420px"
-                                        attributes={{
-                                            img: {
-                                                class: 'rounded-3xl',
-                                            },
-                                        }}
+                                        src={images[imagePath]()}
+                                        height={820}
+                                        width={1420}
+                                        class="rounded-3xl"
                                         loading="lazy"
                                     />
                                 </div>

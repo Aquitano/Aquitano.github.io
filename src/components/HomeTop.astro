@@ -1,12 +1,12 @@
-<section class="home-top landingpage poppins">
-    <div class="wrapper flex flex-col items-center">
+<section class="home-top landingpage text-stone-700">
+    <div class="flex flex-col items-center">
         <div class="text-center">
-            <h1 class="TB poppins font-extrabold">Thomas Breindl</h1>
-            <h2 class="header-light TB-sub poppins">
+            <h1 class="title font-extrabold text-stone-700">Thomas Breindl</h1>
+            <h2 class="header-light TB-sub text-stone-700">
                 <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
             </h2>
-            <nav class="links poppins" aria-label="Project-Link">
-                <a href="#portfolio" class="scroll-to link link-underline" rel="prefetch">Meine Projekte</a>
+            <nav class="links" aria-label="Hero links">
+                <a class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
                 <span class="mx-4">oder</span>
                 <a href="timeline" class="link link-underline" rel="prefetch">Über Mich</a>
             </nav>
@@ -18,14 +18,15 @@
 </section>
 
 <style lang="scss">
-    .poppins {
-        font-family: Poppins, sans-serif;
+    .home-top {
+        font-family: 'Roboto Slab Variable', serif;
     }
     // Underline animation
     .link {
         font-weight: 800;
         letter-spacing: normal;
         text-transform: uppercase;
+        font-size: 1.2rem;
     }
     .link-underline {
         border-bottom-width: 0;
@@ -45,8 +46,8 @@
     section.home-top {
         display: flex;
         flex-direction: column;
-        align-items: center; /* vertical */
-        justify-content: center; /* horizontal */
+        align-items: center;
+        justify-content: center;
         min-height: 100vh;
         position: relative;
         z-index: 2;
@@ -55,7 +56,7 @@
         section.home-top btn.toggle {
             background: 0 0;
             // display: none;
-            visibility: hidden;
+            // visibility: hidden;
             width: 20px;
             margin: 30px auto 20px auto;
         }
@@ -123,37 +124,14 @@
     .container section.home-top .loaded {
         visibility: visible;
     }
-    .TB {
-        font-size: 60px;
+    .title {
+        font-size: 6.5rem;
+        font-family: 'Syne Variable', sans-serif;
     }
     .TB-sub {
-        font-size: 1.375rem;
-    }
-    @media screen and (max-width: 399px) {
-        .TB {
-            font-size: 50px;
-            text-align: center;
-        }
-    }
-    @media screen and (min-width: 400px) {
-        .TB {
-            font-size: 85px;
-        }
-    }
-    @media screen and (min-width: 568px) {
-        .TB {
-            font-size: 75px;
-        }
-    }
-    @media screen and (min-width: 768px) {
-        .TB {
-            font-size: 70px;
-        }
-    }
-    @media screen and (min-width: 800px) {
-        .TB {
-            font-size: 80px;
-        }
+        font-size: 2rem;
+        font-family: 'Roboto Slab Variable', serif;
+        margin-bottom: 1rem;
     }
 
     // Animation
@@ -208,7 +186,9 @@
 </style>
 
 <script>
+    import { animate, timeline, stagger, glide } from 'motion';
     document.querySelector('.toggle')?.addEventListener('click', scrollToPortfolio);
+    document.querySelector('.projects')?.addEventListener('click', scrollToPortfolio);
 
     function scrollToPortfolio() {
         let portfolio: HTMLElement | null = document.querySelector('.home-portfolio');
@@ -218,4 +198,79 @@
 
         window.scrollBy({ top: portfolio?.offsetTop - 150, behavior: 'smooth' });
     }
+
+    const span = (text) => {
+        const node = document.createElement('span');
+
+        node.textContent = text;
+
+        return node;
+    };
+    const byLetter = (text) => [...text].map(span);
+
+    const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+
+    window.addEventListener('load', () => {
+        // animate each character of the title
+        if (!motionOK) return;
+
+        const title = document.querySelector('.title');
+
+        const nodes = byLetter(title?.textContent);
+
+        if (nodes.length) {
+            title?.firstChild?.replaceWith(...nodes);
+        }
+
+        const letters = document.querySelectorAll('.title span');
+        letters.forEach((l) => {
+            if (l.textContent === ' ') return;
+            l.style.display = 'inline-block';
+        });
+
+        const sequence = [
+            [
+                letters,
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0, 50px, 0)', 'translate3d(0, 0, 0)'],
+                    filter: ['blur(5px)', 'blur(0)'],
+                },
+                {
+                    delay: stagger(0.05),
+                },
+            ],
+            [
+                '.header-light',
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0, 50px, 0)', 'translate3d(0, 0, 0)'],
+                    filter: ['blur(5px)', 'blur(0)'],
+                },
+                { at: 0.75 },
+            ],
+            [
+                '.links',
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0, 25px, 0)', 'translate3d(0, 0, 0)'],
+                    filter: ['blur(5px)', 'blur(0)'],
+                },
+                { at: 1.25 },
+            ],
+            [
+                '.animate',
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0, 25px, 0)', 'translate3d(0, 0, 0)'],
+                    filter: ['blur(5px)', 'blur(0)'],
+                },
+                { at: 1.5 },
+            ],
+        ];
+
+        timeline(sequence, { defaultOptions: { easing: glide(), duration: 1, delay: 0.2 } });
+    });
 </script>
+
+<script></script>
