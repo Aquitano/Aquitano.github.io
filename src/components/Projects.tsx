@@ -1,4 +1,5 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
+import { animate, glide, inView, stagger } from "motion";
 import { For, Show, createSignal, onMount, type Component } from 'solid-js';
 import './Projects.scss';
 
@@ -24,6 +25,7 @@ export interface ItemProps {
     isNew?: boolean;
     year: number;
     animation: 'fly-in-right' | 'fly-in-left';
+    classes?: string;
     observable: any;
 }
 
@@ -33,64 +35,74 @@ function Item(props: Readonly<ItemProps>) {
     let ref: HTMLDivElement | undefined;
 
     onMount(() => {
-        const isSafari = /^((?!chrome|android).)*Macintosh/i.test(navigator.userAgent);
-        if (isSafari) {
-            ref?.classList.add('is-visible');
-            ref?.classList.remove(props.animation);
-            ref?.classList.remove('i-v');
-        }
-        if (!isSafari) props.observable(() => ref);
+        // const delay = props.index * 0.2;
+
+        console.log(props.url);
+        // animate(".framer-un9tvm", { transform: ["translateZ(-500px) rotateX(75deg)", "translateZ(0) rotateX(0deg)"], opacity: [0, 1], filter: ['blur(6px)', 'blur(0)'] }, { duration: 1, delay: stagger(0.5), easing: glide() })
+        inView(ref!, (ele) => {
+            animate(ele.target, { transform: ["translateZ(-500px) rotateX(75deg)", "translateZ(0) rotateX(0deg)"], opacity: [0, 1], filter: ['blur(6px)', 'blur(0)'] }, { duration: 1, delay: stagger(0.5), easing: glide() })
+        }, { amount: 0.1 });
     });
 
     return (
-        <div class={`list-item-portfolio i-v will-change ${props.animation}`} ref={ref}>
-            <a href={props.url} class={newClass} rel="prefetch">
-                <Show when={props.isNew}>
-                    <div>
-                        <i class="new dark-bg">new</i>
-                        <svg viewBox="0 0 100 100" class="circle">
-                            <circle cx="50" cy="50" r="47" stroke-width="6" />
-                        </svg>
-                    </div>
-                </Show>
-                <div>
-                    <img
-                        alt="BetterGaming - Designed by rawpixel.com / Freepik"
-                        width={703}
-                        height={838}
-                        src={`/images/${props.name}.webp`}
-                        loading="lazy"
-                    />
+        <div class='contents'>
+            <div class={`framer-1d22imt-container ${props.animation} ${props.classes}`}>
+                <div class='h-[100%] w-[100%] list-item-portfolio' ref={ref} style={
+                    {
+                        perspective: "2000px",
+                        "transform-style": "preserve-3d",
+                        "backface-visibility": "hidden",
+                    }
+                }>
+                    <a href={props.url} class={`${newClass} framer-un9tvm bg-slate-500`} rel="prefetch">
+                        <Show when={props.isNew}>
+                            <div>
+                                <i class="new dark-bg">new</i>
+                                <svg viewBox="0 0 100 100" class="circle">
+                                    <circle cx="50" cy="50" r="47" stroke-width="6" />
+                                </svg>
+                            </div>
+                        </Show>
+                        {/* <div>
+                            <img
+                                alt="BetterGaming - Designed by rawpixel.com / Freepik"
+                                width={703}
+                                height={838}
+                                src={`/images/${props.name}.webp`}
+                                loading="lazy"
+                            />
+                        </div> */}
+                        <strong class="regular white-bg">
+                            <span class="h5">{props.year}</span>
+                            <span class="h2 with-badge font-extrabold">{props.title}</span>
+                            <span class="more with-icon">
+                                <p>
+                                    Mehr erfahren!
+                                    <span class="icon icon-arrow-link-thin icon--on-right">
+                                        <svg>
+                                            <use href="#icon_arrow_link--thin"></use>
+                                        </svg>
+                                    </span>
+                                </p>
+                            </span>
+                        </strong>
+                        <strong class="action">
+                            <span class="h5">{props.year}</span>
+                            <span class="h2 with-badge font-extrabold">{props.title}</span>
+                            <span class="more with-icon">
+                                <p>
+                                    Mehr erfahren!
+                                    <span class="icon icon-arrow-link-thin icon--on-right">
+                                        <svg>
+                                            <use href="#icon_arrow_link--thin"></use>
+                                        </svg>
+                                    </span>
+                                </p>
+                            </span>
+                        </strong>
+                    </a>
                 </div>
-                <strong class="regular white-bg">
-                    <span class="h5">{props.year}</span>
-                    <span class="h2 with-badge font-extrabold">{props.title}</span>
-                    <span class="more with-icon">
-                        <p>
-                            Mehr erfahren!
-                            <span class="icon icon-arrow-link-thin icon--on-right">
-                                <svg>
-                                    <use href="#icon_arrow_link--thin"></use>
-                                </svg>
-                            </span>
-                        </p>
-                    </span>
-                </strong>
-                <strong class="action">
-                    <span class="h5">{props.year}</span>
-                    <span class="h2 with-badge font-extrabold">{props.title}</span>
-                    <span class="more with-icon">
-                        <p>
-                            Mehr erfahren!
-                            <span class="icon icon-arrow-link-thin icon--on-right">
-                                <svg>
-                                    <use href="#icon_arrow_link--thin"></use>
-                                </svg>
-                            </span>
-                        </p>
-                    </span>
-                </strong>
-            </a>
+            </div>
         </div>
     );
 }
@@ -187,7 +199,7 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                         Projekte
                     </h1>
                 </div>
-                <div class="mb-4 mt-[2rem] flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
+                <div class="mb-4 mt-8 flex flex-col space-y-4 md:flex-row md:space-x-4 md:space-y-0">
                     <button
                         ref={(el) => filterButtons.push(el)}
                         class={`filterOption fly-in-up w-full rounded-lg px-4 py-2 opacity-0 shadow-md transition-all duration-500 ease-out md:w-auto ${filter() === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-400'
@@ -230,7 +242,8 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                     </button>
                 </div>
 
-                <div class="list">
+                <div class='grid flex-none gap-8 grid-cols-[repeat(5,minmax(200px,1fr))] grid-rows-[repeat(1,minmax(0,1fr))] justify-center overflow-visible relative z-5'>
+
                     <For each={products()} fallback={<div>Loading...</div>}>
                         {(product, index) => (
                             <Item
@@ -240,10 +253,12 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                                 isNew={product.data.year === currentYear}
                                 url={`project/${product.slug}`}
                                 animation={Number(index()) % 2 === 1 ? 'fly-in-right' : 'fly-in-left'}
+                                classes={Number(index()) % 2 === 1 ? 'self-start col-span-3' : 'self-end col-span-2'}
                                 observable={useVisibilityObserver}
                             />
                         )}
                     </For>
+
                 </div>
             </div>
         </section>

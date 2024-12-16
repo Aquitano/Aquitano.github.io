@@ -4,38 +4,13 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     text-transform: uppercase;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 0;
     letter-spacing: 0.4em;
     color: #878a8f;
 }
 
 section.home-portfolio {
     z-index: 3;
-}
-@media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-    section.home-portfolio .list {
-        margin-top: 130px;
-    }
-}
-
-@media (min-width: 660px) {
-    section.home-portfolio .list {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 123px -7px -7px -7px;
-    }
-}
-@media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-    section.home-portfolio .list {
-        margin: 110px -15px -15px -15px;
-    }
-}
-
-@media (min-width: 1280px) {
-    section.home-portfolio .list {
-        margin: 95px -30px -30px -30px;
-    }
 }
 
 .list-item-portfolio {
@@ -44,8 +19,7 @@ section.home-portfolio {
     }
 
     > a {
-        background: rgba(249, 249, 249, 0.9);
-        height: 100%;
+        // background: rgba(249, 249, 249, 0.9);
         position: relative;
         display: block;
         overflow: hidden;
@@ -298,10 +272,10 @@ section.home-portfolio {
     }
 }
 @media (min-width: 660px) {
-    .list-item-portfolio {
-        margin: 7px;
-        width: calc(50% - 14px);
-    }
+    // .list-item-portfolio {
+    //     margin: 7px;
+    //     width: calc(50% - 14px);
+    // }
     .list-item-portfolio + .list-item-portfolio {
         margin-top: 7px;
     }
@@ -321,10 +295,10 @@ section.home-portfolio {
     }
 }
 @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-    .list-item-portfolio {
-        margin: 15px;
-        width: calc(50% - 30px);
-    }
+    // .list-item-portfolio {
+    //     margin: 15px;
+    //     width: calc(50% - 30px);
+    // }
     .list-item-portfolio + .list-item-portfolio {
         margin-top: 15px;
     }
@@ -363,10 +337,10 @@ section.home-portfolio {
     }
 }
 @media (min-width: 1280px) {
-    .list-item-portfolio {
-        margin: 30px;
-        width: calc(50% - 60px);
-    }
+    // .list-item-portfolio {
+    //     margin: 0px;
+    //     width: 100%;
+    // }
     .list-item-portfolio + .list-item-portfolio {
         margin-top: 30px;
     }
@@ -379,6 +353,7 @@ section.home-portfolio {
     .list-item-portfolio > a:hover:before {
         opacity: 1;
     }
+    
     .list-item-portfolio > a:hover Img {
         transform: scale(1.02);
     }
@@ -449,3 +424,70 @@ section.home-portfolio {
         transform: translateY(-0.15rem) !important;
     }
 }
+
+.framer-un9tvm {
+    align-content: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0px;
+    // height: 400px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+    // width: 720px;
+    will-change: transform;
+
+    display: block;
+
+    border-radius: 24px;
+
+    width: 100%;
+    height: 100%;
+
+    --border-bottom-width: 1px;
+    --border-color: rgba(255, 255, 255, 0.05);
+    --border-left-width: 1px;
+    --border-right-width: 1px;
+    --border-style: solid;
+    --border-top-width: 1px;
+
+    background-color: #878a8f;
+
+    transform-style: preserve-3d;
+
+    // transform: rotateX(70deg); 
+
+    // scss after
+    &::after{
+        content: "";
+        border-width: var(--border-top-width, 0) var(--border-right-width, 0) var(--border-bottom-width, 0) var(--border-left-width, 0);
+        border-color: var(--border-color, none);
+        border-style: var(--border-style, none);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        box-sizing: border-box;
+        left: 0;
+        top: 0;
+        border-radius: inherit;
+        pointer-events: none;
+    }
+}
+
+.framer-1d22imt-container{
+    align-self: start;
+    flex: none;
+    height: 100%;
+    justify-self: start;
+    position: relative;
+    // transform: perspective(1500px);
+    width: 100%;
+    height: 30rem;
+}
+
+// transform: rotateX(10deg); 
