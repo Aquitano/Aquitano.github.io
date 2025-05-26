@@ -43,12 +43,17 @@
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 // Section Header
 .projects-header {
     text-align: left;
     margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1200px;
 
     .projects-pre-header {
         font-size: 0.875rem;
@@ -58,6 +63,8 @@
         color: #878a8f;
         font-weight: 600;
         will-change: opacity, transform;
+        opacity: 0;
+        transform: translateY(20px);
     }
 
     .projects-title {
@@ -66,6 +73,8 @@
         margin-top: 0.5rem;
         line-height: 1.1;
         will-change: opacity, transform;
+        opacity: 0;
+        transform: translateY(25px);
 
         @media (min-width: 768px) {
             font-size: 4rem;
@@ -79,6 +88,8 @@
     flex-wrap: wrap;
     gap: 0.75rem;
     margin-bottom: 3rem;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .projects-filter-btn {
@@ -97,6 +108,8 @@
         box-shadow 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
         background-color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     will-change: transform, opacity;
+    opacity: 0;
+    transform: translateY(15px);
 
     &:hover {
         transform: translateY(-2px);
@@ -126,24 +139,85 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 1.5rem;
     will-change: opacity;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
 
-    @media (min-width: 768px) {
+    @media (min-width: 640px) {
         grid-template-columns: repeat(2, 1fr);
     }
 
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2rem;
+    }
+
     @media (min-width: 1024px) {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(6, 1fr);
+        grid-auto-flow: dense;
+        gap: 2rem;
+    }
+
+    @media (min-width: 1280px) {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 2.5rem;
     }
 }
 
 // Project Card Styling
 .project-card-container {
     position: relative;
-    height: 380px;
+    height: 360px;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
 
-    &.wide {
+    @media (max-width: 639px) {
+        grid-column: span 1;
+    }
+
+    @media (min-width: 640px) and (max-width: 767px) {
+        &.wide {
+            grid-column: span 2;
+        }
+    }
+
+    // Default medium size (spans 2 columns out of 6)
+    &.medium {
         @media (min-width: 768px) {
             grid-column: span 2;
+            height: 360px;
+        }
+    }
+
+    // Small size (spans 2 columns out of 6, shorter height)
+    &.small {
+        @media (min-width: 768px) {
+            grid-column: span 2;
+            height: 320px;
+        }
+    }
+
+    // Large size (spans 2 columns out of 6, taller height)
+    &.large {
+        @media (min-width: 768px) {
+            grid-column: span 2;
+            height: 400px;
+        }
+    }
+
+    // Wide size (spans 4 columns out of 6)
+    &.wide {
+        @media (min-width: 768px) {
+            grid-column: span 4;
+            height: 360px;
+        }
+    }
+
+    // Tall size (spans 2 columns out of 6, extra tall height)
+    &.tall {
+        @media (min-width: 768px) {
+            grid-column: span 2;
+            height: 460px;
         }
     }
 }
@@ -159,6 +233,31 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     will-change: transform, opacity;
     transform: translateZ(0);
+    flex: 1;
+
+    // Initial hidden state for viewport animations
+    opacity: 0;
+    transform: translateY(30px) scale(0.95) translateZ(0);
+    filter: blur(4px);
+
+    // Add subtle variations to make the grid more interesting
+    .small & {
+        border-radius: 20px;
+    }
+
+    .large & {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .wide & {
+        border-radius: 28px;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1);
+    }
+
+    .tall & {
+        border-radius: 26px;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+    }
 }
 
 .project-link {
@@ -170,7 +269,7 @@
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    border-radius: 24px;
+    border-radius: inherit;
     color: #ffffff;
     transform: translateZ(0);
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -186,6 +285,7 @@
         opacity: 0;
         transition: opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         z-index: 1;
+        border-radius: inherit;
     }
 
     &:hover {
