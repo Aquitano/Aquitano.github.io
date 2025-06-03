@@ -19,34 +19,27 @@ const menus = [
 });
 ---
 
-<header class="fixed left-1/2 top-4 z-20 w-[calc(100%-2rem)] max-w-4xl -translate-x-1/2 transform">
-    <div class="rounded-2xl border border-white/10 bg-black/10 px-6 py-4 shadow-2xl shadow-black/20 backdrop-blur-md">
-        <div class="flex items-center justify-between">
-            <a href="/" class="logo scroll-to group">
-                <p class="text-lg font-bold text-white transition-colors duration-300 hover:text-gray-300">
-                    Thomas Breindl
-                </p>
-            </a>
-
-            <btn class="menu group cursor-pointer" style="cursor: pointer">
-                <div class="flex items-center gap-3">
-                    <span
-                        class="hidden text-sm font-semibold uppercase tracking-wider text-white/80 transition-colors duration-200 group-hover:text-white sm:block"
-                    >
-                        Menu
-                    </span>
-                    <div class="relative h-6 w-6">
-                        <div class="menu-lines">
-                            <div class="h-0.5 w-6 bg-white/80 transition-all duration-200 group-hover:bg-white"></div>
-                            <div class="mt-1.5 h-0.5 w-6 bg-white/80 transition-all duration-200 group-hover:bg-white">
-                            </div>
-                            <div class="mt-1.5 h-0.5 w-6 bg-white/80 transition-all duration-200 group-hover:bg-white">
-                            </div>
-                        </div>
-                    </div>
+<header
+    class="fixed left-1/2 top-6 z-20 w-full max-w-4xl -translate-x-1/2 transform px-6 transition-all duration-300 ease-out"
+>
+    <div
+        class="header-bg relative z-10 mx-auto flex items-center justify-between rounded-2xl border border-white/10 px-8 py-5"
+    >
+        <a href="/" class="logo scroll-to">
+            <p class="text-xl font-bold text-white transition-colors duration-200 hover:text-zinc-300">
+                Thomas Breindl
+            </p>
+        </a>
+        <btn class="menu flex cursor-pointer items-center space-x-4" style="cursor: pointer">
+            <span class="hidden text-sm font-bold uppercase tracking-wider text-white/90 sm:block">Menu</span>
+            <div class="menu-icon">
+                <div class="menu-lines">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                    <span class="line line-3"></span>
                 </div>
-            </btn>
-        </div>
+            </div>
+        </btn>
     </div>
 </header>
 
@@ -54,47 +47,27 @@ const menus = [
 <nav
     id="nav"
     aria-label="loader"
-    class="z-25 fixed inset-0 overflow-hidden transition-all duration-500 ease-out"
-    style="height: 0;"
+    class="fixed inset-0 z-50 h-0 overflow-hidden transition-all duration-500 ease-in-out"
 >
-    <div class="menu-bg absolute inset-0 bg-black/95 backdrop-blur-xl"></div>
-    <btn class="close group absolute right-8 top-8 hidden cursor-pointer">
-        <div class="flex items-center gap-3">
-            <span
-                class="text-sm font-semibold uppercase tracking-wider text-white/80 transition-colors duration-200 group-hover:text-white"
-            >
-                Close
-            </span>
-            <div class="relative h-6 w-6">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="h-0.5 w-6 rotate-45 bg-white/80 transition-colors duration-200 group-hover:bg-white">
-                    </div>
-                    <div
-                        class="absolute h-0.5 w-6 -rotate-45 bg-white/80 transition-colors duration-200 group-hover:bg-white"
-                    >
-                    </div>
-                </div>
-            </div>
-        </div>
-    </btn>
+    <div class="menu-bg h-full w-full bg-black/95 backdrop-blur-xl"></div>
 </nav>
 
-<nav id="nav-content" aria-label="menu">
-    <div>
-        <div class="content z-26 fixed inset-0 flex flex-col items-center justify-center" style="visibility: hidden;">
+<nav id="nav-content" aria-label="menu" class="fixed inset-0 z-50">
+    <div class="flex h-full w-full items-center justify-center">
+        <div class="content mx-auto flex max-w-4xl flex-col items-center justify-center px-6 text-center">
             <h5
-                class="duration-400 mb-8 text-sm font-semibold uppercase tracking-wider text-gray-400 opacity-0 transition-opacity"
+                class="duration-400 mb-12 text-lg font-semibold uppercase tracking-wider text-white/60 opacity-0 transition-opacity"
             >
                 Menu
             </h5>
-            <ul id="mi" class="space-y-4 text-center">
+            <ul id="mi" class="w-full space-y-8 text-center">
                 {
                     menus.map((menu) => (
-                        <li class="duration-400 opacity-0 transition-all">
+                        <li class="duration-400 translate-y-8 transform opacity-0 transition-all">
                             <a
                                 href={menu.href}
                                 id={menu.name}
-                                class={`block text-4xl font-bold text-white/70 transition-colors duration-300 hover:text-white md:text-6xl ${menu.active ? 'text-white' : ''}`}
+                                class={`block text-6xl font-bold text-white transition-colors duration-300 hover:text-white/80 md:text-7xl ${menu.active ? 'text-white' : 'text-white/80'}`}
                             >
                                 {menu.name}
                             </a>
@@ -106,124 +79,367 @@ const menus = [
     </div>
 </nav>
 
-<style>
-    /* Custom styles for menu animations and states */
+<!-- Close button with highest z-index and animation -->
+<btn
+    class="close fixed right-10 top-10 z-[60] flex hidden translate-y-[-1rem] cursor-pointer items-center space-x-4 opacity-0 transition-all duration-300 ease-out"
+    style="cursor: pointer"
+>
+    <span class="text-sm font-bold uppercase tracking-wider text-white/90">Close</span>
+    <div class="close-icon">
+        <span class="close-line close-line-1"></span>
+        <span class="close-line close-line-2"></span>
+    </div>
+</btn>
+
+<style lang="scss">
+    .header-bg {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow:
+            0 8px 32px 0 rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .header-bg::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.02) 0%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.01) 100%
+        );
+        pointer-events: none;
+    }
+
+    .menu-icon {
+        width: 28px;
+        height: 28px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+    }
+
     .menu-lines {
-        transition: transform 0.3s ease;
+        position: relative;
+        height: 20px;
+        width: 28px;
     }
 
-    header.nav-on .menu-lines > div:nth-child(1) {
-        transform: rotate(45deg) translate(6px, 6px);
+    .line {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.9);
+        display: block;
+        width: 28px;
+        height: 2px;
+        border-radius: 1px;
+        transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        transform-origin: center;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
-    header.nav-on .menu-lines > div:nth-child(2) {
+    .line-1 {
+        top: 0;
+    }
+
+    .line-2 {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .line-3 {
+        bottom: 0;
+    }
+
+    .menu:hover .line {
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    header.nav-on .line-1 {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    header.nav-on .line-2 {
         opacity: 0;
     }
 
-    header.nav-on .menu-lines > div:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px);
+    header.nav-on .line-3 {
+        transform: rotate(-45deg) translate(7px, -7px);
     }
 
-    /* Menu overlay animations */
+    .close-icon {
+        width: 28px;
+        height: 28px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .close-line {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.9);
+        display: block;
+        width: 28px;
+        height: 2px;
+        border-radius: 1px;
+        top: 50%;
+        left: 50%;
+        transition: all 0.3s ease;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .close-line-1 {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .close-line-2 {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .close:hover .close-line {
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Enhanced glassmorphic close button */
+    .close {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 12px 16px;
+        box-shadow:
+            0 8px 32px 0 rgba(0, 0, 0, 0.37),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .close:hover {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Close button animation states */
+    .close.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .close.hide {
+        opacity: 0;
+        transform: translateY(-1rem);
+    }
+
+    /* Enhanced menu overlay with glassmorphism */
+    nav#nav {
+        background: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+    }
+
+    .menu-bg {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.2) 100%);
+        backdrop-filter: blur(30px) saturate(1.2);
+        -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    }
+
     nav#nav.on {
-        height: 100vh !important;
+        height: 100vh;
+        transition: height 0.5s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
     nav#nav.on + #nav-content .content {
-        visibility: visible !important;
+        visibility: visible;
     }
 
     nav#nav.on + #nav-content .content h5 {
-        opacity: 1 !important;
-        transition-delay: 0.4s;
+        opacity: 1;
+        transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.4s;
     }
 
     nav#nav.on + #nav-content .content ul > li {
-        opacity: 1 !important;
+        opacity: 1;
+        transform: translateY(0);
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(1) {
-        transition-delay: 0.3s;
+        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.3s;
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(2) {
-        transition-delay: 0.35s;
+        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.35s;
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(3) {
-        transition-delay: 0.4s;
+        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.4s;
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(4) {
-        transition-delay: 0.45s;
+        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.45s;
     }
 
-    /* Smooth backdrop blur support */
-    @supports (backdrop-filter: blur(16px)) {
-        header > div {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+    #nav-content {
+        visibility: hidden;
+        transition: visibility 0s linear 0.4s;
+    }
+
+    #nav-content .content {
+        visibility: hidden;
+        transition: visibility 0s linear 0.4s;
+    }
+
+    /* Enhanced text styling for glassmorphic theme */
+    .logo p {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu span {
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .close span {
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Mobile responsive adjustments */
+    @media (max-width: 640px) {
+        header {
+            top: 1rem;
+            left: 1rem;
+            right: 1rem;
+            transform: none;
+            width: calc(100% - 2rem);
+            max-width: none;
+            padding: 0;
         }
 
-        .menu-bg {
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+        .close {
+            top: 2rem !important;
+            right: 2rem !important;
+        }
+
+        #nav-content .content ul li a {
+            font-size: 3rem !important;
+            line-height: 1.2 !important;
         }
     }
 
-    /* Fallback for browsers without backdrop-filter */
-    @supports not (backdrop-filter: blur(16px)) {
-        header > div {
-            background-color: rgba(0, 0, 0, 0.8);
+    @media (min-width: 641px) and (max-width: 1024px) {
+        header {
+            max-width: 600px;
         }
+    }
 
-        .menu-bg {
-            background-color: rgba(0, 0, 0, 0.9);
+    @media (min-width: 1025px) {
+        header {
+            max-width: 800px;
         }
     }
 </style>
 
 <script>
+    import { animate } from 'motion';
+
     const $: (selector: string) => Element | null = (selector: string) => {
-        document.querySelector(selector);
         return document.querySelector(selector);
     };
 
+    function animateHeaderIn() {
+        const header = $('header');
+        console.log(header);
+
+        if (header) {
+            animate(
+                'header',
+                {
+                    transform: ['translateX(-50%) translateY(-10rem)', 'translateX(-50%) translateY(0)'],
+                },
+                { duration: 0.8, easing: [0.25, 0.46, 0.45, 0.94], delay: 2 },
+            );
+        }
+    }
+
     function openNav() {
-        //   let Height = window.screen.availHeight;
         if ($('a')?.classList.contains('Fade-out')) {
             $('a')?.classList.remove('Fade-out');
             $('b')?.classList.remove('Fade-out');
             $('#mi')?.classList.remove('Fade-out');
         }
 
-        $('.close')?.classList.remove('hidden');
-        $('nav')?.classList.add('on');
+        const closeBtn = $('.close');
+        closeBtn?.classList.remove('hidden');
+        closeBtn?.classList.remove('hide');
+        closeBtn?.classList.add('show');
+
+        $('nav#nav')?.classList.add('on');
         $('header')?.classList.add('nav-on');
+
+        animate(
+            'header',
+            {
+                transform: ['translateX(-50%)', 'translateX(-50%) translateY(-1rem)'],
+                scale: [1, 0.95],
+            },
+            {
+                duration: 0.3,
+                easing: 'ease-out',
+            },
+        );
     }
 
     function closeNav() {
         $('a')?.classList.add('Fade-out');
         $('b')?.classList.add('Fade-out');
         $('#mi')?.classList.add('Fade-out');
-        $('nav')?.classList.remove('on');
+        $('nav#nav')?.classList.remove('on');
         $('header')?.classList.remove('nav-on');
+
+        const closeBtn = $('.close');
+        closeBtn?.classList.remove('show');
+        closeBtn?.classList.add('hide');
+
+        animate(
+            'header',
+            {
+                transform: ['translateX(-50%) translateY(-1rem)', 'translateX(-50%)'],
+                scale: [0.95, 1],
+            },
+            {
+                duration: 0.3,
+                easing: 'ease-out',
+                delay: 550.3,
+            },
+        );
+
         setTimeout(() => {
-            $('.close')?.classList.add('hidden');
-        }, 500);
+            closeBtn?.classList.add('hidden');
+        }, 300);
     }
 
-    function listener() {
+    function addListeners() {
         $('.menu')?.addEventListener('click', () => {
             openNav();
+        });
 
-            $('.close')?.addEventListener(
-                'click',
-                () => {
-                    closeNav();
-                },
-                { once: true },
-            );
+        $('.close')?.addEventListener('click', () => {
+            closeNav();
         });
 
         document.querySelectorAll('#mi > li > a').forEach((menu) => {
@@ -233,8 +449,19 @@ const menus = [
         });
     }
 
+    function initializeHeader() {
+        animateHeaderIn();
+
+        addListeners();
+    }
+
     document.addEventListener('astro:after-swap', () => {
-        listener();
+        initializeHeader();
     });
-    listener();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeHeader();
+    });
+
+    initializeHeader();
 </script>
