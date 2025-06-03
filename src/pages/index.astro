@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import HomeTop from '../components/HomeTop.astro';
 import LinkButton from '../components/LinkButton.astro';
-import Projects from '../components/Projects.jsx';
+import Projects from '../components/Projects.tsx';
 import Layout from '../layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
 
@@ -31,7 +31,7 @@ const socials = [
             <Projects allProducts={allProducts} client:load />
 
             <!-- Contact -->
-            <section class="mt-24">
+            <section class="contact-section mt-24 transition-opacity duration-500">
                 <div class="wrapper">
                     <span style="text-align: center">
                         <h1 class="i-v fly-in-up mb-4 text-4xl font-extrabold">Kontaktiere mich!</h1>
@@ -529,10 +529,44 @@ const socials = [
     .hidden {
         visibility: hidden;
     }
+
+    /* Add intersection observer for contact section */
+    .contact-section {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+            opacity 0.8s ease,
+            transform 0.8s ease;
+    }
+
+    .contact-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 </style>
 
 <script>
     import('../assets/js/aos.ts');
+
+    // Add intersection observer for contact section
+    document.addEventListener('DOMContentLoaded', () => {
+        const contactSection = document.querySelector('.contact-section');
+
+        if (contactSection) {
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                },
+                { threshold: 0.1 },
+            );
+
+            observer.observe(contactSection);
+        }
+    });
 </script>
 
 <script>
