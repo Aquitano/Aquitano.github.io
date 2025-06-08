@@ -20,18 +20,19 @@ const menus = [
 ---
 
 <header
-    class="fixed left-1/2 top-6 z-20 w-full max-w-4xl -translate-x-1/2 transform px-6 transition-all duration-300 ease-out"
+    class="header fixed left-1/2 top-6 z-20 w-full max-w-4xl -translate-x-1/2 transform px-6 transition-all duration-300 ease-out"
 >
     <div
-        class="header-bg relative z-10 mx-auto flex items-center justify-between rounded-2xl border border-white/10 px-8 py-5"
+        class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-2xl border border-white/10 px-8 py-5"
     >
         <a href="/" class="logo scroll-to">
-            <p class="text-xl font-bold text-white transition-colors duration-200 hover:text-zinc-300">
-                Thomas Breindl
-            </p>
+            <p class="text-xl font-bold text-white transition-all duration-300 hover:text-zinc-300">Thomas Breindl</p>
         </a>
         <btn class="menu flex cursor-pointer items-center space-x-4" style="cursor: pointer">
-            <span class="hidden text-sm font-bold uppercase tracking-wider text-white/90 sm:block">Menu</span>
+            <span
+                class="menu-text hidden text-sm font-bold uppercase tracking-wider text-white/90 transition-all duration-300 md:block"
+                >Menu</span
+            >
             <div class="menu-icon">
                 <div class="menu-lines">
                     <span class="line line-1"></span>
@@ -63,13 +64,13 @@ const menus = [
             <ul id="mi" class="w-full space-y-8 text-center">
                 {
                     menus.map((menu) => (
-                        <li class="duration-400 translate-y-8 transform opacity-0 transition-all">
+                        <li class="duration-400 menu-item -translate-x-16 transform opacity-0 transition-all">
                             <a
                                 href={menu.href}
                                 id={menu.name}
-                                class={`block text-6xl font-bold text-white transition-colors duration-300 hover:text-white/80 md:text-7xl ${menu.active ? 'text-white' : 'text-white/80'}`}
+                                class={`menu-link block text-6xl font-bold text-white transition-all duration-500 md:text-7xl ${menu.active ? 'text-white' : 'text-white/80'}`}
                             >
-                                {menu.name}
+                                <span class="menu-link-text">{menu.name}</span>
                             </a>
                         </li>
                     ))
@@ -79,15 +80,19 @@ const menus = [
     </div>
 </nav>
 
-<!-- Close button with highest z-index and animation -->
 <btn
-    class="close fixed right-10 top-10 z-[60] flex hidden translate-y-[-1rem] cursor-pointer items-center space-x-4 opacity-0 transition-all duration-300 ease-out"
+    class="close fixed right-10 top-10 z-[60] flex hidden translate-y-[-1rem] cursor-pointer items-center justify-center opacity-0 transition-all duration-300 ease-out"
     style="cursor: pointer"
 >
-    <span class="text-sm font-bold uppercase tracking-wider text-white/90">Close</span>
-    <div class="close-icon">
-        <span class="close-line close-line-1"></span>
-        <span class="close-line close-line-2"></span>
+    <div class="close-container">
+        <div class="close-bg"></div>
+        <div class="close-content">
+            <span class="close-text">Close</span>
+            <div class="close-icon">
+                <span class="close-line close-line-1"></span>
+                <span class="close-line close-line-2"></span>
+            </div>
+        </div>
     </div>
 </btn>
 
@@ -102,6 +107,15 @@ const menus = [
             inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
         position: relative;
         overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .header-bg:hover {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4));
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow:
+            0 12px 40px 0 rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
     }
 
     .header-bg::before {
@@ -112,6 +126,11 @@ const menus = [
         right: 0;
         height: 1px;
         background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.4s ease;
+    }
+
+    .group:hover .header-bg::before {
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     }
 
     .header-bg::after {
@@ -125,6 +144,16 @@ const menus = [
             rgba(255, 255, 255, 0.01) 100%
         );
         pointer-events: none;
+        transition: all 0.4s ease;
+    }
+
+    .group:hover .header-bg::after {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.03) 100%
+        );
     }
 
     .menu-icon {
@@ -135,6 +164,16 @@ const menus = [
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .menu:hover .menu-icon {
+        transform: scale(1.1);
+    }
+
+    .menu:hover .menu-text {
+        color: white;
+        letter-spacing: 0.15em;
     }
 
     .menu-lines {
@@ -157,20 +196,35 @@ const menus = [
 
     .line-1 {
         top: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .line-2 {
         top: 50%;
         transform: translateY(-50%);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .line-3 {
         bottom: 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .menu:hover .line {
         background: rgba(255, 255, 255, 1);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu:hover .line-1 {
+        transform: translateX(3px);
+    }
+
+    .menu:hover .line-2 {
+        transform: translateY(-50%) translateX(-3px);
+    }
+
+    .menu:hover .line-3 {
+        transform: translateX(3px);
     }
 
     header.nav-on .line-1 {
@@ -179,29 +233,114 @@ const menus = [
 
     header.nav-on .line-2 {
         opacity: 0;
+        transform: translateY(-50%) scale(0);
     }
 
     header.nav-on .line-3 {
         transform: rotate(-45deg) translate(7px, -7px);
     }
 
+    .close-container {
+        position: relative;
+        width: 120px;
+        height: 60px;
+        border-radius: 30px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .close-bg {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.05) 50%,
+            rgba(255, 255, 255, 0.1) 100%
+        );
+        backdrop-filter: blur(20px) saturate(1.2);
+        -webkit-backdrop-filter: blur(20px) saturate(1.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 30px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .close-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.6s ease;
+    }
+
+    .close:hover .close-bg {
+        background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.25) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0.2) 100%
+        );
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow:
+            0 10px 40px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .close:hover .close-bg::before {
+        left: 100%;
+    }
+
+    .close:hover .close-container {
+        transform: scale(1.05);
+    }
+
+    .close-content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 20px;
+        height: 100%;
+    }
+
+    .close-text {
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .close:hover .close-text {
+        color: white;
+        letter-spacing: 0.15em;
+    }
+
     .close-icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         position: relative;
         display: inline-block;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .close-line {
         position: absolute;
         background: rgba(255, 255, 255, 0.9);
         display: block;
-        width: 28px;
+        width: 20px;
         height: 2px;
         border-radius: 1px;
         top: 50%;
         left: 50%;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
@@ -214,29 +353,15 @@ const menus = [
     }
 
     .close:hover .close-line {
-        background: rgba(255, 255, 255, 1);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        background: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        width: 24px;
     }
 
-    /* Enhanced glassmorphic close button */
-    .close {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        padding: 12px 16px;
-        box-shadow:
-            0 8px 32px 0 rgba(0, 0, 0, 0.37),
-            inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    .close:hover .close-icon {
+        transform: rotate(90deg) scale(1.1);
     }
 
-    .close:hover {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
-        border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Close button animation states */
     .close.show {
         opacity: 1;
         transform: translateY(0);
@@ -247,7 +372,6 @@ const menus = [
         transform: translateY(-1rem);
     }
 
-    /* Enhanced menu overlay with glassmorphism */
     nav#nav {
         background: rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(30px);
@@ -276,23 +400,59 @@ const menus = [
 
     nav#nav.on + #nav-content .content ul > li {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(1) {
-        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.3s;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(2) {
-        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.35s;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(3) {
-        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.4s;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
     }
 
     nav#nav.on + #nav-content .content ul > li:nth-child(4) {
-        transition: all 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.45s;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
+    }
+
+    .menu-link {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    .menu-link-text {
+        position: relative;
+        display: inline-block;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .menu-link-text::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: white;
+        transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+        mask: linear-gradient(90deg, transparent 0%, black 20%, black 80%, transparent 100%);
+        -webkit-mask: linear-gradient(90deg, transparent 0%, black 20%, black 80%, transparent 100%);
+    }
+
+    .menu-link:hover .menu-link-text::before {
+        left: 100%;
+    }
+
+    .menu-link:hover .menu-link-text {
+        color: rgba(255, 255, 255, 0.95);
     }
 
     #nav-content {
@@ -305,49 +465,148 @@ const menus = [
         transition: visibility 0s linear 0.4s;
     }
 
-    /* Enhanced text styling for glassmorphic theme */
     .logo p {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .logo p::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, white, transparent);
+        transition: width 0.3s ease;
+    }
+
+    .logo:hover p::after {
+        width: 100%;
     }
 
     .menu span {
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
-    .close span {
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
+    /* Mobile First Approach - Enhanced Specificity */
+    @media screen and (max-width: 767px) {
+        .header-bg.header-bg.header-bg {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 1rem 1.5rem !important;
+            border-radius: 0 !important;
+            border-left: none !important;
+            border-right: none !important;
+            border-top: none !important;
+            transform: none !important;
+        }
 
-    /* Mobile responsive adjustments */
-    @media (max-width: 640px) {
-        header {
-            top: 1rem;
-            left: 1rem;
-            right: 1rem;
-            transform: none;
-            width: calc(100% - 2rem);
-            max-width: none;
-            padding: 0;
+        header.header.header {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            max-width: none !important;
+            padding: 0 !important;
+            transform: none !important;
+        }
+
+        .logo p {
+            font-size: 1.125rem !important;
+        }
+
+        .menu-text {
+            display: none !important;
+        }
+
+        .menu-icon {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        .menu-lines {
+            width: 24px !important;
+            height: 16px !important;
+        }
+
+        .line {
+            width: 24px !important;
         }
 
         .close {
-            top: 2rem !important;
-            right: 2rem !important;
+            top: 1rem !important;
+            right: 1rem !important;
+        }
+
+        .close-container {
+            width: 80px !important;
+            height: 40px !important;
+        }
+
+        .close-text {
+            font-size: 0.75rem !important;
+        }
+
+        .close-icon {
+            width: 18px !important;
+            height: 18px !important;
+        }
+
+        .close-line {
+            width: 16px !important;
         }
 
         #nav-content .content ul li a {
-            font-size: 3rem !important;
-            line-height: 1.2 !important;
+            font-size: 2.5rem !important;
+            line-height: 1.1 !important;
+        }
+
+        #nav-content .content {
+            padding: 0 1rem !important;
+        }
+
+        #nav-content .content h5 {
+            font-size: 1rem !important;
+            margin-bottom: 2rem !important;
+        }
+
+        #nav-content .content ul {
+            gap: 1.5rem !important;
+        }
+
+        /* Ensure body has proper top padding for fixed header */
+        body {
+            padding-top: 80px !important;
         }
     }
 
-    @media (min-width: 641px) and (max-width: 1024px) {
-        header {
-            max-width: 600px;
+    /* Tablet Adjustments */
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+        header.header {
+            top: 1rem !important;
+            left: 2rem !important;
+            right: 2rem !important;
+            transform: none !important;
+            width: calc(100% - 4rem) !important;
+            max-width: none !important;
+            padding: 0 !important;
+        }
+
+        .header-bg {
+            padding: 1rem 2rem !important;
         }
     }
 
-    @media (min-width: 1025px) {
+    /* Desktop Adjustments */
+    @media (min-width: 1024px) {
         header {
             max-width: 800px;
         }
@@ -361,17 +620,14 @@ const menus = [
         return document.querySelector(selector);
     };
 
-    function animateHeaderIn() {
-        const header = $('header');
-        console.log(header);
-
-        if (header) {
+    function animateHeaderIn(duration: number, delay: number) {
+        if ($('header')) {
             animate(
                 'header',
                 {
                     transform: ['translateX(-50%) translateY(-10rem)', 'translateX(-50%) translateY(0)'],
                 },
-                { duration: 0.8, easing: [0.25, 0.46, 0.45, 0.94], delay: 2 },
+                { duration, easing: [0.25, 0.46, 0.45, 0.94], delay },
             );
         }
     }
@@ -449,19 +705,19 @@ const menus = [
         });
     }
 
-    function initializeHeader() {
-        animateHeaderIn();
+    function initializeHeader(duration: number, delay: number) {
+        animateHeaderIn(duration, delay);
 
         addListeners();
     }
 
     document.addEventListener('astro:after-swap', () => {
-        initializeHeader();
+        initializeHeader(0, 0);
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        initializeHeader();
+        initializeHeader(0.8, 2);
     });
 
-    initializeHeader();
+    initializeHeader(0.8, 2);
 </script>
