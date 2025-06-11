@@ -235,19 +235,19 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
     ];
 
     return (
-        <section class="relative z-[3] overflow-hidden py-24" id="portfolio">
-            <div class="bg-blue-500/8 duration-800 absolute -right-[200px] -top-[100px] z-[-1] h-[500px] w-[500px] rounded-full opacity-80 blur-[120px] transition-all ease-out"></div>
-            <div class="bg-orange-500/8 duration-800 absolute -bottom-[50px] -left-[150px] z-[-1] h-[400px] w-[400px] rounded-full opacity-80 blur-[100px] transition-all ease-out"></div>
+        <section class="relative z-3 overflow-hidden py-24" id="portfolio">
+            <div class="absolute -top-[100px] -right-[200px] z-[-1] h-[500px] w-[500px] rounded-full bg-blue-500/8 opacity-80 blur-[120px] transition-all duration-800 ease-out"></div>
+            <div class="absolute -bottom-[50px] -left-[150px] z-[-1] h-[400px] w-[400px] rounded-full bg-orange-500/8 opacity-80 blur-[100px] transition-all duration-800 ease-out"></div>
 
             <div class="mx-auto w-full max-w-7xl px-6">
                 {/* Header */}
                 <div class="mb-16 w-full max-w-7xl text-left">
-                    <p ref={preHeader} class="text-sm font-semibold uppercase tracking-[0.4em] text-gray-400">
+                    <p ref={preHeader} class="text-sm font-semibold tracking-[0.4em] text-gray-400 uppercase">
                         Meine
                     </p>
                     <h1
                         ref={header}
-                        class="mt-2 font-['Syne_Variable',sans-serif] text-6xl font-extrabold leading-tight text-stone-700"
+                        class="mt-2 font-['Syne_Variable',sans-serif] text-6xl leading-tight font-extrabold text-stone-700"
                     >
                         Projekte
                     </h1>

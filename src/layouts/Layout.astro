@@ -4,11 +4,12 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Loader from '../components/Loader.astro';
 import ScrollToTop from '../components/ScrollToTop.astro';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import '@fontsource-variable/syne';
-// Supports weights 100-900
 import '@fontsource-variable/roboto-slab';
 import '@fontsource/young-serif';
+
+import '../styles/global.css';
 
 const defaultKeywords = [
     'Thomas Breindl',
@@ -87,7 +88,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
         <!-- <Loader transition:persist /> -->
         <Header active={active} location={location} data-astro-reload />
         <ScrollToTop />
-        <ViewTransitions />
+        <ClientRouter />
         <slot />
 
         <Footer />
@@ -269,7 +270,6 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 font-family: 'Helvetica Now Display DW', sans-serif;
                 font-weight: 800;
                 letter-spacing: -0.01em;
-                color: #0f141e;
             }
             .h2 .header-light,
             .h2.header-light,

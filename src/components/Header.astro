@@ -20,7 +20,7 @@ const menus = [
 ---
 
 <header
-    class="header fixed left-1/2 top-6 z-20 w-full max-w-4xl -translate-x-1/2 transform px-6 transition-all duration-300 ease-out"
+    class="header fixed top-6 left-1/2 z-20 w-full max-w-4xl -translate-x-1/2 transform px-6 transition-all duration-300 ease-out"
 >
     <div
         class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-2xl border border-white/10 px-8 py-5"
@@ -30,7 +30,7 @@ const menus = [
         </a>
         <btn class="menu flex cursor-pointer items-center space-x-4" style="cursor: pointer">
             <span
-                class="menu-text hidden text-sm font-bold uppercase tracking-wider text-white/90 transition-all duration-300 md:block"
+                class="menu-text hidden text-sm font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block"
                 >Menu</span
             >
             <div class="menu-icon">
@@ -57,14 +57,14 @@ const menus = [
     <div class="flex h-full w-full items-center justify-center">
         <div class="content mx-auto flex max-w-4xl flex-col items-center justify-center px-6 text-center">
             <h5
-                class="duration-400 mb-12 text-lg font-semibold uppercase tracking-wider text-white/60 opacity-0 transition-opacity"
+                class="mb-12 text-lg font-semibold tracking-wider text-white/60 uppercase opacity-0 transition-opacity duration-400"
             >
                 Menu
             </h5>
             <ul id="mi" class="w-full space-y-8 text-center">
                 {
                     menus.map((menu) => (
-                        <li class="duration-400 menu-item -translate-x-16 transform opacity-0 transition-all">
+                        <li class="menu-item -translate-x-16 transform opacity-0 transition-all duration-400">
                             <a
                                 href={menu.href}
                                 id={menu.name}
@@ -81,7 +81,7 @@ const menus = [
 </nav>
 
 <btn
-    class="close fixed right-10 top-10 z-[60] flex hidden translate-y-[-1rem] cursor-pointer items-center justify-center opacity-0 transition-all duration-300 ease-out"
+    class="close fixed top-10 right-10 z-60 flex hidden -translate-y-4 cursor-pointer items-center justify-center opacity-0 transition-all duration-300 ease-out"
     style="cursor: pointer"
 >
     <div class="close-container">
@@ -636,7 +636,7 @@ const menus = [
             animate(
                 'header',
                 {
-                    transform: ['translateX(-50%) translateY(-10rem)', 'translateX(-50%) translateY(0)'],
+                    transform: ['translateY(-10rem)', 'translateY(0)'],
                 },
                 { duration, easing: [0.25, 0.46, 0.45, 0.94], delay },
             );
@@ -657,18 +657,6 @@ const menus = [
 
         $('nav#nav')?.classList.add('on');
         $('header')?.classList.add('nav-on');
-
-        animate(
-            'header',
-            {
-                transform: ['translateX(-50%)', 'translateX(-50%) translateY(-1rem)'],
-                scale: [1, 0.95],
-            },
-            {
-                duration: 0.3,
-                easing: 'ease-out',
-            },
-        );
     }
 
     function closeNav() {
@@ -681,19 +669,6 @@ const menus = [
         const closeBtn = $('.close');
         closeBtn?.classList.remove('show');
         closeBtn?.classList.add('hide');
-
-        animate(
-            'header',
-            {
-                transform: ['translateX(-50%) translateY(-1rem)', 'translateX(-50%)'],
-                scale: [0.95, 1],
-            },
-            {
-                duration: 0.3,
-                easing: 'ease-out',
-                delay: 550.3,
-            },
-        );
 
         setTimeout(() => {
             closeBtn?.classList.add('hidden');

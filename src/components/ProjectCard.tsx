@@ -151,18 +151,18 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     rel="prefetch"
                 >
                     <div class={`absolute inset-0 ${bgColor}`}></div>
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.15),_transparent_70%)] mix-blend-overlay"></div>
+                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.15),transparent_70%)] mix-blend-overlay"></div>
 
-                    <div class="absolute inset-0 z-0 bg-gradient-to-b from-black/5 via-transparent to-black/60"></div>
+                    <div class="absolute inset-0 z-0 bg-linear-to-b from-black/5 via-transparent to-black/60"></div>
 
                     {/* New badge */}
                     <Show when={props.isNew}>
-                        <div class="absolute right-5 top-5 z-10">
+                        <div class="absolute top-5 right-5 z-10">
                             <div class="relative">
-                                <div class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white text-xs font-bold uppercase tracking-wider text-stone-800 shadow-md">
+                                <div class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white text-xs font-bold tracking-wider text-stone-800 uppercase shadow-md">
                                     new
                                 </div>
-                                <svg viewBox="0 0 100 100" class="absolute left-0 top-0 h-[50px] w-[50px] -rotate-90">
+                                <svg viewBox="0 0 100 100" class="absolute top-0 left-0 h-[50px] w-[50px] -rotate-90">
                                     <circle cx="50" cy="50" r="47" stroke-width="6" class="fill-none stroke-white/30" />
                                 </svg>
                             </div>
@@ -174,23 +174,23 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         ref={contentRef}
                         class="absolute bottom-0 left-0 z-10 w-full translate-y-2 transform p-8 transition-transform duration-500 ease-out group-hover:translate-y-0"
                     >
-                        <span class="duration-400 mb-2 block text-sm font-medium text-white/85 opacity-80 transition-opacity group-hover:opacity-90">
+                        <span class="mb-2 block text-sm font-medium text-white/85 opacity-80 transition-opacity duration-400 group-hover:opacity-90">
                             {props.year}
                         </span>
 
-                        <h2 class="duration-400 mb-4 text-xl font-bold text-white drop-shadow-md transition-transform group-hover:-translate-y-0.5 md:text-2xl">
+                        <h2 class="mb-4 text-xl font-bold text-white drop-shadow-md transition-transform duration-400 group-hover:-translate-y-0.5 md:text-2xl">
                             {props.title}
                         </h2>
 
                         <div class="mb-6 flex flex-wrap gap-2">
                             {props.tags?.map((tag) => (
-                                <span class="project-tag duration-400 translate-y-2 rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur-md transition-all">
+                                <span class="project-tag translate-y-2 rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur-md transition-all duration-400">
                                     {tag}
                                 </span>
                             ))}
                         </div>
 
-                        <div class="duration-400 flex translate-y-3 transform items-center font-medium opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                        <div class="flex translate-y-3 transform items-center font-medium opacity-0 transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100">
                             <span>View Project</span>
                             <span class="ml-2 text-xl transition-transform duration-300 group-hover:translate-x-1">
                                 →
