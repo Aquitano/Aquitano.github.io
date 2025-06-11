@@ -68,7 +68,7 @@ const menus = [
                             <a
                                 href={menu.href}
                                 id={menu.name}
-                                class={`menu-link block text-6xl font-bold text-white transition-all duration-500 md:text-7xl ${menu.active ? 'text-white' : 'text-white/80'}`}
+                                class={`menu-link block text-6xl font-bold text-white transition-all duration-500 md:text-7xl ${menu.active ? 'menu-link-active text-white' : 'text-white/80'}`}
                             >
                                 <span class="menu-link-text">{menu.name}</span>
                             </a>
@@ -108,29 +108,6 @@ const menus = [
         position: relative;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .header-bg:hover {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4));
-        border-color: rgba(255, 255, 255, 0.25);
-        box-shadow:
-            0 12px 40px 0 rgba(0, 0, 0, 0.5),
-            inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-    }
-
-    .header-bg::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: all 0.4s ease;
-    }
-
-    .group:hover .header-bg::before {
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     }
 
     .header-bg::after {
@@ -453,6 +430,40 @@ const menus = [
 
     .menu-link:hover .menu-link-text {
         color: rgba(255, 255, 255, 0.95);
+    }
+
+    .menu-link-active {
+        cursor: default;
+        color: white !important;
+    }
+
+    .menu-link-active .menu-link-text {
+        color: white !important;
+        position: relative;
+    }
+
+    .menu-link-active .menu-link-text::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, white, transparent);
+        border-radius: 1px;
+    }
+
+    .menu-link-active .menu-link-text::before {
+        display: none !important;
+    }
+
+    .menu-link-active:hover .menu-link-text::before {
+        left: -100% !important;
+    }
+
+    .menu-link-active:hover .menu-link-text {
+        color: white !important;
     }
 
     #nav-content {
