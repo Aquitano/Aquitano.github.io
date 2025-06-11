@@ -8,7 +8,7 @@
         "build": "astro build",
         "preview": "astro preview",
         "astro": "astro",
-        "format": "prettier --write ./src/**/*.{astro,js,jsx,ts,tsx,md,mdx,css,scss,sass,less,html,json,graphql,yaml,yml,mdx}"
+        "format": "prettier --write ./**/*.{astro,js,jsx,ts,tsx,md,mdx,css,scss,sass,less,html,json,graphql,yaml,yml,mdx}"
     },
     "dependencies": {
         "@astrojs/prefetch": "^0.4.1",
