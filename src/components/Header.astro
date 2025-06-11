@@ -20,17 +20,18 @@ const menus = [
 ---
 
 <header
-    class="header fixed top-6 left-1/2 z-20 w-full max-w-4xl -translate-x-1/2 transform px-6 transition-all duration-300 ease-out"
+    class="header fixed top-0 right-0 left-0 z-20 w-full px-4 py-3 transition-all duration-300 ease-out md:top-6 md:right-auto md:left-1/2 md:w-full md:max-w-4xl md:-translate-x-1/2 md:px-6 md:py-0"
 >
     <div
-        class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-2xl border border-white/10 px-8 py-5"
+        class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-none border border-t-0 border-r-0 border-l-0 border-white/10 px-4 py-4 md:rounded-2xl md:border md:px-8 md:py-5"
     >
         <a href="/" class="logo scroll-to">
-            <p class="text-xl font-bold text-white transition-all duration-300 hover:text-zinc-300">Thomas Breindl</p>
+            <p class="text-lg font-bold text-white transition-all duration-300 md:text-xl">Thomas Breindl</p>
         </a>
-        <btn class="menu flex cursor-pointer items-center space-x-4" style="cursor: pointer">
+
+        <btn class="menu flex cursor-pointer items-center space-x-2 md:space-x-4" style="cursor: pointer">
             <span
-                class="menu-text hidden text-sm font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block"
+                class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
                 >Menu</span
             >
             <div class="menu-icon">
@@ -44,7 +45,6 @@ const menus = [
     </div>
 </header>
 
-<!-- Menu -->
 <nav
     id="nav"
     aria-label="loader"
@@ -55,20 +55,20 @@ const menus = [
 
 <nav id="nav-content" aria-label="menu" class="fixed inset-0 z-50">
     <div class="flex h-full w-full items-center justify-center">
-        <div class="content mx-auto flex max-w-4xl flex-col items-center justify-center px-6 text-center">
+        <div class="content mx-auto flex max-w-4xl flex-col items-center justify-center px-4 text-center sm:px-6">
             <h5
-                class="mb-12 text-lg font-semibold tracking-wider text-white/60 uppercase opacity-0 transition-opacity duration-400"
+                class="mb-8 text-base font-semibold tracking-wider text-white/60 uppercase opacity-0 transition-opacity duration-400 md:mb-12 md:text-xl"
             >
                 Menu
             </h5>
-            <ul id="mi" class="w-full space-y-8 text-center">
+            <ul id="mi" class="flex w-full flex-col gap-6 text-center">
                 {
                     menus.map((menu) => (
-                        <li class="menu-item -translate-x-16 transform opacity-0 transition-all duration-400">
+                        <li class="menu-item transform text-stone-700 opacity-0 transition-all duration-400">
                             <a
                                 href={menu.href}
                                 id={menu.name}
-                                class={`menu-link block text-6xl font-bold text-white transition-all duration-500 md:text-7xl ${menu.active ? 'menu-link-active text-white' : 'text-white/80'}`}
+                                class={`menu-link block text-4xl font-bold text-white transition-all duration-500 sm:text-5xl md:text-6xl lg:text-7xl ${menu.active ? 'menu-link-active text-white' : 'text-white/80'}`}
                             >
                                 <span class="menu-link-text">{menu.name}</span>
                             </a>
@@ -81,7 +81,7 @@ const menus = [
 </nav>
 
 <btn
-    class="close fixed top-10 right-10 z-60 flex hidden -translate-y-4 cursor-pointer items-center justify-center opacity-0 transition-all duration-300 ease-out"
+    class="close fixed top-8 right-4 z-60 flex hidden -translate-y-4 cursor-pointer items-center justify-center opacity-0 transition-all duration-300 ease-out md:top-10 md:right-10"
     style="cursor: pointer"
 >
     <div class="close-container">
@@ -134,14 +134,21 @@ const menus = [
     }
 
     .menu-icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (min-width: 768px) {
+        .menu-icon {
+            width: 28px;
+            height: 28px;
+        }
     }
 
     .menu:hover .menu-icon {
@@ -155,20 +162,33 @@ const menus = [
 
     .menu-lines {
         position: relative;
-        height: 20px;
-        width: 28px;
+        height: 16px;
+        width: 24px;
+    }
+
+    @media (min-width: 768px) {
+        .menu-lines {
+            height: 20px;
+            width: 28px;
+        }
     }
 
     .line {
         position: absolute;
         background: rgba(255, 255, 255, 0.9);
         display: block;
-        width: 28px;
+        width: 24px;
         height: 2px;
         border-radius: 1px;
         transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         transform-origin: center;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 768px) {
+        .line {
+            width: 28px;
+        }
     }
 
     .line-1 {
@@ -205,7 +225,13 @@ const menus = [
     }
 
     header.nav-on .line-1 {
-        transform: rotate(45deg) translate(7px, 7px);
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    @media (min-width: 768px) {
+        header.nav-on .line-1 {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
     }
 
     header.nav-on .line-2 {
@@ -214,16 +240,30 @@ const menus = [
     }
 
     header.nav-on .line-3 {
-        transform: rotate(-45deg) translate(7px, -7px);
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (min-width: 768px) {
+        header.nav-on .line-3 {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
     }
 
     .close-container {
         position: relative;
-        width: 120px;
-        height: 60px;
-        border-radius: 30px;
+        width: 100px;
+        height: 50px;
+        border-radius: 20px;
         overflow: hidden;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (min-width: 768px) {
+        .close-container {
+            width: 120px;
+            height: 60px;
+            border-radius: 30px;
+        }
     }
 
     .close-bg {
@@ -238,8 +278,14 @@ const menus = [
         backdrop-filter: blur(20px) saturate(1.2);
         -webkit-backdrop-filter: blur(20px) saturate(1.2);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 30px;
+        border-radius: 20px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (min-width: 768px) {
+        .close-bg {
+            border-radius: 30px;
+        }
     }
 
     .close-bg::before {
@@ -280,13 +326,20 @@ const menus = [
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        padding: 16px 20px;
+        gap: 8px;
+        padding: 12px 16px;
         height: 100%;
     }
 
+    @media (min-width: 768px) {
+        .close-content {
+            gap: 12px;
+            padding: 16px 20px;
+        }
+    }
+
     .close-text {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -295,30 +348,49 @@ const menus = [
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
+    @media (min-width: 768px) {
+        .close-text {
+            font-size: 0.875rem;
+        }
+    }
+
     .close:hover .close-text {
         color: white;
         letter-spacing: 0.15em;
     }
 
     .close-icon {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
         position: relative;
         display: inline-block;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @media (min-width: 768px) {
+        .close-icon {
+            width: 24px;
+            height: 24px;
+        }
     }
 
     .close-line {
         position: absolute;
         background: rgba(255, 255, 255, 0.9);
         display: block;
-        width: 20px;
+        width: 16px;
         height: 2px;
         border-radius: 1px;
         top: 50%;
         left: 50%;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 768px) {
+        .close-line {
+            width: 20px;
+        }
     }
 
     .close-line-1 {
@@ -332,7 +404,13 @@ const menus = [
     .close:hover .close-line {
         background: white;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        width: 24px;
+        width: 20px;
+    }
+
+    @media (min-width: 768px) {
+        .close:hover .close-line {
+            width: 24px;
+        }
     }
 
     .close:hover .close-icon {
@@ -501,125 +579,13 @@ const menus = [
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
-    /* Mobile First Approach - Enhanced Specificity */
-    @media screen and (max-width: 767px) {
-        .header-bg.header-bg.header-bg {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            max-width: none !important;
-            margin: 0 !important;
-            padding: 1rem 1.5rem !important;
-            border-radius: 0 !important;
-            border-left: none !important;
-            border-right: none !important;
-            border-top: none !important;
-            transform: none !important;
-        }
+    body {
+        padding-top: 72px;
+    }
 
-        header.header.header {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100% !important;
-            max-width: none !important;
-            padding: 0 !important;
-            transform: none !important;
-        }
-
-        .logo p {
-            font-size: 1.125rem !important;
-        }
-
-        .menu-text {
-            display: none !important;
-        }
-
-        .menu-icon {
-            width: 24px !important;
-            height: 24px !important;
-        }
-
-        .menu-lines {
-            width: 24px !important;
-            height: 16px !important;
-        }
-
-        .line {
-            width: 24px !important;
-        }
-
-        .close {
-            top: 1rem !important;
-            right: 1rem !important;
-        }
-
-        .close-container {
-            width: 80px !important;
-            height: 40px !important;
-        }
-
-        .close-text {
-            font-size: 0.75rem !important;
-        }
-
-        .close-icon {
-            width: 18px !important;
-            height: 18px !important;
-        }
-
-        .close-line {
-            width: 16px !important;
-        }
-
-        #nav-content .content ul li a {
-            font-size: 2.5rem !important;
-            line-height: 1.1 !important;
-        }
-
-        #nav-content .content {
-            padding: 0 1rem !important;
-        }
-
-        #nav-content .content h5 {
-            font-size: 1rem !important;
-            margin-bottom: 2rem !important;
-        }
-
-        #nav-content .content ul {
-            gap: 1.5rem !important;
-        }
-
-        /* Ensure body has proper top padding for fixed header */
+    @media (min-width: 768px) {
         body {
-            padding-top: 80px !important;
-        }
-    }
-
-    /* Tablet Adjustments */
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
-        header.header {
-            top: 1rem !important;
-            left: 2rem !important;
-            right: 2rem !important;
-            transform: none !important;
-            width: calc(100% - 4rem) !important;
-            max-width: none !important;
-            padding: 0 !important;
-        }
-
-        .header-bg {
-            padding: 1rem 2rem !important;
-        }
-    }
-
-    /* Desktop Adjustments */
-    @media (min-width: 1024px) {
-        header {
-            max-width: 800px;
+            padding-top: 0;
         }
     }
 </style>
