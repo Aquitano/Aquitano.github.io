@@ -1,10 +1,25 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, stagger, timeline } from 'motion';
-import { For, Show, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
 type FilterOption = 'all' | 'featured' | 'frontend' | 'backend' | 'product design';
+const FILTER_OPTIONS = [
+    { value: 'all' as const, label: 'All' },
+    { value: 'featured' as const, label: 'Featured' },
+    { value: 'frontend' as const, label: 'Frontend' },
+    { value: 'backend' as const, label: 'Backend' },
+    { value: 'product design' as const, label: 'Product Design' },
+];
+
+const TESTERS: Record<FilterOption, (p: Project) => boolean> = {
+    all: () => true,
+    featured: (p) => p.data.featured,
+    frontend: (p) => p.data.tasks.includes('Frontend'),
+    backend: (p) => p.data.tasks.includes('Backend'),
+    'product design': (p) => p.data.tasks.includes('Product Design'),
+};
 
 type Project = {
     id: string;
@@ -22,14 +37,6 @@ type Project = {
         gridSize?: GridSize;
     };
 };
-
-const FILTER_OPTIONS = [
-    { value: 'all' as const, label: 'All' },
-    { value: 'featured' as const, label: 'Featured' },
-    { value: 'frontend' as const, label: 'Frontend' },
-    { value: 'backend' as const, label: 'Backend' },
-    { value: 'product design' as const, label: 'Product Design' },
-];
 
 const GRID_SIZES: GridSize[] = [
     'medium',
@@ -68,25 +75,6 @@ const sortProjects = (projects: Project[]): Project[] => {
     });
 };
 
-const filterProjects = (projects: Project[], filter: FilterOption): Project[] => {
-    const sortedProjects = assignGridSizes(sortProjects(projects));
-
-    switch (filter) {
-        case 'all':
-            return sortedProjects;
-        case 'featured':
-            return sortedProjects.filter((p) => p.data.featured);
-        case 'frontend':
-            return sortedProjects.filter((p) => p.data.tasks.includes('Frontend'));
-        case 'backend':
-            return sortedProjects.filter((p) => p.data.tasks.includes('Backend'));
-        case 'product design':
-            return sortedProjects.filter((p) => p.data.tasks.includes('Produktdesign'));
-        default:
-            return sortedProjects;
-    }
-};
-
 const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     const [projects, setProjects] = createSignal<Project[]>([]);
     const [filter, setFilter] = createSignal<FilterOption>('featured');
@@ -107,20 +95,22 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
         withOccurrence((entry, { occurrence }) => {
             if (occurrence === 'Entering' && !headerVisible()) {
                 setHeaderVisible(true);
-                animateHeader();
             }
             return entry.isIntersecting;
         }),
     );
 
+    createEffect(() => {
+        if (headerVisible() && !headerAnimationComplete()) animateHeader();
+    });
+
     const animateHeader = () => {
         if (!preHeader || !header) return;
-
         preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
         header.style.cssText = 'opacity: 0; transform: translateY(20px);';
 
         requestAnimationFrame(() => {
-            headerAnimation = timeline([
+            timeline([
                 [
                     preHeader,
                     { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
@@ -131,9 +121,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                     { opacity: [0, 1], transform: ['translateY(25px)', 'translateY(0)'] },
                     { duration: 0.8, at: '-0.4', easing: ANIMATION_CONFIG.entrance.easing },
                 ],
-            ]);
-
-            headerAnimation.finished.then(() => {
+            ]).finished.then(() => {
                 setHeaderAnimationComplete(true);
             });
 
@@ -153,7 +141,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
     const handleFilterChange = (option: FilterOption) => {
         if (isAnimating() || filter() === option) return;
-
         setIsAnimating(true);
         setFilter(option);
 
@@ -163,7 +150,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
             return;
         }
 
-        const exitAnimation = animate(
+        animate(
             projectCards,
             {
                 opacity: [null, 0],
@@ -175,9 +162,13 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 easing: ANIMATION_CONFIG.exit.easing,
                 delay: stagger(0.04),
             },
-        );
+        ).finished.then(() => applyFilter(option));
+    };
 
-        exitAnimation.finished.then(() => applyFilter(option)).catch(() => applyFilter(option));
+    const filterProjects = (projects: Project[], option: FilterOption) => {
+        const sorted = sortProjects(projects);
+        const baseProjects = assignGridSizes(sorted);
+        return baseProjects.filter(TESTERS[option]);
     };
 
     const applyFilter = (option: FilterOption) => {
@@ -194,10 +185,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
             preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
             useHeaderVisibilityObserver(() => preHeader);
         }
-    });
-
-    onCleanup(() => {
-        headerAnimation?.stop();
     });
 
     return (
