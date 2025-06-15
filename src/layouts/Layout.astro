@@ -86,7 +86,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
     <body class="bg-orange-50/20 antialiased">
         <Loader />
         <!-- <Loader transition:persist /> -->
-        <Header active={active} location={location} data-astro-reload />
+        <Header active={active} location={location} />
         <ScrollToTop />
         <ClientRouter />
         <slot />

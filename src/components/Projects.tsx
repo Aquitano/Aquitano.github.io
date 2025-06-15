@@ -1,6 +1,6 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, stagger, timeline } from 'motion';
-import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { For, Show, createSignal, onCleanup, onMount, type Component } from 'solid-js';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
@@ -23,51 +23,77 @@ type Project = {
     };
 };
 
-const GRID_TEMPLATE = [
-    { row: 1, col: 1, size: 'medium' },
-    { row: 1, col: 3, size: 'medium' },
-    { row: 1, col: 5, size: 'medium' },
-    { row: 2, col: 1, size: 'wide' },
-    { row: 2, col: 5, size: 'medium' },
-    { row: 3, col: 1, size: 'medium' },
-    { row: 3, col: 3, size: 'medium' },
-    { row: 3, col: 5, size: 'medium' },
-    { row: 4, col: 1, size: 'medium' },
-    { row: 4, col: 3, size: 'wide' },
-    { row: 5, col: 1, size: 'medium' },
-    { row: 5, col: 3, size: 'medium' },
-    { row: 5, col: 5, size: 'medium' },
-] as const;
+const FILTER_OPTIONS = [
+    { value: 'all' as const, label: 'All' },
+    { value: 'featured' as const, label: 'Featured' },
+    { value: 'frontend' as const, label: 'Frontend' },
+    { value: 'backend' as const, label: 'Backend' },
+    { value: 'product design' as const, label: 'Product Design' },
+];
 
-const createBalancedGrid = (projects: Project[]): Project[] => {
-    const sortedProjects = [...projects].sort((a, b) => {
-        if (a.data.featured && !b.data.featured) return -1;
-        if (!a.data.featured && b.data.featured) return 1;
-        return b.data.year - a.data.year;
-    });
+const GRID_SIZES: GridSize[] = [
+    'medium',
+    'medium',
+    'medium',
+    'wide',
+    'medium',
+    'medium',
+    'medium',
+    'medium',
+    'medium',
+    'wide',
+    'medium',
+    'medium',
+    'medium',
+];
 
-    return sortedProjects.map((project, index) => {
+const assignGridSizes = (projects: Project[]): Project[] => {
+    return projects.map((project, index) => {
         if (project.data.gridSize) return project;
 
         if (project.data.featured && index === 0) {
             return { ...project, data: { ...project.data, gridSize: 'wide' } };
         }
 
-        const templatePos = index % GRID_TEMPLATE.length;
-        const size = GRID_TEMPLATE[templatePos].size as GridSize;
+        const size = GRID_SIZES[index % GRID_SIZES.length];
         return { ...project, data: { ...project.data, gridSize: size } };
     });
 };
 
-// Main component
-const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
+const sortProjects = (projects: Project[]): Project[] => {
+    return [...projects].sort((a, b) => {
+        if (a.data.featured && !b.data.featured) return -1;
+        if (!a.data.featured && b.data.featured) return 1;
+        return b.data.year - a.data.year;
+    });
+};
+
+const filterProjects = (projects: Project[], filter: FilterOption): Project[] => {
+    const sortedProjects = assignGridSizes(sortProjects(projects));
+
+    switch (filter) {
+        case 'all':
+            return sortedProjects;
+        case 'featured':
+            return sortedProjects.filter((p) => p.data.featured);
+        case 'frontend':
+            return sortedProjects.filter((p) => p.data.tasks.includes('Frontend'));
+        case 'backend':
+            return sortedProjects.filter((p) => p.data.tasks.includes('Backend'));
+        case 'product design':
+            return sortedProjects.filter((p) => p.data.tasks.includes('Produktdesign'));
+        default:
+            return sortedProjects;
+    }
+};
+
+const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     const [projects, setProjects] = createSignal<Project[]>([]);
     const [filter, setFilter] = createSignal<FilterOption>('featured');
     const [isAnimating, setIsAnimating] = createSignal(false);
     const [headerVisible, setHeaderVisible] = createSignal(false);
-    const [filtersVisible, setFiltersVisible] = createSignal(false);
-    const [gridHeight, setGridHeight] = createSignal<number | null>(null);
     const [headerAnimationComplete, setHeaderAnimationComplete] = createSignal(false);
+
     const currentYear = new Date().getFullYear();
 
     let preHeader: HTMLParagraphElement | undefined;
@@ -86,12 +112,6 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
             return entry.isIntersecting;
         }),
     );
-
-    createEffect(() => {
-        if (projectsContainer && !gridHeight()) {
-            setGridHeight(projectsContainer.offsetHeight);
-        }
-    });
 
     const animateHeader = () => {
         if (!preHeader || !header) return;
@@ -117,7 +137,6 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                 setHeaderAnimationComplete(true);
             });
 
-            setFiltersVisible(true);
             if (filterButtons.length) {
                 filterButtons.forEach((button) => {
                     button.style.cssText = 'opacity: 0; transform: translateY(15px);';
@@ -132,62 +151,17 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
         });
     };
 
-    const applyFilter = (option: FilterOption) => {
-        const productsWithGridSize = createBalancedGrid(allProducts);
-        let filteredProducts: Project[] = [];
-
-        switch (option) {
-            case 'all':
-                filteredProducts = productsWithGridSize;
-                break;
-            case 'featured':
-                filteredProducts = productsWithGridSize.filter((p) => p.data.featured);
-                break;
-            case 'frontend':
-                filteredProducts = productsWithGridSize.filter((p) => p.data.tasks.includes('Frontend'));
-                break;
-            case 'backend':
-                filteredProducts = productsWithGridSize.filter((p) => p.data.tasks.includes('Backend'));
-                break;
-            case 'product design':
-                filteredProducts = productsWithGridSize.filter((p) => p.data.tasks.includes('Produktdesign'));
-                break;
-        }
-
-        if (filteredProducts.length === 0) filteredProducts = productsWithGridSize;
-        setProjects(filteredProducts);
-
-        setTimeout(() => {
-            if (projectsContainer) {
-                projectsContainer.style.height = 'auto';
-                projectsContainer.style.minHeight = '0';
-                setGridHeight(projectsContainer.offsetHeight);
-            }
-            setIsAnimating(false);
-        }, 300);
-    };
-
     const handleFilterChange = (option: FilterOption) => {
         if (isAnimating() || filter() === option) return;
 
         setIsAnimating(true);
         setFilter(option);
 
-        if (projectsContainer && gridHeight()) {
-            projectsContainer.style.height = `${gridHeight()}px`;
-            projectsContainer.style.minHeight = `${gridHeight()}px`;
-        }
-
-        const projectCards = document.querySelectorAll('.h-full.w-full.perspective-2000');
+        const projectCards = document.querySelectorAll('.perspective-2000');
         if (projectCards.length === 0) {
             applyFilter(option);
             return;
         }
-
-        projectCards.forEach((card) => {
-            (card as HTMLElement).style.pointerEvents = 'none';
-            (card as HTMLElement).style.willChange = 'transform, opacity, filter';
-        });
 
         const exitAnimation = animate(
             projectCards,
@@ -206,14 +180,15 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
         exitAnimation.finished.then(() => applyFilter(option)).catch(() => applyFilter(option));
     };
 
-    onMount(() => {
-        allProducts.sort((a, b) => b.data.year - a.data.year);
-        const productsWithGridSize = createBalancedGrid(allProducts);
-        const featuredProducts = productsWithGridSize
-            .filter((p) => p.data.featured)
-            .sort((a, b) => b.data.year - a.data.year);
+    const applyFilter = (option: FilterOption) => {
+        const filteredProjects = filterProjects(allProjects, option);
+        setProjects(filteredProjects);
+        setIsAnimating(false);
+    };
 
-        setProjects(featuredProducts.length > 0 ? featuredProducts : productsWithGridSize);
+    onMount(() => {
+        const initialProjects = filterProjects(allProjects, 'featured');
+        setProjects(initialProjects.length > 0 ? initialProjects : filterProjects(allProjects, 'all'));
 
         if (preHeader) {
             preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
@@ -225,23 +200,11 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
         headerAnimation?.stop();
     });
 
-    // Filter options configuration
-    const filterOptions: { value: FilterOption; label: string }[] = [
-        { value: 'all', label: 'All' },
-        { value: 'featured', label: 'Featured' },
-        { value: 'frontend', label: 'Frontend' },
-        { value: 'backend', label: 'Backend' },
-        { value: 'product design', label: 'Product Design' },
-    ];
-
     return (
         <section class="relative z-3 overflow-hidden py-24" id="portfolio">
-            <div class="absolute -top-[100px] -right-[200px] z-[-1] h-[500px] w-[500px] rounded-full bg-blue-500/8 opacity-80 blur-[120px] transition-all duration-800 ease-out"></div>
-            <div class="absolute -bottom-[50px] -left-[150px] z-[-1] h-[400px] w-[400px] rounded-full bg-orange-500/8 opacity-80 blur-[100px] transition-all duration-800 ease-out"></div>
-
             <div class="mx-auto w-full max-w-7xl px-6">
                 {/* Header */}
-                <div class="mb-16 w-full max-w-7xl text-left">
+                <div class="mb-16 text-left">
                     <p ref={preHeader} class="text-sm font-semibold tracking-[0.4em] text-gray-400 uppercase">
                         Meine
                     </p>
@@ -254,20 +217,19 @@ const Projects: Component<{ allProducts: Project[] }> = ({ allProducts }) => {
                 </div>
 
                 {/* Filter buttons */}
-                <div
-                    class={`mb-12 flex w-full max-w-7xl flex-wrap gap-4 transition-opacity duration-500 ${filtersVisible() ? 'opacity-100' : 'opacity-0'}`}
-                >
-                    {filterOptions.map((option, index) => (
-                        <TagButton
-                            ref={(el) => (filterButtons[index] = el)}
-                            label={option.label}
-                            isActive={filter() === option.value}
-                            onClick={() => handleFilterChange(option.value)}
-                        />
-                    ))}
+                <div class="mb-12 flex flex-wrap gap-4">
+                    <For each={FILTER_OPTIONS}>
+                        {(option, index) => (
+                            <TagButton
+                                ref={(el) => (filterButtons[index()] = el)}
+                                label={option.label}
+                                isActive={filter() === option.value}
+                                onClick={() => handleFilterChange(option.value)}
+                            />
+                        )}
+                    </For>
                 </div>
 
-                {/* Projects grid with transition */}
                 <div
                     ref={projectsContainer}
                     class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-8 lg:gap-6"

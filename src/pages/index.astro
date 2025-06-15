@@ -6,7 +6,7 @@ import Projects from '../components/Projects.tsx';
 import Layout from '../layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
 
-const allProducts = await getCollection('project');
+const allProjects = await getCollection('project');
 export type product = CollectionEntry<'project'>;
 
 const socials = [
@@ -28,7 +28,7 @@ const socials = [
         <div id="Welcome">
             <HomeTop />
 
-            <Projects allProducts={allProducts} client:load />
+            <Projects allProjects={allProjects} client:load />
 
             <!-- Contact -->
             <section class="contact-section mt-24 transition-opacity duration-500">

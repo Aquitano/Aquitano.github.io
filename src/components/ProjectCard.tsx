@@ -38,13 +38,13 @@ export const GRID_SIZE_CLASSES = {
 export const ANIMATION_CONFIG = {
     entrance: { duration: 0.8, easing: [0.25, 0.1, 0.25, 1] as Easing },
     exit: { duration: 0.4, easing: [0.4, 0.0, 0.2, 1] as Easing },
-    staggerDelay: 0.08,
+    staggerDelay: 0.15,
     viewportThreshold: 0.15,
 };
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
     const bgColor = COLORS[props.index % COLORS.length];
-    const gridSize = props.gridSize || 'medium';
+    const gridSize = props.gridSize ?? 'medium';
 
     let cardRef: HTMLDivElement | undefined;
     let contentRef: HTMLDivElement | undefined;
