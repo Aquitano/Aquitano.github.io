@@ -3,12 +3,12 @@
         <div class="text-center">
             <h1 class="title font-extrabold text-stone-700">Thomas Breindl</h1>
             <h2 class="header-light TB-sub text-stone-700">
-                <br />Hallo, ich bin Programmierer, Designer und Schüler.<br />
+                <br />Hallo, ich bin Programmierer, Designer und Student.<br />
             </h2>
             <nav class="links" aria-label="Hero links">
-                <a class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
+                <a href="#portfolio" class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
                 <span class="mx-4">oder</span>
-                <a href="timeline" class="link link-underline" rel="prefetch">Über Mich</a>
+                <a href="/timeline" class="link link-underline" rel="prefetch">Über Mich</a>
             </nav>
         </div>
         <btn class="scroll-to toggle animate">
@@ -199,14 +199,14 @@
         window.scrollBy({ top: portfolio?.offsetTop - 150, behavior: 'smooth' });
     }
 
-    const span = (text) => {
+    const span = (text: string | null) => {
         const node = document.createElement('span');
 
         node.textContent = text;
 
         return node;
     };
-    const byLetter = (text) => [...text].map(span);
+    const byLetter = (text: string | null | undefined) => (text ? [...text].map(span) : []);
 
     const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
 
@@ -221,11 +221,10 @@
         if (nodes.length) {
             title?.firstChild?.replaceWith(...nodes);
         }
-
         const letters = document.querySelectorAll('.title span');
-        letters.forEach((l) => {
-            if (l.textContent === ' ') return;
-            l.style.display = 'inline-block';
+        letters.forEach((letter) => {
+            if (letter.textContent === ' ') return;
+            (letter as HTMLElement).style.display = 'inline-block';
         });
 
         const sequence = [

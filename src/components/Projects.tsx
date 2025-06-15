@@ -4,22 +4,24 @@ import { For, Show, createEffect, createSignal, onMount, type Component } from '
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
-type FilterOption = 'all' | 'featured' | 'frontend' | 'backend' | 'product design';
-const FILTER_OPTIONS = [
-    { value: 'all' as const, label: 'All' },
-    { value: 'featured' as const, label: 'Featured' },
-    { value: 'frontend' as const, label: 'Frontend' },
-    { value: 'backend' as const, label: 'Backend' },
-    { value: 'product design' as const, label: 'Product Design' },
-];
+type FilterOption = 'all' | 'featured' | 'frontend' | 'backend' | 'productdesign';
 
-const TESTERS: Record<FilterOption, (p: Project) => boolean> = {
-    all: () => true,
-    featured: (p) => p.data.featured,
-    frontend: (p) => p.data.tasks.includes('Frontend'),
-    backend: (p) => p.data.tasks.includes('Backend'),
-    'product design': (p) => p.data.tasks.includes('Product Design'),
-};
+const FILTERS: {
+    value: FilterOption;
+    label: string;
+    tester: (p: Project) => boolean;
+}[] = [
+    { value: 'all', label: 'All', tester: (_) => true },
+    { value: 'featured', label: 'Featured', tester: (p) => p.data.featured },
+    { value: 'frontend', label: 'Frontend', tester: (p) => p.data.tasks.includes('Frontend') },
+    { value: 'backend', label: 'Backend', tester: (p) => p.data.tasks.includes('Backend') },
+    { value: 'productdesign', label: 'Product Design', tester: (p) => p.data.tasks.includes('Produktdesign') },
+];
+const FILTER_OPTIONS = FILTERS.map(({ value, label }) => ({ value, label }));
+const TESTERS = Object.fromEntries(FILTERS.map(({ value, tester }) => [value, tester])) as Record<
+    FilterOption,
+    (p: Project) => boolean
+>;
 
 type Project = {
     id: string;
@@ -88,7 +90,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     let header: HTMLHeadingElement | undefined;
     let projectsContainer: HTMLDivElement | undefined;
     let filterButtons: HTMLButtonElement[] = [];
-    let headerAnimation: any = null;
 
     const useHeaderVisibilityObserver = createVisibilityObserver(
         { threshold: 0.2 },
