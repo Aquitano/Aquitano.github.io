@@ -83,7 +83,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
             }}
         />
     </head>
-    <body class="bg-orange-50/20 antialiased">
+    <body class="overflow-x-hidden antialiased">
         <Loader />
         <!-- <Loader transition:persist /> -->
         <Header active={active} location={location} />
@@ -122,16 +122,27 @@ const { title, SEO: SEOData, active, location } = Astro.props;
             :root {
                 --accent: 124, 58, 237;
                 --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #da62c4 30%, white 60%);
+                /* Theming */
+                --page-bg-color: #faf5ef;
+                --page-bg-overlay:
+                    radial-gradient(1200px 600px at 15% 0%, rgba(255, 187, 120, 0.08), transparent 60%),
+                    radial-gradient(1000px 500px at 85% 100%, rgba(255, 187, 120, 0.05), transparent 60%);
+            }
+            [data-theme='dark'] {
+                --page-bg-color: #0a0a0a;
+                --page-bg-overlay: none;
             }
             html {
                 font-family: system-ui, sans-serif;
-                overflow: auto;
+                overflow-x: hidden;
+                overflow-y: auto;
                 scrollbar-width: none;
                 scroll-behavior: smooth;
             }
 
             body {
                 background-image: url('/images/grainBlack.png');
+                background-color: var(--page-bg-color);
             }
             code {
                 font-family:

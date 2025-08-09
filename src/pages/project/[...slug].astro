@@ -24,68 +24,66 @@ if (project.data.fullImage)
 ---
 
 <Layout title={project.data.title + ' | Breindl Thomas'} active="Projekte">
-    <body>
-        <div class="scroll-container">
-            <div>
-                <section class="pt-24 md:pt-36 lg:pt-48 xl:pt-52">
-                    <div class="wrapper px-4">
-                        <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-                            <div class="info mb-5 md:mb-0">
-                                <div>
-                                    <h1 class="mb-4 text-3xl font-extrabold lg:text-4xl">{project.data.title}</h1>
-                                    <div id="Desc" class="mb-4">
-                                        <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Aufgabe</p>
-                                        <h4 class="mb-4 text-lg font-medium">
-                                            {
-                                                project.data.tasks.map((task: string) => (
-                                                    <span>
-                                                        {task}
-                                                        <br />
-                                                    </span>
-                                                ))
-                                            }
-                                        </h4>
-                                        <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Jahr</p>
-                                        <h4 class="text-lg font-medium">{project.data.year}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content col-span-2">
-                                <div class="content-body mb-4 text-justify text-xl font-normal text-gray-600">
-                                    <Content />
-                                    <div class="mt-4 flex flex-row space-x-4">
+    <div class="scroll-container">
+        <div>
+            <section class="pt-24 md:pt-36 lg:pt-48 xl:pt-52">
+                <div class="wrapper px-4">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <div class="info mb-5 md:mb-0">
+                            <div>
+                                <h1 class="mb-4 text-3xl font-extrabold lg:text-4xl">{project.data.title}</h1>
+                                <div id="Desc" class="mb-4">
+                                    <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Aufgabe</p>
+                                    <h4 class="mb-4 text-lg font-medium">
                                         {
-                                            project.data.links?.map((link) => (
-                                                <LinkButton text={link.text} icon={link.icon} href={link.link} />
+                                            project.data.tasks.map((task: string) => (
+                                                <span>
+                                                    {task}
+                                                    <br />
+                                                </span>
                                             ))
                                         }
-                                    </div>
+                                    </h4>
+                                    <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Jahr</p>
+                                    <h4 class="text-lg font-medium">{project.data.year}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content col-span-2">
+                            <div class="content-body mb-4 text-justify text-xl font-normal text-gray-600">
+                                <Content />
+                                <div class="mt-4 flex flex-row space-x-4">
+                                    {
+                                        project.data.links?.map((link) => (
+                                            <LinkButton text={link.text} icon={link.icon} href={link.link} />
+                                        ))
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-                {
-                    project.data.fullImage && (
-                        <section class="case-study-photos pt-20">
-                            <div class="wrapper px-4">
-                                <div>
-                                    <Image
-                                        alt="Website on multiple devices"
-                                        src={images[imagePath]()}
-                                        height={820}
-                                        width={1420}
-                                        class="rounded-3xl"
-                                        loading="lazy"
-                                    />
-                                </div>
+                </div>
+            </section>
+            {
+                project.data.fullImage && (
+                    <section class="case-study-photos pt-20">
+                        <div class="wrapper px-4">
+                            <div>
+                                <Image
+                                    alt="Website on multiple devices"
+                                    src={images[imagePath]()}
+                                    height={820}
+                                    width={1420}
+                                    class="rounded-3xl"
+                                    loading="lazy"
+                                />
                             </div>
-                        </section>
-                    )
-                }
-            </div>
+                        </div>
+                    </section>
+                )
+            }
         </div>
-    </body>
+    </div>
 </Layout>
 
 <style lang="scss">

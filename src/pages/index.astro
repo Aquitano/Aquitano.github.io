@@ -24,37 +24,35 @@ const socials = [
 ---
 
 <Layout title="Breindl Thomas | Portfolio" active="Home">
-    <body>
-        <div id="Welcome">
-            <HomeTop />
+    <div id="Welcome">
+        <HomeTop />
 
-            <Projects allProjects={allProjects} client:load />
+        <Projects allProjects={allProjects} client:load />
 
-            <!-- Contact -->
-            <section class="contact-section mt-24 transition-opacity duration-500">
-                <div class="wrapper">
-                    <span style="text-align: center">
-                        <h1 class="i-v fly-in-up mb-4 text-4xl font-extrabold">Kontaktiere mich!</h1>
-                        <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
-                            {
-                                socials.map((social) => (
-                                    <div class="i-v fly-in-up">
-                                        <LinkButton
-                                            text={social.name}
-                                            icon={social.icon}
-                                            href={social.link}
-                                            target={'_blank'}
-                                            rel={'noopener noreferrer'}
-                                        />
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </span>
-                </div>
-            </section>
-        </div>
-    </body>
+        <!-- Contact -->
+        <section class="contact-section mt-24 transition-opacity duration-500">
+            <div class="wrapper">
+                <span style="text-align: center">
+                    <h1 class="i-v fly-in-up mb-4 text-4xl font-extrabold">Kontaktiere mich!</h1>
+                    <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
+                        {
+                            socials.map((social) => (
+                                <div class="i-v fly-in-up">
+                                    <LinkButton
+                                        text={social.name}
+                                        icon={social.icon}
+                                        href={social.link}
+                                        target={'_blank'}
+                                        rel={'noopener noreferrer'}
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </span>
+            </div>
+        </section>
+    </div>
 </Layout>
 
 <style lang="scss">

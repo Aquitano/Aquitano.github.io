@@ -205,7 +205,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 </div>
 
                 {/* Filter buttons */}
-                <div class="mb-12 flex flex-wrap gap-4">
+                <div class="mb-12 flex flex-wrap gap-3">
                     <For each={FILTER_OPTIONS}>
                         {(option, index) => (
                             <TagButton
@@ -220,7 +220,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
                 <div
                     ref={projectsContainer}
-                    class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-8 lg:gap-6"
+                    class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-5 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-6 lg:gap-5"
                 >
                     <Show
                         when={projects().length > 0}

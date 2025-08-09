@@ -16,16 +16,7 @@ export interface ProjectCardProps {
     headerAnimationComplete?: boolean;
 }
 
-const COLORS = [
-    'bg-indigo-600',
-    'bg-emerald-500',
-    'bg-amber-500',
-    'bg-sky-500',
-    'bg-blue-600',
-    'bg-rose-500',
-    'bg-purple-500',
-    'bg-teal-500',
-];
+const CARD_BG_CLASS = 'bg-neutral-600';
 
 export const GRID_SIZE_CLASSES = {
     small: 'md:col-span-2 h-[320px]',
@@ -43,7 +34,6 @@ export const ANIMATION_CONFIG = {
 };
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
-    const bgColor = COLORS[props.index % COLORS.length];
     const gridSize = props.gridSize ?? 'medium';
 
     let cardRef: HTMLDivElement | undefined;
@@ -143,17 +133,17 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         <div class={`relative ${GRID_SIZE_CLASSES[gridSize]}`}>
             <div
                 ref={cardRef}
-                class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-2xl shadow-lg transition-shadow duration-300 hover:shadow-xl"
+                class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl shadow-none ring-1 ring-white/10 transition-all duration-300 hover:ring-white/20"
             >
                 <a
                     href={props.url}
                     class="decoration-none group relative block h-full w-full overflow-hidden text-white"
                     rel="prefetch"
                 >
-                    <div class={`absolute inset-0 ${bgColor}`}></div>
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.15),transparent_70%)] mix-blend-overlay"></div>
+                    <div class={`absolute inset-0 ${CARD_BG_CLASS}`}></div>
+                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.10),transparent_70%)] mix-blend-overlay"></div>
 
-                    <div class="absolute inset-0 z-0 bg-linear-to-b from-black/5 via-transparent to-black/60"></div>
+                    <div class="absolute inset-0 z-0 bg-linear-to-b from-black/10 via-transparent to-black/60"></div>
 
                     {/* New badge */}
                     <Show when={props.isNew}>
@@ -174,11 +164,11 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         ref={contentRef}
                         class="absolute bottom-0 left-0 z-10 w-full translate-y-2 transform p-8 transition-transform duration-500 ease-out group-hover:translate-y-0"
                     >
-                        <span class="mb-2 block text-sm font-medium text-white/85 opacity-80 transition-opacity duration-400 group-hover:opacity-90">
+                        <span class="mb-2 block text-sm font-medium text-white/85 opacity-80 transition-opacity duration-400 group-hover:opacity-95">
                             {props.year}
                         </span>
 
-                        <h2 class="mb-4 text-xl font-bold text-white drop-shadow-md transition-transform duration-400 group-hover:-translate-y-0.5 md:text-2xl">
+                        <h2 class="mb-4 text-xl font-bold text-white transition-transform duration-400 group-hover:-translate-y-0.5 md:text-2xl">
                             {props.title}
                         </h2>
 
