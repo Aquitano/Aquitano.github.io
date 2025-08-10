@@ -86,6 +86,14 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
     const currentYear = new Date().getFullYear();
 
+    const HEIGHT_CLASSES: Record<GridSize, string> = {
+        small: 'h-[320px]',
+        medium: 'h-[360px]',
+        large: 'h-[400px]',
+        wide: 'h-[360px]',
+        tall: 'h-[460px]',
+    };
+
     let preHeader: HTMLParagraphElement | undefined;
     let header: HTMLHeadingElement | undefined;
     let projectsContainer: HTMLDivElement | undefined;
@@ -227,19 +235,34 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                         fallback={<div class="col-span-full py-8 text-center text-gray-400">No projects found</div>}
                     >
                         <For each={projects()}>
-                            {(project, index) => (
-                                <ProjectCard
-                                    title={project.data.title}
-                                    name={project.data.name}
-                                    year={project.data.year}
-                                    isNew={project.data.year === currentYear}
-                                    url={`project/${project.slug}`}
-                                    tags={project.data.tags}
-                                    index={index()}
-                                    gridSize={project.data.gridSize}
-                                    headerAnimationComplete={headerAnimationComplete()}
-                                />
-                            )}
+                            {(project, index) => {
+                                const size: GridSize = project.data.gridSize ?? 'medium';
+                                const count = projects().length;
+                                let wrapperClassOverride: string | undefined = undefined;
+
+                                if (count === 1) {
+                                    // Center single card and make it a bit wider (4/6 columns)
+                                    wrapperClassOverride = `relative md:col-span-4 md:col-start-2 ${HEIGHT_CLASSES[size]}`;
+                                } else if (count === 2) {
+                                    // Two cards balanced across the row (3/6 each)
+                                    wrapperClassOverride = `relative md:col-span-3 ${HEIGHT_CLASSES[size]}`;
+                                }
+
+                                return (
+                                    <ProjectCard
+                                        title={project.data.title}
+                                        name={project.data.name}
+                                        year={project.data.year}
+                                        isNew={project.data.year === currentYear}
+                                        url={`project/${project.slug}`}
+                                        tags={project.data.tags}
+                                        index={index()}
+                                        gridSize={project.data.gridSize}
+                                        headerAnimationComplete={headerAnimationComplete()}
+                                        wrapperClassOverride={wrapperClassOverride}
+                                    />
+                                );
+                            }}
                         </For>
                     </Show>
                 </div>

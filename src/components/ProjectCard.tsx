@@ -14,6 +14,7 @@ export interface ProjectCardProps {
     index: number;
     gridSize?: GridSize;
     headerAnimationComplete?: boolean;
+    wrapperClassOverride?: string;
 }
 
 const CARD_BG_CLASS = 'bg-neutral-600';
@@ -40,6 +41,30 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     let contentRef: HTMLDivElement | undefined;
     let animationController: ReturnType<typeof animate> | null = null;
     const [hasAnimated, setHasAnimated] = createSignal(false);
+
+    // Spotlight hover/focus effect
+    const [isSpotlightFocused, setIsSpotlightFocused] = createSignal(false);
+    const [spotlightOpacity, setSpotlightOpacity] = createSignal(0);
+    const [spotlightPosition, setSpotlightPosition] = createSignal({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: MouseEvent) => {
+        if (!cardRef || isSpotlightFocused()) return;
+        const rect = cardRef.getBoundingClientRect();
+        setSpotlightPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    };
+
+    const handleFocus = () => {
+        setIsSpotlightFocused(true);
+        setSpotlightOpacity(0.6);
+    };
+
+    const handleBlur = () => {
+        setIsSpotlightFocused(false);
+        setSpotlightOpacity(0);
+    };
+
+    const handleMouseEnter = () => setSpotlightOpacity(0.6);
+    const handleMouseLeave = () => setSpotlightOpacity(0);
 
     const useVisibilityObserver = createVisibilityObserver(
         { threshold: ANIMATION_CONFIG.viewportThreshold },
@@ -129,8 +154,10 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         if (animationController) animationController.stop();
     });
 
+    const wrapperClass = props.wrapperClassOverride ?? `relative ${GRID_SIZE_CLASSES[gridSize]}`;
+
     return (
-        <div class={`relative ${GRID_SIZE_CLASSES[gridSize]}`}>
+        <div class={wrapperClass}>
             <div
                 ref={cardRef}
                 class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl shadow-none ring-1 ring-white/10 transition-all duration-300 hover:ring-white/20"
@@ -139,11 +166,25 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     href={props.url}
                     class="decoration-none group relative block h-full w-full overflow-hidden text-white"
                     rel="prefetch"
+                    onMouseMove={handleMouseMove}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                 >
                     <div class={`absolute inset-0 ${CARD_BG_CLASS}`}></div>
                     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.10),transparent_70%)] mix-blend-overlay"></div>
 
                     <div class="absolute inset-0 z-0 bg-linear-to-b from-black/10 via-transparent to-black/60"></div>
+
+                    {/* Spotlight overlay */}
+                    <div
+                        class="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 ease-in-out"
+                        style={{
+                            opacity: spotlightOpacity(),
+                            background: `radial-gradient(circle at ${spotlightPosition().x}px ${spotlightPosition().y}px, rgba(255,255,255,0.25), transparent 80%)`,
+                        }}
+                    />
 
                     {/* New badge */}
                     <Show when={props.isNew}>

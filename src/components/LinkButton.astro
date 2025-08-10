@@ -8,27 +8,33 @@ export interface Props {
     style?: string;
     target?: string;
     rel?: 'noopener noreferrer' | 'noopener' | 'noreferrer' | 'prefetch' | 'none';
+    variant?: 'icon' | 'pill';
 }
 
-const { text, icon, href, style, target, rel } = Astro.props;
+const { text, icon, href, style, target, rel, variant = 'pill' } = Astro.props;
 ---
 
-<a href={href} class="special" target={target} rel={rel}>
-    <button
-        class="flex items-center justify-center rounded-xl bg-neutral-900 px-4 py-2 transition-all duration-300 hover:bg-gray-800"
-    >
-        <div>
-            <Icon name={icon} style={style} />
-        </div>
-        <div class="mx-3 h-4 border-l border-gray-300"></div>
-        <div class="text-white">{text}</div>
-    </button>
+<a href={href} class="special" target={target} rel={rel} aria-label={text}>
+    {
+        variant === 'icon' ? (
+            <button class="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-900 text-white ring-1 ring-black/10 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-neutral-800">
+                <Icon name={icon} style={style} />
+            </button>
+        ) : (
+            <button class="flex items-center justify-center rounded-xl bg-neutral-900 px-4 py-2 transition-all duration-300 hover:bg-gray-800">
+                <div>
+                    <Icon name={icon} style={style} />
+                </div>
+                <div class="mx-3 h-4 border-l border-gray-300" />
+                <div class="text-white">{text}</div>
+            </button>
+        )
+    }
 </a>
 
 <style lang="scss">
     [data-icon] {
         color: #fff;
-        font-size: 1.5rem;
-        // height: 1.5rem;
+        font-size: 1.1rem;
     }
 </style>

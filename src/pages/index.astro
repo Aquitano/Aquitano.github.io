@@ -28,30 +28,6 @@ const socials = [
         <HomeTop />
 
         <Projects allProjects={allProjects} client:load />
-
-        <!-- Contact -->
-        <section class="contact-section mt-24 transition-opacity duration-500">
-            <div class="wrapper">
-                <span style="text-align: center">
-                    <h1 class="i-v fly-in-up mb-4 text-4xl font-extrabold">Kontaktiere mich!</h1>
-                    <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
-                        {
-                            socials.map((social) => (
-                                <div class="i-v fly-in-up">
-                                    <LinkButton
-                                        text={social.name}
-                                        icon={social.icon}
-                                        href={social.link}
-                                        target={'_blank'}
-                                        rel={'noopener noreferrer'}
-                                    />
-                                </div>
-                            ))
-                        }
-                    </div>
-                </span>
-            </div>
-        </section>
     </div>
 </Layout>
 
@@ -528,19 +504,7 @@ const socials = [
         visibility: hidden;
     }
 
-    /* Add intersection observer for contact section */
-    .contact-section {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-            opacity 0.8s ease,
-            transform 0.8s ease;
-    }
-
-    .contact-section.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    /* Contact CTA moved to footer */
 </style>
 
 <script>
