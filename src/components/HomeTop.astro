@@ -1,27 +1,53 @@
-<section class="home-top landingpage text-stone-700">
+<section class="home-top landingpage text-stone-700" aria-labelledby="hero-title">
     <div class="flex flex-col items-center">
-        <div class="text-center">
-            <h1 class="title font-extrabold text-stone-700">Thomas Breindl</h1>
-            <h2 class="header-light TB-sub text-stone-700">
-                <br />Hallo, ich bin Programmierer, Designer und Student.<br />
+        <div class="hero-animation text-center">
+            <h1 id="hero-title" class="title font-extrabold text-stone-700">
+                <span class="word">Thomas</span>
+                <span class="word">Breindl</span>
+            </h1>
+            <h2 class="header-light hero-subtitle hero-animation text-stone-700">
+                Hallo, ich bin Programmierer, Designer und Student.
             </h2>
-            <nav class="links" aria-label="Hero links">
+            <nav class="links hero-animation" aria-label="Hauptlinks im Hero">
                 <a href="#portfolio" class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
-                <span class="mx-4">oder</span>
+                <span class="links-sep" aria-hidden="true">oder</span>
                 <a href="/timeline" class="link link-underline" rel="prefetch">Über Mich</a>
             </nav>
         </div>
-        <btn class="scroll-to toggle animate">
-            <div class="scroll-to-icon"></div>
-        </btn>
+        <button
+            type="button"
+            class="scroll-to animate hero-animation"
+            aria-label="Zum Portfolio scrollen"
+            title="Zum Portfolio scrollen scroll-trigger"
+        >
+            <div class="scroll-to-icon" aria-hidden="true"></div>
+        </button>
     </div>
 </section>
 
 <style lang="scss">
     .home-top {
         font-family: 'Roboto Slab Variable', serif;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: -60px 0 0;
+            pointer-events: none;
+            background: radial-gradient(900px 200px at 50% 0, rgba(0, 0, 0, 0.06), transparent 65%);
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: url('/images/grain.png');
+            opacity: 0.08;
+            mix-blend-mode: multiply;
+        }
     }
-    // Underline animation
     .link {
         font-weight: 800;
         letter-spacing: normal;
@@ -52,32 +78,86 @@
         position: relative;
         z-index: 2;
     }
+    .title {
+        font-family: 'Syne Variable', sans-serif;
+        line-height: 0.9;
+        letter-spacing: -0.01em;
+        font-size: clamp(2.75rem, 7vw + 1rem, 7.5rem);
+        margin-bottom: clamp(0.5rem, 1vw, 1rem);
+        text-wrap: balance;
+    }
+    .title .word {
+        display: block;
+    }
+    .hero-subtitle {
+        font-size: clamp(1.1rem, 1.6vw + 0.9rem, 2.25rem);
+        font-family: 'Roboto Slab Variable', serif;
+        margin-bottom: 1rem;
+        max-width: 34ch;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.3;
+        text-wrap: balance;
+    }
+    button.scroll-trigger {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+    }
+    button.scroll-trigger:focus-visible .scroll-to-icon {
+        box-shadow:
+            inset 0 0 0 2px #0f141e,
+            0 0 0 3px rgba(15, 20, 30, 0.15);
+    }
+    .links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.25rem;
+        margin-top: 0.5rem;
+        flex-direction: column;
+    }
+    .links-sep {
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: #6b7280;
+        text-transform: uppercase;
+        font-size: clamp(0.95rem, 0.2vw + 0.85rem, 1.05rem);
+    }
+    @media (min-width: 640px) {
+        .links {
+            flex-direction: row;
+        }
+    }
     @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        section.home-top btn.toggle {
+        section.home-top button.scroll-trigger {
             background: 0 0;
-            // display: none;
-            // visibility: hidden;
             width: 20px;
             margin: 30px auto 20px auto;
         }
-        section.home-top btn.toggle:after {
+        section.home-top button.scroll-trigger:after {
             display: none;
         }
-        section.home-top btn.toggle svg {
+        section.home-top button.scroll-trigger svg {
             width: 20px;
             height: 20px;
             margin: 20px;
         }
-        section.home-top btn.toggle svg path {
+        section.home-top button.scroll-trigger svg path {
             transition: fill 0.2s linear;
         }
-        section.home-top btn.toggle:active svg path {
+        section.home-top button.scroll-trigger:active svg path {
             fill: #878a8f;
         }
-        section.home-top btn.toggle:active .scroll-to-icon {
+        section.home-top button.scroll-trigger:active .scroll-to-icon {
             box-shadow: inset 0 0 0 2px #878a8f;
         }
-        section.home-top btn.toggle:active .scroll-to-icon:after {
+        section.home-top button.scroll-trigger:active .scroll-to-icon:after {
             background: #878a8f;
         }
         section.home-top .scroll-to-icon {
@@ -85,67 +165,54 @@
             height: 30px;
             box-shadow: inset 0 0 0 2px #0f141e;
             border-radius: 25px;
+            margin-top: 10px;
             cursor: pointer;
             transition: all 0.2s ease-in-out 0s;
             transform: translateY(0);
+            position: relative;
         }
         section.home-top .scroll-to-icon:after {
             content: '';
             width: 4px;
             height: 6px;
             background: #0f141e;
-            margin-left: 8px;
             top: 8px;
+            right: 8px;
             border-radius: 2px;
             animation-duration: 1.5s;
             animation-iteration-count: infinite;
             animation-name: scroll;
             position: absolute;
         }
-        section.home-top.keep-arrow btn.toggle {
-            // display: block;
+        section.home-top.keep-arrow button.scroll-trigger {
             visibility: visible;
         }
     }
     @media (min-width: 1280px) {
-        section.home-top btn.toggle {
+        section.home-top button.scroll-trigger {
             margin-top: 30px;
         }
-        section.home-top btn.toggle:hover svg path {
+        section.home-top button.scroll-trigger:hover svg path {
             fill: #878a8f;
         }
-        section.home-top btn.toggle:hover .scroll-to-icon {
+        section.home-top button.scroll-trigger:hover .scroll-to-icon {
             box-shadow: inset 0 0 0 2px #878a8f;
         }
-        section.home-top btn.toggle:hover .scroll-to-icon:after {
+        section.home-top button.scroll-trigger:hover .scroll-to-icon:after {
             background: #878a8f;
         }
     }
-    .container section.home-top .loaded {
-        visibility: visible;
-    }
-    .title {
-        font-size: 6.5rem;
-        font-family: 'Syne Variable', sans-serif;
-    }
-    .TB-sub {
-        font-size: 2rem;
-        font-family: 'Roboto Slab Variable', serif;
-        margin-bottom: 1rem;
-    }
 
-    // Animation
-    .Lading-animation {
+    .hero-animation {
         animation: none;
         transition: none;
     }
 
     @media (prefers-reduced-motion: no-preference) {
-        // Landing page animation
-        .Lading-animation {
+        .hero-animation {
             z-index: 2;
             opacity: 0;
-            animation-name: Lading-animation;
+            animation-name: hero-animation;
             animation-duration: 1.2s;
             animation-fill-mode: forwards;
 
@@ -154,9 +221,6 @@
             }
             &:nth-child(2) {
                 animation-delay: 1s;
-
-                // .scroll-to weirdly is the second child and not the fourth
-                // Therefore, we need to add the following to make it work
                 &.animate {
                     animation-delay: 2s;
                 }
@@ -165,7 +229,7 @@
                 animation-delay: 1.5s;
             }
         }
-        @keyframes Lading-animation {
+        @keyframes hero-animation {
             from {
                 opacity: 0;
                 visibility: hidden;
@@ -182,62 +246,80 @@
                 transform: translate3d(0, 0, 0);
             }
         }
+        @keyframes scroll {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(7px);
+            }
+        }
     }
 </style>
 
 <script>
-    import { animate, timeline, stagger, glide } from 'motion';
-    document.querySelector('.toggle')?.addEventListener('click', scrollToPortfolio);
-    document.querySelector('.projects')?.addEventListener('click', scrollToPortfolio);
+    import { timeline, stagger, glide } from 'motion';
+    import type { TimelineDefinition } from 'motion';
+
+    const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
+    scrollTriggers.forEach((el) =>
+        el.addEventListener('click', (event) => {
+            (event as Event & { preventDefault?: () => void }).preventDefault?.();
+            scrollToPortfolio();
+        }),
+    );
 
     function scrollToPortfolio() {
-        let portfolio: HTMLElement | null = document.querySelector('.home-portfolio');
-        if (!portfolio) {
-            return;
-        }
-
-        window.scrollBy({ top: portfolio?.offsetTop - 150, behavior: 'smooth' });
+        const portfolio: HTMLElement | null = document.querySelector('#portfolio');
+        if (!portfolio) return;
+        const stickyHeader = document.querySelector('header');
+        const headerOffset = stickyHeader instanceof HTMLElement ? stickyHeader.offsetHeight : 150;
+        const rect = portfolio.getBoundingClientRect();
+        const targetTop = rect.top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: targetTop, behavior: 'smooth' });
     }
 
-    const span = (text: string | null) => {
+    const createSpan = (text: string | null) => {
         const node = document.createElement('span');
-
         node.textContent = text;
-
         return node;
     };
-    const byLetter = (text: string | null | undefined) => (text ? [...text].map(span) : []);
+    const splitByLetter = (text: string | null | undefined) => (text ? [...text].map(createSpan) : []);
 
     const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
 
     window.addEventListener('load', () => {
-        // animate each character of the title
         if (!motionOK) return;
 
-        const title = document.querySelector('.title');
-
-        const nodes = byLetter(title?.textContent);
-
-        if (nodes.length) {
-            title?.firstChild?.replaceWith(...nodes);
-        }
-        const letters = document.querySelectorAll('.title span');
-        letters.forEach((letter) => {
-            if (letter.textContent === ' ') return;
-            (letter as HTMLElement).style.display = 'inline-block';
+        // Split each word into letters while keeping words on separate lines
+        const words = document.querySelectorAll<HTMLElement>('.title .word');
+        words.forEach((wordEl) => {
+            const nodes = splitByLetter(wordEl.textContent);
+            wordEl.textContent = '';
+            nodes.forEach((node) => {
+                if (node.textContent === ' ') {
+                    wordEl.append(' ');
+                    return;
+                }
+                (node as HTMLElement).classList.add('letter');
+                (node as HTMLElement).style.display = 'inline-block';
+                wordEl.appendChild(node);
+            });
         });
 
-        const sequence = [
+        const letters = document.querySelectorAll<HTMLElement>('.title .letter');
+
+        const sequence: TimelineDefinition = [
             [
-                letters,
+                Array.from(letters),
                 {
                     opacity: [0, 1],
                     transform: ['translate3d(0, 50px, 0)', 'translate3d(0, 0, 0)'],
                     filter: ['blur(5px)', 'blur(0)'],
                 },
-                {
-                    delay: stagger(0.05),
-                },
+                { delay: stagger(0.05) },
             ],
             [
                 '.header-light',
