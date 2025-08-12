@@ -26,12 +26,12 @@ if (project.data.fullImage)
 <Layout title={project.data.title + ' | Breindl Thomas'} active="Projekte">
     <div class="scroll-container">
         <div>
-            <section class="pt-24 md:pt-36 lg:pt-48 xl:pt-52">
+            <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52">
                 <div class="wrapper px-4">
-                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <h1 class="project-title mb-8 font-extrabold tracking-tight text-black/90">{project.data.title}</h1>
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                         <div class="info mb-5 md:mb-0">
                             <div>
-                                <h1 class="mb-4 text-3xl font-extrabold lg:text-4xl">{project.data.title}</h1>
                                 <div id="Desc" class="mb-4">
                                     <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Aufgabe</p>
                                     <h4 class="mb-4 text-lg font-medium">
@@ -50,7 +50,7 @@ if (project.data.fullImage)
                             </div>
                         </div>
                         <div class="content col-span-2">
-                            <div class="content-body mb-4 text-justify text-xl font-normal text-gray-600">
+                            <div class="content-body mb-4 text-justify font-normal text-black/70">
                                 <Content />
                                 <div class="mt-4 flex flex-row space-x-4">
                                     {
@@ -91,6 +91,34 @@ if (project.data.fullImage)
         padding-top: 5px;
         padding-bottom: 5px;
         letter-spacing: 0.4em;
+    }
+    /* Tighten the label-to-list spacing, but add clear separation between groups */
+    .pre-header + h4 {
+        margin-top: 0.35rem;
+    }
+    h4 + .pre-header {
+        margin-top: 1.75rem;
+    }
+    .project-hero::before {
+        content: '';
+        position: absolute;
+        inset: -40px 0 0;
+        pointer-events: none;
+        background: radial-gradient(800px 160px at 50% 0, rgba(255, 255, 255, 0.06), transparent 60%);
+    }
+    .project-title {
+        /* Match footer tone and use fluid clamp similar to global headings */
+        font-family: 'Helvetica Now Display DW', sans-serif;
+        font-size: clamp(2.6rem, 1.2rem + 6vw, 6rem);
+        line-height: 1.08;
+        text-wrap: balance;
+        font-weight: 1000;
+    }
+    .content-body {
+        /* Fluid readable body size similar to main page */
+        font-size: clamp(1.02rem, 0.9rem + 0.6vw, 1.2rem);
+        line-height: 1.7;
+        text-wrap: pretty;
     }
     section.case-study-photos Img {
         display: block;
@@ -162,7 +190,8 @@ if (project.data.fullImage)
         return document.querySelector(selector);
     };
 
-    $('.info h1')?.classList.add('Lading-animation');
+    // Title is now outside .info
+    $('.project-title')?.classList.add('Lading-animation');
     $('#Desc')?.classList.add('Lading-animation');
     $('.content .content-body')?.classList.add('Lading-animation');
     $('.case-study-photos')?.classList.add('Lading-animation');
