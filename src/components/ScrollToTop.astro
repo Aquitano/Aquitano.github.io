@@ -1,7 +1,8 @@
 <button
     id="scroll-to-top"
     title="Go To Top"
-    class="scroll-top fixed right-8 bottom-8 z-50 h-11 w-11 rounded-full border-0 text-3xl font-bold text-white"
+    aria-label="Scroll to top"
+    class="scroll-top fixed right-8 bottom-8 z-50 h-11 w-11 rounded-full border-0 text-3xl font-bold text-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
     >&uarr;</button
 >
 
@@ -73,9 +74,10 @@
     scrollButton?.addEventListener('click', goToTop);
 
     function goToTop() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({
             top: 0,
-            behavior: 'smooth',
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
         });
     }
 </script>

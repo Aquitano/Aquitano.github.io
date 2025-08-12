@@ -84,13 +84,14 @@ const { title, SEO: SEOData, active, location } = Astro.props;
         />
     </head>
     <body class="overflow-x-hidden antialiased">
+        <a href="#main-content" class="skip-link">Skip to main content</a>
         <Loader />
-        <!-- <Loader transition:persist /> -->
         <Header active={active} location={location} />
         <ScrollToTop />
         <ClientRouter />
-        <slot />
-
+        <main id="main-content" tabindex="-1">
+            <slot />
+        </main>
         <Footer />
 
         <style is:global>
@@ -272,6 +273,30 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 font-size: 3rem;
                 font-weight: 800;
                 margin: 0;
+            }
+
+            /* Focus styles */
+            :focus-visible {
+                outline: 3px solid #ffbb78;
+                outline-offset: 2px;
+            }
+            /* Remove outline only when not focus-visible */
+            :focus:not(:focus-visible) {
+                outline: none;
+            }
+
+            /* Reduced motion support */
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    animation: none !important;
+                    transition: none !important;
+                    scroll-behavior: auto !important;
+                }
+            }
+
+            /* Dark mode focus color tweak */
+            [data-theme='dark'] :focus-visible {
+                outline-color: #ffbb78;
             }
 
             h1,
