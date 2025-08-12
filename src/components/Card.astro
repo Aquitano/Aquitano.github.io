@@ -28,9 +28,9 @@ import { Image } from 'astro:assets';
                 </div>
             )
         }
-        <div>
+    <div class="card-media-wrapper">
             <Image
-                alt="BetterGaming - Designed by rawpixel.com / Freepik"
+                alt={`${title} Projekt Cover`}
                 width={703}
                 height={838}
                 src={`images/${name}.jpg`}
@@ -78,6 +78,7 @@ import { Image } from 'astro:assets';
             padding-top: 130px;
             border: 0;
             border-radius: 25px;
+            transition: transform 180ms cubic-bezier(.4,0,.2,1), box-shadow 180ms cubic-bezier(.4,0,.2,1);
 
             &:before {
                 background: rgba(15, 20, 30, 0.9);
@@ -153,7 +154,7 @@ import { Image } from 'astro:assets';
         & > a strong.regular .h2,
         & > a strong.regular .h5,
         & > a strong.regular .more {
-            transition: all 0.2s linear;
+            transition: transform 160ms cubic-bezier(.4,0,.2,1), color 160ms cubic-bezier(.4,0,.2,1), opacity 160ms cubic-bezier(.4,0,.2,1);
         }
 
         & > a strong.regular.dark-bg .h5,
@@ -408,32 +409,47 @@ import { Image } from 'astro:assets';
         .list-item-portfolio > a:hover Img {
             transform: scale(1.02);
         }
+        .list-item-portfolio > a:focus-visible Img {
+            transform: scale(1.02);
+        }
+        .list-item-portfolio > a:hover,
+        .list-item-portfolio > a:focus-visible {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 6px 24px -8px rgba(0,0,0,.35), 0 2px 8px -2px rgba(0,0,0,.25);
+        }
         .list-item-portfolio > a:hover strong.regular {
             opacity: 0;
         }
-        .list-item-portfolio > a:hover strong.regular .h2,
-        .list-item-portfolio > a:hover strong.regular .h5,
-        .list-item-portfolio > a:hover strong.regular .more p {
+    .list-item-portfolio > a:hover strong.regular .h2,
+    .list-item-portfolio > a:hover strong.regular .h5,
+    .list-item-portfolio > a:hover strong.regular .more p,
+    .list-item-portfolio > a:focus-visible strong.regular .h2,
+    .list-item-portfolio > a:focus-visible strong.regular .h5,
+    .list-item-portfolio > a:focus-visible strong.regular .more p {
             color: #fff;
         }
         .list-item-portfolio > a:hover strong.regular .h5,
         .list-item-portfolio > a:hover strong.regular .more {
             opacity: 0.6;
         }
-        .list-item-portfolio > a:hover strong.action {
+    .list-item-portfolio > a:hover strong.action,
+    .list-item-portfolio > a:focus-visible strong.action {
             left: 0;
         }
-        .list-item-portfolio > a:hover strong.action .h5 {
+    .list-item-portfolio > a:hover strong.action .h5,
+    .list-item-portfolio > a:focus-visible strong.action .h5 {
             opacity: 0.6;
             transform: translate3d(0, 0, 0);
             transition: all 0.2s linear 0s;
         }
-        .list-item-portfolio > a:hover strong.action .h2 {
+    .list-item-portfolio > a:hover strong.action .h2,
+    .list-item-portfolio > a:focus-visible strong.action .h2 {
             opacity: 1;
             transform: translate3d(0, 0, 0);
             transition: all 0.2s linear 0.1s;
         }
-        .list-item-portfolio > a:hover strong.action .more {
+    .list-item-portfolio > a:hover strong.action .more,
+    .list-item-portfolio > a:focus-visible strong.action .more {
             opacity: 0.6;
             transform: translate3d(0, 0, 0);
             transition: all 0.2s linear 0.2s;
@@ -521,6 +537,19 @@ import { Image } from 'astro:assets';
 
         .i-v {
             opacity: 0;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .list-item-portfolio > a,
+        .list-item-portfolio > a:hover,
+        .list-item-portfolio > a:focus-visible {
+            transition: none !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        .list-item-portfolio > a:hover Img,
+        .list-item-portfolio > a:focus-visible Img {
+            transform: none !important;
         }
     }
 </style>

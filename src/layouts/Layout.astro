@@ -85,12 +85,12 @@ const { title, SEO: SEOData, active, location } = Astro.props;
     </head>
     <body class="overflow-x-hidden antialiased">
         <Loader />
-        <!-- <Loader transition:persist /> -->
         <Header active={active} location={location} />
         <ScrollToTop />
         <ClientRouter />
-        <slot />
-
+        <main id="main-content" tabindex="-1">
+            <slot />
+        </main>
         <Footer />
 
         <style is:global>
@@ -268,10 +268,32 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 overflow: auto;
             }
 
-            h1 {
-                font-size: 3rem;
-                font-weight: 800;
-                margin: 0;
+            /* Legacy fixed h1 size removed; fluid sizes defined later */
+
+            /* Focus styles */
+            :focus-visible {
+                outline: 3px solid #ffbb78;
+                outline-offset: 2px;
+            }
+            /* Remove outline only when not focus-visible */
+            :focus:not(:focus-visible) {
+                outline: none;
+            }
+
+            /* Reduced motion support */
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    animation: none !important;
+                    transition: none !important;
+                    scroll-behavior: auto !important;
+                }
+            }
+
+            /* Dark mode focus color tweak */
+            [data-theme='dark'] :focus-visible {
+                outline-color: #ffbb78;
             }
 
             h1,
@@ -336,13 +358,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                 font-weight: 400;
                 letter-spacing: 0.4em;
             }
-            h1,
-            h1.large {
-                font-size: 2.125rem;
-                line-height: 2.5rem;
-                padding-top: 2px;
-                padding-bottom: 3px;
-            }
+            /* Legacy size block removed (now fluid) */
             h1 .icon,
             h1.large .icon {
                 width: 26px;
@@ -356,81 +372,9 @@ const { title, SEO: SEOData, active, location } = Astro.props;
             h1.large .icon--on-right {
                 margin-left: 10px;
             }
-            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-                h1,
-                h1.large {
-                    font-size: 2.75rem;
-                    line-height: 3.125rem;
-                    padding-top: 4px;
-                    padding-bottom: 1px;
-                }
-                h1 .icon,
-                h1.large .icon {
-                    width: 32px;
-                    height: 32px;
-                }
-                h1 .icon svg,
-                h1.large .icon svg {
-                    top: 0.04545em;
-                }
-                h1.large,
-                h1.large.large {
-                    font-size: 3.875rem;
-                    line-height: 4.0625rem;
-                    padding-top: 5px;
-                    padding-bottom: 5px;
-                }
-                h1.large .icon,
-                h1.large.large .icon {
-                    width: 42px;
-                    height: 42px;
-                }
-                h1.large .icon svg,
-                h1.large.large .icon svg {
-                    top: 0.0161em;
-                }
-                h1.large .icon--on-right,
-                h1.large.large .icon--on-right {
-                    margin-left: 20px;
-                }
-            }
-            @media (min-width: 1280px) {
-                h1.large,
-                h1.large.large {
-                    font-size: 4.5rem;
-                    line-height: 4.6875rem;
-                    padding-top: 1px;
-                    padding-bottom: 4px;
-                }
-                h1.large .icon,
-                h1.large.large .icon {
-                    width: 48px;
-                    height: 48px;
-                }
-                h1.large .icon svg,
-                h1.large.large .icon svg {
-                    top: 0.01389em;
-                }
-                h1 a.special:after,
-                h1 a.with-icon:after,
-                h1.large a.special:after,
-                h1.large a.with-icon:after {
-                    border-width: 5px;
-                }
-                h1.large a.special:after,
-                h1.large a.with-icon:after,
-                h1.large.large a.special:after,
-                h1.large.large a.with-icon:after {
-                    border-width: 6px;
-                }
-            }
-            .h2,
-            h2 {
-                font-size: 1.75rem;
-                line-height: 2.1875rem;
-                padding-top: 2px;
-                padding-bottom: 3px;
-            }
+            /* Removed legacy responsive h1 sizing (fluid now) */
+            /* Removed large breakpoint h1 sizing overrides */
+            /* Legacy h2 static size removed */
             .h2 .icon,
             h2 .icon {
                 width: 22px;
@@ -444,28 +388,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
             h2 .icon--on-right {
                 margin-left: 10px;
             }
-            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-                .h2,
-                h2 {
-                    font-size: 2rem;
-                    line-height: 2.5rem;
-                    padding-top: 3px;
-                    padding-bottom: 2px;
-                }
-                .h2 .icon,
-                h2 .icon {
-                    width: 26px;
-                    height: 26px;
-                }
-                .h2 .icon svg,
-                h2 .icon svg {
-                    top: 0.0625em;
-                }
-                .h2 .icon--on-right,
-                h2 .icon--on-right {
-                    margin-left: 10px;
-                }
-            }
+            /* Removed legacy responsive h2 sizing */
             @media (min-width: 1280px) {
                 .h2 a.special:after,
                 .h2 a.with-icon:after,
@@ -474,12 +397,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                     border-width: 3px;
                 }
             }
-            h3 {
-                font-size: 1.125rem;
-                line-height: 1.5625rem;
-                padding-top: 1px;
-                padding-bottom: 4px;
-            }
+            /* Legacy h3 static size removed */
             h3 em {
                 font-weight: 500;
                 color: #cfd0d2;
@@ -501,26 +419,14 @@ const { title, SEO: SEOData, active, location } = Astro.props;
             h3 .icon--on-right {
                 margin-left: 10px;
             }
-            @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-                h3 {
-                    font-size: 1.375rem;
-                    line-height: 1.875rem;
-                    padding-top: 2px;
-                    padding-bottom: 3px;
-                }
-            }
+            /* Removed legacy responsive h3 sizing */
             @media (min-width: 1280px) {
                 h3 a.special:after,
                 h3 a.with-icon:after {
                     border-width: 2px;
                 }
             }
-            h4 {
-                font-size: 1.125rem;
-                line-height: 1.5625rem;
-                padding-top: 1px;
-                padding-bottom: 4px;
-            }
+            /* Legacy h4 static size removed */
             h4 .icon {
                 width: 16px;
                 height: 16px;
@@ -537,14 +443,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                     border-width: 2px;
                 }
             }
-            .h5,
-            h5 {
-                font-size: 0.875rem;
-                line-height: 1.25rem;
-                text-transform: uppercase;
-                padding-top: 5px;
-                padding-bottom: 5px;
-            }
+            /* Legacy h5 static size removed (fluid + utility now) */
             .h5 .icon,
             h5 .icon {
                 width: 16px;
@@ -659,6 +558,106 @@ const { title, SEO: SEOData, active, location } = Astro.props;
             }
             h5 + h3 {
                 margin-top: 5px;
+            }
+        </style>
+        <style is:global>
+            /* Typography refinement & fluid scale overrides */
+            :root {
+                /* Modular scale base 1rem, ratio 1.125 */
+                --step--2: 0.79rem; /* 1 / 1.125^2 */
+                --step--1: 0.889rem; /* 1 / 1.125 */
+                --step-0: 1rem; /* base */
+                --step-1: 1.125rem; /* * 1.125 */
+                --step-2: 1.266rem; /* * 1.125^2 */
+                --step-3: 1.424rem; /* ... */
+                --step-4: 1.602rem;
+                --step-5: 1.802rem;
+                --step-6: 2.027rem;
+                --step-7: 2.281rem;
+                --step-8: 2.566rem;
+            }
+
+            /* Fluid clamps (mobile -> large desktop). Adjusted to keep within prior visual rhythm */
+            h1,
+            .h1,
+            h1.large {
+                font-size: clamp(2.2rem, 1.2rem + 3.2vw, 3.6rem);
+                line-height: 1.08;
+            }
+            h2,
+            .h2 {
+                font-size: clamp(1.9rem, 1.1rem + 2.4vw, 2.8rem);
+                line-height: 1.15;
+            }
+            h3 {
+                font-size: clamp(1.5rem, 0.9rem + 1.6vw, 2.05rem);
+                line-height: 1.2;
+            }
+            h4 {
+                font-size: clamp(1.25rem, 0.85rem + 1.1vw, 1.6rem);
+                line-height: 1.3;
+            }
+            h5,
+            .h5 {
+                font-size: clamp(0.95rem, 0.8rem + 0.4vw, 1.1rem);
+                letter-spacing: 0.08em;
+            }
+
+            /* Use font steps for utility classes (optional future use) */
+            .fs-step--1 {
+                font-size: var(--step--1);
+            }
+            .fs-step-0 {
+                font-size: var(--step-0);
+            }
+            .fs-step-1 {
+                font-size: var(--step-1);
+            }
+            .fs-step-2 {
+                font-size: var(--step-2);
+            }
+            .fs-step-3 {
+                font-size: var(--step-3);
+            }
+            .fs-step-4 {
+                font-size: var(--step-4);
+            }
+            .fs-step-5 {
+                font-size: var(--step-5);
+            }
+            .fs-step-6 {
+                font-size: var(--step-6);
+            }
+
+            /* Micro-interactions base (cards & interactive blocks) */
+            .interactive-card,
+            .interactive-surface {
+                transition:
+                    transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
+                    box-shadow 180ms cubic-bezier(0.4, 0, 0.2, 1);
+                will-change: transform;
+            }
+            .interactive-card:hover,
+            .interactive-card:focus-visible,
+            .interactive-surface:hover,
+            .interactive-surface:focus-visible {
+                transform: translateY(-4px) scale(1.01);
+                box-shadow:
+                    0 6px 24px -8px rgba(0, 0, 0, 0.35),
+                    0 2px 8px -2px rgba(0, 0, 0, 0.25);
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .interactive-card,
+                .interactive-surface {
+                    transition: none !important;
+                }
+                .interactive-card:hover,
+                .interactive-card:focus-visible,
+                .interactive-surface:hover,
+                .interactive-surface:focus-visible {
+                    transform: none !important;
+                    box-shadow: none !important;
+                }
             }
         </style>
     </body>

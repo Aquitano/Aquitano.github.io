@@ -17,6 +17,8 @@ const TagButton: Component<TagButtonProps> = (props) => {
                     : 'bg-white/70 text-stone-700 ring-1 ring-black/5 hover:bg-white/90 hover:ring-black/10'
             }`}
             onClick={props.onClick}
+            aria-pressed={props.isActive}
+            type="button"
             onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
             }}
