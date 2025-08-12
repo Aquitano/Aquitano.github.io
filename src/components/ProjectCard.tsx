@@ -164,7 +164,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
             >
                 <a
                     href={props.url}
-                    class="decoration-none group relative block h-full w-full overflow-hidden text-white"
+                    class="decoration-none group relative block h-full w-full overflow-hidden text-white interactive-card"
                     rel="prefetch"
                     onMouseMove={handleMouseMove}
                     onFocus={handleFocus}
@@ -175,7 +175,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     <div class={`absolute inset-0 ${CARD_BG_CLASS}`}></div>
                     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.10),transparent_70%)] mix-blend-overlay"></div>
 
-                    <div class="absolute inset-0 z-0 bg-linear-to-b from-black/10 via-transparent to-black/60"></div>
+                    <div class="absolute inset-0 z-0 bg-linear-to-b from-black/10 via-transparent to-black/60 transition-opacity duration-200 group-hover:opacity-90"></div>
 
                     {/* Spotlight overlay */}
                     <div
@@ -209,7 +209,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                             {props.year}
                         </span>
 
-                        <h2 class="mb-4 text-xl font-bold text-white transition-transform duration-400 group-hover:-translate-y-0.5 md:text-2xl">
+                        <h2 class="mb-4 text-xl font-bold text-white transition-transform duration-200 ease-out group-hover:-translate-y-0.5 md:text-2xl">
                             {props.title}
                         </h2>
 
@@ -221,7 +221,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                             ))}
                         </div>
 
-                        <div class="flex translate-y-3 transform items-center font-medium opacity-0 transition-all duration-400 group-hover:translate-y-0 group-hover:opacity-100">
+                        <div class="flex translate-y-3 transform items-center font-medium opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                             <span>View Project</span>
                             <span class="ml-2 text-xl transition-transform duration-300 group-hover:translate-x-1">
                                 →
@@ -233,5 +233,12 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         </div>
     );
 };
+
+if (typeof window !== 'undefined') {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce.matches) {
+        document.documentElement.classList.add('prm');
+    }
+}
 
 export default ProjectCard;

@@ -341,7 +341,8 @@ const menus = [
     }
 
     .close-text {
-        font-size: 0.75rem;
+    /* Using modular scale step -1 approximation (~0.79rem); keeping 0.75rem for tight nav look */
+    font-size: 0.75rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -352,7 +353,7 @@ const menus = [
 
     @media (min-width: 768px) {
         .close-text {
-            font-size: 0.875rem;
+            font-size: var(--step--1);
         }
     }
 
