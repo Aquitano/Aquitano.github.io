@@ -1,26 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import HomeTop from '../components/HomeTop.astro';
-import LinkButton from '../components/LinkButton.astro';
 import Projects from '../components/Projects.tsx';
 import Layout from '../layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
 
 const allProjects = await getCollection('project');
 export type product = CollectionEntry<'project'>;
-
-const socials = [
-    {
-        name: 'GitHub',
-        icon: 'mdi:github',
-        link: 'https://www.github.com/Aquitano',
-    },
-    {
-        name: 'Twitter',
-        icon: 'mdi:twitter',
-        link: 'https://www.twitter.com/BreindlThomas',
-    },
-];
 ---
 
 <Layout title="Breindl Thomas | Portfolio" active="Home">
@@ -491,44 +477,4 @@ const socials = [
     .hidden {
         visibility: hidden;
     }
-
-    /* Contact CTA moved to footer */
 </style>
-
-<script>
-    import('../assets/js/aos.ts');
-
-    // Add intersection observer for contact section
-    document.addEventListener('DOMContentLoaded', () => {
-        const contactSection = document.querySelector('.contact-section');
-
-        if (contactSection) {
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                },
-                { threshold: 0.1 },
-            );
-
-            observer.observe(contactSection);
-        }
-    });
-</script>
-
-<script>
-    const $: (selector: string) => Element | null = (selector: string) => {
-        document.querySelector(selector);
-        return document.querySelector(selector);
-    };
-
-    // window.addEventListener('load', () => {
-    //     $('.TB')?.classList.add('Lading-animation');
-    //     $('.header-light')?.classList.add('Lading-animation');
-    //     $('.links')?.classList.add('Lading-animation');
-    //     $('.animate')?.classList.add('Lading-animation');
-    // });
-</script>

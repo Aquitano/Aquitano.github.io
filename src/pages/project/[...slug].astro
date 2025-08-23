@@ -16,11 +16,18 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await project.render();
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.jpg');
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp}');
 const imagePath = `/src/assets/images/${project.data.fullImage}`;
 
-if (project.data.fullImage)
-    if (!images[imagePath]) throw new Error(`"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`);
+let fullImageSrc: ImageMetadata | null = null;
+if (project.data.fullImage) {
+    if (!images[imagePath]) {
+        console.warn(`Full image not found for ${imagePath}`);
+    } else {
+        const mod = await images[imagePath]();
+        fullImageSrc = mod.default;
+    }
+}
 ---
 
 <Layout title={project.data.title + ' | Breindl Thomas'} active="Projekte">
@@ -28,11 +35,16 @@ if (project.data.fullImage)
         <div>
             <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52">
                 <div class="wrapper px-4">
-                    <h1 class="project-title mb-8 font-extrabold tracking-tight text-black/90">{project.data.title}</h1>
+                    <h1
+                        class="project-title hero-animation mb-8 font-extrabold tracking-tight text-black/90"
+                        style="--reveal-delay: 340ms"
+                    >
+                        {project.data.title}
+                    </h1>
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                         <div class="info mb-5 md:mb-0">
                             <div>
-                                <div id="Desc" class="mb-4">
+                                <div id="Desc" class="hero-animation mb-4" style="--reveal-delay: 750ms">
                                     <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Aufgabe</p>
                                     <h4 class="mb-4 text-lg font-medium">
                                         {
@@ -50,7 +62,10 @@ if (project.data.fullImage)
                             </div>
                         </div>
                         <div class="content col-span-2">
-                            <div class="content-body mb-4 text-justify font-normal text-black/70">
+                            <div
+                                class="content-body hero-animation mb-4 text-justify font-normal text-black/70"
+                                style="--reveal-delay: 1900ms"
+                            >
                                 <Content />
                                 <div class="mt-4 flex flex-row space-x-4">
                                     {
@@ -65,13 +80,13 @@ if (project.data.fullImage)
                 </div>
             </section>
             {
-                project.data.fullImage && (
-                    <section class="case-study-photos pt-20">
+                fullImageSrc && (
+                    <section class="case-study-photos hero-animation pt-20" style="--reveal-delay: 720ms">
                         <div class="wrapper px-4">
                             <div>
                                 <Image
                                     alt="Website on multiple devices"
-                                    src={images[imagePath]()}
+                                    src={fullImageSrc}
                                     height={820}
                                     width={1420}
                                     class="rounded-3xl"
@@ -92,7 +107,6 @@ if (project.data.fullImage)
         padding-bottom: 5px;
         letter-spacing: 0.4em;
     }
-    /* Tighten the label-to-list spacing, but add clear separation between groups */
     .pre-header + h4 {
         margin-top: 0.35rem;
     }
@@ -132,67 +146,98 @@ if (project.data.fullImage)
         width: 100%;
     }
 
-    // Animation
-    .Lading-animation {
-        animation: none;
+    .hero-animation {
+        opacity: 0;
         transition: none;
     }
-
-    @media (prefers-reduced-motion: no-preference) {
-        // Landing page animation
-        .Lading-animation {
-            z-index: 2;
-            opacity: 0;
-            animation-name: Lading-animation;
-            animation-duration: 1.2s;
-            animation-fill-mode: forwards;
-
-            &:nth-child(1) {
-                animation-delay: 0.5s;
-
-                &.content-body {
-                    animation-delay: 1.5s;
-                }
-            }
-
-            &:nth-child(2) {
-                animation-delay: 1s;
-
-                &.case-study-photos {
-                    animation-delay: 2.5s;
-                }
-            }
-        }
-        @keyframes Lading-animation {
-            from {
-                opacity: 0;
-                visibility: hidden;
-                filter: blur(2px);
-                transform: translate3d(0, 20px, 0);
-                transition:
-                    opacity 0.5s ease-in,
-                    transform 0.4s ease-in;
-            }
-            to {
-                opacity: 1;
-                visibility: visible;
-                filter: blur(0);
-                transform: translate3d(0, 0, 0);
-            }
+    @media (prefers-reduced-motion: reduce) {
+        .hero-animation {
+            opacity: 1 !important;
         }
     }
 </style>
 
 <script>
-    const $: (selector: string) => Element | null = (selector: string) => {
-        document.querySelector(selector);
+    import { timeline, glide } from 'motion';
+    import type { TimelineDefinition } from 'motion';
 
-        return document.querySelector(selector);
-    };
+    const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
 
-    // Title is now outside .info
-    $('.project-title')?.classList.add('Lading-animation');
-    $('#Desc')?.classList.add('Lading-animation');
-    $('.content .content-body')?.classList.add('Lading-animation');
-    $('.case-study-photos')?.classList.add('Lading-animation');
+    function parseDelaySeconds(el: Element | null): number {
+        if (!el) return 0;
+        const style = (el as HTMLElement).style;
+        let raw = style.getPropertyValue('--reveal-delay');
+        if (!raw) raw = getComputedStyle(el as HTMLElement).getPropertyValue('--reveal-delay');
+        if (!raw) return 0;
+        const v = raw.trim();
+        if (v.endsWith('ms')) return parseFloat(v) / 1000;
+        if (v.endsWith('s')) return parseFloat(v);
+        const n = parseFloat(v);
+        return isNaN(n) ? 0 : n / 1000;
+    }
+
+    function runProjectAnimations() {
+        if (!motionOK) return;
+
+        const title = document.querySelector('.project-title');
+        const desc = document.querySelector('#Desc');
+        const body = document.querySelector('.content-body');
+        const photo = document.querySelector('.case-study-photos');
+
+        const sequence: TimelineDefinition = [];
+        if (title) {
+            (title as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            sequence.push([
+                title,
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
+                    filter: ['blur(2px)', 'blur(0)'],
+                },
+                { at: parseDelaySeconds(title) },
+            ]);
+        }
+        if (desc) {
+            (desc as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            sequence.push([
+                desc,
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
+                    filter: ['blur(2px)', 'blur(0)'],
+                },
+                { at: parseDelaySeconds(desc) || 0.2 },
+            ]);
+        }
+        if (body) {
+            (body as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            sequence.push([
+                body,
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
+                    filter: ['blur(2px)', 'blur(0)'],
+                },
+                { at: parseDelaySeconds(body) || 0.4 },
+            ]);
+        }
+        if (photo) {
+            (photo as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            sequence.push([
+                photo,
+                {
+                    opacity: [0, 1],
+                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
+                    filter: ['blur(2px)', 'blur(0)'],
+                },
+                { at: parseDelaySeconds(photo) || 0.6 },
+            ]);
+        }
+
+        if (sequence.length) timeline(sequence, { defaultOptions: { easing: glide(), duration: 0.9, delay: 0 } });
+    }
+
+    window.addEventListener('load', runProjectAnimations);
+    document.addEventListener('astro:page-load', runProjectAnimations);
+    document.addEventListener('astro:after-swap', runProjectAnimations);
 </script>

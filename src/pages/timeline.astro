@@ -3,7 +3,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Timeline | Breindl Thomas" active="Über mich" data-astro-reload>
+<Layout title="Timeline | Breindl Thomas" active="Über mich">
     <!-- <Courses /> -->
     <div class="scroll-container">
         <div class="wrapper flex flex-col items-center justify-center">
@@ -297,5 +297,34 @@ import Layout from '../layouts/Layout.astro';
     }
 </style>
 
-<!-- <script src="src/assets/js/aos.ts"></script> -->
-<script src="../assets/js/aos.ts"></script>
+<script>
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function revealTimeline() {
+        const items = Array.from(document.querySelectorAll<HTMLElement>('.i-v'));
+        if (reduce || !('IntersectionObserver' in window)) {
+            items.forEach((el) => el.classList.remove('i-v'));
+            return;
+        }
+
+        const io = new IntersectionObserver(
+            (entries, obs) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target as HTMLElement;
+                        el.classList.add('is-visible');
+                        el.classList.remove('i-v');
+                        obs.unobserve(el);
+                    }
+                });
+            },
+            { threshold: 0.15 },
+        );
+
+        items.forEach((el) => io.observe(el));
+    }
+
+    window.addEventListener('load', revealTimeline);
+    document.addEventListener('astro:page-load', revealTimeline);
+    document.addEventListener('astro:after-swap', revealTimeline);
+</script>
