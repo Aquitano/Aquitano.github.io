@@ -45,8 +45,5 @@ export default defineConfig({
 
     vite: {
         plugins: [tailwindcss()],
-        optimizeDeps: {
-            noDiscovery: true,
-        },
     },
 });

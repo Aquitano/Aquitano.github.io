@@ -164,9 +164,14 @@ import '@assets/griffin/css/magnific-popup.css';
                             value=""
                             placeholder="Donation-Code"
                             required
-                            oninput="this.value = this.value.toUpperCase();"
                         />
                         <script defer is:inline>
+                            document.addEventListener('input', (e) => {
+                                const t = e.target;
+                                if (t && t instanceof HTMLInputElement && t.id === 'DC') {
+                                    t.value = t.value.toUpperCase();
+                                }
+                            });
                             window.onload = function () {
                                 function querySt(ji) {
                                     const hu = window.location.search.substring(1);

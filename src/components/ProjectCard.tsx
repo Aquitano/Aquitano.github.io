@@ -1,5 +1,5 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
-import { animate, stagger, type Easing } from 'motion';
+import { animate, type Easing } from 'motion';
 import { Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
@@ -97,19 +97,21 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
             requestAnimationFrame(() => {
                 if (cardRef) {
-                    animationController = animate(
-                        cardRef,
-                        {
-                            opacity: [0, 1],
-                            transform: ['translateY(30px) scale(0.95)', 'translateY(0) scale(1)'],
-                            filter: ['blur(4px)', 'blur(0px)'],
-                        },
-                        {
-                            duration: ANIMATION_CONFIG.entrance.duration,
-                            delay: (props.index % 6) * ANIMATION_CONFIG.staggerDelay,
-                            easing: ANIMATION_CONFIG.entrance.easing,
-                        },
-                    );
+                    const seq = [
+                        [
+                            cardRef,
+                            {
+                                opacity: [0, 1],
+                                transform: ['translateY(30px) scale(0.95)', 'translateY(0) scale(1)'],
+                                filter: ['blur(4px)', 'blur(0px)'],
+                            },
+                            {
+                                duration: ANIMATION_CONFIG.entrance.duration,
+                                at: (props.index % 6) * ANIMATION_CONFIG.staggerDelay,
+                            },
+                        ],
+                    ];
+                    animationController = animate(seq as any);
 
                     animationController.finished.then(() => {
                         if (cardRef) {
@@ -124,18 +126,22 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
             if (contentRef && props.tags?.length && props.headerAnimationComplete) {
                 const tagElements = contentRef.querySelectorAll('.project-tag');
-                animate(
-                    tagElements,
-                    {
-                        opacity: [0.7, 1],
-                        transform: ['translateY(8px)', 'translateY(0)'],
-                    },
-                    {
-                        delay: stagger(0.03),
-                        duration: 0.5,
-                        easing: 'ease-out',
-                    },
+                const tagsSeq = Array.from(tagElements).map(
+                    (el, i) =>
+                        [
+                            el,
+                            {
+                                opacity: [0.7, 1],
+                                transform: ['translateY(8px)', 'translateY(0)'],
+                            },
+                            {
+                                duration: 0.5,
+                                ease: 'easeOut',
+                                at: i * 0.03,
+                            },
+                        ] as const,
                 );
+                animate(tagsSeq as any);
             }
         }
     };
@@ -164,7 +170,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
             >
                 <a
                     href={props.url}
-                    class="decoration-none group relative block h-full w-full overflow-hidden text-white interactive-card"
+                    class="decoration-none group interactive-card relative block h-full w-full overflow-hidden text-white"
                     rel="prefetch"
                     onMouseMove={handleMouseMove}
                     onFocus={handleFocus}

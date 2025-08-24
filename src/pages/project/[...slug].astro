@@ -35,17 +35,14 @@ if (project.data.fullImage) {
         <div>
             <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52">
                 <div class="wrapper px-4">
-                    <h1
-                        class="project-title hero-animation mb-8 font-extrabold tracking-tight text-black/90"
-                        style="--reveal-delay: 340ms"
-                    >
+                    <h1 class="project-title hero-animation mb-8 font-extrabold tracking-tight text-black/90">
                         {project.data.title}
                     </h1>
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
                         <div class="info mb-5 md:mb-0">
                             <div>
-                                <div id="Desc" class="hero-animation mb-4" style="--reveal-delay: 750ms">
-                                    <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Aufgabe</p>
+                                <div id="Desc" class="hero-animation mb-4">
+                                    <p class="pre-header mb-1 text-sm text-gray-400 uppercase">Aufgabe</p>
                                     <h4 class="mb-4 text-lg font-medium">
                                         {
                                             project.data.tasks.map((task: string) => (
@@ -56,16 +53,13 @@ if (project.data.fullImage) {
                                             ))
                                         }
                                     </h4>
-                                    <p class="pre-header mb-2 text-sm text-gray-400 uppercase">Jahr</p>
+                                    <p class="pre-header mt-2 mb-1 text-sm text-gray-400 uppercase">Jahr</p>
                                     <h4 class="text-lg font-medium">{project.data.year}</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="content col-span-2">
-                            <div
-                                class="content-body hero-animation mb-4 text-justify font-normal text-black/70"
-                                style="--reveal-delay: 1900ms"
-                            >
+                            <div class="content-body hero-animation mb-4 text-justify font-normal text-black/70">
                                 <Content />
                                 <div class="mt-4 flex flex-row space-x-4">
                                     {
@@ -81,7 +75,7 @@ if (project.data.fullImage) {
             </section>
             {
                 fullImageSrc && (
-                    <section class="case-study-photos hero-animation pt-20" style="--reveal-delay: 720ms">
+                    <section class="case-study-photos hero-animation pt-20">
                         <div class="wrapper px-4">
                             <div>
                                 <Image
@@ -158,23 +152,17 @@ if (project.data.fullImage) {
 </style>
 
 <script>
-    import { timeline, glide } from 'motion';
-    import type { TimelineDefinition } from 'motion';
+    import { animate } from 'motion';
 
     const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
 
-    function parseDelaySeconds(el: Element | null): number {
-        if (!el) return 0;
-        const style = (el as HTMLElement).style;
-        let raw = style.getPropertyValue('--reveal-delay');
-        if (!raw) raw = getComputedStyle(el as HTMLElement).getPropertyValue('--reveal-delay');
-        if (!raw) return 0;
-        const v = raw.trim();
-        if (v.endsWith('ms')) return parseFloat(v) / 1000;
-        if (v.endsWith('s')) return parseFloat(v);
-        const n = parseFloat(v);
-        return isNaN(n) ? 0 : n / 1000;
-    }
+    // Simple, minimal delays (seconds)
+    const DELAY_TITLE = 0.3;
+    const DELAY_DESC = 0.75;
+    const DELAY_BODY = 1.0;
+    const DELAY_PHOTO = 1.25;
+
+    let projectAnim: any = null;
 
     function runProjectAnimations() {
         if (!motionOK) return;
@@ -184,60 +172,64 @@ if (project.data.fullImage) {
         const body = document.querySelector('.content-body');
         const photo = document.querySelector('.case-study-photos');
 
-        const sequence: TimelineDefinition = [];
+        const sequence = [] as any[];
         if (title) {
-            (title as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            (title as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,16px,0)';
             sequence.push([
                 title,
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
-                    filter: ['blur(2px)', 'blur(0)'],
+                    y: [16, 0],
+                    filter: ['blur(3px)', 'blur(0)'],
                 },
-                { at: parseDelaySeconds(title) },
+                { at: DELAY_TITLE, duration: 0.9, ease: 'easeOut' },
             ]);
         }
         if (desc) {
-            (desc as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            (desc as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
             sequence.push([
                 desc,
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
-                    filter: ['blur(2px)', 'blur(0)'],
+                    y: [12, 0],
                 },
-                { at: parseDelaySeconds(desc) || 0.2 },
+                { at: DELAY_DESC, duration: 0.9, ease: 'easeOut' },
             ]);
         }
         if (body) {
-            (body as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            (body as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
             sequence.push([
                 body,
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
-                    filter: ['blur(2px)', 'blur(0)'],
+                    y: [12, 0],
                 },
-                { at: parseDelaySeconds(body) || 0.4 },
+                { at: DELAY_BODY, duration: 0.9, ease: 'easeOut' },
             ]);
         }
         if (photo) {
-            (photo as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,22px,0)';
+            (photo as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,10px,0)';
             sequence.push([
                 photo,
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0,22px,0)', 'translate3d(0,0,0)'],
-                    filter: ['blur(2px)', 'blur(0)'],
+                    y: [10, 0],
                 },
-                { at: parseDelaySeconds(photo) || 0.6 },
+                { at: DELAY_PHOTO, duration: 0.9, ease: 'easeOut' },
             ]);
         }
 
-        if (sequence.length) timeline(sequence, { defaultOptions: { easing: glide(), duration: 0.9, delay: 0 } });
+        if (sequence.length) {
+            projectAnim?.stop();
+            projectAnim = animate(sequence as any);
+        }
     }
 
     window.addEventListener('load', runProjectAnimations);
     document.addEventListener('astro:page-load', runProjectAnimations);
     document.addEventListener('astro:after-swap', runProjectAnimations);
+    document.addEventListener('astro:before-swap', () => {
+        projectAnim?.stop();
+        projectAnim = null;
+    });
 </script>

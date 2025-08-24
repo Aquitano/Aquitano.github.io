@@ -1,5 +1,5 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
-import { animate, stagger, timeline } from 'motion';
+import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
@@ -119,31 +119,33 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
         header.style.cssText = 'opacity: 0; transform: translateY(20px);';
 
         requestAnimationFrame(() => {
-            timeline([
-                [
-                    preHeader,
-                    { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
-                    { duration: 0.8, easing: ANIMATION_CONFIG.entrance.easing },
-                ],
+            const sequence = [
+                [preHeader, { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] }, { duration: 0.8 }],
                 [
                     header,
                     { opacity: [0, 1], transform: ['translateY(25px)', 'translateY(0)'] },
-                    { duration: 0.8, at: '-0.4', easing: ANIMATION_CONFIG.entrance.easing },
+                    { duration: 0.8, at: '-0.4' },
                 ],
-            ]).finished.then(() => {
+            ];
+
+            animate(sequence as any).finished.then(() => {
                 setHeaderAnimationComplete(true);
             });
 
             if (filterButtons.length) {
                 filterButtons.forEach((button) => {
-                    button.style.cssText = 'opacity: 0; transform: translateY(15px);';
+                    button.style.cssText = 'opacity: 0; transform: translateY(15px)';
                 });
 
-                animate(
-                    filterButtons,
-                    { opacity: [0, 1], transform: ['translateY(15px)', 'translateY(0)'] },
-                    { duration: 0.6, delay: stagger(0.08, { start: 0.5 }), easing: ANIMATION_CONFIG.entrance.easing },
+                const buttonsSequence = filterButtons.map(
+                    (btn, i) =>
+                        [
+                            btn,
+                            { opacity: [0, 1], transform: ['translateY(15px)', 'translateY(0)'] },
+                            { duration: 0.6, at: 0.5 + i * 0.08 },
+                        ] as const,
                 );
+                animate(buttonsSequence as any);
             }
         });
     };
@@ -159,19 +161,20 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
             return;
         }
 
-        animate(
-            projectCards,
-            {
-                opacity: [null, 0],
-                transform: [null, 'translateY(-15px) scale(0.95)'],
-                filter: [null, 'blur(4px)'],
-            },
-            {
-                duration: ANIMATION_CONFIG.exit.duration,
-                easing: ANIMATION_CONFIG.exit.easing,
-                delay: stagger(0.04),
-            },
-        ).finished.then(() => applyFilter(option));
+        const cards = Array.from(projectCards);
+        const exitSequence = cards.map(
+            (el, i) =>
+                [
+                    el,
+                    {
+                        opacity: 0,
+                        transform: 'translateY(-15px) scale(0.95)',
+                        filter: 'blur(4px)',
+                    },
+                    { duration: ANIMATION_CONFIG.exit.duration, at: i * 0.04 },
+                ] as const,
+        );
+        animate(exitSequence as any).finished.then(() => applyFilter(option));
     };
 
     const filterProjects = (projects: Project[], option: FilterOption) => {

@@ -21,6 +21,7 @@ const menus = [
 
 <header
     class="header fixed top-0 right-0 left-0 z-20 w-full px-4 py-3 transition-all duration-300 ease-out md:top-6 md:right-auto md:left-1/2 md:w-full md:max-w-4xl md:-translate-x-1/2 md:px-6 md:py-0"
+    style="visibility: hidden"
 >
     <div
         class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-none border border-t-0 border-r-0 border-l-0 border-white/10 px-4 py-4 md:rounded-2xl md:border md:px-8 md:py-5"
@@ -341,8 +342,8 @@ const menus = [
     }
 
     .close-text {
-    /* Using modular scale step -1 approximation (~0.79rem); keeping 0.75rem for tight nav look */
-    font-size: 0.75rem;
+        /* Using modular scale step -1 approximation (~0.79rem); keeping 0.75rem for tight nav look */
+        font-size: 0.75rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
@@ -602,13 +603,16 @@ const menus = [
 
     function animateHeaderIn(duration: number, delay: number) {
         if ($('header')) {
-            animate(
-                'header',
-                {
-                    transform: ['translateY(-10rem)', 'translateY(0)'],
-                },
-                { duration, easing: [0.25, 0.46, 0.45, 0.94], delay },
-            );
+            const seq = [
+                [
+                    'header',
+                    {
+                        transform: ['translateY(-10rem)', 'translateY(0)'],
+                    },
+                    { duration, delay },
+                ],
+            ] as const;
+            animate(seq as any);
         }
     }
 
@@ -666,13 +670,47 @@ const menus = [
         addListeners();
     }
 
+    let headerAnimated = false;
+    document.addEventListener('hero:sequence-done', () => {
+        if (!headerAnimated) {
+            const el = $('header') as HTMLElement | null;
+            if (el) el.style.visibility = 'visible';
+            initializeHeader(0.8, 0);
+            headerAnimated = true;
+        }
+    });
+
     document.addEventListener('astro:after-swap', () => {
-        initializeHeader(0, 0);
+        const el = $('header') as HTMLElement | null;
+        const hero = document.querySelector('.home-top');
+        if (!el) return;
+        if (hero) {
+            el.style.visibility = 'hidden';
+            headerAnimated = false;
+        } else {
+            el.style.visibility = 'visible';
+            initializeHeader(0.8, 0.2);
+            headerAnimated = true;
+        }
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        initializeHeader(0.8, 2);
+        const el = $('header') as HTMLElement | null;
+        if (!el) return;
+        const hero = document.querySelector('.home-top');
+        if (hero) {
+            el.style.visibility = 'hidden';
+            setTimeout(() => {
+                if (!headerAnimated) {
+                    el.style.visibility = 'visible';
+                    initializeHeader(0.8, 0);
+                    headerAnimated = true;
+                }
+            }, 3000);
+        } else {
+            el.style.visibility = 'visible';
+            initializeHeader(0.8, 0.2);
+            headerAnimated = true;
+        }
     });
-
-    initializeHeader(0.8, 2);
 </script>

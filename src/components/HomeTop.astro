@@ -1,14 +1,14 @@
 <section class="home-top landingpage text-stone-700" aria-labelledby="hero-title">
     <div class="flex flex-col items-center">
-        <div class="hero-animation text-center">
+        <div class="text-center">
             <h1 id="hero-title" class="title font-extrabold text-stone-700">
                 <span class="word">Thomas</span>
                 <span class="word">Breindl</span>
             </h1>
-            <h2 class="header-light hero-subtitle hero-animation text-stone-700">
+            <h2 class="header-light hero-subtitle text-stone-700">
                 Hallo, ich bin Programmierer, Designer und Student.
             </h2>
-            <nav class="links hero-animation" aria-label="Hauptlinks im Hero">
+            <nav class="links" aria-label="Hauptlinks im Hero">
                 <a href="#portfolio" class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
                 <span class="links-sep" aria-hidden="true">oder</span>
                 <a href="/timeline" class="link link-underline" rel="prefetch">Über Mich</a>
@@ -16,7 +16,7 @@
         </div>
         <button
             type="button"
-            class="scroll-to animate hero-animation"
+            class="scroll-to animate"
             aria-label="Zum Portfolio scrollen"
             title="Zum Portfolio scrollen scroll-trigger"
         >
@@ -203,49 +203,7 @@
         }
     }
 
-    .hero-animation {
-        animation: none;
-        transition: none;
-    }
-
     @media (prefers-reduced-motion: no-preference) {
-        .hero-animation {
-            z-index: 2;
-            opacity: 0;
-            animation-name: hero-animation;
-            animation-duration: 1.2s;
-            animation-fill-mode: forwards;
-
-            &:nth-child(1) {
-                animation-delay: 0.5s;
-            }
-            &:nth-child(2) {
-                animation-delay: 1s;
-                &.animate {
-                    animation-delay: 2s;
-                }
-            }
-            &:nth-child(3) {
-                animation-delay: 1.5s;
-            }
-        }
-        @keyframes hero-animation {
-            from {
-                opacity: 0;
-                visibility: hidden;
-                filter: blur(2px);
-                transform: translate3d(0, 25px, 0);
-                transition:
-                    opacity 0.5s ease-in,
-                    transform 0.4s ease-in;
-            }
-            to {
-                opacity: 1;
-                visibility: visible;
-                filter: blur(0);
-                transform: translate3d(0, 0, 0);
-            }
-        }
         @keyframes scroll {
             0% {
                 opacity: 1;
@@ -260,8 +218,7 @@
 </style>
 
 <script>
-    import { timeline, stagger, glide } from 'motion';
-    import type { TimelineDefinition } from 'motion';
+    import { animate, stagger } from 'motion';
 
     const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
     scrollTriggers.forEach((el) =>
@@ -277,7 +234,7 @@
         const stickyHeader = document.querySelector('header');
         const headerOffset = stickyHeader instanceof HTMLElement ? stickyHeader.offsetHeight : 150;
         const rect = portfolio.getBoundingClientRect();
-        const targetTop = rect.top + window.pageYOffset - headerOffset;
+        const targetTop = rect.top + window.scrollY - headerOffset;
         window.scrollTo({ top: targetTop, behavior: 'smooth' });
     }
 
@@ -289,68 +246,97 @@
     const splitByLetter = (text: string | null | undefined) => (text ? [...text].map(createSpan) : []);
 
     const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+    let heroAnim: any = null;
 
-    window.addEventListener('load', () => {
+    function runHeroLetters() {
         if (!motionOK) return;
 
-        // Split each word into letters while keeping words on separate lines
-        const words = document.querySelectorAll<HTMLElement>('.title .word');
-        words.forEach((wordEl) => {
-            const nodes = splitByLetter(wordEl.textContent);
-            wordEl.textContent = '';
-            nodes.forEach((node) => {
-                if (node.textContent === ' ') {
-                    wordEl.append(' ');
-                    return;
-                }
-                (node as HTMLElement).classList.add('letter');
-                (node as HTMLElement).style.display = 'inline-block';
-                wordEl.appendChild(node);
+        if (!document.querySelector('.title .letter')) {
+            const words = document.querySelectorAll<HTMLElement>('.title .word');
+            words.forEach((wordEl) => {
+                const nodes = splitByLetter(wordEl.textContent);
+                wordEl.textContent = '';
+                nodes.forEach((node) => {
+                    if (node.textContent === ' ') {
+                        wordEl.append(' ');
+                        return;
+                    }
+                    (node as HTMLElement).classList.add('letter');
+                    (node as HTMLElement).style.display = 'inline-block';
+                    wordEl.appendChild(node);
+                });
             });
-        });
+        }
 
         const letters = document.querySelectorAll<HTMLElement>('.title .letter');
+        letters.forEach((el) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translate3d(0, 25px, 0)';
+            el.style.filter = 'blur(5px)';
+            el.style.willChange = 'opacity, transform, filter';
+        });
 
-        const sequence: TimelineDefinition = [
+        const step = 0.075;
+        const letterDuration = 0.8;
+
+        const lastLetterEndAt = letters.length ? (letters.length - 1) * step + letterDuration : 0;
+
+        const sequence = [
             [
                 Array.from(letters),
                 {
+                    y: [50, 0],
                     opacity: [0, 1],
-                    transform: ['translate3d(0, 50px, 0)', 'translate3d(0, 0, 0)'],
                     filter: ['blur(5px)', 'blur(0)'],
                 },
-                { delay: stagger(0.05) },
+                { duration: letterDuration, delay: stagger(step, { startDelay: 0.3 }), ease: 'easeOut' },
             ],
             [
                 '.header-light',
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0, 50px, 0)', 'translate3d(0, 0, 0)'],
+                    y: [50, 0],
                     filter: ['blur(5px)', 'blur(0)'],
                 },
-                { at: 0.75 },
+                { at: Math.max(0, lastLetterEndAt - 0.3), duration: 0.75, ease: 'easeOut' },
             ],
             [
                 '.links',
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0, 25px, 0)', 'translate3d(0, 0, 0)'],
+                    y: [25, 0],
                     filter: ['blur(5px)', 'blur(0)'],
                 },
-                { at: 1.25 },
+                { at: Math.max(0, lastLetterEndAt - 0.05), duration: 0.7, ease: 'easeOut' },
             ],
             [
                 '.animate',
                 {
                     opacity: [0, 1],
-                    transform: ['translate3d(0, 25px, 0)', 'translate3d(0, 0, 0)'],
-                    filter: ['blur(5px)', 'blur(0)'],
+                    y: [25, 0],
                 },
-                { at: 1.5 },
+                { at: lastLetterEndAt + 0.1, duration: 0.7, ease: 'easeOut' },
             ],
+            ['.animate', { at: lastLetterEndAt + 0.6, duration: 0.2, ease: 'linear' }],
         ];
 
-        timeline(sequence, { defaultOptions: { easing: glide(), duration: 1, delay: 0.2 } });
+        heroAnim?.stop();
+        heroAnim = animate(sequence as any);
+        heroAnim.finished.then(() => {
+            const all = document.querySelectorAll<HTMLElement>('.title .letter, .header-light, .links, .animate');
+            all.forEach((el) => {
+                el.style.willChange = 'auto';
+            });
+            document.dispatchEvent(new CustomEvent('hero:sequence-done'));
+        });
+    }
+
+    window.addEventListener('load', runHeroLetters);
+    document.addEventListener('astro:page-load', runHeroLetters);
+    document.addEventListener('astro:after-swap', runHeroLetters);
+    document.addEventListener('astro:before-swap', () => {
+        heroAnim?.stop();
+        heroAnim = null;
     });
 </script>
 
