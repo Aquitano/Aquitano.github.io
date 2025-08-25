@@ -5,7 +5,6 @@ import compress from 'astro-compress';
 import critters from 'astro-critters';
 import icon from 'astro-icon';
 import { astroImageTools } from 'astro-imagetools';
-import purgecss from 'astro-purgecss';
 import { defineConfig } from 'astro/config';
 
 import devtools from 'solid-devtools/vite';
@@ -20,10 +19,6 @@ export default defineConfig({
         solidJs(),
         sitemap(),
         astroImageTools,
-        purgecss({
-            keyframes: true,
-            fontFace: true,
-        }),
         critters({
             exclude: ['./dist/showcase'],
             Logger: 1,

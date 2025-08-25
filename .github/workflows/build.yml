@@ -17,8 +17,7 @@ jobs:
                   key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
                   restore-keys: |
                       ${{ runner.os }}-bun-
-            - run: bun install --frozen-lockfile
-            - run: bun add sharp
+            - run: bun install --no-frozen-lockfile
             - run: bun run build
 
     production-check:
@@ -35,5 +34,5 @@ jobs:
                   key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
                   restore-keys: |
                       ${{ runner.os }}-bun-
-            - run: bun install --frozen-lockfile
+            - run: bun install --no-frozen-lockfile
             - run: bun run astro check
