@@ -41,12 +41,13 @@
     },
     "devDependencies": {
         "@types/lodash-es": "^4.17.12",
-        "sharp": "^0.34.3",
         "solid-devtools": "^0.34.3",
         "svgo": "^3.3.2"
     },
     "trustedDependencies": [
         "@parcel/watcher",
-        "@tailwindcss/oxide"
+        "@tailwindcss/oxide",
+        "esbuild",
+        "sharp"
     ]
 }
