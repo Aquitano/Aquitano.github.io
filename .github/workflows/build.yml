@@ -18,8 +18,7 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-bun-
             - run: bun install --frozen-lockfile
-            - name: Rebuild Sharp for current platform
-              run: bun rebuild sharp
+            - run: bun add sharp
             - run: bun run build
 
     production-check:
