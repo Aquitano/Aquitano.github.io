@@ -77,8 +77,18 @@ const sortProjects = (projects: Project[]): Project[] => {
     });
 };
 
+const filterProjects = (projects: Project[], option: FilterOption) => {
+    const sorted = sortProjects(projects);
+    const baseProjects = assignGridSizes(sorted);
+    return baseProjects.filter(TESTERS[option]);
+};
+
 const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
-    const [projects, setProjects] = createSignal<Project[]>([]);
+    const computeInitial = () => {
+        const featured = filterProjects(allProjects, 'featured');
+        return featured.length > 0 ? featured : filterProjects(allProjects, 'all');
+    };
+    const [projects, setProjects] = createSignal<Project[]>(computeInitial());
     const [filter, setFilter] = createSignal<FilterOption>('featured');
     const [isAnimating, setIsAnimating] = createSignal(false);
     const [headerVisible, setHeaderVisible] = createSignal(false);
@@ -177,12 +187,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
         animate(exitSequence as any).finished.then(() => applyFilter(option));
     };
 
-    const filterProjects = (projects: Project[], option: FilterOption) => {
-        const sorted = sortProjects(projects);
-        const baseProjects = assignGridSizes(sorted);
-        return baseProjects.filter(TESTERS[option]);
-    };
-
     const applyFilter = (option: FilterOption) => {
         const filteredProjects = filterProjects(allProjects, option);
         setProjects(filteredProjects);
@@ -190,9 +194,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     };
 
     onMount(() => {
-        const initialProjects = filterProjects(allProjects, 'featured');
-        setProjects(initialProjects.length > 0 ? initialProjects : filterProjects(allProjects, 'all'));
-
         if (preHeader) {
             preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
             useHeaderVisibilityObserver(() => preHeader);

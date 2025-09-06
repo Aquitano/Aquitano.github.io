@@ -30,7 +30,40 @@ if (project.data.fullImage) {
 }
 ---
 
-<Layout title={project.data.title + ' | Breindl Thomas'} active="Projekte">
+<Layout
+    title={project.data.title + ' | Breindl Thomas'}
+    active="Projekte"
+    SEO={{
+        description: project.data.description,
+        openGraph: {
+            title: project.data.title,
+            type: 'article',
+            image: project.data.share?.image || `/images/${project.data.name}.webp`,
+        },
+        extend: {
+            meta: {
+                keywords: [...project.data.tags, ...project.data.tasks, project.data.name],
+            },
+        },
+    }}
+>
+    <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'CreativeWork',
+            name: project.data.title,
+            description: project.data.description,
+            creator: {
+                '@type': 'Person',
+                name: 'Thomas Breindl',
+            },
+            dateCreated: project.data.year.toString(),
+            keywords: [...project.data.tags, ...project.data.tasks].join(', '),
+            url: new URL(`/project/${project.slug}`, Astro.site).toString(),
+        })}
+    />
+
     <div class="scroll-container">
         <div>
             <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52">
@@ -79,7 +112,7 @@ if (project.data.fullImage) {
                         <div class="wrapper px-4">
                             <div>
                                 <Image
-                                    alt="Website on multiple devices"
+                                    alt={`${project.data.title} - Vollständige Projektansicht`}
                                     src={fullImageSrc}
                                     height={820}
                                     width={1420}

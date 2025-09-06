@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+    title="404 - Seite nicht gefunden | Thomas Breindl"
+    active="Home"
+    SEO={{
+        description:
+            "Die angeforderte Seite wurde nicht gefunden. Zurück zur Startseite von Thomas Breindl's Portfolio.",
+        openGraph: {
+            title: '404 - Seite nicht gefunden',
+            type: 'website',
+        },
+    }}
+>
+    <div class="flex min-h-screen items-center justify-center">
+        <div class="text-center">
+            <h1 class="text-9xl font-bold text-stone-700">404</h1>
+            <h2 class="mt-4 text-2xl font-semibold text-stone-600">Seite nicht gefunden</h2>
+            <p class="mt-4 max-w-md text-lg text-stone-500">
+                Die angeforderte Seite existiert nicht oder wurde verschoben.
+            </p>
+            <a
+                href="/"
+                class="mt-8 inline-block rounded-lg bg-stone-700 px-6 py-3 text-white transition-colors hover:bg-stone-800"
+            >
+                Zurück zur Startseite
+            </a>
+        </div>
+    </div>
+</Layout>

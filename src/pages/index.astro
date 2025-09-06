@@ -9,7 +9,18 @@ const allProjects = await getCollection('project');
 export type product = CollectionEntry<'project'>;
 ---
 
-<Layout title="Breindl Thomas | Portfolio" active="Home">
+<Layout
+    title="Breindl Thomas | Portfolio"
+    active="Home"
+    SEO={{
+        description:
+            'Thomas Breindl - Programmierer, Designer und Student aus Deutschland. Entdecken Sie meine Projekte in Webentwicklung, React, TypeScript und mehr.',
+        openGraph: {
+            title: 'Thomas Breindl | Portfolio - Webentwickler & Designer',
+            type: 'website',
+        },
+    }}
+>
     <div id="Welcome">
         <HomeTop />
 

@@ -50,7 +50,7 @@ const { title, SEO: SEOData, active, location } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
@@ -75,12 +75,37 @@ const { title, SEO: SEOData, active, location } = Astro.props;
                     {
                         name: 'keywords',
                         content:
-                            // Add all keywords here and separate them with a comma
                             SEOData?.extend?.meta?.keywords?.join(',')?.concat(',', defaultKeywords.join(',')) ||
                             defaultKeywords.join(','),
                     },
+                    { name: 'twitter:card', content: 'summary_large_image' },
                 ],
             }}
+        />
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Person',
+                name: 'Thomas Breindl',
+                url: new URL('/', Astro.site).toString(),
+                sameAs: [
+                    'https://www.linkedin.com/in/thomas-breindl/',
+                    'https://github.com/Aquitano',
+                    'https://x.com/breindlthomas',
+                ],
+            })}
+        />
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'WebSite',
+                name: 'Thomas Breindl | Portfolio',
+                url: new URL('/', Astro.site).toString(),
+                inLanguage: 'de',
+                publisher: { '@type': 'Person', name: 'Thomas Breindl' },
+            })}
         />
     </head>
     <body class="overflow-x-hidden antialiased">

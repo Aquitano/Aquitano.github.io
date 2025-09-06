@@ -3,7 +3,18 @@ import { Icon } from 'astro-icon/components';
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Kontakt | Breindl Thomas" active="Kontakt">
+<Layout
+    title="Kontakt | Breindl Thomas"
+    active="Kontakt"
+    SEO={{
+        description:
+            'Kontaktieren Sie Thomas Breindl für Webentwicklung, Design und Programmierungsprojekte. Portfolio-Anfragen willkommen.',
+        openGraph: {
+            title: 'Kontakt - Thomas Breindl',
+            type: 'website',
+        },
+    }}
+>
     <div class="relative mt-11 flex min-h-screen items-center justify-center sm:mt-0 sm:items-center sm:pt-0">
         <div class="mx-auto w-full max-w-6xl sm:px-6 lg:px-8">
             <div class="mt-8 overflow-hidden">
