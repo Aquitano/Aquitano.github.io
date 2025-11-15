@@ -73,6 +73,11 @@ const sortProjects = (projects: Project[]): Project[] => {
     return [...projects].sort((a, b) => {
         if (a.data.featured && !b.data.featured) return -1;
         if (!a.data.featured && b.data.featured) return 1;
+
+        // TODO: Temporary fix for specific project ordering
+        if (a.data.name === 'Griffin' && b.data.name === 'JustHTML') return 1;
+        if (a.data.name === 'JustHTML' && b.data.name === 'Griffin') return -1;
+
         return b.data.year - a.data.year;
     });
 };

@@ -1,330 +1,628 @@
 ---
-// import Courses from '@components/Courses.astro';
 import Layout from '../layouts/Layout.astro';
+
+type ExperienceEntry = {
+    role: string;
+    company: string;
+    period: string;
+    highlights: string[];
+};
+
+type SkillGroup = {
+    title: string;
+    items: string[];
+};
+
+const experiences: ExperienceEntry[] = [
+    {
+        role: 'Software Development Intern & Working Student',
+        company: 'itestra GmbH · Passau',
+        period: 'Mar 2025 – Jul 2025, Oct 2025 – Present',
+        highlights: [
+            'Migrated ~12K LOC COBOL-Vertragslogik in eine Java/Quarkus-Architektur und reduzierte den Codeumfang um 40%.',
+            'Validierte mehrstufige Batch-Workflows (JBeret, Panache, Hibernate), um konsistente Outputs sicherzustellen.',
+        ],
+    },
+    {
+        role: 'Software Engineering Intern',
+        company: 'CHECK24 Vergleichsportal GmbH · München',
+        period: 'Aug 2025 – Sep 2025',
+        highlights: [
+            'Konzipierte eine asynchrone ActiveMQ-Pipeline zur Entkopplung kritischer Provider-Antworten.',
+            'Halbierte die P95-Latenz auf ~150 ms bei 1.5 M Events/Tag und etablierte neue Grafana-Metriken.',
+        ],
+    },
+    {
+        role: 'Software Development Intern',
+        company: '4process AG · Passau',
+        period: 'Jul 2024 – Aug 2024',
+        highlights: [
+            'Baute ein internes Ideenportal mit SAP Fiori Elements zur Strukturierung von Vorschlägen.',
+            'Implementierte ein Java-Tool für SAP Sales Cloud mit >5k validierten Excel-Updates/Sekunde.',
+        ],
+    },
+];
+
+const skillGroups: SkillGroup[] = [
+    {
+        title: 'Backend & Services',
+        items: ['Java', 'Spring Boot', 'Quarkus', 'JPA/Hibernate', 'Node.js', 'Express.js', 'tRPC', 'Python', 'SQL'],
+    },
+    {
+        title: 'Frontend & Product',
+        items: ['TypeScript', 'React', 'Next.js', 'SolidJS', 'Astro', 'Tailwind CSS'],
+    },
+    {
+        title: 'Platform & Observability',
+        items: [
+            'Docker & Kubernetes',
+            'Terraform',
+            'Linux/Bash',
+            'GitHub Actions',
+            'ActiveMQ',
+            'Grafana & Prometheus',
+            'PostgreSQL',
+            'Elasticsearch',
+        ],
+    },
+    {
+        title: 'Self-Hosting & Ops',
+        items: ['NixOS', 'Proxmox', 'Traefik', 'WireGuard', 'Ansible', 'GitLab', 'Nextcloud'],
+    },
+    {
+        title: 'Languages',
+        items: ['German (Native)', 'English (B2+/C1)', 'Latin'],
+    },
+];
+
+const coreSkills = [
+    {
+        name: 'Java',
+        accent: 'rgba(37, 99, 235, 0.65)',
+    },
+    {
+        name: 'TypeScript',
+        accent: 'rgba(14, 165, 233, 0.6)',
+    },
+];
+
+const languageGroup = skillGroups.find((group) => group.title === 'Languages');
+const primarySkillGroups = skillGroups.filter((group) => group.title !== 'Languages');
 ---
 
 <Layout title="Timeline | Breindl Thomas" active="Über mich">
-    <!-- <Courses /> -->
     <div class="scroll-container">
-        <div class="wrapper flex flex-col items-center justify-center">
-            <section class="block">
-                <div class="each-year">
-                    <div class="title fly-in-up i-v">2020</div>
-                    <div class="each-event i-v fly-in-up">
-                        <div class="event-description">
-                            Angefangen das Framework
-                            <a href="project/JustHTML" class="link-underline">JustHTML</a>, das helfen soll Webseiten
-                            nur mit HTML zu erstellen, zu erstellen.
-                        </div>
-                    </div>
-                    <div class="each-event i-v fly-in-up">
-                        <div class="event-description">
-                            Projekt, ein Getränk mit der imaginären "Brummselbeere" zu gestalten, hat Produktdesign,
-                            Verpackungsdesign, Marketingstrategie und eine Webseite beinhaltet:
-                            <a href="project/Griffin" class="link-underline">Griffin Energy</a>.
-                        </div>
-                    </div>
-                    <div class="each-event i-v fly-in-up">
-                        <div class="event-description">
-                            Angefangen mit dem Grafiktablett
-                            <a
-                                href="https://www.wacom.com/de-de/products/pen-tablets/wacom-intuos"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link-underline"
-                            >
-                                Wacom Intuos
-                            </a>
-                            zu zeichnen.
-                        </div>
-                    </div>
+        <section class="timeline-section experience-bento">
+            <div class="wrapper">
+                <div class="section-heading">
+                    <h2>Work Experience</h2>
                 </div>
-            </section>
-            <section class="block">
-                <div class="each-year">
-                    <div class="title i-v fly-in-up">2019</div>
-                    <div class="each-event i-v fly-in-up">
-                        <div class="event-description">
-                            Mit der 3D-Grafiksuite
-                            <a
-                                href="https://www.blender.org/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link-underline"
-                            >
-                                Blender
-                            </a>
-                            angefangen.
-                        </div>
-                    </div>
+                <div class="experience-grid">
+                    {
+                        experiences.map((exp) => (
+                            <article class="bento-card bento-card--experience experience-card">
+                                <div class="experience-card__header">
+                                    <span class="period">{exp.period}</span>
+                                    <h3>{exp.role}</h3>
+                                    <p class="company">{exp.company}</p>
+                                </div>
+                                <ul class="experience-points">
+                                    {exp.highlights.map((highlight) => (
+                                        <li>{highlight}</li>
+                                    ))}
+                                </ul>
+                            </article>
+                        ))
+                    }
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="block">
-                <div class="each-year">
-                    <div class="title i-v fly-in-up">2018</div>
-                    <div class="each-event i-v fly-in-up">
-                        <div class="event-description">
-                            In der Schule mit Java und der Game Engine
-                            <a
-                                href="https://github.com/engine-alpha/engine-alpha"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link-underline"
-                            >
-                                Engine Alpha
-                            </a>
-                            angefangen.
-                        </div>
-                    </div>
-                    <div class="each-event i-v fly-in-up">
-                        <div class="event-description">
-                            Mit Kurs
-                            <a
-                                href="https://www.udemy.com/course/der-komplette-webentwickler-2/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link-underline"
-                            >
-                                "Der komplette Web-Entwickler von Udemy"
-                            </a>
-                            gestartet, HTML, CSS, JS, Python & Wordpress zu lernen.
-                        </div>
-                    </div>
+        <section class="timeline-section skills-bento">
+            <div class="wrapper px-4">
+                <div class="section-heading">
+                    <h2>Skills & Tools</h2>
                 </div>
-            </section>
-        </div>
+                <div class="skills-grid">
+                    <article class="bento-card bento-card--skill core-skills-card">
+                        <div class="card-heading">
+                            <span>Core Languages</span>
+                        </div>
+                        <div class="core-language-stack">
+                            {
+                                coreSkills.map((skill, index) => (
+                                    <div
+                                        class="core-lang-card"
+                                        tabindex="0"
+                                        style={`--card-index: ${index}; --card-accent: ${skill.accent};`}
+                                    >
+                                        <p class="core-lang-card__label">{skill.name}</p>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </article>
+
+                    {
+                        primarySkillGroups.map((group) => (
+                            <article class="bento-card bento-card--skill">
+                                <div class="card-heading">
+                                    <span>{group.title}</span>
+                                </div>
+                                <div class="skill-chip-grid">
+                                    {group.items.map((item) => (
+                                        <span class="skill-chip">{item}</span>
+                                    ))}
+                                </div>
+                            </article>
+                        ))
+                    }
+
+                    {
+                        languageGroup && (
+                            <article class="bento-card bento-card--skill">
+                                <div class="card-heading">
+                                    <span>{languageGroup.title}</span>
+                                </div>
+                                <div class="skill-chip-grid">
+                                    {languageGroup.items.map((lang) => (
+                                        <span class="skill-chip">{lang}</span>
+                                    ))}
+                                </div>
+                            </article>
+                        )
+                    }
+                </div>
+            </div>
+        </section>
     </div>
 </Layout>
 
 <style lang="scss">
     @use '@assets/css/animation.scss';
-    .link-underline {
-        font-weight: 600;
-        color: #21468f;
-        border-bottom-width: 0;
-        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
-        background-size: 0 3px;
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        transition: background-size 0.25s ease-in-out;
 
-        &:hover {
-            background-size: 100% 3px;
-            background-position: 0 100%;
-            text-shadow: 0 0 0.25px #0f141e80;
-        }
+    .scroll-container {
+        padding-top: 3rem;
+        padding-bottom: clamp(2rem, 1rem + 3vw, 4rem);
     }
+
     .wrapper {
         width: 100%;
-        min-height: 100vh;
-        height: 100%;
-        font:
-            normal 16px/26px Open Sans Condensed,
-            sans-serif;
-        color: rgb(90, 90, 90);
-        padding: 100px 20px 200px;
-        box-sizing: border-box;
-    }
-    .block {
-        z-index: 1;
-        position: relative;
-    }
-    .block:before {
-        content: '';
-        position: absolute;
-        height: calc(100% - 40px);
-        width: 1px;
-        background-color: #353535;
-        left: 50%;
-        margin-top: 65px;
-    }
-    .title {
-        font:
-            bold 42px/52px Open Sans Condensed,
-            sans-serif;
-        text-align: center;
-        padding: 20px;
-        transition: all 0.8s ease-in-out;
-    }
-    @media screen and (min-width: 240px) {
-        .each-event {
-            background-color: #c2c2c277;
-            color: #777;
-            padding: 15px;
-            margin: 80px 0px;
-            width: 170px;
-            position: relative;
-            border-radius: 10px;
-            box-sizing: border-box;
-            transition: all 0.3s ease-in-out;
-        }
-        .each-event:nth-child(even) {
-            margin-left: calc(50% - 191px);
-        }
-    }
-    @media screen and (min-width: 650px) {
-        .each-event {
-            background-color: #c2c2c277;
-            color: #777;
-            padding: 15px;
-            margin: 80px 0px;
-            width: 300px;
-            position: relative;
-            border-radius: 10px;
-            box-sizing: border-box;
-            transition: all 0.3s ease-in-out;
-        }
-        .each-event:nth-child(even) {
-            margin-left: calc(50% - 321px);
-        }
-    }
-    .each-event:before {
-        content: '';
-        position: absolute;
-        top: calc(50% - 8px);
-        left: -27px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: rgb(80, 80, 80);
-        box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.8);
-    }
-    .each-event:nth-child(odd) {
-        margin-left: calc(50% + 20px);
-    }
-    .each-event:nth-child(even):before {
-        left: calc(100% + 14px);
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
     }
 
-    // From index.html
-    main {
-        margin: auto;
-        padding: 1.5rem;
-        max-width: 60ch;
+    .experience-bento .wrapper {
+        padding-top: clamp(4rem, 2.5rem + 4vw, 7rem);
     }
-    .text-gradient {
-        background-image: var(--accent-gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 400%;
-        background-position: 0%;
+
+    .skills-bento .wrapper {
+        padding-top: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+        padding-bottom: clamp(2.5rem, 1.5rem + 3vw, 4rem);
     }
-    .link-card-grid {
+
+    .section-heading {
+        margin-bottom: clamp(1.5rem, 1rem + 1vw, 2.5rem);
+        max-width: 760px;
+
+        h1,
+        h2 {
+            font-family: 'Helvetica Now Display DW', sans-serif;
+            font-weight: 900;
+            line-height: 1.1;
+            font-size: clamp(2rem, 1.2rem + 3vw, 3.2rem);
+            color: #44403c;
+        }
+    }
+
+    .timeline-section {
+        color: rgba(15, 20, 30, 0.75);
+    }
+
+    .timeline-section .section-heading h2 {
+        color: #44403c;
+    }
+
+    .experience-bento .section-heading h2 {
+        font-size: clamp(2.4rem, 1.6rem + 3vw, 3.6rem);
+    }
+
+    .experience-grid,
+    .skills-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-        gap: 1rem;
-        padding: 0;
+        gap: 1.2rem;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        margin-top: clamp(1rem, 0.8rem + 1vw, 2rem);
     }
 
-    /* New */
-    ::selection {
-        background-color: #878a8f;
-        color: #fff;
-    }
-    a:focus,
-    button:focus,
-    input:focus,
-    select:focus,
-    textarea:focus {
-        outline: 0;
-    }
-    @keyframes loader-progress-on {
-        0%,
-        50% {
-            opacity: 0;
-            transform: translate3d(0, 30px, 0);
-        }
-        100% {
+    .bento-card {
+        position: relative;
+        border-radius: clamp(1.2rem, 0.9rem + 1vw, 2rem);
+        padding: clamp(1.5rem, 1.2rem + 1vw, 2.5rem);
+        background: linear-gradient(165deg, rgba(10, 12, 23, 0.95), rgba(15, 23, 42, 0.82));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 28px 50px rgba(2, 6, 23, 0.55);
+        display: flex;
+        flex-direction: column;
+        gap: 1.3rem;
+        backdrop-filter: blur(14px);
+        color: rgba(243, 244, 246, 0.9);
+        opacity: 0;
+        transform: translate3d(0, 24px, 0);
+        transition:
+            opacity 0.8s ease,
+            transform 0.8s ease;
+        overflow: hidden;
+
+        &.is-visible {
             opacity: 1;
             transform: translate3d(0, 0, 0);
         }
     }
 
-    .icon {
-        display: inline-flex;
-        align-self: center;
-    }
-    .icon svg {
-        fill: currentColor;
-        height: 100%;
-        width: 100%;
+    .bento-card > * {
         position: relative;
-        top: 0.025em;
-    }
-    a {
-        color: #878a8f;
-        text-decoration: none;
-        border-bottom: 1px solid rgba(135, 138, 143, 0.4);
-        transition: all 0.2s cubic-bezier(0.3, 0, 0.5, 1);
-    }
-    a:active {
-        color: #0f141e;
-        border-color: #0f141e;
-    }
-    a.special,
-    a.with-icon {
-        position: relative;
-        color: #0f141e;
-        border: 0 none;
-        display: inline-block;
-        line-height: 1;
+        z-index: 1;
     }
 
-    p {
-        color: #878a8f;
-        font-weight: 500;
-        letter-spacing: 0.01em;
-        padding-top: 2px;
-        padding-bottom: 3px;
+    .card-heading {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
     }
-    p a .icon {
-        width: 16px;
-        height: 16px;
+
+    .card-heading span {
+        font-size: 0.74rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: rgba(226, 232, 240, 0.7);
+        font-weight: 600;
     }
-    p a .icon svg {
-        top: 0.125em;
+
+    .bento-card--experience {
+        border-color: rgba(148, 163, 184, 0.25);
+        background: linear-gradient(170deg, rgba(10, 12, 23, 0.96), rgba(15, 23, 42, 0.8));
     }
-    p a .icon--on-right {
-        margin-left: 5px;
+
+    .experience-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
     }
-    strong {
-        font-weight: 500;
-        color: #0f141e;
+
+    .experience-card__header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
     }
-    .hidden {
-        visibility: hidden;
+
+    .experience-card__header .period {
+        font-size: 0.75rem;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: rgba(199, 210, 254, 0.9);
+        font-weight: 600;
+    }
+
+    .experience-card__header h3 {
+        margin: 0;
+        font-family: 'Helvetica Now Display DW', sans-serif;
+        font-size: 1.45rem;
+        color: rgba(248, 250, 252, 0.95);
+    }
+
+    .experience-card__header .company {
+        color: rgba(226, 232, 240, 0.7);
+        margin: 0;
+    }
+
+    .experience-points {
+        margin: 0;
+        list-style: disc;
+        list-style-position: outside;
+        padding-left: 1.4rem;
+        color: rgba(226, 232, 240, 0.78);
+        line-height: 1.55;
+    }
+
+    .experience-points li::marker {
+        color: rgba(129, 140, 248, 0.85);
+    }
+
+    .experience-points li + li {
+        margin-top: 0.45rem;
+    }
+
+    .bento-card--skill {
+        background: linear-gradient(165deg, rgba(6, 10, 25, 0.95), rgba(18, 34, 63, 0.85));
+    }
+
+    .skill-chip-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .skill-chip {
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.15);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        font-size: 0.85rem;
+        color: rgba(248, 250, 252, 0.9);
+        font-weight: 600;
+    }
+
+    .skills-bento .skill-chip {
+        background: rgba(255, 255, 255, 0.07);
+        border-color: rgba(255, 255, 255, 0.12);
+        color: rgba(248, 250, 252, 0.88);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.72rem;
+        padding: 0.4rem 0.95rem;
+        transition:
+            background 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    .skills-bento .skill-chip:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .core-skills-card {
+        background:
+            radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.08), transparent 55%),
+            linear-gradient(135deg, rgb(8, 47, 73), rgb(15, 23, 42));
+        color: #f8fafc;
+        border-color: rgba(59, 130, 246, 0.35);
+        box-shadow: 0 30px 50px rgba(2, 6, 23, 0.55);
+        overflow: hidden;
+    }
+
+    .core-language-stack {
+        position: relative;
+        min-height: clamp(190px, 140px + 4vw, 260px);
+        margin-top: 0.75rem;
+        isolation: isolate;
+    }
+
+    .core-lang-card {
+        position: absolute;
+        width: min(260px, 68%);
+        height: min(260px, 68%);
+        left: 50%;
+        top: 50%;
+        padding: 1rem 1.5rem;
+        border-radius: 1.1rem;
+        background:
+            radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.85), transparent 55%),
+            linear-gradient(155deg, rgba(255, 255, 255, 0.94), var(--card-accent, rgba(59, 130, 246, 0.65)));
+        border: 1px solid rgba(255, 255, 255, 0.65);
+        box-shadow: 0 30px 55px rgba(15, 23, 42, 0.35);
+        z-index: var(--card-base-z, 1);
+        --card-scale: 1;
+        transform: translate(-50%, -50%) translate(var(--card-translate-x, 0px), var(--card-translate-y, 0px))
+            rotate(var(--card-rotate, 0deg)) scale(var(--card-scale));
+        backdrop-filter: blur(6px);
+        color: rgba(8, 15, 35, 0.85);
+        transition:
+            transform 0.6s ease,
+            box-shadow 0.4s ease,
+            z-index 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+    }
+
+    .core-lang-card:hover,
+    .core-lang-card:focus-visible,
+    .core-lang-card.is-active {
+        z-index: 5;
+        --card-scale: 1.06;
+        box-shadow: 0 35px 60px rgba(15, 23, 42, 0.55);
+    }
+
+    .core-lang-card:focus-visible {
+        outline: 2px solid rgba(199, 210, 254, 0.8);
+        outline-offset: 4px;
+    }
+
+    .core-lang-card:nth-child(1) {
+        --card-base-z: 2;
+        --card-translate-x: -65px;
+        --card-translate-y: -42px;
+        --card-rotate: -6deg;
+    }
+
+    .core-lang-card:nth-child(2) {
+        --card-base-z: 3;
+        --card-translate-x: 58px;
+        --card-translate-y: 45px;
+        --card-rotate: 5deg;
+    }
+
+    .core-lang-card__label {
+        margin: 0;
+        font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-align: center;
+        width: 100%;
+        word-break: break-word;
+        color: rgba(7, 11, 25, 0.85);
+    }
+
+    @media (max-width: 640px) {
+        .core-language-stack {
+            min-height: auto;
+        }
+
+        .core-lang-card {
+            position: relative;
+            width: 100%;
+            height: auto;
+            left: 0;
+            top: 0;
+            transform: none !important;
+            animation: none;
+            margin-bottom: 1rem;
+        }
+
+        .core-lang-card:hover,
+        .core-lang-card:focus-visible {
+            --card-scale: 1;
+            box-shadow: 0 15px 25px rgba(15, 23, 42, 0.25);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .experience-grid,
+        .skills-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-auto-rows: minmax(220px, auto);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .bento-card {
+            transition: none;
+            opacity: 1 !important;
+            transform: none !important;
+        }
     }
 </style>
 
 <script>
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let detachSpotlight: (() => void) | undefined;
+    let detachCoreStack: (() => void) | undefined;
 
-    function revealTimeline() {
-        const items = Array.from(document.querySelectorAll<HTMLElement>('.i-v'));
-        if (reduce || !('IntersectionObserver' in window)) {
-            items.forEach((el) => el.classList.remove('i-v'));
+    function revealCards() {
+        const cards = Array.from(document.querySelectorAll<HTMLElement>('.bento-card'));
+        if (prefersReduce || !('IntersectionObserver' in window)) {
+            cards.forEach((card) => card.classList.add('is-visible'));
             return;
         }
 
         const io = new IntersectionObserver(
-            (entries, obs) => {
+            (entries, observer) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        const el = entry.target as HTMLElement;
-                        el.classList.add('is-visible');
-                        el.classList.remove('i-v');
-                        obs.unobserve(el);
+                        (entry.target as HTMLElement).classList.add('is-visible');
+                        observer.unobserve(entry.target);
                     }
                 });
             },
-            { threshold: 0.15 },
+            {
+                threshold: 0.25,
+                rootMargin: '0px 0px -10% 0px',
+            },
         );
 
-        items.forEach((el) => io.observe(el));
+        cards.forEach((card) => io.observe(card));
     }
 
-    window.addEventListener('load', revealTimeline);
-    document.addEventListener('astro:page-load', revealTimeline);
-    document.addEventListener('astro:after-swap', revealTimeline);
+    function attachSpotlightFx() {
+        detachSpotlight?.();
+        if (prefersReduce) {
+            return;
+        }
+
+        const cards = Array.from(document.querySelectorAll<HTMLElement>('.bento-card'));
+        const cleanups: Array<() => void> = [];
+
+        cards.forEach((card) => {
+            // Create spotlight overlay element
+            const spotlight = document.createElement('div');
+            spotlight.className = 'spotlight-overlay';
+            spotlight.style.cssText = `
+                position: absolute;
+                inset: 0;
+                z-index: 0;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+                border-radius: inherit;
+            `;
+            card.style.position = 'relative';
+            card.insertBefore(spotlight, card.firstChild);
+
+            const handleMove = (event: PointerEvent) => {
+                const rect = card.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.1), transparent 80%)`;
+                spotlight.style.opacity = '1';
+            };
+
+            const handleEnter = () => {
+                spotlight.style.opacity = '1';
+            };
+
+            const handleLeave = () => {
+                spotlight.style.opacity = '0';
+            };
+
+            card.addEventListener('pointermove', handleMove);
+            card.addEventListener('pointerenter', handleEnter);
+            card.addEventListener('pointerleave', handleLeave);
+
+            cleanups.push(() => {
+                card.removeEventListener('pointermove', handleMove);
+                card.removeEventListener('pointerenter', handleEnter);
+                card.removeEventListener('pointerleave', handleLeave);
+                spotlight.remove();
+            });
+        });
+
+        detachSpotlight = () => cleanups.forEach((fn) => fn());
+    }
+
+    function setupCoreLanguageCards() {
+        detachCoreStack?.();
+
+        const stacks = Array.from(document.querySelectorAll<HTMLElement>('.core-language-stack'));
+        const cleanups: Array<() => void> = [];
+
+        stacks.forEach((stack) => {
+            const cards = Array.from(stack.querySelectorAll<HTMLElement>('.core-lang-card'));
+            if (!cards.length) {
+                return;
+            }
+
+            const activate = (target: HTMLElement) => {
+                cards.forEach((card) => card.classList.toggle('is-active', card === target));
+            };
+
+            cards.forEach((card) => {
+                const handlePointer = () => activate(card);
+                card.addEventListener('pointerenter', handlePointer);
+                card.addEventListener('focus', handlePointer);
+                cleanups.push(() => {
+                    card.removeEventListener('pointerenter', handlePointer);
+                    card.removeEventListener('focus', handlePointer);
+                });
+            });
+
+            activate(cards[1]);
+        });
+
+        detachCoreStack = () => cleanups.forEach((fn) => fn());
+    }
+
+    function hydrateTimeline() {
+        revealCards();
+        attachSpotlightFx();
+        setupCoreLanguageCards();
+    }
+
+    window.addEventListener('load', hydrateTimeline);
+    document.addEventListener('astro:page-load', hydrateTimeline);
+    document.addEventListener('astro:after-swap', hydrateTimeline);
 </script>
