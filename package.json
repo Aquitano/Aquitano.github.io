@@ -35,6 +35,7 @@
         "prettier-plugin-astro": "^0.14.1",
         "prettier-plugin-tailwindcss": "^0.7.1",
         "sass": "^1.94.0",
+        "sharp": "^0.34.5",
         "solid-js": "^1.9.10",
         "tailwindcss": "^4.1.17"
     },

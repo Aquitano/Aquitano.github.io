@@ -17,7 +17,13 @@ jobs:
                   key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
                   restore-keys: |
                       ${{ runner.os }}-bun-
-            - run: bun install --no-frozen-lockfile
+            - name: Install deps (bun)
+              run: |
+                  rm -rf node_modules bun.lockb
+                  bun install --no-frozen-lockfile
+            - name: Rebuild sharp for linux-x64
+              run: |
+                  npm rebuild sharp --include=optional --platform=linux --arch=x64
             - run: bun run build
 
     production-check:
@@ -34,5 +40,11 @@ jobs:
                   key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
                   restore-keys: |
                       ${{ runner.os }}-bun-
-            - run: bun install --no-frozen-lockfile
+            - name: Install deps (bun)
+              run: |
+                  rm -rf node_modules bun.lockb
+                  bun install --no-frozen-lockfile
+            - name: Rebuild sharp for linux-x64
+              run: |
+                  npm rebuild sharp --include=optional --platform=linux --arch=x64
             - run: bun run astro check
