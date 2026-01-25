@@ -1,36 +1,29 @@
 <section class="home-top landingpage" aria-labelledby="hero-title">
     <div class="flex flex-col items-center">
         <div class="text-center">
-            <span class="hero-tag">// Welcome</span>
-            <h1 id="hero-title" class="title font-extrabold text-[var(--color-text-primary)]">
+            <!-- CLI header -->
+            <div class="cli-header">
+                <span class="cli-prompt">$</span>
+                <span class="cli-command">whoami</span>
+            </div>
+            
+            <h1 id="hero-title" class="title font-extrabold text-(--color-text-primary)">
                 <span class="word">Thomas</span>
                 <span class="word">Breindl</span>
             </h1>
-            <p class="hero-subtitle text-[var(--color-text-secondary)]">
+            <p class="hero-subtitle text-(--color-text-secondary)">
                 Hallo, ich bin Programmierer, Designer und Student.
             </p>
             <nav class="links" aria-label="Hauptlinks im Hero">
-                <a
-                    href="#portfolio"
-                    class="link link-underline scroll-to projects cursor-pointer"
-                >
-                    Projekte
-                </a>
+                <a href="#portfolio" class="link link-underline scroll-to projects cursor-pointer"> Projekte </a>
                 <span class="links-sep" aria-hidden="true">oder</span>
                 <a href="/timeline" class="link link-underline" data-astro-prefetch>Über Mich</a>
             </nav>
         </div>
-        <button
-            type="button"
-            class="scroll-trigger animate"
-            aria-label="Zum Portfolio scrollen"
-        >
+        <button type="button" class="scroll-trigger animate" aria-label="Zum Portfolio scrollen">
             <span class="scroll-to-icon" aria-hidden="true"></span>
         </button>
     </div>
-    <!-- ASCII decoration -->
-    <div class="ascii-deco ascii-deco-left" aria-hidden="true">$$$$$</div>
-    <div class="ascii-deco ascii-deco-right" aria-hidden="true">////</div>
 </section>
 
 <style>
@@ -57,13 +50,24 @@
         background: radial-gradient(900px 200px at 50% 0, var(--color-border-subtle), transparent 65%);
     }
 
-    .hero-tag {
-        display: block;
+    /* CLI header */
+    .cli-header {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-3);
         font-family: var(--font-mono);
         font-size: var(--text-sm);
+        margin-bottom: var(--space-6);
+        color: var(--text-secondary);
+    }
+
+    .cli-prompt {
         color: var(--color-accent);
-        letter-spacing: var(--tracking-wide);
-        margin-bottom: var(--space-4);
+        font-weight: var(--font-bold);
+    }
+
+    .cli-command {
+        color: var(--text-secondary);
     }
 
     .title {
@@ -90,33 +94,6 @@
         text-wrap: balance;
     }
 
-    .ascii-deco {
-        position: absolute;
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-        color: var(--text-muted);
-        letter-spacing: 0.1em;
-        opacity: 0.4;
-        pointer-events: none;
-        user-select: none;
-    }
-
-    .ascii-deco-left {
-        bottom: var(--space-8);
-        left: var(--gutter);
-    }
-
-    .ascii-deco-right {
-        bottom: var(--space-8);
-        right: var(--gutter);
-    }
-
-    @media (max-width: 640px) {
-        .ascii-deco {
-            display: none;
-        }
-    }
-
     .link {
         font-weight: var(--font-extrabold);
         letter-spacing: normal;
@@ -132,11 +109,12 @@
 
     .link-underline {
         border-bottom-width: 0;
-        background-image: linear-gradient(transparent, transparent), linear-gradient(var(--color-accent), var(--color-accent));
+        background-image:
+            linear-gradient(transparent, transparent), linear-gradient(var(--color-accent), var(--color-accent));
         background-size: 0 3px;
         background-position: 0 100%;
         background-repeat: no-repeat;
-        transition: 
+        transition:
             background-size var(--duration-normal) var(--ease-out),
             color var(--duration-fast) var(--ease-out);
     }
@@ -288,7 +266,7 @@
     function runHeroLetters() {
         if (!motionOK) {
             // Show elements immediately without animation
-            const elements = document.querySelectorAll<HTMLElement>('.header-light, .hero-subtitle, .links, .animate');
+            const elements = document.querySelectorAll<HTMLElement>('.cli-header, .header-light, .hero-subtitle, .links, .animate');
             elements.forEach((el) => {
                 el.style.opacity = '1';
             });
@@ -325,6 +303,14 @@
         const lastLetterEndAt = letters.length ? (letters.length - 1) * step + letterDuration : 0;
 
         const sequence = [
+            [
+                '.cli-header',
+                {
+                    opacity: [0, 1],
+                    x: [-8, 0],
+                },
+                { duration: 0.6, delay: 0.1, ease: 'easeOut' },
+            ],
             [
                 Array.from(letters),
                 {
@@ -365,7 +351,7 @@
         heroAnim?.stop();
         heroAnim = animate(sequence as any);
         heroAnim.finished.then(() => {
-            const all = document.querySelectorAll<HTMLElement>('.title .letter, .hero-subtitle, .links, .animate');
+            const all = document.querySelectorAll<HTMLElement>('.cli-header, .title .letter, .hero-subtitle, .links, .animate');
             all.forEach((el) => {
                 el.style.willChange = 'auto';
             });

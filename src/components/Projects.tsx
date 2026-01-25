@@ -1,4 +1,5 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
+import { sortedUniq } from 'lodash-es';
 import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
@@ -116,6 +117,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
         tall: 'h-[460px]',
     };
 
+    let cliHeader: HTMLDivElement | undefined;
     let preHeader: HTMLParagraphElement | undefined;
     let header: HTMLHeadingElement | undefined;
     let projectsContainer: HTMLDivElement | undefined;
@@ -140,6 +142,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
         // Skip animation if reduced motion is preferred
         if (!motionOK) {
+            if (cliHeader) cliHeader.style.opacity = '1';
             if (preHeader) preHeader.style.opacity = '1';
             if (header) header.style.opacity = '1';
             filterButtons.forEach((btn) => {
@@ -149,17 +152,31 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
             return;
         }
 
+        if (cliHeader) cliHeader.style.cssText = 'opacity: 0; transform: translateX(-8px);';
         preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
         header.style.cssText = 'opacity: 0; transform: translateY(20px);';
 
         requestAnimationFrame(() => {
             const sequence = [
-                [preHeader, { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] }, { duration: 0.8 }],
+                ...(cliHeader
+                    ? [
+                          [
+                              cliHeader,
+                              { opacity: [0, 1], transform: ['translateX(-8px)', 'translateX(0)'] },
+                              { duration: 0.6 },
+                          ] as const,
+                      ]
+                    : []),
+                [
+                    preHeader,
+                    { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
+                    { duration: 0.8, at: '-0.3' },
+                ] as const,
                 [
                     header,
                     { opacity: [0, 1], transform: ['translateY(25px)', 'translateY(0)'] },
                     { duration: 0.8, at: '-0.4' },
-                ],
+                ] as const,
             ];
 
             animate(sequence as any).finished.then(() => {
@@ -225,8 +242,14 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
     onMount(() => {
         if (preHeader) {
-            if (motionOK) {
-                preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
+            if (!motionOK) {
+                if (cliHeader) cliHeader.style.opacity = '1';
+                preHeader.style.opacity = '1';
+                if (header) header.style.opacity = '1';
+                filterButtons.forEach((btn) => {
+                    btn.style.opacity = '1';
+                });
+                setHeaderAnimationComplete(true);
             }
             useHeaderVisibilityObserver(() => preHeader);
         }
@@ -234,27 +257,35 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
     return (
         <section
-            class="relative z-3 overflow-hidden py-[var(--space-section)]"
+            class="relative z-3 overflow-hidden py-(--space-section)"
             id="portfolio"
             aria-labelledby="portfolio-heading"
         >
-            <div class="mx-auto w-full max-w-7xl px-[var(--gutter)]">
-                {/* Header */}
-                <header class="mb-16 text-left">
+            <div class="mx-auto w-full max-w-7xl px-(--gutter)">
+                <div class="mb-16 text-left">
+                    {/* CLI header */}
+                    <div
+                        ref={cliHeader}
+                        class="mb-6 flex items-center gap-3 font-(family-name:--font-mono) text-(length:--text-sm) text-(--text-secondary)"
+                    >
+                        <span class="font-bold text-(--color-accent)">$</span>
+                        <span>cd ~/portfolio && ls</span>
+                    </div>
+
                     <p
                         ref={preHeader}
-                        class="text-[length:var(--text-sm)] font-semibold tracking-[var(--tracking-caps)] text-[var(--color-text-tertiary)] uppercase"
+                        class="text-(length:--text-sm) font-semibold tracking-(--tracking-caps) text-(--color-text-tertiary) uppercase"
                     >
                         Meine
                     </p>
                     <h1
                         ref={header}
                         id="portfolio-heading"
-                        class="mt-2 font-[family-name:var(--font-display)] text-[length:var(--text-5xl)] leading-[var(--leading-tight)] font-extrabold text-[var(--color-text-primary)]"
+                        class="mt-2 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
                     >
                         Projekte
                     </h1>
-                </header>
+                </div>
 
                 {/* Filter buttons */}
                 <nav class="mb-12" aria-label="Projektfilter">
@@ -289,7 +320,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                     <Show
                         when={projects().length > 0}
                         fallback={
-                            <div class="col-span-full py-8 text-center text-[var(--color-text-tertiary)]">
+                            <div class="col-span-full py-8 text-center text-(--color-text-tertiary)">
                                 Keine Projekte gefunden
                             </div>
                         }

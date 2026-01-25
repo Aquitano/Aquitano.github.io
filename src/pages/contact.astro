@@ -20,9 +20,7 @@ import Layout from '../layouts/Layout.astro';
             <div class="contact-header">
                 <span class="section-tag">// Contact</span>
                 <h1>Kontaktieren Sie mich</h1>
-                <p class="contact-subtitle">
-                    Füllen Sie das Formular aus, um ein Gespräch zu beginnen
-                </p>
+                <p class="contact-subtitle">Füllen Sie das Formular aus, um ein Gespräch zu beginnen</p>
             </div>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                 <!-- Contact Info -->
@@ -62,7 +60,12 @@ import Layout from '../layouts/Layout.astro';
                             </div>
                             <div>
                                 <p class="contact-label">Twitter / X</p>
-                                <a href="https://twitter.com/BreindlThomas" target="_blank" rel="noopener noreferrer" class="contact-link">
+                                <a
+                                    href="https://twitter.com/BreindlThomas"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="contact-link"
+                                >
                                     @BreindlThomas
                                 </a>
                             </div>
@@ -75,7 +78,12 @@ import Layout from '../layouts/Layout.astro';
                             </div>
                             <div>
                                 <p class="contact-label">GitHub</p>
-                                <a href="https://github.com/Aquitano" target="_blank" rel="noopener noreferrer" class="contact-link">
+                                <a
+                                    href="https://github.com/Aquitano"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="contact-link"
+                                >
                                     Aquitano
                                 </a>
                             </div>
@@ -156,9 +164,7 @@ import Layout from '../layouts/Layout.astro';
                             class="form-input"
                             placeholder="max@beispiel.de"
                         />
-                        <p id="email-hint" class="form-hint">
-                            Ihre E-Mail wird nur für die Kontaktaufnahme verwendet.
-                        </p>
+                        <p id="email-hint" class="form-hint">Ihre E-Mail wird nur für die Kontaktaufnahme verwendet.</p>
                     </div>
 
                     <!-- Phone Field -->
@@ -192,8 +198,7 @@ import Layout from '../layouts/Layout.astro';
                             aria-required="true"
                             rows="5"
                             class="form-input form-textarea"
-                            placeholder="Ihre Nachricht..."
-                        ></textarea>
+                            placeholder="Ihre Nachricht..."></textarea>
                     </div>
 
                     <!-- reCAPTCHA -->
@@ -203,7 +208,8 @@ import Layout from '../layouts/Layout.astro';
                     <div id="form-error" role="alert" aria-live="polite" class="form-message form-error hidden"></div>
 
                     <!-- Success message container -->
-                    <div id="form-success" role="status" aria-live="polite" class="form-message form-success hidden"></div>
+                    <div id="form-success" role="status" aria-live="polite" class="form-message form-success hidden">
+                    </div>
 
                     <button type="submit" class="btn btn-primary submit-btn">
                         Absenden
@@ -424,7 +430,8 @@ import Layout from '../layouts/Layout.astro';
         text-decoration: underline;
         text-decoration-color: rgba(255, 255, 255, 0.3);
         text-underline-offset: 2px;
-        transition: color var(--duration-fast) var(--ease-out),
+        transition:
+            color var(--duration-fast) var(--ease-out),
             text-decoration-color var(--duration-fast) var(--ease-out);
     }
 

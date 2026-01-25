@@ -85,49 +85,57 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     <div class="timeline-page">
         <section class="hero" aria-labelledby="page-title">
             <div class="hero-content">
+                <div class="cli-header">
+                    <span class="cli-prompt">$</span>
+                    <span class="cli-command">ls -la ~/experience</span>
+                </div>
                 <span class="hero-tag">// About</span>
                 <h1 id="page-title">Work Experience</h1>
                 <p class="hero-sub">Building systems that scale</p>
             </div>
-        <div class="hero-pattern" aria-hidden="true">
-            <svg viewBox="0 0 400 200" preserveAspectRatio="none">
-                <defs>
-                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)"/>
-            </svg>
-        </div>
+            <div class="hero-pattern" aria-hidden="true">
+                <svg viewBox="0 0 400 200" preserveAspectRatio="none">
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"></path>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)"></rect>
+                </svg>
+            </div>
         </section>
 
         <section class="experience-section" aria-labelledby="experience-heading">
             <h2 id="experience-heading" class="sr-only">Professional Experience</h2>
             <div class="timeline-track" aria-hidden="true"></div>
             <ol class="experience-list" role="list">
-                {experiences.map((exp, index) => (
-                    <li class="exp-card" style={`--card-index: ${index}`}>
-                        <div class="exp-marker" aria-hidden="true">
-                            <span class="marker-dot"></span>
-                            <span class="marker-line"></span>
-                        </div>
-                        <article class="exp-content">
-                            <header class="exp-header">
-                                <time class="exp-period">{exp.period}</time>
-                                <h3 class="exp-role">{exp.role}</h3>
-                                <p class="exp-company">{exp.company}</p>
-                            </header>
-                            <ul class="exp-highlights" aria-label="Key achievements">
-                                {exp.highlights.map((h) => (
-                                    <li>
-                                        <span class="highlight-arrow" aria-hidden="true">&rarr;</span>
-                                        {h}
-                                    </li>
-                                ))}
-                            </ul>
-                        </article>
-                    </li>
-                ))}
+                {
+                    experiences.map((exp, index) => (
+                        <li class="exp-card" style={`--card-index: ${index}`}>
+                            <div class="exp-marker" aria-hidden="true">
+                                <span class="marker-dot" />
+                                <span class="marker-line" />
+                            </div>
+                            <article class="exp-content">
+                                <header class="exp-header">
+                                    <time class="exp-period">{exp.period}</time>
+                                    <h3 class="exp-role">{exp.role}</h3>
+                                    <p class="exp-company">{exp.company}</p>
+                                </header>
+                                <ul class="exp-highlights" aria-label="Key achievements">
+                                    {exp.highlights.map((h) => (
+                                        <li>
+                                            <span class="highlight-arrow" aria-hidden="true">
+                                                &rarr;
+                                            </span>
+                                            {h}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </article>
+                        </li>
+                    ))
+                }
             </ol>
         </section>
 
@@ -138,33 +146,41 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
             </header>
 
             <div class="core-stack">
-                {coreSkills.map((skill) => (
-                    <div class="core-card" tabindex="0" role="button" aria-pressed="false">
-                        <span class="core-name">{skill.name}</span>
-                        <span class="core-years">{skill.years} years</span>
-                    </div>
-                ))}
+                {
+                    coreSkills.map((skill) => (
+                        <div class="core-card" tabindex="0" role="button" aria-pressed="false">
+                            <span class="core-name">{skill.name}</span>
+                            <span class="core-years">{skill.years} years</span>
+                        </div>
+                    ))
+                }
             </div>
 
             <div class="skill-grid" role="list">
-                {skillGroups.map((group) => (
-                    <article class="skill-card" role="listitem">
-                        <h3 class="skill-title">{group.title}</h3>
-                        <ul class="skill-tags">
-                            {group.items.map((item) => (
-                                <li class="skill-tag">{item}</li>
-                            ))}
-                        </ul>
-                    </article>
-                ))}
+                {
+                    skillGroups.map((group) => (
+                        <article class="skill-card" role="listitem">
+                            <h3 class="skill-title">{group.title}</h3>
+                            <ul class="skill-tags">
+                                {group.items.map((item) => (
+                                    <li class="skill-tag">{item}</li>
+                                ))}
+                            </ul>
+                        </article>
+                    ))
+                }
             </div>
 
             <div class="lang-section">
                 <h3 class="lang-title">Languages</h3>
                 <ul class="lang-list">
-                    {languages.map((lang) => (
-                        <li class="lang-item">{lang}</li>
-                    ))}
+                    {
+                        languages.map((lang) => (
+                            <li class="lang-item">
+                                <p class="text-md">{lang}</p>
+                            </li>
+                        ))
+                    }
                 </ul>
             </div>
         </section>
@@ -190,10 +206,30 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         margin: 0 auto;
     }
 
+    /* CLI header */
+    .cli-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        margin-bottom: var(--space-6);
+        color: var(--text-secondary);
+    }
+
+    .cli-prompt {
+        color: var(--color-accent);
+        font-weight: var(--font-bold);
+    }
+
+    .cli-command {
+        color: var(--text-secondary);
+    }
+
     .hero-tag {
         display: block;
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--text-md);
         color: var(--color-accent);
         letter-spacing: var(--tracking-wide);
         margin-bottom: var(--space-4);
@@ -266,7 +302,8 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         gap: var(--space-6);
         opacity: 0;
         transform: translateY(20px);
-        transition: opacity var(--duration-slow) var(--ease-out),
+        transition:
+            opacity var(--duration-slow) var(--ease-out),
             transform var(--duration-slow) var(--ease-out);
         transition-delay: calc(var(--card-index) * 100ms);
     }
@@ -289,7 +326,8 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         border-radius: var(--radius-full);
         background: var(--bg-primary);
         border: 2px solid var(--color-accent);
-        transition: border-color var(--duration-fast) var(--ease-out),
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
             background var(--duration-fast) var(--ease-out);
     }
 
@@ -394,7 +432,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     .section-tag {
         display: block;
         font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        font-size: var(--text-md);
         color: var(--color-accent);
         letter-spacing: var(--tracking-wide);
         margin-bottom: var(--space-3);
@@ -424,7 +462,8 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         cursor: pointer;
         position: relative;
         overflow: hidden;
-        transition: border-color var(--duration-fast) var(--ease-out),
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
             transform var(--duration-fast) var(--ease-out);
     }
 
@@ -525,7 +564,8 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         background: transparent;
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: var(--radius-sm);
-        transition: border-color var(--duration-fast) var(--ease-out),
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
             color var(--duration-fast) var(--ease-out);
     }
 
@@ -541,7 +581,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
 
     .lang-title {
         font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        font-size: var(--text-lg);
         font-weight: var(--font-medium);
         color: var(--color-accent);
         text-transform: uppercase;
@@ -613,7 +653,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                     }
                 });
             },
-            { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
+            { threshold: 0.1, rootMargin: '0px 0px -10% 0px' },
         );
 
         cards.forEach((card) => observer.observe(card));

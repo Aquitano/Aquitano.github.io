@@ -72,47 +72,78 @@ if (project.data.fullImage) {
         <article>
             <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52" aria-labelledby="project-title">
                 <div class="wrapper px-[var(--gutter)]">
-                    <span class="hero-tag hero-animation">// Project</span>
-                    <h1 id="project-title" class="project-title hero-animation mb-8">
+                    <!-- CLI-style header -->
+                    <div class="cli-header hero-animation">
+                        <span class="cli-prompt">$</span>
+                        <span class="cli-command">cat project/{project.data.name}.md</span>
+                    </div>
+
+                    <!-- Title -->
+                    <h1 id="project-title" class="project-title hero-animation">
                         {project.data.title}
                     </h1>
-                    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                        <!-- Project Meta -->
+
+                    <div class="grid grid-cols-1 gap-6 md:gap-8 md:grid-cols-3">
+                        <!-- Project Meta Sidebar -->
                         <aside class="info mb-5 md:mb-0">
-                            <div>
-                                <div id="Desc" class="hero-animation mb-4">
-                                    <p class="pre-header">
-                                        Aufgabe
-                                    </p>
-                                    <div class="meta-list">
-                                        {project.data.tasks.map((task: string) => (
-                                            <span class="meta-item">
-                                                <span class="meta-arrow" aria-hidden="true">&rarr;</span>
-                                                {task}
-                                            </span>
-                                        ))}
-                                    </div>
-                                    <p class="pre-header mt-8">
-                                        Jahr
-                                    </p>
-                                    <p class="meta-value">
-                                        {project.data.year}
-                                    </p>
+                            <div class="meta-card hero-animation">
+                                <!-- ASCII decoration -->
+                                <div class="card-decoration-top" aria-hidden="true">
+                                    >>>
                                 </div>
+                                
+                                <div id="Desc" class="meta-content">
+                                    <div class="meta-section">
+                                        <p class="pre-header">
+                                            Aufgabe
+                                        </p>
+                                        <div class="meta-list">
+                                            {project.data.tasks.map((task: string) => (
+                                                <div class="meta-item">
+                                                    <span class="meta-arrow" aria-hidden="true">→</span>
+                                                    <span class="meta-text">{task}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div class="meta-section">
+                                        <p class="pre-header">
+                                            Jahr
+                                        </p>
+                                        <p class="meta-value">
+                                            {project.data.year}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Halftone decoration -->
+                                <div class="halftone-decoration" aria-hidden="true"></div>
                             </div>
                         </aside>
 
                         <!-- Project Content -->
                         <div class="content col-span-2">
-                            <div class="content-body prose hero-animation mb-4">
-                                <Content />
-                                {project.data.links && project.data.links.length > 0 && (
-                                    <nav class="mt-8 flex flex-row flex-wrap gap-4" aria-label="Projektlinks">
-                                        {project.data.links.map((link: { text: string; icon: string; link: string }) => (
-                                            <LinkButton text={link.text} icon={link.icon} href={link.link} />
-                                        ))}
-                                    </nav>
-                                )}
+                            <div class="content-card hero-animation">
+                                <!-- Content header decoration -->
+                                <div class="card-decoration-top" aria-hidden="true">
+                                    /////
+                                </div>
+
+                                <div class="content-body prose">
+                                    <Content />
+                                    
+                                    {project.data.links && project.data.links.length > 0 && (
+                                        <nav class="links-section" aria-label="Projektlinks">
+                                            {project.data.links.map((link: { text: string; icon: string; link: string }) => (
+                                                <LinkButton text={link.text} icon={link.icon} href={link.link} />
+                                            ))}
+                                        </nav>
+                                    )}
+                                </div>
+
+                                <!-- Halftone decoration -->
+                                <div class="halftone-decoration" aria-hidden="true"></div>
                             </div>
                         </div>
                     </div>
@@ -149,53 +180,6 @@ if (project.data.fullImage) {
         margin: 0 auto;
     }
 
-    .hero-tag {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-        color: var(--color-accent);
-        letter-spacing: var(--tracking-wide);
-        margin-bottom: var(--space-4);
-    }
-
-    .pre-header {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
-        font-weight: var(--font-medium);
-        color: var(--color-accent);
-        text-transform: uppercase;
-        letter-spacing: var(--tracking-caps);
-        margin-bottom: var(--space-2);
-    }
-
-    .meta-list {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-2);
-    }
-
-    .meta-item {
-        display: flex;
-        align-items: flex-start;
-        gap: var(--space-2);
-        font-size: var(--text-lg);
-        font-weight: var(--font-medium);
-        color: var(--text-primary);
-        line-height: var(--leading-snug);
-    }
-
-    .meta-arrow {
-        font-family: var(--font-mono);
-        color: var(--color-accent);
-        flex-shrink: 0;
-    }
-
-    .meta-value {
-        font-size: var(--text-lg);
-        font-weight: var(--font-medium);
-        color: var(--text-primary);
-    }
-
     .project-hero {
         position: relative;
     }
@@ -205,37 +189,191 @@ if (project.data.fullImage) {
         position: absolute;
         inset: -40px 0 0;
         pointer-events: none;
-        background: radial-gradient(800px 160px at 50% 0, var(--color-border-subtle), transparent 60%);
+        background: radial-gradient(900px 180px at 50% 0, var(--color-accent-muted), transparent 70%);
     }
 
+    /* CLI Header */
+    .cli-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        margin-bottom: var(--space-8);
+        color: var(--text-secondary);
+    }
+
+    .cli-prompt {
+        color: var(--color-accent);
+        font-weight: var(--font-bold);
+    }
+
+    .cli-command {
+        color: var(--text-secondary);
+    }
+
+    /* Title */
     .project-title {
         font-family: var(--font-display);
-        font-size: clamp(2.6rem, 1.2rem + 6vw, 6rem);
-        line-height: var(--leading-none);
+        font-size: clamp(2rem, 1rem + 4.5vw, 5rem);
+        line-height: var(--leading-tight);
         letter-spacing: var(--tracking-tight);
         text-wrap: balance;
         font-weight: var(--font-black);
         color: var(--text-primary);
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        margin-bottom: var(--space-8);
+    }
+
+    /* Card Decorations */
+    .card-decoration-top {
+        position: absolute;
+        top: var(--space-3);
+        right: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.15);
+        letter-spacing: 0.05em;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .halftone-decoration {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: repeating-linear-gradient(
+            90deg,
+            rgba(224, 122, 58, 0.3) 0,
+            rgba(224, 122, 58, 0.3) 2px,
+            transparent 2px,
+            transparent 6px
+        );
+        pointer-events: none;
+    }
+
+    /* Meta Card */
+    .meta-card {
+        position: relative;
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        overflow: hidden;
+        transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .meta-card:hover {
+        border-color: var(--bg-card-border-hover);
+    }
+
+    .meta-content {
+        position: relative;
+    }
+
+    .meta-section {
+        margin-bottom: var(--space-6);
+    }
+
+    .meta-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .pre-header {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--font-semibold);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-caps);
+        margin-bottom: var(--space-3);
+    }
+
+    .meta-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-3);
+        font-size: var(--text-sm);
+        font-weight: var(--font-medium);
+        color: rgba(255, 255, 255, 0.8);
+        line-height: var(--leading-relaxed);
+    }
+
+    .meta-arrow {
+        font-family: var(--font-mono);
+        color: var(--color-accent);
+        flex-shrink: 0;
+        margin-top: 0.125em;
+    }
+
+    .meta-text {
+        flex: 1;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .meta-value {
+        font-size: var(--text-lg);
+        font-weight: var(--font-bold);
+        color: var(--text-inverse);
+        font-family: var(--font-mono);
+    }
+
+    /* Content Card */
+    .content-card {
+        position: relative;
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        overflow: hidden;
+        transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .content-card:hover {
+        border-color: var(--bg-card-border-hover);
     }
 
     .content-body {
-        font-size: var(--text-lg);
+        font-size: var(--text-base);
         line-height: var(--leading-relaxed);
-        color: var(--text-secondary);
+        color: rgba(255, 255, 255, 0.8);
         text-wrap: pretty;
     }
 
     .content-body :global(p) {
-        font-size: var(--text-lg);
+        font-size: var(--text-base);
         line-height: var(--leading-relaxed);
         margin-bottom: var(--space-5);
+        color: rgba(255, 255, 255, 0.8);
     }
 
     .content-body :global(strong) {
         font-weight: var(--font-semibold);
-        color: var(--text-primary);
+        color: var(--text-inverse);
     }
 
+    /* Links Section */
+    .links-section {
+        margin-top: var(--space-8);
+        padding-top: var(--space-6);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-4);
+    }
+
+    /* Image Section */
     .case-study-photos figure {
         margin: 0;
     }
@@ -248,11 +386,7 @@ if (project.data.fullImage) {
         width: 100%;
     }
 
-    .case-study-photos :global(video) {
-        display: block;
-        width: 100%;
-    }
-
+    /* Animations */
     .hero-animation {
         opacity: 0;
         transition: none;
@@ -263,6 +397,17 @@ if (project.data.fullImage) {
             opacity: 1 !important;
         }
     }
+
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        .project-title {
+            font-size: clamp(1.75rem, 0.9rem + 3.5vw, 3.5rem);
+        }
+        
+        .cli-header {
+            margin-bottom: var(--space-6);
+        }
+    }
 </style>
 
 <script>
@@ -270,16 +415,16 @@ if (project.data.fullImage) {
 
     const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
-    const DELAY_TITLE = 0.3;
-    const DELAY_DESC = 0.75;
-    const DELAY_BODY = 1.0;
-    const DELAY_PHOTO = 1.25;
+    const DELAY_CLI = 0.2;
+    const DELAY_TITLE = 0.4;
+    const DELAY_META = 0.6;
+    const DELAY_CONTENT = 0.7;
+    const DELAY_PHOTO = 0.9;
 
     let projectAnim: ReturnType<typeof animate> | null = null;
 
     function runProjectAnimations() {
         if (!motionOK) {
-            // Show all elements immediately without animation
             const elements = document.querySelectorAll<HTMLElement>('.hero-animation');
             elements.forEach((el) => {
                 el.style.opacity = '1';
@@ -287,12 +432,25 @@ if (project.data.fullImage) {
             return;
         }
 
+        const cli = document.querySelector<HTMLElement>('.cli-header');
         const title = document.querySelector<HTMLElement>('.project-title');
-        const desc = document.querySelector<HTMLElement>('#Desc');
-        const body = document.querySelector<HTMLElement>('.content-body');
+        const meta = document.querySelector<HTMLElement>('.meta-card');
+        const content = document.querySelector<HTMLElement>('.content-card');
         const photo = document.querySelector<HTMLElement>('.case-study-photos');
 
         const sequence: Parameters<typeof animate>[0] = [];
+
+        if (cli) {
+            cli.style.cssText = 'opacity:0; transform: translate3d(-8px,0,0)';
+            sequence.push([
+                cli,
+                {
+                    opacity: [0, 1],
+                    x: [-8, 0],
+                },
+                { at: DELAY_CLI, duration: 0.6, ease: 'easeOut' },
+            ]);
+        }
 
         if (title) {
             title.style.cssText = 'opacity:0; transform: translate3d(0,16px,0)';
@@ -301,33 +459,32 @@ if (project.data.fullImage) {
                 {
                     opacity: [0, 1],
                     y: [16, 0],
-                    filter: ['blur(3px)', 'blur(0)'],
                 },
-                { at: DELAY_TITLE, duration: 0.9, ease: 'easeOut' },
+                { at: DELAY_TITLE, duration: 0.8, ease: 'easeOut' },
             ]);
         }
 
-        if (desc) {
-            desc.style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
+        if (meta) {
+            meta.style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
             sequence.push([
-                desc,
+                meta,
                 {
                     opacity: [0, 1],
                     y: [12, 0],
                 },
-                { at: DELAY_DESC, duration: 0.9, ease: 'easeOut' },
+                { at: DELAY_META, duration: 0.8, ease: 'easeOut' },
             ]);
         }
 
-        if (body) {
-            body.style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
+        if (content) {
+            content.style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
             sequence.push([
-                body,
+                content,
                 {
                     opacity: [0, 1],
                     y: [12, 0],
                 },
-                { at: DELAY_BODY, duration: 0.9, ease: 'easeOut' },
+                { at: DELAY_CONTENT, duration: 0.8, ease: 'easeOut' },
             ]);
         }
 
@@ -349,7 +506,6 @@ if (project.data.fullImage) {
         }
     }
 
-    // Initialize on load and after Astro page transitions
     window.addEventListener('load', runProjectAnimations);
     document.addEventListener('astro:page-load', runProjectAnimations);
     document.addEventListener('astro:after-swap', runProjectAnimations);

@@ -1,6 +1,6 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, type Easing } from 'motion';
-import { Show, createEffect, createSignal, onCleanup, onMount, type Component, For } from 'solid-js';
+import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 
@@ -32,11 +32,17 @@ export const ANIMATION_CONFIG = {
     viewportThreshold: 0.15,
 };
 
-const ASCII_PATTERNS = ['$$$$$', '/////', '>>>>>', '<<<<<', '#####', '=====', '~~~~~', '+++++'];
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+const getReducedMotionMQL = (): MediaQueryList | null => {
+    if (typeof globalThis.matchMedia !== 'function') {
+        return null;
+    }
+    return globalThis.matchMedia(REDUCED_MOTION_QUERY);
+};
 
 const getMotionPreference = (): boolean => {
-    if (typeof window === 'undefined') return true;
-    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const mql = getReducedMotionMQL();
+    return mql ? !mql.matches : true;
 };
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
@@ -51,12 +57,12 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     const [isHovered, setIsHovered] = createSignal(false);
     const [spotlightPosition, setSpotlightPosition] = createSignal({ x: 0, y: 0 });
 
-    // Deterministic pattern based on index
-    const asciiPattern = () => ASCII_PATTERNS[props.index % ASCII_PATTERNS.length];
-
     onMount(() => {
-        if (typeof window === 'undefined') return;
-        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const mq = getReducedMotionMQL();
+        if (!mq) return;
+
+        setMotionOK(!mq.matches);
+
         const handler = (e: MediaQueryListEvent) => setMotionOK(!e.matches);
         mq.addEventListener('change', handler);
         onCleanup(() => mq.removeEventListener('change', handler));
@@ -204,7 +210,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         style={{ color: 'rgba(255, 255, 255, 0.15)', 'letter-spacing': '0.05em' }}
                         aria-hidden="true"
                     >
-                        {asciiPattern()}
+                        /////
                     </div>
 
                     {/* Subtle gradient overlay */}
@@ -220,7 +226,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     {/* Spotlight effect */}
                     <Show when={motionOK()}>
                         <div
-                            class="pointer-events-none absolute inset-0 z-[1] transition-opacity duration-500 ease-in-out"
+                            class="pointer-events-none absolute inset-0 z-1 transition-opacity duration-500 ease-in-out"
                             style={{
                                 opacity: isHovered() ? 0.5 : 0,
                                 background: `radial-gradient(circle at ${spotlightPosition().x}px ${spotlightPosition().y}px, rgba(224, 122, 58, 0.15), transparent 60%)`,

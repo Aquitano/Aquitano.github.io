@@ -32,31 +32,26 @@ const sections: FooterSection[] = [
 ];
 ---
 
-<footer class="relative z-10 mt-[var(--space-section)] w-full" role="contentinfo">
-    <div class="w-full px-[var(--gutter)] py-12 lg:py-16">
+<footer class="relative z-10 mt-(--space-section) w-full" role="contentinfo">
+    <div class="w-full px-(--gutter) py-12 lg:py-16">
         <nav aria-label="Footer Navigation">
             <div class="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:gap-16">
                 {
                     sections.map((section) => (
                         <div>
-                            <h2 class="text-[length:var(--text-lg)] font-bold tracking-tight text-[var(--text-primary)] sm:text-[length:var(--text-xl)] md:text-[length:var(--text-2xl)]">
+                            <p class="text-lg font-bold tracking-tight text-(--text-primary) sm:text-xl md:text-2xl">
                                 {section.title}
-                            </h2>
-                            <div
-                                class="mb-2 h-[2px] w-full bg-[var(--border-default)]"
-                                role="presentation"
-                            />
+                            </p>
+                            <div class="mb-2 h-0.5 w-full bg-(--border-default)" role="presentation" />
                             <ul class="mt-5 space-y-3" role="list">
                                 {section.items.map((item) => (
                                     <li>
                                         <a
                                             href={item.href}
-                                            {...(item.external
-                                                ? { target: '_blank', rel: 'noopener noreferrer' }
-                                                : {})}
-                                            class="group inline-flex items-center gap-1.5 text-[length:var(--text-base)] font-semibold text-[var(--text-secondary)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-accent)] sm:text-[length:var(--text-lg)] md:text-[length:var(--text-xl)]"
+                                            {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                            class="group inline-flex items-center gap-1.5 text-(length:--text-base) font-semibold text-(--text-secondary) transition-colors duration-(--duration-fast) hover:text-(--color-accent) sm:text-(length:--text-lg) md:text-(length:--text-xl)"
                                         >
-                                            <span class="bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-[background-size] duration-[var(--duration-normal)] ease-out group-hover:bg-[length:100%_2px]">
+                                            <span class="bg-linear-to-r from-(--color-accent) to-(--color-accent) bg-size-[0%_2px] bg-bottom-left bg-no-repeat transition-[background-size] duration-(--duration-normal) ease-out group-hover:bg-size-[100%_2px]">
                                                 {item.label}
                                             </span>
                                             {item.external && (
@@ -92,19 +87,19 @@ const sections: FooterSection[] = [
 
         <div class="mt-16 grid grid-cols-1 items-end gap-10 sm:mt-20 lg:grid-cols-2">
             <p
-                class="text-[length:var(--text-4xl)] font-extrabold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--text-primary)] sm:text-[length:var(--text-5xl)] lg:text-[length:var(--text-6xl)]"
+                class="text-(length:--text-4xl) leading-tight font-extrabold tracking-(--tracking-tight) text-(--text-primary) sm:text-(length:--text-5xl) lg:text-(length:--text-6xl)"
             >
                 &copy; {year} Thomas Breindl
                 <br class="hidden md:block" />
                 All rights reserved.
             </p>
-            <div class="justify-self-start text-[var(--text-secondary)] md:justify-self-end">
-                <p class="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-widest)] text-[var(--text-tertiary)]">
+            <div class="justify-self-start text-(--text-secondary) md:justify-self-end">
+                <p class="text-(length:--text-xs) font-bold tracking-widest text-(--text-tertiary) uppercase">
                     Local time
                 </p>
                 <time
                     id="local-time"
-                    class="mt-2 block font-[family-name:var(--font-mono)] text-[length:var(--text-lg)] font-semibold tabular-nums sm:text-[length:var(--text-xl)]"
+                    class="mt-2 block font-mono text-(length:--text-lg) font-semibold tabular-nums sm:text-(length:--text-xl)"
                     aria-live="off"
                     aria-label="Current local time"
                 >
@@ -114,19 +109,6 @@ const sections: FooterSection[] = [
         </div>
     </div>
 </footer>
-
-<style>
-    footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: var(--gutter);
-        right: var(--gutter);
-        height: 1px;
-        background: var(--border-subtle);
-        pointer-events: none;
-    }
-</style>
 
 <script>
     let intervalId: number | undefined;
