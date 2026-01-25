@@ -14,19 +14,113 @@ import Layout from '../layouts/Layout.astro';
         },
     }}
 >
-    <div class="flex min-h-screen items-center justify-center">
-        <div class="text-center">
-            <h1 class="text-9xl font-bold text-stone-700">404</h1>
-            <h2 class="mt-4 text-2xl font-semibold text-stone-600">Seite nicht gefunden</h2>
-            <p class="mt-4 max-w-md text-lg text-stone-500">
+    <div class="error-page">
+        <div class="error-content">
+            <span class="error-tag">// Error</span>
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Seite nicht gefunden</h2>
+            <p class="error-message">
                 Die angeforderte Seite existiert nicht oder wurde verschoben.
             </p>
-            <a
-                href="/"
-                class="mt-8 inline-block rounded-lg bg-stone-700 px-6 py-3 text-white transition-colors hover:bg-stone-800"
-            >
+            <a href="/" class="btn btn-primary">
+                <span class="btn-arrow" aria-hidden="true">&larr;</span>
                 Zurück zur Startseite
             </a>
         </div>
+        <div class="ascii-deco ascii-deco-left" aria-hidden="true">&gt;&gt;&gt;</div>
+        <div class="ascii-deco ascii-deco-right" aria-hidden="true">###</div>
     </div>
 </Layout>
+
+<style>
+    .error-page {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: var(--gutter);
+        position: relative;
+    }
+
+    .error-content {
+        text-align: center;
+        max-width: 480px;
+    }
+
+    .error-tag {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+        letter-spacing: var(--tracking-wide);
+        margin-bottom: var(--space-4);
+    }
+
+    .error-code {
+        font-family: var(--font-display);
+        font-size: clamp(6rem, 20vw, 12rem);
+        font-weight: var(--font-black);
+        line-height: var(--leading-none);
+        color: var(--text-primary);
+        letter-spacing: var(--tracking-tight);
+        margin-bottom: var(--space-4);
+    }
+
+    .error-title {
+        font-family: var(--font-heading);
+        font-size: var(--text-2xl);
+        font-weight: var(--font-bold);
+        color: var(--text-primary);
+        margin-bottom: var(--space-4);
+    }
+
+    .error-message {
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+        margin-bottom: var(--space-8);
+        line-height: var(--leading-relaxed);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+    }
+
+    .btn-arrow {
+        font-family: var(--font-mono);
+        transition: transform var(--duration-fast) var(--ease-out);
+    }
+
+    .btn:hover .btn-arrow {
+        transform: translateX(-4px);
+    }
+
+    .ascii-deco {
+        position: absolute;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--text-muted);
+        letter-spacing: 0.1em;
+        opacity: 0.4;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .ascii-deco-left {
+        bottom: var(--space-8);
+        left: var(--gutter);
+    }
+
+    .ascii-deco-right {
+        bottom: var(--space-8);
+        right: var(--gutter);
+    }
+
+    @media (max-width: 640px) {
+        .ascii-deco {
+            display: none;
+        }
+    }
+</style>

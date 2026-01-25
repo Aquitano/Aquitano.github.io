@@ -15,27 +15,25 @@ import Layout from '../layouts/Layout.astro';
         },
     }}
 >
-    <section class="relative flex min-h-screen items-center justify-center px-[var(--gutter)] py-16 sm:py-24">
+    <section class="contact-page">
         <div class="mx-auto w-full max-w-6xl">
+            <div class="contact-header">
+                <span class="section-tag">// Contact</span>
+                <h1>Kontaktieren Sie mich</h1>
+                <p class="contact-subtitle">
+                    Füllen Sie das Formular aus, um ein Gespräch zu beginnen
+                </p>
+            </div>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
                 <!-- Contact Info -->
-                <div class="rounded-2xl bg-[var(--color-bg-secondary)] p-8 lg:p-10">
-                    <h1
-                        class="text-[length:var(--text-4xl)] font-extrabold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--color-text-primary)]"
-                    >
-                        Kontaktieren Sie mich
-                    </h1>
-                    <p class="mt-4 text-[length:var(--text-lg)] text-[var(--color-text-secondary)]">
-                        Füllen Sie das Formular aus, um ein Gespräch zu beginnen
-                    </p>
+                <div class="contact-card">
+                    <div class="card-ascii" aria-hidden="true">$$$$$</div>
+                    <h2 class="card-title">Kontaktdaten</h2>
 
-                    <address class="mt-10 space-y-6 not-italic">
+                    <address class="contact-list not-italic">
                         <!-- Location -->
-                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
-                            <div
-                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
-                                aria-hidden="true"
-                            >
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
                                 <svg
                                     fill="none"
                                     stroke="currentColor"
@@ -43,7 +41,7 @@ import Layout from '../layouts/Layout.astro';
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
                                     viewBox="0 0 24 24"
-                                    class="h-5 w-5 text-[var(--color-accent)]"
+                                    class="h-5 w-5"
                                 >
                                     <path
                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
@@ -52,67 +50,40 @@ import Layout from '../layouts/Layout.astro';
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
-                                    Standort
-                                </p>
-                                <p class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)]">
-                                    Passau, Deutschland
-                                </p>
+                                <p class="contact-label">Standort</p>
+                                <p class="contact-value">Passau, Deutschland</p>
                             </div>
                         </div>
 
                         <!-- Twitter / X -->
-                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
-                            <div
-                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
-                                aria-hidden="true"
-                            >
-                                <Icon name="mdi:twitter" class="h-5 w-5 text-[var(--color-accent)]" />
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
+                                <Icon name="mdi:twitter" class="h-5 w-5" />
                             </div>
                             <div>
-                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
-                                    Twitter / X
-                                </p>
-                                <a
-                                    href="https://twitter.com/BreindlThomas"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)] underline decoration-[var(--color-border-default)] underline-offset-2 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
-                                >
+                                <p class="contact-label">Twitter / X</p>
+                                <a href="https://twitter.com/BreindlThomas" target="_blank" rel="noopener noreferrer" class="contact-link">
                                     @BreindlThomas
                                 </a>
                             </div>
                         </div>
 
                         <!-- GitHub -->
-                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
-                            <div
-                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
-                                aria-hidden="true"
-                            >
-                                <Icon name="mdi:github" class="h-5 w-5 text-[var(--color-accent)]" />
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
+                                <Icon name="mdi:github" class="h-5 w-5" />
                             </div>
                             <div>
-                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
-                                    GitHub
-                                </p>
-                                <a
-                                    href="https://github.com/Aquitano"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)] underline decoration-[var(--color-border-default)] underline-offset-2 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
-                                >
+                                <p class="contact-label">GitHub</p>
+                                <a href="https://github.com/Aquitano" target="_blank" rel="noopener noreferrer" class="contact-link">
                                     Aquitano
                                 </a>
                             </div>
                         </div>
 
                         <!-- Email -->
-                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
-                            <div
-                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
-                                aria-hidden="true"
-                            >
+                        <div class="contact-item">
+                            <div class="contact-icon" aria-hidden="true">
                                 <svg
                                     fill="none"
                                     stroke="currentColor"
@@ -120,7 +91,7 @@ import Layout from '../layouts/Layout.astro';
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
                                     viewBox="0 0 24 24"
-                                    class="h-5 w-5 text-[var(--color-accent)]"
+                                    class="h-5 w-5"
                                 >
                                     <path
                                         d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
@@ -128,13 +99,8 @@ import Layout from '../layouts/Layout.astro';
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
-                                    E-Mail
-                                </p>
-                                <a
-                                    href="mailto:ThomasBreindl@proton.me"
-                                    class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)] underline decoration-[var(--color-border-default)] underline-offset-2 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
-                                >
+                                <p class="contact-label">E-Mail</p>
+                                <a href="mailto:ThomasBreindl@proton.me" class="contact-link">
                                     ThomasBreindl@proton.me
                                 </a>
                             </div>
@@ -144,7 +110,7 @@ import Layout from '../layouts/Layout.astro';
 
                 <!-- Contact Form -->
                 <form
-                    class="flex flex-col justify-center space-y-6 rounded-2xl bg-[var(--color-bg-secondary)] p-8 lg:p-10"
+                    class="contact-card"
                     name="contact"
                     data-netlify-recaptcha="true"
                     data-netlify="true"
@@ -152,13 +118,14 @@ import Layout from '../layouts/Layout.astro';
                     novalidate
                     aria-label="Kontaktformular"
                 >
+                    <div class="card-ascii" aria-hidden="true">////</div>
                     <input type="hidden" name="form-name" value="contact" />
 
                     <!-- Name Field -->
-                    <div class="flex flex-col gap-2">
-                        <label for="name" class="label">
+                    <div class="form-field">
+                        <label for="name" class="form-label">
                             Vollständiger Name
-                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                            <span class="required" aria-hidden="true">*</span>
                         </label>
                         <input
                             type="text"
@@ -167,16 +134,16 @@ import Layout from '../layouts/Layout.astro';
                             autocomplete="name"
                             required
                             aria-required="true"
-                            class="input"
+                            class="form-input"
                             placeholder="Max Mustermann"
                         />
                     </div>
 
                     <!-- Email Field -->
-                    <div class="flex flex-col gap-2">
-                        <label for="email" class="label">
+                    <div class="form-field">
+                        <label for="email" class="form-label">
                             E-Mail
-                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                            <span class="required" aria-hidden="true">*</span>
                         </label>
                         <input
                             type="email"
@@ -186,19 +153,19 @@ import Layout from '../layouts/Layout.astro';
                             required
                             aria-required="true"
                             aria-describedby="email-hint"
-                            class="input"
+                            class="form-input"
                             placeholder="max@beispiel.de"
                         />
-                        <p id="email-hint" class="text-[length:var(--text-xs)] text-[var(--color-text-tertiary)]">
+                        <p id="email-hint" class="form-hint">
                             Ihre E-Mail wird nur für die Kontaktaufnahme verwendet.
                         </p>
                     </div>
 
                     <!-- Phone Field -->
-                    <div class="flex flex-col gap-2">
-                        <label for="tel" class="label">
+                    <div class="form-field">
+                        <label for="tel" class="form-label">
                             Telefonnummer
-                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                            <span class="required" aria-hidden="true">*</span>
                         </label>
                         <input
                             type="tel"
@@ -207,16 +174,16 @@ import Layout from '../layouts/Layout.astro';
                             autocomplete="tel"
                             required
                             aria-required="true"
-                            class="input"
+                            class="form-input"
                             placeholder="+49 123 456789"
                         />
                     </div>
 
                     <!-- Message Field -->
-                    <div class="flex flex-col gap-2">
-                        <label for="message" class="label">
+                    <div class="form-field">
+                        <label for="message" class="form-label">
                             Nachricht
-                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                            <span class="required" aria-hidden="true">*</span>
                         </label>
                         <textarea
                             name="message"
@@ -224,7 +191,7 @@ import Layout from '../layouts/Layout.astro';
                             required
                             aria-required="true"
                             rows="5"
-                            class="input min-h-32 resize-y"
+                            class="form-input form-textarea"
                             placeholder="Ihre Nachricht..."
                         ></textarea>
                     </div>
@@ -232,29 +199,15 @@ import Layout from '../layouts/Layout.astro';
                     <!-- reCAPTCHA -->
                     <div data-netlify-recaptcha="true"></div>
 
-                    <!-- Error message container (populated by JS) -->
-                    <div
-                        id="form-error"
-                        role="alert"
-                        aria-live="polite"
-                        class="hidden rounded-lg bg-[color-mix(in_srgb,var(--color-error)_15%,transparent)] p-4 text-[length:var(--text-sm)] text-[var(--color-error)]"
-                    >
-                    </div>
+                    <!-- Error message container -->
+                    <div id="form-error" role="alert" aria-live="polite" class="form-message form-error hidden"></div>
 
-                    <!-- Success message container (populated by JS) -->
-                    <div
-                        id="form-success"
-                        role="status"
-                        aria-live="polite"
-                        class="hidden rounded-lg bg-[color-mix(in_srgb,var(--color-success)_15%,transparent)] p-4 text-[length:var(--text-sm)] text-[var(--color-success)]"
-                    >
-                    </div>
+                    <!-- Success message container -->
+                    <div id="form-success" role="status" aria-live="polite" class="form-message form-success hidden"></div>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary mt-2 w-full py-3 text-[length:var(--text-base)] font-bold sm:w-auto sm:px-8"
-                    >
+                    <button type="submit" class="btn btn-primary submit-btn">
                         Absenden
+                        <span class="btn-arrow" aria-hidden="true">&rarr;</span>
                     </button>
                 </form>
             </div>
@@ -354,3 +307,220 @@ import Layout from '../layouts/Layout.astro';
     document.addEventListener('astro:after-swap', initContactForm);
     initContactForm();
 </script>
+
+<style>
+    .contact-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: var(--space-section) var(--gutter);
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: var(--space-component);
+    }
+
+    .section-tag {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+        letter-spacing: var(--tracking-wide);
+        margin-bottom: var(--space-4);
+    }
+
+    .contact-header h1 {
+        font-family: var(--font-display);
+        font-size: var(--text-5xl);
+        font-weight: var(--font-black);
+        color: var(--text-primary);
+        letter-spacing: var(--tracking-tight);
+        margin-bottom: var(--space-4);
+    }
+
+    .contact-subtitle {
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+    }
+
+    .contact-card {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: var(--radius-xl);
+        padding: var(--space-8);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-6);
+    }
+
+    .card-ascii {
+        position: absolute;
+        top: var(--space-3);
+        right: var(--space-4);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.15);
+        letter-spacing: 0.05em;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .card-title {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--font-medium);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-caps);
+    }
+
+    .contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-5);
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-4);
+    }
+
+    .contact-icon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(224, 122, 58, 0.15);
+        border-radius: var(--radius-md);
+        color: var(--color-accent);
+    }
+
+    .contact-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.6);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wider);
+        margin-bottom: var(--space-1);
+    }
+
+    .contact-value {
+        font-size: var(--text-base);
+        font-weight: var(--font-semibold);
+        color: var(--text-inverse);
+    }
+
+    .contact-link {
+        font-size: var(--text-base);
+        font-weight: var(--font-semibold);
+        color: var(--text-inverse);
+        text-decoration: underline;
+        text-decoration-color: rgba(255, 255, 255, 0.3);
+        text-underline-offset: 2px;
+        transition: color var(--duration-fast) var(--ease-out),
+            text-decoration-color var(--duration-fast) var(--ease-out);
+    }
+
+    .contact-link:hover {
+        color: var(--color-accent);
+        text-decoration-color: var(--color-accent);
+    }
+
+    .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .form-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--font-medium);
+        color: rgba(255, 255, 255, 0.7);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wider);
+    }
+
+    .required {
+        color: var(--color-accent);
+    }
+
+    .form-input {
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-base);
+        font-weight: var(--font-medium);
+        color: var(--text-inverse);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: var(--radius-md);
+        transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .form-input:hover {
+        border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .form-input:focus {
+        border-color: var(--color-accent);
+        outline: none;
+    }
+
+    .form-textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .form-hint {
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-message {
+        padding: var(--space-4);
+        border-radius: var(--radius-md);
+        font-size: var(--text-sm);
+    }
+
+    .form-error {
+        background: rgba(255, 89, 89, 0.15);
+        color: #ff5959;
+    }
+
+    .form-success {
+        background: rgba(89, 255, 89, 0.15);
+        color: #59ff59;
+    }
+
+    .submit-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        align-self: flex-start;
+        padding: var(--space-3) var(--space-6);
+    }
+
+    .btn-arrow {
+        font-family: var(--font-mono);
+        transition: transform var(--duration-fast) var(--ease-out);
+    }
+
+    .submit-btn:hover .btn-arrow {
+        transform: translateX(4px);
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>

@@ -1,6 +1,6 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, type Easing } from 'motion';
-import { Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { Show, createEffect, createSignal, onCleanup, onMount, type Component, For } from 'solid-js';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 
@@ -32,7 +32,8 @@ export const ANIMATION_CONFIG = {
     viewportThreshold: 0.15,
 };
 
-// Check for reduced motion preference
+const ASCII_PATTERNS = ['$$$$$', '/////', '>>>>>', '<<<<<', '#####', '=====', '~~~~~', '+++++'];
+
 const getMotionPreference = (): boolean => {
     if (typeof window === 'undefined') return true;
     return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -47,12 +48,12 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     let animationController: ReturnType<typeof animate> | null = null;
     const [hasAnimated, setHasAnimated] = createSignal(false);
 
-    // Spotlight hover/focus effect
-    const [isSpotlightFocused, setIsSpotlightFocused] = createSignal(false);
-    const [spotlightOpacity, setSpotlightOpacity] = createSignal(0);
+    const [isHovered, setIsHovered] = createSignal(false);
     const [spotlightPosition, setSpotlightPosition] = createSignal({ x: 0, y: 0 });
 
-    // Listen for motion preference changes
+    // Deterministic pattern based on index
+    const asciiPattern = () => ASCII_PATTERNS[props.index % ASCII_PATTERNS.length];
+
     onMount(() => {
         if (typeof window === 'undefined') return;
         const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -62,26 +63,13 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     });
 
     const handleMouseMove = (e: MouseEvent) => {
-        if (!cardRef || isSpotlightFocused() || !motionOK()) return;
+        if (!cardRef || !motionOK()) return;
         const rect = cardRef.getBoundingClientRect();
         setSpotlightPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
 
-    const handleFocus = () => {
-        setIsSpotlightFocused(true);
-        if (motionOK()) setSpotlightOpacity(0.6);
-    };
-
-    const handleBlur = () => {
-        setIsSpotlightFocused(false);
-        setSpotlightOpacity(0);
-    };
-
-    const handleMouseEnter = () => {
-        if (motionOK()) setSpotlightOpacity(0.6);
-    };
-
-    const handleMouseLeave = () => setSpotlightOpacity(0);
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
     const useVisibilityObserver = createVisibilityObserver(
         { threshold: ANIMATION_CONFIG.viewportThreshold },
@@ -108,7 +96,6 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     const animateIn = () => {
         if (!cardRef || hasAnimated()) return;
 
-        // Skip animation if reduced motion is preferred
         if (!motionOK()) {
             cardRef.style.opacity = '1';
             cardRef.style.transform = 'none';
@@ -192,37 +179,51 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         <article class={wrapperClass}>
             <div
                 ref={cardRef}
-                class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl shadow-none ring-1 ring-[var(--color-border-default)] transition-all duration-300 hover:ring-[var(--color-border-strong)]"
+                class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl"
+                style={{
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--bg-card-border)',
+                    transition: 'border-color 150ms ease-out',
+                    'border-color': isHovered() ? 'var(--bg-card-border-hover)' : 'var(--bg-card-border)',
+                }}
             >
                 <a
                     href={props.url}
-                    class="group relative block h-full w-full overflow-hidden text-white no-underline"
+                    class="group relative block h-full w-full overflow-hidden no-underline"
                     data-astro-prefetch
                     onMouseMove={handleMouseMove}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
+                    onFocus={handleMouseEnter}
+                    onBlur={handleMouseLeave}
                     aria-label={`${props.title} - ${props.year}. ${props.tags?.join(', ') || ''}`}
                 >
-                    {/* Background layers */}
-                    <div class="absolute inset-0 bg-neutral-600" aria-hidden="true" />
+                    {/* ASCII pattern decoration */}
                     <div
-                        class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.10),transparent_70%)] mix-blend-overlay"
+                        class="pointer-events-none absolute top-3 right-4 font-mono text-xs tracking-tight select-none"
+                        style={{ color: 'rgba(255, 255, 255, 0.15)', 'letter-spacing': '0.05em' }}
                         aria-hidden="true"
-                    />
+                    >
+                        {asciiPattern()}
+                    </div>
+
+                    {/* Subtle gradient overlay */}
                     <div
-                        class="absolute inset-0 z-0 bg-linear-to-b from-black/10 via-transparent to-black/60 transition-opacity duration-200 group-hover:opacity-90"
+                        class="absolute inset-0 z-0 transition-opacity duration-200"
+                        style={{
+                            background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)',
+                            opacity: isHovered() ? 0.9 : 1,
+                        }}
                         aria-hidden="true"
                     />
 
-                    {/* Spotlight overlay - only show when motion is OK */}
+                    {/* Spotlight effect */}
                     <Show when={motionOK()}>
                         <div
-                            class="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 ease-in-out"
+                            class="pointer-events-none absolute inset-0 z-[1] transition-opacity duration-500 ease-in-out"
                             style={{
-                                opacity: spotlightOpacity(),
-                                background: `radial-gradient(circle at ${spotlightPosition().x}px ${spotlightPosition().y}px, rgba(255,255,255,0.25), transparent 80%)`,
+                                opacity: isHovered() ? 0.5 : 0,
+                                background: `radial-gradient(circle at ${spotlightPosition().x}px ${spotlightPosition().y}px, rgba(224, 122, 58, 0.15), transparent 60%)`,
                             }}
                             aria-hidden="true"
                         />
@@ -230,18 +231,15 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                     {/* New badge */}
                     <Show when={props.isNew}>
-                        <div class="absolute top-5 right-5 z-10" aria-label="Neues Projekt">
-                            <div class="relative">
-                                <div class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white text-xs font-bold tracking-wider text-stone-800 uppercase shadow-md">
-                                    new
-                                </div>
-                                <svg
-                                    viewBox="0 0 100 100"
-                                    class="absolute top-0 left-0 h-[50px] w-[50px] -rotate-90"
-                                    aria-hidden="true"
-                                >
-                                    <circle cx="50" cy="50" r="47" stroke-width="6" class="fill-none stroke-white/30" />
-                                </svg>
+                        <div class="absolute top-4 left-4 z-10" aria-label="New project">
+                            <div
+                                class="rounded px-2 py-1 font-mono text-xs font-bold tracking-wider uppercase"
+                                style={{
+                                    background: 'var(--color-accent)',
+                                    color: '#fff',
+                                }}
+                            >
+                                NEW
                             </div>
                         </div>
                     </Show>
@@ -249,34 +247,81 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     {/* Content */}
                     <div
                         ref={contentRef}
-                        class="absolute bottom-0 left-0 z-10 w-full translate-y-2 transform p-8 transition-transform duration-500 ease-out group-hover:translate-y-0 group-focus:translate-y-0"
+                        class="absolute bottom-0 left-0 z-10 w-full p-6"
+                        style={{
+                            transform: isHovered() ? 'translateY(0)' : 'translateY(4px)',
+                            transition: 'transform 300ms ease-out',
+                        }}
                     >
-                        <span class="mb-2 block text-sm font-medium text-white/85 opacity-80 transition-opacity duration-400 group-hover:opacity-95">
+                        {/* Year label */}
+                        <span
+                            class="mb-2 block font-mono text-xs tracking-wider uppercase"
+                            style={{ color: 'var(--color-accent)' }}
+                        >
                             {props.year}
                         </span>
 
-                        <h2 class="mb-4 text-xl font-bold text-white transition-transform duration-200 ease-out group-hover:-translate-y-0.5 md:text-2xl">
+                        {/* Title */}
+                        <h2
+                            class="mb-4 text-xl font-bold md:text-2xl"
+                            style={{
+                                color: '#fafaf9',
+                                'line-height': '1.25',
+                            }}
+                        >
                             {props.title}
                         </h2>
 
-                        <ul class="mb-6 flex list-none flex-wrap gap-2 p-0" aria-label="Projekt Tags">
-                            {props.tags?.map((tag) => (
-                                <li class="project-tag translate-y-2 rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur-md transition-all duration-400">
-                                    {tag}
-                                </li>
-                            ))}
+                        {/* Tags */}
+                        <ul class="mb-4 flex list-none flex-wrap gap-2 p-0" aria-label="Project tags">
+                            <For each={props.tags}>
+                                {(tag) => (
+                                    <li
+                                        class="project-tag rounded px-2 py-1 font-mono text-xs"
+                                        style={{
+                                            color: 'rgba(255, 255, 255, 0.7)',
+                                            background: 'transparent',
+                                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                                        }}
+                                    >
+                                        {tag}
+                                    </li>
+                                )}
+                            </For>
                         </ul>
 
+                        {/* View link */}
                         <div
-                            class="flex translate-y-3 transform items-center font-medium opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus:translate-y-0 group-focus:opacity-100"
-                            aria-hidden="true"
+                            class="flex items-center font-mono text-sm font-medium"
+                            style={{
+                                color: 'var(--color-accent)',
+                                opacity: isHovered() ? 1 : 0.7,
+                                transform: isHovered() ? 'translateY(0)' : 'translateY(4px)',
+                                transition: 'opacity 200ms ease-out, transform 200ms ease-out',
+                            }}
                         >
                             <span>View Project</span>
-                            <span class="ml-2 text-xl transition-transform duration-300 group-hover:translate-x-1">
+                            <span
+                                class="ml-2"
+                                style={{
+                                    transform: isHovered() ? 'translateX(4px)' : 'translateX(0)',
+                                    transition: 'transform 200ms ease-out',
+                                }}
+                            >
                                 &rarr;
                             </span>
                         </div>
                     </div>
+
+                    {/* Bottom halftone decoration */}
+                    <div
+                        class="pointer-events-none absolute right-0 bottom-0 left-0 h-px"
+                        style={{
+                            background:
+                                'repeating-linear-gradient(90deg, rgba(224, 122, 58, 0.3) 0, rgba(224, 122, 58, 0.3) 2px, transparent 2px, transparent 6px)',
+                        }}
+                        aria-hidden="true"
+                    />
                 </a>
             </div>
         </article>

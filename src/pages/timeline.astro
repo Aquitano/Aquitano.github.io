@@ -16,78 +16,58 @@ interface SkillGroup {
 const experiences: ExperienceEntry[] = [
     {
         role: 'Software Development Intern & Working Student',
-        company: 'itestra GmbH · Passau',
-        period: 'Mar 2025 – Jul 2025, Oct 2025 – Present',
+        company: 'itestra GmbH',
+        period: 'Mar 2025 - Present',
         highlights: [
-            'Migrated ~12K LOC COBOL-Vertragslogik in eine Java/Quarkus-Architektur und reduzierte den Codeumfang um 40%.',
-            'Validierte mehrstufige Batch-Workflows (JBeret, Panache, Hibernate), um konsistente Outputs sicherzustellen.',
+            'Migrated ~12K LOC COBOL contract logic to Java/Quarkus, reducing codebase by 40%',
+            'Validated multi-stage batch workflows (JBeret, Panache, Hibernate) for consistent outputs',
         ],
     },
     {
         role: 'Software Engineering Intern',
-        company: 'CHECK24 Vergleichsportal GmbH · München',
-        period: 'Aug 2025 – Sep 2025',
+        company: 'CHECK24 Vergleichsportal GmbH',
+        period: 'Aug 2025 - Sep 2025',
         highlights: [
-            'Konzipierte eine asynchrone ActiveMQ-Pipeline zur Entkopplung kritischer Provider-Antworten.',
-            'Halbierte die P95-Latenz auf ~150 ms bei 1.5 M Events/Tag und etablierte neue Grafana-Metriken.',
+            'Designed async ActiveMQ pipeline decoupling critical provider responses',
+            'Cut P95 latency to ~150ms at 1.5M events/day with new Grafana metrics',
         ],
     },
     {
         role: 'Software Development Intern',
-        company: '4process AG · Passau',
-        period: 'Jul 2024 – Aug 2024',
+        company: '4process AG',
+        period: 'Jul 2024 - Aug 2024',
         highlights: [
-            'Baute ein internes Ideenportal mit SAP Fiori Elements zur Strukturierung von Vorschlägen.',
-            'Implementierte ein Java-Tool für SAP Sales Cloud mit >5k validierten Excel-Updates/Sekunde.',
+            'Built internal idea portal with SAP Fiori Elements for structured proposals',
+            'Implemented Java tool for SAP Sales Cloud with >5k validated Excel updates/sec',
         ],
     },
 ];
 
 const skillGroups: SkillGroup[] = [
     {
-        title: 'Backend & Services',
-        items: ['Java', 'Spring Boot', 'Quarkus', 'JPA/Hibernate', 'Node.js', 'Express.js', 'tRPC', 'Python', 'SQL'],
+        title: 'Backend',
+        items: ['Java', 'Spring Boot', 'Quarkus', 'JPA/Hibernate', 'Node.js', 'Python', 'SQL'],
     },
     {
-        title: 'Frontend & Product',
-        items: ['TypeScript', 'React', 'Next.js', 'SolidJS', 'Astro', 'Tailwind CSS'],
+        title: 'Frontend',
+        items: ['TypeScript', 'React', 'Next.js', 'SolidJS', 'Astro', 'Tailwind'],
     },
     {
-        title: 'Platform & Observability',
-        items: [
-            'Docker & Kubernetes',
-            'Terraform',
-            'Linux/Bash',
-            'GitHub Actions',
-            'ActiveMQ',
-            'Grafana & Prometheus',
-            'PostgreSQL',
-            'Elasticsearch',
-        ],
+        title: 'Infrastructure',
+        items: ['Docker', 'Kubernetes', 'Terraform', 'GitHub Actions', 'Grafana', 'PostgreSQL'],
     },
     {
-        title: 'Self-Hosting & Ops',
-        items: ['NixOS', 'Proxmox', 'Traefik', 'WireGuard', 'Ansible', 'GitLab', 'Nextcloud'],
-    },
-    {
-        title: 'Languages',
-        items: ['German (Native)', 'English (B2+/C1)', 'Latin'],
+        title: 'Self-Hosted',
+        items: ['NixOS', 'Proxmox', 'Traefik', 'WireGuard', 'Ansible'],
     },
 ];
 
 const coreSkills = [
-    {
-        name: 'Java',
-        accent: 'rgba(37, 99, 235, 0.65)',
-    },
-    {
-        name: 'TypeScript',
-        accent: 'rgba(14, 165, 233, 0.6)',
-    },
+    { name: 'Java', years: '3+' },
+    { name: 'TypeScript', years: '4+' },
 ];
 
-const languageGroup = skillGroups.find((group) => group.title === 'Languages');
-const primarySkillGroups = skillGroups.filter((group) => group.title !== 'Languages');
+const languages = ['German (Native)', 'English (C1)', 'Latin'];
 ---
 
 <Layout
@@ -95,471 +75,537 @@ const primarySkillGroups = skillGroups.filter((group) => group.title !== 'Langua
     active="Über mich"
     SEO={{
         description:
-            'Berufserfahrung, Skills und Tools von Thomas Breindl - Software Developer mit Fokus auf Java, TypeScript und Cloud-Technologien.',
+            'Work experience, skills and tools - Thomas Breindl, Software Developer focused on Java, TypeScript and cloud technologies.',
         openGraph: {
-            title: 'Über mich - Thomas Breindl',
+            title: 'About - Thomas Breindl',
             type: 'website',
         },
     }}
 >
-    <div class="scroll-container">
-        <!-- Work Experience Section -->
-        <section class="timeline-section experience-bento" aria-labelledby="experience-heading">
-            <div class="wrapper">
-                <header class="section-heading">
-                    <h1 id="experience-heading">Work Experience</h1>
-                </header>
-                <div class="experience-grid" role="list">
-                    {
-                        experiences.map((exp) => (
-                            <article class="bento-card bento-card--experience experience-card" role="listitem">
-                                <header class="experience-card__header">
-                                    <time class="period">{exp.period}</time>
-                                    <h2>{exp.role}</h2>
-                                    <p class="company">{exp.company}</p>
-                                </header>
-                                <ul class="experience-points" aria-label="Highlights">
-                                    {exp.highlights.map((highlight) => (
-                                        <li>{highlight}</li>
-                                    ))}
-                                </ul>
-                            </article>
-                        ))
-                    }
-                </div>
+    <div class="timeline-page">
+        <section class="hero" aria-labelledby="page-title">
+            <div class="hero-content">
+                <span class="hero-tag">// About</span>
+                <h1 id="page-title">Work Experience</h1>
+                <p class="hero-sub">Building systems that scale</p>
             </div>
+        <div class="hero-pattern" aria-hidden="true">
+            <svg viewBox="0 0 400 200" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)"/>
+            </svg>
+        </div>
         </section>
 
-        <!-- Skills Section -->
-        <section class="timeline-section skills-bento" aria-labelledby="skills-heading">
-            <div class="wrapper px-[var(--gutter)]">
-                <header class="section-heading">
-                    <h2 id="skills-heading">Skills & Tools</h2>
-                </header>
-                <div class="skills-grid" role="list">
-                    <!-- Core Languages Card -->
-                    <article class="bento-card bento-card--skill core-skills-card" role="listitem">
-                        <header class="card-heading">
-                            <span>Core Languages</span>
-                        </header>
-                        <div class="core-language-stack" role="group" aria-label="Hauptprogrammiersprachen">
-                            {
-                                coreSkills.map((skill, index) => (
-                                    <div
-                                        class="core-lang-card"
-                                        tabindex="0"
-                                        role="button"
-                                        aria-pressed="false"
-                                        style={`--card-index: ${index}; --card-accent: ${skill.accent};`}
-                                    >
-                                        <p class="core-lang-card__label">{skill.name}</p>
-                                    </div>
-                                ))
-                            }
+        <section class="experience-section" aria-labelledby="experience-heading">
+            <h2 id="experience-heading" class="sr-only">Professional Experience</h2>
+            <div class="timeline-track" aria-hidden="true"></div>
+            <ol class="experience-list" role="list">
+                {experiences.map((exp, index) => (
+                    <li class="exp-card" style={`--card-index: ${index}`}>
+                        <div class="exp-marker" aria-hidden="true">
+                            <span class="marker-dot"></span>
+                            <span class="marker-line"></span>
                         </div>
+                        <article class="exp-content">
+                            <header class="exp-header">
+                                <time class="exp-period">{exp.period}</time>
+                                <h3 class="exp-role">{exp.role}</h3>
+                                <p class="exp-company">{exp.company}</p>
+                            </header>
+                            <ul class="exp-highlights" aria-label="Key achievements">
+                                {exp.highlights.map((h) => (
+                                    <li>
+                                        <span class="highlight-arrow" aria-hidden="true">&rarr;</span>
+                                        {h}
+                                    </li>
+                                ))}
+                            </ul>
+                        </article>
+                    </li>
+                ))}
+            </ol>
+        </section>
+
+        <section class="skills-section" aria-labelledby="skills-heading">
+            <header class="skills-header">
+                <span class="section-tag">// Stack</span>
+                <h2 id="skills-heading">Skills & Tools</h2>
+            </header>
+
+            <div class="core-stack">
+                {coreSkills.map((skill) => (
+                    <div class="core-card" tabindex="0" role="button" aria-pressed="false">
+                        <span class="core-name">{skill.name}</span>
+                        <span class="core-years">{skill.years} years</span>
+                    </div>
+                ))}
+            </div>
+
+            <div class="skill-grid" role="list">
+                {skillGroups.map((group) => (
+                    <article class="skill-card" role="listitem">
+                        <h3 class="skill-title">{group.title}</h3>
+                        <ul class="skill-tags">
+                            {group.items.map((item) => (
+                                <li class="skill-tag">{item}</li>
+                            ))}
+                        </ul>
                     </article>
+                ))}
+            </div>
 
-                    <!-- Primary Skill Groups -->
-                    {
-                        primarySkillGroups.map((group) => (
-                            <article class="bento-card bento-card--skill" role="listitem">
-                                <header class="card-heading">
-                                    <span>{group.title}</span>
-                                </header>
-                                <ul class="skill-chip-grid" aria-label={group.title}>
-                                    {group.items.map((item) => (
-                                        <li class="skill-chip">{item}</li>
-                                    ))}
-                                </ul>
-                            </article>
-                        ))
-                    }
-
-                    <!-- Language Skills -->
-                    {
-                        languageGroup && (
-                            <article class="bento-card bento-card--skill" role="listitem">
-                                <header class="card-heading">
-                                    <span>{languageGroup.title}</span>
-                                </header>
-                                <ul class="skill-chip-grid" aria-label={languageGroup.title}>
-                                    {languageGroup.items.map((lang) => (
-                                        <li class="skill-chip">{lang}</li>
-                                    ))}
-                                </ul>
-                            </article>
-                        )
-                    }
-                </div>
+            <div class="lang-section">
+                <h3 class="lang-title">Languages</h3>
+                <ul class="lang-list">
+                    {languages.map((lang) => (
+                        <li class="lang-item">{lang}</li>
+                    ))}
+                </ul>
             </div>
         </section>
     </div>
 </Layout>
 
 <style>
-    .scroll-container {
+    .timeline-page {
         padding-top: var(--space-12);
         padding-bottom: var(--space-section);
     }
 
-    .wrapper {
-        width: 100%;
+    .hero {
+        position: relative;
+        padding: var(--space-section) var(--gutter);
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
         max-width: var(--container-6xl);
         margin: 0 auto;
+    }
+
+    .hero-tag {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+        letter-spacing: var(--tracking-wide);
+        margin-bottom: var(--space-4);
+    }
+
+    .hero h1 {
+        font-size: var(--text-6xl);
+        font-weight: var(--font-black);
+        letter-spacing: var(--tracking-tight);
+        line-height: var(--leading-none);
+        margin-bottom: var(--space-4);
+        color: var(--text-primary);
+    }
+
+    .hero-sub {
+        font-family: var(--font-mono);
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+    }
+
+    .hero-pattern {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .hero-pattern svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .experience-section {
+        position: relative;
+        max-width: var(--container-6xl);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
         padding-bottom: var(--space-section);
     }
 
-    .experience-bento .wrapper {
-        padding-top: var(--space-section);
-    }
-
-    .skills-bento .wrapper {
-        padding-top: var(--space-component);
-        padding-bottom: var(--space-component);
-    }
-
-    .section-heading {
-        margin-bottom: var(--space-component);
-        max-width: 760px;
-    }
-
-    .section-heading h1,
-    .section-heading h2 {
-        font-family: var(--font-heading);
-        font-weight: var(--font-black);
-        line-height: var(--leading-tight);
-        font-size: var(--text-4xl);
-        color: var(--color-text-primary);
-    }
-
-    .timeline-section {
-        color: var(--color-text-secondary);
-    }
-
-    .experience-bento .section-heading h1 {
-        font-size: var(--text-5xl);
-    }
-
-    /* Grid Layouts */
-    .experience-grid,
-    .skills-grid {
-        display: grid;
-        gap: var(--space-5);
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        margin-top: var(--space-component);
-        list-style: none;
-        padding: 0;
-    }
-
-    /* Bento Cards */
-    .bento-card {
-        position: relative;
-        border-radius: var(--radius-2xl);
-        padding: var(--space-component);
-        background: var(--color-card-bg);
-        border: 1px solid var(--color-card-border);
-        box-shadow: var(--shadow-elevated);
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-5);
-        backdrop-filter: blur(14px);
-        color: rgba(243, 244, 246, 0.9);
-        overflow: hidden;
-    }
-
-    /* Animation handled via JS - start visible to prevent FOUC on SSR */
-    .bento-card:not(.js-loaded) {
-        opacity: 1;
-        transform: none;
-    }
-
-    /* Only apply initial hidden state after JS has loaded */
-    .bento-card.js-loaded {
-        opacity: 0;
-        transform: translate3d(0, 24px, 0);
-        transition:
-            opacity var(--duration-slow) var(--ease-out),
-            transform var(--duration-slow) var(--ease-out);
-    }
-
-    .bento-card.js-loaded.is-visible {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-
-    .bento-card > * {
-        position: relative;
-        z-index: 1;
-    }
-
-    .card-heading {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-1);
-    }
-
-    .card-heading span {
-        font-size: var(--text-xs);
-        letter-spacing: var(--tracking-caps);
-        text-transform: uppercase;
-        color: rgba(226, 232, 240, 0.7);
-        font-weight: var(--font-semibold);
-    }
-
-    /* Experience Cards */
-    .bento-card--experience {
-        border-color: rgba(148, 163, 184, 0.25);
-        background: linear-gradient(170deg, rgba(10, 12, 23, 0.96), rgba(15, 23, 42, 0.8));
-    }
-
-    .experience-card {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-5);
-    }
-
-    .experience-card__header {
-        display: flex;
-        flex-direction: column;
-        gap: var(--space-1);
-    }
-
-    .experience-card__header .period {
-        font-size: var(--text-xs);
-        letter-spacing: var(--tracking-caps);
-        text-transform: uppercase;
-        color: rgba(199, 210, 254, 0.9);
-        font-weight: var(--font-semibold);
-    }
-
-    .experience-card__header h2 {
-        margin: 0;
-        font-family: var(--font-heading);
-        font-size: var(--text-xl);
-        color: rgba(248, 250, 252, 0.95);
-    }
-
-    .experience-card__header .company {
-        color: rgba(226, 232, 240, 0.7);
-        margin: 0;
-        font-size: var(--text-sm);
-    }
-
-    .experience-points {
-        margin: 0;
-        list-style: disc;
-        list-style-position: outside;
-        padding-left: var(--space-6);
-        color: rgba(226, 232, 240, 0.78);
-        line-height: var(--leading-relaxed);
-        font-size: var(--text-sm);
-    }
-
-    .experience-points li::marker {
-        color: rgba(129, 140, 248, 0.85);
-    }
-
-    .experience-points li + li {
-        margin-top: var(--space-2);
-    }
-
-    /* Skill Cards */
-    .bento-card--skill {
-        background: linear-gradient(165deg, rgba(6, 10, 25, 0.95), rgba(18, 34, 63, 0.85));
-    }
-
-    .skill-chip-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--space-2);
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .skill-chip {
-        padding: var(--space-1-5) var(--space-4);
-        border-radius: var(--radius-full);
-        background: rgba(255, 255, 255, 0.07);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        font-size: var(--text-xs);
-        color: rgba(248, 250, 252, 0.88);
-        font-weight: var(--font-semibold);
-        text-transform: uppercase;
-        letter-spacing: var(--tracking-wide);
-        transition:
-            background var(--duration-fast) var(--ease-out),
-            border-color var(--duration-fast) var(--ease-out);
-    }
-
-    .skill-chip:hover {
-        background: rgba(255, 255, 255, 0.12);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    /* Core Skills Card */
-    .core-skills-card {
-        background:
-            radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.08), transparent 55%),
-            linear-gradient(135deg, rgb(8, 47, 73), rgb(15, 23, 42));
-        color: #f8fafc;
-        border-color: rgba(59, 130, 246, 0.35);
-        box-shadow: var(--shadow-elevated);
-        overflow: hidden;
-    }
-
-    .core-language-stack {
-        position: relative;
-        min-height: clamp(190px, 140px + 4vw, 260px);
-        margin-top: var(--space-3);
-        isolation: isolate;
-    }
-
-    .core-lang-card {
+    .timeline-track {
         position: absolute;
-        width: min(260px, 68%);
-        height: min(260px, 68%);
-        left: 50%;
-        top: 50%;
-        padding: var(--space-4) var(--space-6);
-        border-radius: var(--radius-xl);
-        background:
-            radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.85), transparent 55%),
-            linear-gradient(155deg, rgba(255, 255, 255, 0.94), var(--card-accent, rgba(59, 130, 246, 0.65)));
-        border: 1px solid rgba(255, 255, 255, 0.65);
-        box-shadow: 0 30px 55px rgba(15, 23, 42, 0.35);
-        z-index: var(--card-base-z, 1);
-        --card-scale: 1;
-        transform: translate(-50%, -50%) translate(var(--card-translate-x, 0px), var(--card-translate-y, 0px))
-            rotate(var(--card-rotate, 0deg)) scale(var(--card-scale));
-        backdrop-filter: blur(6px);
-        color: rgba(8, 15, 35, 0.85);
-        transition:
-            transform var(--duration-slow) var(--ease-out),
-            box-shadow var(--duration-normal) var(--ease-out),
-            z-index var(--duration-normal) var(--ease-out);
+        left: calc(var(--gutter) + 6px);
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            var(--border-strong) 10%,
+            var(--border-strong) 90%,
+            transparent 100%
+        );
+    }
+
+    @media (min-width: 768px) {
+        .timeline-track {
+            left: calc(var(--gutter) + 8px);
+        }
+    }
+
+    .experience-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-10);
+    }
+
+    .exp-card {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        gap: var(--space-6);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity var(--duration-slow) var(--ease-out),
+            transform var(--duration-slow) var(--ease-out);
+        transition-delay: calc(var(--card-index) * 100ms);
+    }
+
+    .exp-card.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .exp-marker {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        padding-top: var(--space-1);
+    }
+
+    .marker-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: var(--radius-full);
+        background: var(--bg-primary);
+        border: 2px solid var(--color-accent);
+        transition: border-color var(--duration-fast) var(--ease-out),
+            background var(--duration-fast) var(--ease-out);
+    }
+
+    .exp-card:hover .marker-dot,
+    .exp-card:focus-within .marker-dot {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+    }
+
+    .marker-line {
+        flex: 1;
+        width: 1px;
+        background: var(--border-strong);
+        margin-top: var(--space-2);
+    }
+
+    .exp-content {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        position: relative;
+        overflow: hidden;
+        transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .exp-content::before {
+        content: '////////////////////';
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.15);
+        letter-spacing: -0.05em;
+        padding: var(--space-2) var(--space-3);
+        pointer-events: none;
+    }
+
+    .exp-card:hover .exp-content,
+    .exp-card:focus-within .exp-content {
+        border-color: var(--bg-card-border-hover);
+    }
+
+    .exp-header {
+        margin-bottom: var(--space-5);
+    }
+
+    .exp-period {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-accent);
+        letter-spacing: var(--tracking-wider);
+        text-transform: uppercase;
+        margin-bottom: var(--space-2);
+    }
+
+    .exp-role {
+        font-size: var(--text-xl);
+        font-weight: var(--font-bold);
+        color: var(--text-inverse);
+        margin-bottom: var(--space-1);
+        line-height: var(--leading-snug);
+    }
+
+    .exp-company {
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .exp-highlights {
+        display: flex;
+        flex-direction: column;
         gap: var(--space-3);
+    }
+
+    .exp-highlights li {
+        display: flex;
+        gap: var(--space-3);
+        font-size: var(--text-sm);
+        color: rgba(255, 255, 255, 0.7);
+        line-height: var(--leading-relaxed);
+    }
+
+    .highlight-arrow {
+        flex-shrink: 0;
+        font-family: var(--font-mono);
+        color: var(--color-accent);
+    }
+
+    .skills-section {
+        max-width: var(--container-6xl);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+    }
+
+    .skills-header {
+        margin-bottom: var(--space-component);
+    }
+
+    .section-tag {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+        letter-spacing: var(--tracking-wide);
+        margin-bottom: var(--space-3);
+    }
+
+    .skills-header h2 {
+        font-size: var(--text-4xl);
+        font-weight: var(--font-black);
+        letter-spacing: var(--tracking-tight);
+        color: var(--text-primary);
+    }
+
+    .core-stack {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+        margin-bottom: var(--space-10);
+        max-width: 400px;
+    }
+
+    .core-card {
+        padding: var(--space-6) var(--space-5);
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: var(--radius-lg);
+        text-align: center;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: border-color var(--duration-fast) var(--ease-out),
+            transform var(--duration-fast) var(--ease-out);
     }
 
-    .core-lang-card:hover,
-    .core-lang-card:focus-visible,
-    .core-lang-card.is-active {
-        z-index: 5;
-        --card-scale: 1.06;
-        box-shadow: 0 35px 60px rgba(15, 23, 42, 0.55);
+    .core-card::before {
+        content: '$$$$$';
+        position: absolute;
+        top: var(--space-2);
+        left: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.15);
+        letter-spacing: 0.1em;
+        pointer-events: none;
     }
 
-    .core-lang-card:focus-visible {
+    .core-card:hover,
+    .core-card:focus-visible {
+        border-color: var(--color-accent);
+        transform: translateY(-2px);
+    }
+
+    .core-card:focus-visible {
         outline: var(--focus-ring-width) solid var(--focus-ring-color);
         outline-offset: var(--focus-ring-offset);
     }
 
-    .core-lang-card:nth-child(1) {
-        --card-base-z: 2;
-        --card-translate-x: -65px;
-        --card-translate-y: -42px;
-        --card-rotate: -6deg;
+    .core-name {
+        display: block;
+        font-family: var(--font-heading);
+        font-size: var(--text-2xl);
+        font-weight: var(--font-bold);
+        color: var(--color-accent);
+        margin-bottom: var(--space-2);
     }
 
-    .core-lang-card:nth-child(2) {
-        --card-base-z: 3;
-        --card-translate-x: 58px;
-        --card-translate-y: 45px;
-        --card-rotate: 5deg;
-    }
-
-    .core-lang-card__label {
-        margin: 0;
-        font-size: var(--text-lg);
-        font-weight: var(--font-black);
-        letter-spacing: var(--tracking-wide);
+    .core-years {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.6);
         text-transform: uppercase;
-        text-align: center;
-        width: 100%;
-        word-break: break-word;
-        color: rgba(7, 11, 25, 0.85);
+        letter-spacing: var(--tracking-wider);
     }
 
-    /* Responsive adjustments */
-    @media (max-width: 640px) {
-        .core-language-stack {
-            min-height: auto;
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-4);
+    .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: var(--space-5);
+        margin-bottom: var(--space-10);
+    }
+
+    .skill-card {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: var(--radius-lg);
+        padding: var(--space-5);
+        position: relative;
+        overflow: hidden;
+        transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .skill-card::before {
+        content: '>>>>';
+        position: absolute;
+        top: var(--space-2);
+        right: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.15);
+        letter-spacing: 0.05em;
+        pointer-events: none;
+    }
+
+    .skill-card:hover {
+        border-color: var(--bg-card-border-hover);
+    }
+
+    .skill-title {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--font-medium);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-caps);
+        margin-bottom: var(--space-4);
+    }
+
+    .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    .skill-tag {
+        padding: var(--space-1) var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: rgba(255, 255, 255, 0.8);
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--radius-sm);
+        transition: border-color var(--duration-fast) var(--ease-out),
+            color var(--duration-fast) var(--ease-out);
+    }
+
+    .skill-tag:hover {
+        border-color: var(--color-accent);
+        color: var(--text-inverse);
+    }
+
+    .lang-section {
+        padding-top: var(--space-8);
+        border-top: 1px solid var(--border-default);
+    }
+
+    .lang-title {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--font-medium);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-caps);
+        margin-bottom: var(--space-4);
+    }
+
+    .lang-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-6);
+    }
+
+    .lang-item {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .exp-card {
+            opacity: 1;
+            transform: none;
+            transition: none;
         }
 
-        .core-lang-card {
-            position: relative;
-            width: 100%;
-            height: auto;
-            left: 0;
-            top: 0;
-            transform: none !important;
-            animation: none;
-            padding: var(--space-6);
+        .core-card,
+        .skill-card,
+        .skill-tag,
+        .exp-content,
+        .marker-dot {
+            transition: none;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .exp-card {
+            grid-template-columns: 20px 1fr;
         }
 
-        .core-lang-card:hover,
-        .core-lang-card:focus-visible {
-            --card-scale: 1;
-            box-shadow: 0 15px 25px rgba(15, 23, 42, 0.25);
+        .marker-dot {
+            width: 16px;
+            height: 16px;
         }
     }
 
     @media (min-width: 1024px) {
-        .experience-grid,
-        .skills-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            grid-auto-rows: minmax(220px, auto);
-        }
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-        .bento-card {
-            transition: none;
-            opacity: 1 !important;
-            transform: none !important;
-        }
-
-        .core-lang-card {
-            transition: none;
-        }
-
-        .skill-chip {
-            transition: none;
+        .skill-grid {
+            grid-template-columns: repeat(4, 1fr);
         }
     }
 </style>
 
 <script>
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let detachSpotlight: (() => void) | undefined;
-    let detachCoreStack: (() => void) | undefined;
+    function initTimeline() {
+        const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const cards = document.querySelectorAll<HTMLElement>('.exp-card');
 
-    function revealCards() {
-        const cards = Array.from(document.querySelectorAll<HTMLElement>('.bento-card'));
-
-        // If reduced motion is preferred, show all cards immediately without animation
         if (prefersReduce || !('IntersectionObserver' in window)) {
-            cards.forEach((card) => {
-                card.classList.remove('js-loaded');
-                card.classList.add('is-visible');
-            });
+            cards.forEach((card) => card.classList.add('is-visible'));
             return;
         }
 
-        // Mark cards as JS-loaded to enable animation
-        cards.forEach((card) => card.classList.add('js-loaded'));
-
-        const io = new IntersectionObserver(
-            (entries, observer) => {
+        const observer = new IntersectionObserver(
+            (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         (entry.target as HTMLElement).classList.add('is-visible');
@@ -567,125 +613,13 @@ const primarySkillGroups = skillGroups.filter((group) => group.title !== 'Langua
                     }
                 });
             },
-            {
-                threshold: 0.15,
-                rootMargin: '0px 0px -5% 0px',
-            },
+            { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
         );
 
-        cards.forEach((card) => io.observe(card));
+        cards.forEach((card) => observer.observe(card));
     }
 
-    function attachSpotlightFx() {
-        detachSpotlight?.();
-
-        // Skip spotlight effect if reduced motion is preferred
-        if (prefersReduce) return;
-
-        const cards = Array.from(document.querySelectorAll<HTMLElement>('.bento-card'));
-        const cleanups: Array<() => void> = [];
-
-        cards.forEach((card) => {
-            const spotlight = document.createElement('div');
-            spotlight.className = 'spotlight-overlay';
-            spotlight.setAttribute('aria-hidden', 'true');
-            spotlight.style.cssText = `
-                position: absolute;
-                inset: 0;
-                z-index: 0;
-                pointer-events: none;
-                opacity: 0;
-                transition: opacity 0.5s ease-in-out;
-                border-radius: inherit;
-            `;
-            card.style.position = 'relative';
-            card.insertBefore(spotlight, card.firstChild);
-
-            const handleMove = (event: PointerEvent) => {
-                const rect = card.getBoundingClientRect();
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-                spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.1), transparent 80%)`;
-                spotlight.style.opacity = '1';
-            };
-
-            const handleEnter = () => {
-                spotlight.style.opacity = '1';
-            };
-
-            const handleLeave = () => {
-                spotlight.style.opacity = '0';
-            };
-
-            card.addEventListener('pointermove', handleMove);
-            card.addEventListener('pointerenter', handleEnter);
-            card.addEventListener('pointerleave', handleLeave);
-
-            cleanups.push(() => {
-                card.removeEventListener('pointermove', handleMove);
-                card.removeEventListener('pointerenter', handleEnter);
-                card.removeEventListener('pointerleave', handleLeave);
-                spotlight.remove();
-            });
-        });
-
-        detachSpotlight = () => cleanups.forEach((fn) => fn());
-    }
-
-    function setupCoreLanguageCards() {
-        detachCoreStack?.();
-
-        const stacks = Array.from(document.querySelectorAll<HTMLElement>('.core-language-stack'));
-        const cleanups: Array<() => void> = [];
-
-        stacks.forEach((stack) => {
-            const cards = Array.from(stack.querySelectorAll<HTMLElement>('.core-lang-card'));
-            if (!cards.length) return;
-
-            const activate = (target: HTMLElement) => {
-                cards.forEach((card) => {
-                    const isActive = card === target;
-                    card.classList.toggle('is-active', isActive);
-                    card.setAttribute('aria-pressed', isActive.toString());
-                });
-            };
-
-            cards.forEach((card) => {
-                const handlePointer = () => activate(card);
-                const handleKeydown = (e: KeyboardEvent) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        activate(card);
-                    }
-                };
-
-                card.addEventListener('pointerenter', handlePointer);
-                card.addEventListener('focus', handlePointer);
-                card.addEventListener('keydown', handleKeydown);
-
-                cleanups.push(() => {
-                    card.removeEventListener('pointerenter', handlePointer);
-                    card.removeEventListener('focus', handlePointer);
-                    card.removeEventListener('keydown', handleKeydown);
-                });
-            });
-
-            // Activate second card by default
-            if (cards[1]) activate(cards[1]);
-        });
-
-        detachCoreStack = () => cleanups.forEach((fn) => fn());
-    }
-
-    function hydrateTimeline() {
-        revealCards();
-        attachSpotlightFx();
-        setupCoreLanguageCards();
-    }
-
-    // Initialize on load and after Astro page transitions
-    window.addEventListener('load', hydrateTimeline);
-    document.addEventListener('astro:page-load', hydrateTimeline);
-    document.addEventListener('astro:after-swap', hydrateTimeline);
-    hydrateTimeline();
+    initTimeline();
+    document.addEventListener('astro:page-load', initTimeline);
+    document.addEventListener('astro:after-swap', initTimeline);
 </script>

@@ -34,17 +34,16 @@ const sections: FooterSection[] = [
 
 <footer class="relative z-10 mt-[var(--space-section)] w-full" role="contentinfo">
     <div class="w-full px-[var(--gutter)] py-12 lg:py-16">
-        <!-- Navigation Sections -->
         <nav aria-label="Footer Navigation">
             <div class="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:gap-16">
                 {
                     sections.map((section) => (
                         <div>
-                            <h2 class="text-[length:var(--text-lg)] font-bold tracking-tight text-[var(--color-text-primary)] sm:text-[length:var(--text-xl)] md:text-[length:var(--text-2xl)]">
+                            <h2 class="text-[length:var(--text-lg)] font-bold tracking-tight text-[var(--text-primary)] sm:text-[length:var(--text-xl)] md:text-[length:var(--text-2xl)]">
                                 {section.title}
                             </h2>
                             <div
-                                class="mb-2 h-[2px] w-full bg-[var(--color-border-default)]"
+                                class="mb-2 h-[2px] w-full bg-[var(--border-default)]"
                                 role="presentation"
                             />
                             <ul class="mt-5 space-y-3" role="list">
@@ -55,7 +54,7 @@ const sections: FooterSection[] = [
                                             {...(item.external
                                                 ? { target: '_blank', rel: 'noopener noreferrer' }
                                                 : {})}
-                                            class="group inline-flex items-center gap-1.5 text-[length:var(--text-base)] font-semibold text-[var(--color-text-secondary)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-accent)] sm:text-[length:var(--text-lg)] md:text-[length:var(--text-xl)]"
+                                            class="group inline-flex items-center gap-1.5 text-[length:var(--text-base)] font-semibold text-[var(--text-secondary)] transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-accent)] sm:text-[length:var(--text-lg)] md:text-[length:var(--text-xl)]"
                                         >
                                             <span class="bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat transition-[background-size] duration-[var(--duration-normal)] ease-out group-hover:bg-[length:100%_2px]">
                                                 {item.label}
@@ -91,17 +90,16 @@ const sections: FooterSection[] = [
             </div>
         </nav>
 
-        <!-- Bottom Section -->
         <div class="mt-16 grid grid-cols-1 items-end gap-10 sm:mt-20 lg:grid-cols-2">
             <p
-                class="text-[length:var(--text-4xl)] font-extrabold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--color-text-primary)] sm:text-[length:var(--text-5xl)] lg:text-[length:var(--text-6xl)]"
+                class="text-[length:var(--text-4xl)] font-extrabold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--text-primary)] sm:text-[length:var(--text-5xl)] lg:text-[length:var(--text-6xl)]"
             >
                 &copy; {year} Thomas Breindl
                 <br class="hidden md:block" />
                 All rights reserved.
             </p>
-            <div class="justify-self-start text-[var(--color-text-secondary)] md:justify-self-end">
-                <p class="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-widest)] text-[var(--color-text-tertiary)]">
+            <div class="justify-self-start text-[var(--text-secondary)] md:justify-self-end">
+                <p class="text-[length:var(--text-xs)] font-bold uppercase tracking-[var(--tracking-widest)] text-[var(--text-tertiary)]">
                     Local time
                 </p>
                 <time
@@ -118,7 +116,6 @@ const sections: FooterSection[] = [
 </footer>
 
 <style>
-    /* Subtle top border for visual separation without harsh gradient */
     footer::before {
         content: '';
         position: absolute;
@@ -126,7 +123,7 @@ const sections: FooterSection[] = [
         left: var(--gutter);
         right: var(--gutter);
         height: 1px;
-        background: var(--color-border-subtle);
+        background: var(--border-subtle);
         pointer-events: none;
     }
 </style>
@@ -151,7 +148,6 @@ const sections: FooterSection[] = [
                     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                 });
                 localTime.textContent = formatter.format(now);
-                // Update datetime attribute for semantic correctness
                 localTime.setAttribute('datetime', now.toISOString());
             } catch {
                 localTime.textContent = new Date().toLocaleTimeString();
@@ -170,11 +166,8 @@ const sections: FooterSection[] = [
         }
     }
 
-    // Mount on load and after Astro client navigation swaps
     document.addEventListener('DOMContentLoaded', mountClock);
     document.addEventListener('astro:after-swap', mountClock);
     document.addEventListener('astro:before-swap', cleanupClock);
-
-    // In case the page was hydrated without DOMContentLoaded
     mountClock();
 </script>

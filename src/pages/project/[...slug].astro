@@ -72,7 +72,8 @@ if (project.data.fullImage) {
         <article>
             <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52" aria-labelledby="project-title">
                 <div class="wrapper px-[var(--gutter)]">
-                    <h1 id="project-title" class="project-title hero-animation mb-8 font-extrabold tracking-tight text-[var(--color-text-primary)]">
+                    <span class="hero-tag hero-animation">// Project</span>
+                    <h1 id="project-title" class="project-title hero-animation mb-8">
                         {project.data.title}
                     </h1>
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -80,21 +81,21 @@ if (project.data.fullImage) {
                         <aside class="info mb-5 md:mb-0">
                             <div>
                                 <div id="Desc" class="hero-animation mb-4">
-                                    <p class="pre-header mb-1 text-[length:var(--text-sm)] uppercase tracking-[var(--tracking-caps)] text-[var(--color-text-tertiary)]">
+                                    <p class="pre-header">
                                         Aufgabe
                                     </p>
-                                    <div class="mb-4 text-[length:var(--text-lg)] font-medium text-[var(--color-text-primary)]">
+                                    <div class="meta-list">
                                         {project.data.tasks.map((task: string) => (
-                                            <span>
+                                            <span class="meta-item">
+                                                <span class="meta-arrow" aria-hidden="true">&rarr;</span>
                                                 {task}
-                                                <br />
                                             </span>
                                         ))}
                                     </div>
-                                    <p class="pre-header mt-6 mb-1 text-[length:var(--text-sm)] uppercase tracking-[var(--tracking-caps)] text-[var(--color-text-tertiary)]">
+                                    <p class="pre-header mt-8">
                                         Jahr
                                     </p>
-                                    <p class="text-[length:var(--text-lg)] font-medium text-[var(--color-text-primary)]">
+                                    <p class="meta-value">
                                         {project.data.year}
                                     </p>
                                 </div>
@@ -103,10 +104,10 @@ if (project.data.fullImage) {
 
                         <!-- Project Content -->
                         <div class="content col-span-2">
-                            <div class="content-body prose hero-animation mb-4 text-justify font-normal text-[var(--color-text-secondary)]">
+                            <div class="content-body prose hero-animation mb-4">
                                 <Content />
                                 {project.data.links && project.data.links.length > 0 && (
-                                    <nav class="mt-6 flex flex-row flex-wrap gap-4" aria-label="Projektlinks">
+                                    <nav class="mt-8 flex flex-row flex-wrap gap-4" aria-label="Projektlinks">
                                         {project.data.links.map((link: { text: string; icon: string; link: string }) => (
                                             <LinkButton text={link.text} icon={link.icon} href={link.link} />
                                         ))}
@@ -148,9 +149,51 @@ if (project.data.fullImage) {
         margin: 0 auto;
     }
 
+    .hero-tag {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--color-accent);
+        letter-spacing: var(--tracking-wide);
+        margin-bottom: var(--space-4);
+    }
+
     .pre-header {
-        padding-top: var(--space-1);
-        padding-bottom: var(--space-1);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--font-medium);
+        color: var(--color-accent);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-caps);
+        margin-bottom: var(--space-2);
+    }
+
+    .meta-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-2);
+        font-size: var(--text-lg);
+        font-weight: var(--font-medium);
+        color: var(--text-primary);
+        line-height: var(--leading-snug);
+    }
+
+    .meta-arrow {
+        font-family: var(--font-mono);
+        color: var(--color-accent);
+        flex-shrink: 0;
+    }
+
+    .meta-value {
+        font-size: var(--text-lg);
+        font-weight: var(--font-medium);
+        color: var(--text-primary);
     }
 
     .project-hero {
@@ -166,17 +209,31 @@ if (project.data.fullImage) {
     }
 
     .project-title {
-        font-family: var(--font-heading);
+        font-family: var(--font-display);
         font-size: clamp(2.6rem, 1.2rem + 6vw, 6rem);
-        line-height: var(--leading-tight);
+        line-height: var(--leading-none);
+        letter-spacing: var(--tracking-tight);
         text-wrap: balance;
         font-weight: var(--font-black);
+        color: var(--text-primary);
     }
 
     .content-body {
-        font-size: var(--text-base);
+        font-size: var(--text-lg);
         line-height: var(--leading-relaxed);
+        color: var(--text-secondary);
         text-wrap: pretty;
+    }
+
+    .content-body :global(p) {
+        font-size: var(--text-lg);
+        line-height: var(--leading-relaxed);
+        margin-bottom: var(--space-5);
+    }
+
+    .content-body :global(strong) {
+        font-weight: var(--font-semibold);
+        color: var(--text-primary);
     }
 
     .case-study-photos figure {
