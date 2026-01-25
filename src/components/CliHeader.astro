@@ -1,0 +1,33 @@
+---
+export interface Props {
+    command: string;
+    class?: string;
+}
+
+const { command, class: className } = Astro.props;
+---
+
+<div class:list={['cli-header', className]}>
+    <span class="cli-prompt">$</span>
+    <span class="cli-command">{command}</span>
+</div>
+
+<style>
+    .cli-header {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+    }
+
+    .cli-prompt {
+        color: var(--color-accent);
+        font-weight: var(--font-bold);
+    }
+
+    .cli-command {
+        color: var(--text-secondary);
+    }
+</style>

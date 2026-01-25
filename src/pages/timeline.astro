@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CliHeader from '../components/CliHeader.astro';
 
 interface ExperienceEntry {
     role: string;
@@ -85,10 +86,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     <div class="timeline-page">
         <section class="hero" aria-labelledby="page-title">
             <div class="hero-content">
-                <div class="cli-header">
-                    <span class="cli-prompt">$</span>
-                    <span class="cli-command">ls -la ~/experience</span>
-                </div>
+                <CliHeader command="ls -la ~/experience" class="mb-6" />
                 <span class="hero-tag">// About</span>
                 <h1 id="page-title">Work Experience</h1>
                 <p class="hero-sub">Building systems that scale</p>
@@ -117,11 +115,11 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                                 <span class="marker-line" />
                             </div>
                             <article class="exp-content">
-                                <header class="exp-header">
+                                <div class="exp-header">
                                     <time class="exp-period">{exp.period}</time>
                                     <h3 class="exp-role">{exp.role}</h3>
                                     <p class="exp-company">{exp.company}</p>
-                                </header>
+                                </div>
                                 <ul class="exp-highlights" aria-label="Key achievements">
                                     {exp.highlights.map((h) => (
                                         <li>
@@ -140,10 +138,10 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         </section>
 
         <section class="skills-section" aria-labelledby="skills-heading">
-            <header class="skills-header">
+            <div class="skills-header">
                 <span class="section-tag">// Stack</span>
                 <h2 id="skills-heading">Skills & Tools</h2>
-            </header>
+            </div>
 
             <div class="core-stack">
                 {
@@ -204,26 +202,6 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         z-index: 1;
         max-width: var(--container-6xl);
         margin: 0 auto;
-    }
-
-    /* CLI header */
-    .cli-header {
-        display: flex;
-        align-items: center;
-        gap: var(--space-3);
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-        margin-bottom: var(--space-6);
-        color: var(--text-secondary);
-    }
-
-    .cli-prompt {
-        color: var(--color-accent);
-        font-weight: var(--font-bold);
-    }
-
-    .cli-command {
-        color: var(--text-secondary);
     }
 
     .hero-tag {
@@ -300,17 +278,29 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         display: grid;
         grid-template-columns: 16px 1fr;
         gap: var(--space-6);
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-            opacity var(--duration-slow) var(--ease-out),
-            transform var(--duration-slow) var(--ease-out);
-        transition-delay: calc(var(--card-index) * 100ms);
     }
 
-    .exp-card.is-visible {
-        opacity: 1;
-        transform: translateY(0);
+    .js-motion .exp-card {
+        opacity: 0;
+        transform: translateY(20px);
+        will-change: opacity, transform;
+    }
+
+    /* Hero animations */
+    .js-motion .hero-tag,
+    .js-motion .hero h1,
+    .js-motion .hero-sub {
+        opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .exp-card,
+        .hero-tag,
+        .hero h1,
+        .hero-sub {
+            opacity: 1 !important;
+            transform: none !important;
+        }
     }
 
     .exp-marker {
@@ -601,12 +591,6 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .exp-card {
-            opacity: 1;
-            transform: none;
-            transition: none;
-        }
-
         .core-card,
         .skill-card,
         .skill-tag,
@@ -635,31 +619,154 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
 </style>
 
 <script>
-    function initTimeline() {
-        const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const cards = document.querySelectorAll<HTMLElement>('.exp-card');
+    import { animateCliTyping, getMotionPreference } from '../utils/cliAnimations';
+    import { animate, inView } from 'motion';
 
-        if (prefersReduce || !('IntersectionObserver' in window)) {
-            cards.forEach((card) => card.classList.add('is-visible'));
+    const motionOK = getMotionPreference();
+    const root = document.documentElement;
+    if (motionOK) {
+        root.classList.add('js-motion');
+    } else {
+        root.classList.remove('js-motion');
+    }
+
+    function initHeroAnimations() {
+        const heroTag = document.querySelector<HTMLElement>('.hero-tag');
+        const heroTitle = document.querySelector<HTMLElement>('.hero h1');
+        const heroSub = document.querySelector<HTMLElement>('.hero-sub');
+
+        const heroItems = [
+            { el: heroTag, y: 12, duration: 0.5, delay: 0.7 },
+            { el: heroTitle, y: 16, duration: 0.8, delay: 0.9 },
+            { el: heroSub, y: 12, duration: 0.8, delay: 1.1 },
+        ];
+
+        if (!motionOK) {
+            heroItems.forEach(({ el }) => {
+                if (!el) return;
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
             return;
         }
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        (entry.target as HTMLElement).classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            },
-            { threshold: 0.1, rootMargin: '0px 0px -10% 0px' },
-        );
-
-        cards.forEach((card) => observer.observe(card));
+        heroItems.forEach(({ el, y, duration, delay }) => {
+            if (!el) return;
+            el.style.opacity = '0';
+            el.style.transform = `translate3d(0, ${y}px, 0)`;
+            animate(el, { opacity: [0, 1], y: [y, 0] }, { duration, delay, ease: 'anticipate' });
+        });
     }
 
-    initTimeline();
-    document.addEventListener('astro:page-load', initTimeline);
-    document.addEventListener('astro:after-swap', initTimeline);
+    function initCliAnimation() {
+        if (!motionOK) return;
+
+        const cliPrompt = document.querySelector<HTMLElement>('.cli-prompt');
+
+        if (cliPrompt) {
+            animate(cliPrompt, { scale: [1, 1.2, 1] }, { duration: 0.5, delay: 0.1, ease: 'easeOut' });
+
+            animateCliTyping('.cli-command', 100, 50);
+        }
+    }
+
+    function initCardAnimations() {
+        const cards = document.querySelectorAll<HTMLElement>('.exp-card');
+
+        if (!motionOK) {
+            cards.forEach((card) => {
+                card.style.opacity = '1';
+                card.style.transform = 'none';
+                card.style.willChange = 'auto';
+            });
+            return;
+        }
+
+        const animateCard = (card: HTMLElement, index: number) => {
+            if (card.dataset.motion === 'done') return;
+            card.dataset.motion = 'done';
+            const delay = (index % 4) * 0.08;
+            const controls = animate(
+                card,
+                { opacity: [0, 1], y: [20, 0] },
+                { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+            );
+            controls.finished.then(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'none';
+                card.style.willChange = 'auto';
+            });
+        };
+
+        cards.forEach((card, index) => {
+            if (card.dataset.motion) return;
+            card.dataset.motion = 'pending';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.willChange = 'opacity, transform';
+
+            let stop: VoidFunction | undefined;
+            stop = inView(
+                card,
+                () => {
+                    if (card.dataset.motion === 'done') return;
+                    animateCard(card, index);
+                    stop?.();
+                },
+                { margin: '0px 0px -80px 0px', amount: 0.2 },
+            );
+
+            const rect = card.getBoundingClientRect();
+            const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+            if (rect.top < viewHeight && rect.bottom > 0) {
+                animateCard(card, index);
+                stop?.();
+            }
+        });
+    }
+
+    function initAllAnimations() {
+        initCliAnimation();
+        initHeroAnimations();
+        initCardAnimations();
+    }
+
+    function waitForLoader() {
+        return new Promise<void>((resolve) => {
+            const loader = document.querySelector<HTMLElement>('#loader');
+            if (!loader || !loader.classList.contains('on')) {
+                resolve();
+                return;
+            }
+
+            const finish = () => {
+                loader.removeEventListener('transitionend', finish);
+                observer?.disconnect();
+                resolve();
+            };
+
+            const observer = new MutationObserver(() => {
+                if (!loader.classList.contains('on')) {
+                    finish();
+                }
+            });
+
+            loader.addEventListener('transitionend', finish, { once: true });
+            observer.observe(loader, { attributes: true, attributeFilter: ['class'] });
+
+            setTimeout(finish, 1200);
+        });
+    }
+
+    let animationRunId = 0;
+    async function scheduleAnimations() {
+        const runId = ++animationRunId;
+        await waitForLoader();
+        if (runId !== animationRunId) return;
+        initAllAnimations();
+    }
+
+    scheduleAnimations();
+    document.addEventListener('astro:page-load', scheduleAnimations);
+    document.addEventListener('astro:after-swap', scheduleAnimations);
 </script>

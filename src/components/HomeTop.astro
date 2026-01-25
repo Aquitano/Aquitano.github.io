@@ -1,12 +1,12 @@
+---
+import CliHeader from './CliHeader.astro';
+---
+
 <section class="home-top landingpage" aria-labelledby="hero-title">
     <div class="flex flex-col items-center">
         <div class="text-center">
-            <!-- CLI header -->
-            <div class="cli-header">
-                <span class="cli-prompt">$</span>
-                <span class="cli-command">whoami</span>
-            </div>
-            
+            <CliHeader command="whoami" class="mb-6 justify-center" />
+
             <h1 id="hero-title" class="title font-extrabold text-(--color-text-primary)">
                 <span class="word">Thomas</span>
                 <span class="word">Breindl</span>
@@ -48,26 +48,6 @@
         inset: -60px 0 0;
         pointer-events: none;
         background: radial-gradient(900px 200px at 50% 0, var(--color-border-subtle), transparent 65%);
-    }
-
-    /* CLI header */
-    .cli-header {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--space-3);
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-        margin-bottom: var(--space-6);
-        color: var(--text-secondary);
-    }
-
-    .cli-prompt {
-        color: var(--color-accent);
-        font-weight: var(--font-bold);
-    }
-
-    .cli-command {
-        color: var(--text-secondary);
     }
 
     .title {
@@ -231,6 +211,7 @@
 
 <script>
     import { animate, stagger } from 'motion';
+    import { animateCliTyping } from '../utils/cliAnimations';
 
     function initHeroSection() {
         const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
@@ -265,13 +246,16 @@
 
     function runHeroLetters() {
         if (!motionOK) {
-            // Show elements immediately without animation
-            const elements = document.querySelectorAll<HTMLElement>('.cli-header, .header-light, .hero-subtitle, .links, .animate');
+            const elements = document.querySelectorAll<HTMLElement>(
+                '.cli-header, .header-light, .hero-subtitle, .links, .animate',
+            );
             elements.forEach((el) => {
                 el.style.opacity = '1';
             });
             return;
         }
+
+        animateCliTyping('.cli-command', 200, 50);
 
         if (!document.querySelector('.title .letter')) {
             const words = document.querySelectorAll<HTMLElement>('.title .word');
@@ -304,12 +288,12 @@
 
         const sequence = [
             [
-                '.cli-header',
+                '.cli-prompt',
                 {
                     opacity: [0, 1],
-                    x: [-8, 0],
+                    scale: [0.8, 1],
                 },
-                { duration: 0.6, delay: 0.1, ease: 'easeOut' },
+                { duration: 0.3, delay: 0.1, ease: 'easeOut' },
             ],
             [
                 Array.from(letters),
@@ -318,7 +302,7 @@
                     opacity: [0, 1],
                     filter: ['blur(5px)', 'blur(0)'],
                 },
-                { duration: letterDuration, delay: stagger(step, { startDelay: 0.3 }), ease: 'easeOut' },
+                { duration: letterDuration, delay: stagger(step, { startDelay: 0.5 }), ease: 'easeOut' },
             ],
             [
                 '.hero-subtitle',
@@ -351,7 +335,9 @@
         heroAnim?.stop();
         heroAnim = animate(sequence as any);
         heroAnim.finished.then(() => {
-            const all = document.querySelectorAll<HTMLElement>('.cli-header, .title .letter, .hero-subtitle, .links, .animate');
+            const all = document.querySelectorAll<HTMLElement>(
+                '.cli-header, .title .letter, .hero-subtitle, .links, .animate',
+            );
             all.forEach((el) => {
                 el.style.willChange = 'auto';
             });

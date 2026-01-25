@@ -2,6 +2,7 @@ import { createVisibilityObserver, withOccurrence } from '@solid-primitives/inte
 import { sortedUniq } from 'lodash-es';
 import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
+import { getMotionPreference } from '../utils/cliAnimations';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
@@ -87,12 +88,6 @@ const filterProjects = (projects: Project[], option: FilterOption) => {
     const sorted = sortProjects(projects);
     const baseProjects = assignGridSizes(sorted);
     return baseProjects.filter(TESTERS[option]);
-};
-
-// Check for reduced motion preference
-const getMotionPreference = (): boolean => {
-    if (typeof window === 'undefined') return true;
-    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 };
 
 const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {

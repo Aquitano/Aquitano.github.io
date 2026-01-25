@@ -1,6 +1,7 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, type Easing } from 'motion';
 import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { getMotionPreference, getReducedMotionMQL } from '../utils/cliAnimations';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 
@@ -30,19 +31,6 @@ export const ANIMATION_CONFIG = {
     exit: { duration: 0.4, easing: [0.4, 0.0, 0.2, 1] as Easing },
     staggerDelay: 0.15,
     viewportThreshold: 0.15,
-};
-
-const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
-const getReducedMotionMQL = (): MediaQueryList | null => {
-    if (typeof globalThis.matchMedia !== 'function') {
-        return null;
-    }
-    return globalThis.matchMedia(REDUCED_MOTION_QUERY);
-};
-
-const getMotionPreference = (): boolean => {
-    const mql = getReducedMotionMQL();
-    return mql ? !mql.matches : true;
 };
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
