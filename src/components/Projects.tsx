@@ -11,7 +11,7 @@ const FILTERS: {
     label: string;
     tester: (p: Project) => boolean;
 }[] = [
-    { value: 'all', label: 'All', tester: (_) => true },
+    { value: 'all', label: 'Alle', tester: () => true },
     { value: 'featured', label: 'Featured', tester: (p) => p.data.featured },
     { value: 'frontend', label: 'Frontend', tester: (p) => p.data.tasks.includes('Frontend') },
     { value: 'backend', label: 'Backend', tester: (p) => p.data.tasks.includes('Backend') },
@@ -74,7 +74,7 @@ const sortProjects = (projects: Project[]): Project[] => {
         if (a.data.featured && !b.data.featured) return -1;
         if (!a.data.featured && b.data.featured) return 1;
 
-        // TODO: Temporary fix for specific project ordering
+        // TODO(TB): Temporary fix for specific project ordering
         if (a.data.name === 'Griffin' && b.data.name === 'JustHTML') return 1;
         if (a.data.name === 'JustHTML' && b.data.name === 'Griffin') return -1;
 
@@ -88,6 +88,12 @@ const filterProjects = (projects: Project[], option: FilterOption) => {
     return baseProjects.filter(TESTERS[option]);
 };
 
+// Check for reduced motion preference
+const getMotionPreference = (): boolean => {
+    if (typeof window === 'undefined') return true;
+    return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
 const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     const computeInitial = () => {
         const featured = filterProjects(allProjects, 'featured');
@@ -98,6 +104,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     const [isAnimating, setIsAnimating] = createSignal(false);
     const [headerVisible, setHeaderVisible] = createSignal(false);
     const [headerAnimationComplete, setHeaderAnimationComplete] = createSignal(false);
+    const motionOK = getMotionPreference();
 
     const currentYear = new Date().getFullYear();
 
@@ -130,6 +137,18 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
     const animateHeader = () => {
         if (!preHeader || !header) return;
+
+        // Skip animation if reduced motion is preferred
+        if (!motionOK) {
+            if (preHeader) preHeader.style.opacity = '1';
+            if (header) header.style.opacity = '1';
+            filterButtons.forEach((btn) => {
+                btn.style.opacity = '1';
+            });
+            setHeaderAnimationComplete(true);
+            return;
+        }
+
         preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
         header.style.cssText = 'opacity: 0; transform: translateY(20px);';
 
@@ -170,6 +189,12 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
         setIsAnimating(true);
         setFilter(option);
 
+        // Skip animation if reduced motion is preferred
+        if (!motionOK) {
+            applyFilter(option);
+            return;
+        }
+
         const projectCards = document.querySelectorAll('.perspective-2000');
         if (projectCards.length === 0) {
             applyFilter(option);
@@ -200,48 +225,74 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
     onMount(() => {
         if (preHeader) {
-            preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
+            if (motionOK) {
+                preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
+            }
             useHeaderVisibilityObserver(() => preHeader);
         }
     });
 
     return (
-        <section class="relative z-3 overflow-hidden py-24" id="portfolio">
-            <div class="mx-auto w-full max-w-7xl px-6">
+        <section
+            class="relative z-3 overflow-hidden py-[var(--space-section)]"
+            id="portfolio"
+            aria-labelledby="portfolio-heading"
+        >
+            <div class="mx-auto w-full max-w-7xl px-[var(--gutter)]">
                 {/* Header */}
-                <div class="mb-16 text-left">
-                    <p ref={preHeader} class="text-sm font-semibold tracking-[0.4em] text-gray-400 uppercase">
+                <header class="mb-16 text-left">
+                    <p
+                        ref={preHeader}
+                        class="text-[length:var(--text-sm)] font-semibold tracking-[var(--tracking-caps)] text-[var(--color-text-tertiary)] uppercase"
+                    >
                         Meine
                     </p>
                     <h1
                         ref={header}
-                        class="mt-2 font-['Syne_Variable',sans-serif] text-6xl leading-tight font-extrabold text-stone-700"
+                        id="portfolio-heading"
+                        class="mt-2 font-[family-name:var(--font-display)] text-[length:var(--text-5xl)] leading-[var(--leading-tight)] font-extrabold text-[var(--color-text-primary)]"
                     >
                         Projekte
                     </h1>
-                </div>
+                </header>
 
                 {/* Filter buttons */}
-                <div class="mb-12 flex flex-wrap gap-3">
-                    <For each={FILTER_OPTIONS}>
-                        {(option, index) => (
-                            <TagButton
-                                ref={(el) => (filterButtons[index()] = el)}
-                                label={option.label}
-                                isActive={filter() === option.value}
-                                onClick={() => handleFilterChange(option.value)}
-                            />
-                        )}
-                    </For>
+                <nav class="mb-12" aria-label="Projektfilter">
+                    <ul class="flex list-none flex-wrap gap-3 p-0" role="list">
+                        <For each={FILTER_OPTIONS}>
+                            {(option, index) => (
+                                <li>
+                                    <TagButton
+                                        ref={(el) => (filterButtons[index()] = el)}
+                                        label={option.label}
+                                        isActive={filter() === option.value}
+                                        onClick={() => handleFilterChange(option.value)}
+                                        aria-pressed={filter() === option.value}
+                                    />
+                                </li>
+                            )}
+                        </For>
+                    </ul>
+                </nav>
+
+                {/* Status announcement for screen readers */}
+                <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                    {projects().length} Projekte gefunden
                 </div>
 
                 <div
                     ref={projectsContainer}
                     class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-5 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-6 lg:gap-5"
+                    role="list"
+                    aria-label="Projektliste"
                 >
                     <Show
                         when={projects().length > 0}
-                        fallback={<div class="col-span-full py-8 text-center text-gray-400">No projects found</div>}
+                        fallback={
+                            <div class="col-span-full py-8 text-center text-[var(--color-text-tertiary)]">
+                                Keine Projekte gefunden
+                            </div>
+                        }
                     >
                         <For each={projects()}>
                             {(project, index) => {
@@ -250,10 +301,8 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                                 let wrapperClassOverride: string | undefined = undefined;
 
                                 if (count === 1) {
-                                    // Center single card and make it a bit wider (4/6 columns)
                                     wrapperClassOverride = `relative md:col-span-4 md:col-start-2 ${HEIGHT_CLASSES[size]}`;
                                 } else if (count === 2) {
-                                    // Two cards balanced across the row (3/6 each)
                                     wrapperClassOverride = `relative md:col-span-3 ${HEIGHT_CLASSES[size]}`;
                                 }
 
