@@ -228,6 +228,7 @@ import Layout from '../layouts/Layout.astro';
         const successContainer = document.getElementById('form-success');
 
         if (!form || !errorContainer || !successContainer) return;
+        if (form.dataset.contactInitialized === 'true') return;
 
         function showError(message: string) {
             if (!errorContainer || !successContainer) return;
@@ -281,19 +282,22 @@ import Layout from '../layouts/Layout.astro';
                 return;
             }
 
-            const formData = new URLSearchParams({
-                'form-name': 'contact',
-                name,
-                email,
-                tel,
-                message,
+            const formData = new FormData(form);
+            formData.set('name', name);
+            formData.set('email', email);
+            formData.set('tel', tel);
+            formData.set('message', message);
+
+            const body = new URLSearchParams();
+            formData.forEach((value, key) => {
+                body.append(key, typeof value === 'string' ? value : value.name);
             });
 
             try {
                 const response = await fetch('/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: formData.toString(),
+                    body: body.toString(),
                 });
 
                 if (response.ok) {
@@ -306,6 +310,8 @@ import Layout from '../layouts/Layout.astro';
                 showError('Netzwerkfehler. Bitte überprüfen Sie Ihre Internetverbindung.');
             }
         });
+
+        form.dataset.contactInitialized = 'true';
     }
 
     // Initialize on load and after Astro page transitions

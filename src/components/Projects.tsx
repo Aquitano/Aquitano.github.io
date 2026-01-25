@@ -1,5 +1,4 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
-import { sortedUniq } from 'lodash-es';
 import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
 import { getMotionPreference } from '../utils/cliAnimations';
