@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import LinkButton from '../../components/LinkButton.astro';
 import Layout from '../../layouts/Layout.astro';
 
@@ -11,6 +11,10 @@ export async function getStaticPaths() {
         params: { slug: project.slug },
         props: { project },
     }));
+}
+
+interface Props {
+    project: CollectionEntry<'project'>;
 }
 
 const { project } = Astro.props;
@@ -31,7 +35,7 @@ if (project.data.fullImage) {
 ---
 
 <Layout
-    title={project.data.title + ' | Breindl Thomas'}
+    title={`${project.data.title} | Breindl Thomas`}
     active="Projekte"
     SEO={{
         description: project.data.description,
@@ -65,110 +69,129 @@ if (project.data.fullImage) {
     />
 
     <div class="scroll-container">
-        <div>
-            <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52">
-                <div class="wrapper px-4">
-                    <h1 class="project-title hero-animation mb-8 font-extrabold tracking-tight text-black/90">
+        <article>
+            <section class="project-hero pt-24 md:pt-36 lg:pt-48 xl:pt-52" aria-labelledby="project-title">
+                <div class="wrapper px-[var(--gutter)]">
+                    <h1 id="project-title" class="project-title hero-animation mb-8 font-extrabold tracking-tight text-[var(--color-text-primary)]">
                         {project.data.title}
                     </h1>
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-                        <div class="info mb-5 md:mb-0">
+                        <!-- Project Meta -->
+                        <aside class="info mb-5 md:mb-0">
                             <div>
                                 <div id="Desc" class="hero-animation mb-4">
-                                    <p class="pre-header mb-1 text-sm text-gray-400 uppercase">Aufgabe</p>
-                                    <h4 class="mb-4 text-lg font-medium">
-                                        {
-                                            project.data.tasks.map((task: string) => (
-                                                <span>
-                                                    {task}
-                                                    <br />
-                                                </span>
-                                            ))
-                                        }
-                                    </h4>
-                                    <p class="pre-header mt-2 mb-1 text-sm text-gray-400 uppercase">Jahr</p>
-                                    <h4 class="text-lg font-medium">{project.data.year}</h4>
+                                    <p class="pre-header mb-1 text-[length:var(--text-sm)] uppercase tracking-[var(--tracking-caps)] text-[var(--color-text-tertiary)]">
+                                        Aufgabe
+                                    </p>
+                                    <div class="mb-4 text-[length:var(--text-lg)] font-medium text-[var(--color-text-primary)]">
+                                        {project.data.tasks.map((task: string) => (
+                                            <span>
+                                                {task}
+                                                <br />
+                                            </span>
+                                        ))}
+                                    </div>
+                                    <p class="pre-header mt-6 mb-1 text-[length:var(--text-sm)] uppercase tracking-[var(--tracking-caps)] text-[var(--color-text-tertiary)]">
+                                        Jahr
+                                    </p>
+                                    <p class="text-[length:var(--text-lg)] font-medium text-[var(--color-text-primary)]">
+                                        {project.data.year}
+                                    </p>
                                 </div>
                             </div>
-                        </div>
+                        </aside>
+
+                        <!-- Project Content -->
                         <div class="content col-span-2">
-                            <div class="content-body hero-animation mb-4 text-justify font-normal text-black/70">
+                            <div class="content-body prose hero-animation mb-4 text-justify font-normal text-[var(--color-text-secondary)]">
                                 <Content />
-                                <div class="mt-4 flex flex-row space-x-4">
-                                    {
-                                        project.data.links?.map((link) => (
+                                {project.data.links && project.data.links.length > 0 && (
+                                    <nav class="mt-6 flex flex-row flex-wrap gap-4" aria-label="Projektlinks">
+                                        {project.data.links.map((link: { text: string; icon: string; link: string }) => (
                                             <LinkButton text={link.text} icon={link.icon} href={link.link} />
-                                        ))
-                                    }
-                                </div>
+                                        ))}
+                                    </nav>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            {
-                fullImageSrc && (
-                    <section class="case-study-photos hero-animation pt-20">
-                        <div class="wrapper px-4">
-                            <div>
-                                <Image
-                                    alt={`${project.data.title} - Vollständige Projektansicht`}
-                                    src={fullImageSrc}
-                                    height={820}
-                                    width={1420}
-                                    class="rounded-3xl"
-                                    loading="lazy"
-                                />
-                            </div>
-                        </div>
-                    </section>
-                )
-            }
-        </div>
+
+            {fullImageSrc && (
+                <section class="case-study-photos hero-animation pt-20" aria-label="Projektbild">
+                    <div class="wrapper px-[var(--gutter)]">
+                        <figure>
+                            <Image
+                                alt={`${project.data.title} - Vollständige Projektansicht`}
+                                src={fullImageSrc}
+                                height={820}
+                                width={1420}
+                                class="rounded-3xl"
+                                loading="lazy"
+                            />
+                        </figure>
+                    </div>
+                </section>
+            )}
+        </article>
     </div>
 </Layout>
 
-<style lang="scss">
+<style>
+    .scroll-container {
+        padding-bottom: var(--space-section);
+    }
+
+    .wrapper {
+        max-width: var(--container-6xl);
+        margin: 0 auto;
+    }
+
     .pre-header {
-        padding-top: 5px;
-        padding-bottom: 5px;
-        letter-spacing: 0.4em;
+        padding-top: var(--space-1);
+        padding-bottom: var(--space-1);
     }
-    .pre-header + h4 {
-        margin-top: 0.35rem;
+
+    .project-hero {
+        position: relative;
     }
-    h4 + .pre-header {
-        margin-top: 1.75rem;
-    }
+
     .project-hero::before {
         content: '';
         position: absolute;
         inset: -40px 0 0;
         pointer-events: none;
-        background: radial-gradient(800px 160px at 50% 0, rgba(255, 255, 255, 0.06), transparent 60%);
+        background: radial-gradient(800px 160px at 50% 0, var(--color-border-subtle), transparent 60%);
     }
+
     .project-title {
-        /* Match footer tone and use fluid clamp similar to global headings */
-        font-family: 'Helvetica Now Display DW', sans-serif;
+        font-family: var(--font-heading);
         font-size: clamp(2.6rem, 1.2rem + 6vw, 6rem);
-        line-height: 1.08;
+        line-height: var(--leading-tight);
         text-wrap: balance;
-        font-weight: 1000;
+        font-weight: var(--font-black);
     }
+
     .content-body {
-        /* Fluid readable body size similar to main page */
-        font-size: clamp(1.02rem, 0.9rem + 0.6vw, 1.2rem);
-        line-height: 1.7;
+        font-size: var(--text-base);
+        line-height: var(--leading-relaxed);
         text-wrap: pretty;
     }
-    section.case-study-photos Img {
+
+    .case-study-photos figure {
+        margin: 0;
+    }
+
+    .case-study-photos :global(img) {
         display: block;
         max-width: 100%;
         opacity: 1;
         margin: 0 auto;
         width: 100%;
     }
-    section.case-study-photos video {
+
+    .case-study-photos :global(video) {
         display: block;
         width: 100%;
     }
@@ -177,6 +200,7 @@ if (project.data.fullImage) {
         opacity: 0;
         transition: none;
     }
+
     @media (prefers-reduced-motion: reduce) {
         .hero-animation {
             opacity: 1 !important;
@@ -187,27 +211,34 @@ if (project.data.fullImage) {
 <script>
     import { animate } from 'motion';
 
-    const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
+    const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
-    // Simple, minimal delays (seconds)
     const DELAY_TITLE = 0.3;
     const DELAY_DESC = 0.75;
     const DELAY_BODY = 1.0;
     const DELAY_PHOTO = 1.25;
 
-    let projectAnim: any = null;
+    let projectAnim: ReturnType<typeof animate> | null = null;
 
     function runProjectAnimations() {
-        if (!motionOK) return;
+        if (!motionOK) {
+            // Show all elements immediately without animation
+            const elements = document.querySelectorAll<HTMLElement>('.hero-animation');
+            elements.forEach((el) => {
+                el.style.opacity = '1';
+            });
+            return;
+        }
 
-        const title = document.querySelector('.project-title');
-        const desc = document.querySelector('#Desc');
-        const body = document.querySelector('.content-body');
-        const photo = document.querySelector('.case-study-photos');
+        const title = document.querySelector<HTMLElement>('.project-title');
+        const desc = document.querySelector<HTMLElement>('#Desc');
+        const body = document.querySelector<HTMLElement>('.content-body');
+        const photo = document.querySelector<HTMLElement>('.case-study-photos');
 
-        const sequence = [] as any[];
+        const sequence: Parameters<typeof animate>[0] = [];
+
         if (title) {
-            (title as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,16px,0)';
+            title.style.cssText = 'opacity:0; transform: translate3d(0,16px,0)';
             sequence.push([
                 title,
                 {
@@ -218,8 +249,9 @@ if (project.data.fullImage) {
                 { at: DELAY_TITLE, duration: 0.9, ease: 'easeOut' },
             ]);
         }
+
         if (desc) {
-            (desc as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
+            desc.style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
             sequence.push([
                 desc,
                 {
@@ -229,8 +261,9 @@ if (project.data.fullImage) {
                 { at: DELAY_DESC, duration: 0.9, ease: 'easeOut' },
             ]);
         }
+
         if (body) {
-            (body as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
+            body.style.cssText = 'opacity:0; transform: translate3d(0,12px,0)';
             sequence.push([
                 body,
                 {
@@ -240,8 +273,9 @@ if (project.data.fullImage) {
                 { at: DELAY_BODY, duration: 0.9, ease: 'easeOut' },
             ]);
         }
+
         if (photo) {
-            (photo as HTMLElement).style.cssText = 'opacity:0; transform: translate3d(0,10px,0)';
+            photo.style.cssText = 'opacity:0; transform: translate3d(0,10px,0)';
             sequence.push([
                 photo,
                 {
@@ -258,6 +292,7 @@ if (project.data.fullImage) {
         }
     }
 
+    // Initialize on load and after Astro page transitions
     window.addEventListener('load', runProjectAnimations);
     document.addEventListener('astro:page-load', runProjectAnimations);
     document.addEventListener('astro:after-swap', runProjectAnimations);

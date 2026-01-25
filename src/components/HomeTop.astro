@@ -1,207 +1,192 @@
-<section class="home-top landingpage text-stone-700" aria-labelledby="hero-title">
+<section class="home-top landingpage" aria-labelledby="hero-title">
     <div class="flex flex-col items-center">
         <div class="text-center">
-            <h1 id="hero-title" class="title font-extrabold text-stone-700">
+            <h1 id="hero-title" class="title font-extrabold text-[var(--color-text-primary)]">
                 <span class="word">Thomas</span>
                 <span class="word">Breindl</span>
             </h1>
-            <h2 class="header-light hero-subtitle text-stone-700">
+            <p class="hero-subtitle text-[var(--color-text-secondary)]">
                 Hallo, ich bin Programmierer, Designer und Student.
-            </h2>
+            </p>
             <nav class="links" aria-label="Hauptlinks im Hero">
-                <a href="#portfolio" class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
+                <a
+                    href="#portfolio"
+                    class="link link-underline scroll-to projects cursor-pointer"
+                >
+                    Projekte
+                </a>
                 <span class="links-sep" aria-hidden="true">oder</span>
-                <a href="/timeline" class="link link-underline" rel="prefetch">Über Mich</a>
+                <a href="/timeline" class="link link-underline" data-astro-prefetch>Über Mich</a>
             </nav>
         </div>
         <button
             type="button"
-            class="scroll-to animate"
+            class="scroll-trigger animate"
             aria-label="Zum Portfolio scrollen"
-            title="Zum Portfolio scrollen scroll-trigger"
         >
-            <div class="scroll-to-icon" aria-hidden="true"></div>
+            <span class="scroll-to-icon" aria-hidden="true"></span>
         </button>
     </div>
 </section>
 
-<style lang="scss">
+<style>
     .home-top {
-        font-family: 'Roboto Slab Variable', serif;
+        font-family: var(--font-body);
         position: relative;
         overflow: hidden;
-
-        &::before {
-            content: '';
-            position: absolute;
-            inset: -60px 0 0;
-            pointer-events: none;
-            background: radial-gradient(900px 200px at 50% 0, rgba(0, 0, 0, 0.06), transparent 65%);
-        }
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0.08;
-            mix-blend-mode: multiply;
-        }
-    }
-    .link {
-        font-weight: 800;
-        letter-spacing: normal;
-        text-transform: uppercase;
-        font-size: var(--step-1);
-    }
-    .link-underline {
-        border-bottom-width: 0;
-        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
-        background-size: 0 3px;
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        transition: background-size 0.25s ease-in-out;
-
-        &:hover {
-            background-size: 100% 3px;
-            background-position: 0 100%;
-            text-shadow: 0 0 0.25px #0f141e80;
-        }
-    }
-
-    section.home-top {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        position: relative;
+        min-height: 100dvh;
+        /* Account for sticky header height to center content in remaining space */
+        padding-top: clamp(60px, 8vh, 100px);
         z-index: 2;
     }
+
+    .home-top::before {
+        content: '';
+        position: absolute;
+        inset: -60px 0 0;
+        pointer-events: none;
+        background: radial-gradient(900px 200px at 50% 0, var(--color-border-subtle), transparent 65%);
+    }
+
     .title {
-        font-family: 'Syne Variable', sans-serif;
-        line-height: 0.9;
-        letter-spacing: -0.01em;
+        font-family: var(--font-display);
+        line-height: var(--leading-none);
+        letter-spacing: var(--tracking-tight);
         font-size: clamp(2.75rem, 7vw + 1rem, 7.5rem);
         margin-bottom: clamp(0.5rem, 1vw, 1rem);
         text-wrap: balance;
     }
+
     .title .word {
         display: block;
     }
+
     .hero-subtitle {
-        font-size: clamp(var(--step-2), 1.2rem + 1.8vw, 2.25rem);
-        font-family: 'Roboto Slab Variable', serif;
-        margin-bottom: 1rem;
+        font-size: var(--text-2xl);
+        font-family: var(--font-body);
+        margin-bottom: var(--space-4);
         max-width: 34ch;
         margin-left: auto;
         margin-right: auto;
-        line-height: 1.3;
+        line-height: var(--leading-snug);
         text-wrap: balance;
     }
-    button.scroll-trigger {
-        background: transparent;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        outline: none;
+
+    .link {
+        font-weight: var(--font-extrabold);
+        letter-spacing: normal;
+        text-transform: uppercase;
+        font-size: var(--text-lg);
+        color: var(--color-text-primary);
+        transition: color var(--duration-fast) var(--ease-out);
     }
-    button.scroll-trigger:focus-visible .scroll-to-icon {
-        box-shadow:
-            inset 0 0 0 2px #0f141e,
-            0 0 0 3px rgba(15, 20, 30, 0.15);
+
+    .link:hover {
+        color: var(--color-accent);
     }
+
+    .link-underline {
+        border-bottom-width: 0;
+        background-image: linear-gradient(transparent, transparent), linear-gradient(var(--color-accent), var(--color-accent));
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition: 
+            background-size var(--duration-normal) var(--ease-out),
+            color var(--duration-fast) var(--ease-out);
+    }
+
+    .link-underline:hover {
+        background-size: 100% 3px;
+        background-position: 0 100%;
+    }
+
     .links {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1.25rem;
-        margin-top: 0.5rem;
+        gap: var(--space-5);
+        margin-top: var(--space-2);
         flex-direction: column;
     }
+
     .links-sep {
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        color: #6b7280;
+        font-weight: var(--font-bold);
+        letter-spacing: var(--tracking-wide);
+        color: var(--color-text-tertiary);
         text-transform: uppercase;
-        font-size: clamp(0.95rem, 0.2vw + 0.85rem, 1.05rem);
+        font-size: var(--text-sm);
     }
+
     @media (min-width: 640px) {
         .links {
             flex-direction: row;
         }
     }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        section.home-top button.scroll-trigger {
-            background: 0 0;
-            width: 20px;
-            margin: 30px auto 20px auto;
-        }
-        section.home-top button.scroll-trigger:after {
-            display: none;
-        }
-        section.home-top button.scroll-trigger svg {
-            width: 20px;
-            height: 20px;
-            margin: 20px;
-        }
-        section.home-top button.scroll-trigger svg path {
-            transition: fill 0.2s linear;
-        }
-        section.home-top button.scroll-trigger:active svg path {
-            fill: #878a8f;
-        }
-        section.home-top button.scroll-trigger:active .scroll-to-icon {
-            box-shadow: inset 0 0 0 2px #878a8f;
-        }
-        section.home-top button.scroll-trigger:active .scroll-to-icon:after {
-            background: #878a8f;
-        }
-        section.home-top .scroll-to-icon {
-            width: 20px;
-            height: 30px;
-            box-shadow: inset 0 0 0 2px #0f141e;
-            border-radius: 25px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out 0s;
-            transform: translateY(0);
-            position: relative;
-        }
-        section.home-top .scroll-to-icon:after {
-            content: '';
-            width: 4px;
-            height: 6px;
-            background: #0f141e;
-            top: 8px;
-            right: 8px;
-            border-radius: 2px;
-            animation-duration: 1.5s;
-            animation-iteration-count: infinite;
-            animation-name: scroll;
-            position: absolute;
-        }
-        section.home-top.keep-arrow button.scroll-trigger {
-            visibility: visible;
-        }
+
+    /* Scroll trigger button */
+    .scroll-trigger {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        margin-top: var(--space-8);
     }
-    @media (min-width: 1280px) {
-        section.home-top button.scroll-trigger {
-            margin-top: 30px;
-        }
-        section.home-top button.scroll-trigger:hover svg path {
-            fill: #878a8f;
-        }
-        section.home-top button.scroll-trigger:hover .scroll-to-icon {
-            box-shadow: inset 0 0 0 2px #878a8f;
-        }
-        section.home-top button.scroll-trigger:hover .scroll-to-icon:after {
-            background: #878a8f;
+
+    .scroll-trigger:focus-visible .scroll-to-icon {
+        box-shadow:
+            inset 0 0 0 2px var(--color-text-primary),
+            0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+    }
+
+    .scroll-to-icon {
+        width: 20px;
+        height: 30px;
+        box-shadow: inset 0 0 0 2px var(--color-text-primary);
+        border-radius: var(--radius-full);
+        cursor: pointer;
+        transition: box-shadow var(--duration-fast) var(--ease-out);
+        position: relative;
+    }
+
+    .scroll-to-icon::after {
+        content: '';
+        width: 4px;
+        height: 6px;
+        background: var(--color-text-primary);
+        top: 8px;
+        right: 8px;
+        border-radius: 2px;
+        position: absolute;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-name: scroll;
+    }
+
+    .scroll-trigger:hover .scroll-to-icon {
+        box-shadow: inset 0 0 0 2px var(--color-accent);
+    }
+
+    .scroll-trigger:hover .scroll-to-icon::after {
+        background: var(--color-accent);
+    }
+
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        .scroll-trigger {
+            display: inline-flex;
         }
     }
 
+    /* Scroll animation - respect reduced motion */
     @media (prefers-reduced-motion: no-preference) {
         @keyframes scroll {
             0% {
@@ -212,6 +197,16 @@
                 opacity: 1;
                 transform: translateY(7px);
             }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-to-icon::after {
+            animation: none;
         }
     }
 </style>
@@ -219,16 +214,18 @@
 <script>
     import { animate, stagger } from 'motion';
 
-    const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
-    scrollTriggers.forEach((el) =>
-        el.addEventListener('click', (event) => {
-            (event as Event & { preventDefault?: () => void }).preventDefault?.();
-            scrollToPortfolio();
-        }),
-    );
+    function initHeroSection() {
+        const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
+        scrollTriggers.forEach((el) =>
+            el.addEventListener('click', (event) => {
+                event.preventDefault();
+                scrollToPortfolio();
+            }),
+        );
+    }
 
     function scrollToPortfolio() {
-        const portfolio: HTMLElement | null = document.querySelector('#portfolio');
+        const portfolio = document.querySelector<HTMLElement>('#portfolio');
         if (!portfolio) return;
         const stickyHeader = document.querySelector('header');
         const headerOffset = stickyHeader instanceof HTMLElement ? stickyHeader.offsetHeight : 150;
@@ -242,13 +239,21 @@
         node.textContent = text;
         return node;
     };
+
     const splitByLetter = (text: string | null | undefined) => (text ? [...text].map(createSpan) : []);
 
-    const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
-    let heroAnim: any = null;
+    const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+    let heroAnim: ReturnType<typeof animate> | null = null;
 
     function runHeroLetters() {
-        if (!motionOK) return;
+        if (!motionOK) {
+            // Show elements immediately without animation
+            const elements = document.querySelectorAll<HTMLElement>('.header-light, .hero-subtitle, .links, .animate');
+            elements.forEach((el) => {
+                el.style.opacity = '1';
+            });
+            return;
+        }
 
         if (!document.querySelector('.title .letter')) {
             const words = document.querySelectorAll<HTMLElement>('.title .word');
@@ -260,8 +265,8 @@
                         wordEl.append(' ');
                         return;
                     }
-                    (node as HTMLElement).classList.add('letter');
-                    (node as HTMLElement).style.display = 'inline-block';
+                    node.classList.add('letter');
+                    node.style.display = 'inline-block';
                     wordEl.appendChild(node);
                 });
             });
@@ -277,7 +282,6 @@
 
         const step = 0.075;
         const letterDuration = 0.8;
-
         const lastLetterEndAt = letters.length ? (letters.length - 1) * step + letterDuration : 0;
 
         const sequence = [
@@ -291,7 +295,7 @@
                 { duration: letterDuration, delay: stagger(step, { startDelay: 0.3 }), ease: 'easeOut' },
             ],
             [
-                '.header-light',
+                '.hero-subtitle',
                 {
                     opacity: [0, 1],
                     y: [50, 0],
@@ -316,13 +320,12 @@
                 },
                 { at: lastLetterEndAt + 0.1, duration: 0.7, ease: 'easeOut' },
             ],
-            ['.animate', { at: lastLetterEndAt + 0.6, duration: 0.2, ease: 'linear' }],
         ];
 
         heroAnim?.stop();
         heroAnim = animate(sequence as any);
         heroAnim.finished.then(() => {
-            const all = document.querySelectorAll<HTMLElement>('.title .letter, .header-light, .links, .animate');
+            const all = document.querySelectorAll<HTMLElement>('.title .letter, .hero-subtitle, .links, .animate');
             all.forEach((el) => {
                 el.style.willChange = 'auto';
             });
@@ -330,13 +333,16 @@
         });
     }
 
+    // Initialize
+    initHeroSection();
     window.addEventListener('load', runHeroLetters);
     document.addEventListener('astro:page-load', runHeroLetters);
-    document.addEventListener('astro:after-swap', runHeroLetters);
+    document.addEventListener('astro:after-swap', () => {
+        initHeroSection();
+        runHeroLetters();
+    });
     document.addEventListener('astro:before-swap', () => {
         heroAnim?.stop();
         heroAnim = null;
     });
 </script>
-
-<script></script>

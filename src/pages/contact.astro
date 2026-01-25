@@ -15,197 +15,342 @@ import Layout from '../layouts/Layout.astro';
         },
     }}
 >
-    <div class="relative mt-11 flex min-h-screen items-center justify-center sm:mt-0 sm:items-center sm:pt-0">
-        <div class="mx-auto w-full max-w-6xl sm:px-6 lg:px-8">
-            <div class="mt-8 overflow-hidden">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <div class="bg-gray-100 p-6 sm:rounded-lg dark:bg-gray-800">
-                        <h1
-                            class="mb-4 text-4xl font-extrabold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
-                        >
-                            Kontaktieren Sie mich
-                        </h1>
-                        <p class="text-normal text-lg font-medium text-gray-600 sm:text-2xl dark:text-gray-400">
-                            Füllen Sie das Formular aus, um ein Gespräch zu beginnen
-                        </p>
+    <section class="relative flex min-h-screen items-center justify-center px-[var(--gutter)] py-16 sm:py-24">
+        <div class="mx-auto w-full max-w-6xl">
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
+                <!-- Contact Info -->
+                <div class="rounded-2xl bg-[var(--color-bg-secondary)] p-8 lg:p-10">
+                    <h1
+                        class="text-[length:var(--text-4xl)] font-extrabold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] text-[var(--color-text-primary)]"
+                    >
+                        Kontaktieren Sie mich
+                    </h1>
+                    <p class="mt-4 text-[length:var(--text-lg)] text-[var(--color-text-secondary)]">
+                        Füllen Sie das Formular aus, um ein Gespräch zu beginnen
+                    </p>
 
-                        <div class="mt-8 flex items-center text-gray-600 dark:text-gray-400">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="1.5"
-                                viewBox="0 0 24 24"
-                                class="h-8 w-8 text-gray-500"
+                    <address class="mt-10 space-y-6 not-italic">
+                        <!-- Location -->
+                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
+                            <div
+                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
+                                aria-hidden="true"
                             >
-                                <path
+                                <svg
+                                    fill="none"
+                                    stroke="currentColor"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                ></path>
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <div class="text-md ml-4 w-40 font-semibold tracking-wide">Passau, Deutschland</div>
-                        </div>
-
-                        <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
-                            <svg class="h-8 w-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                                <Icon name="mdi:twitter" style={'width: 2rem'} />
-                            </svg>
-                            <div class="text-md ml-4 w-40 font-semibold tracking-wide">
-                                <a href="https://twitter.com/BreindlThomas" target="_blank" rel="noopener noreferrer"
-                                    >@BreindlThomas</a
+                                    viewBox="0 0 24 24"
+                                    class="h-5 w-5 text-[var(--color-accent)]"
                                 >
+                                    <path
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                    ></path>
+                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
+                                    Standort
+                                </p>
+                                <p class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)]">
+                                    Passau, Deutschland
+                                </p>
                             </div>
                         </div>
 
-                        <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
-                            <svg class="h-8 w-8 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                                <Icon name="mdi:github" style={'width: 2rem'} />
-                            </svg>
-                            <div class="text-md ml-4 w-40 font-semibold tracking-wide">
-                                <a href="https://github.com/Aquitano" target="_blank" rel="noopener noreferrer"
-                                    >Aquitano</a
-                                >
-                            </div>
-                        </div>
-
-                        <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
-                            <svg
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="1.5"
-                                viewBox="0 0 24 24"
-                                class="h-8 w-8 text-gray-500"
+                        <!-- Twitter / X -->
+                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
+                            <div
+                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
+                                aria-hidden="true"
                             >
-                                <path
+                                <Icon name="mdi:twitter" class="h-5 w-5 text-[var(--color-accent)]" />
+                            </div>
+                            <div>
+                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
+                                    Twitter / X
+                                </p>
+                                <a
+                                    href="https://twitter.com/BreindlThomas"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)] underline decoration-[var(--color-border-default)] underline-offset-2 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+                                >
+                                    @BreindlThomas
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- GitHub -->
+                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
+                            <div
+                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
+                                aria-hidden="true"
+                            >
+                                <Icon name="mdi:github" class="h-5 w-5 text-[var(--color-accent)]" />
+                            </div>
+                            <div>
+                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
+                                    GitHub
+                                </p>
+                                <a
+                                    href="https://github.com/Aquitano"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)] underline decoration-[var(--color-border-default)] underline-offset-2 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+                                >
+                                    Aquitano
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex items-start gap-4 text-[var(--color-text-secondary)]">
+                            <div
+                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[var(--color-accent-muted)]"
+                                aria-hidden="true"
+                            >
+                                <svg
+                                    fill="none"
+                                    stroke="currentColor"
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="1.5"
-                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                ></path>
-                            </svg>
-                            <div class="text-md ml-4 w-40 font-semibold tracking-wide">
-                                <a href="mailto:ThomasBreindl@proton.me">ThomasBreindl@proton.me</a>
+                                    viewBox="0 0 24 24"
+                                    class="h-5 w-5 text-[var(--color-accent)]"
+                                >
+                                    <path
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-[length:var(--text-sm)] font-medium text-[var(--color-text-tertiary)]">
+                                    E-Mail
+                                </p>
+                                <a
+                                    href="mailto:ThomasBreindl@proton.me"
+                                    class="text-[length:var(--text-base)] font-semibold text-[var(--color-text-primary)] underline decoration-[var(--color-border-default)] underline-offset-2 transition-colors hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+                                >
+                                    ThomasBreindl@proton.me
+                                </a>
                             </div>
                         </div>
+                    </address>
+                </div>
+
+                <!-- Contact Form -->
+                <form
+                    class="flex flex-col justify-center space-y-6 rounded-2xl bg-[var(--color-bg-secondary)] p-8 lg:p-10"
+                    name="contact"
+                    data-netlify-recaptcha="true"
+                    data-netlify="true"
+                    method="POST"
+                    novalidate
+                    aria-label="Kontaktformular"
+                >
+                    <input type="hidden" name="form-name" value="contact" />
+
+                    <!-- Name Field -->
+                    <div class="flex flex-col gap-2">
+                        <label for="name" class="label">
+                            Vollständiger Name
+                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            id="name"
+                            autocomplete="name"
+                            required
+                            aria-required="true"
+                            class="input"
+                            placeholder="Max Mustermann"
+                        />
                     </div>
 
-                    <form
-                        class="flex flex-col justify-center space-y-4 p-6"
-                        name="contact"
-                        data-netlify-recaptcha="true"
-                        data-netlify="true"
-                        method="POST"
+                    <!-- Email Field -->
+                    <div class="flex flex-col gap-2">
+                        <label for="email" class="label">
+                            E-Mail
+                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            autocomplete="email"
+                            required
+                            aria-required="true"
+                            aria-describedby="email-hint"
+                            class="input"
+                            placeholder="max@beispiel.de"
+                        />
+                        <p id="email-hint" class="text-[length:var(--text-xs)] text-[var(--color-text-tertiary)]">
+                            Ihre E-Mail wird nur für die Kontaktaufnahme verwendet.
+                        </p>
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="flex flex-col gap-2">
+                        <label for="tel" class="label">
+                            Telefonnummer
+                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                        </label>
+                        <input
+                            type="tel"
+                            name="tel"
+                            id="tel"
+                            autocomplete="tel"
+                            required
+                            aria-required="true"
+                            class="input"
+                            placeholder="+49 123 456789"
+                        />
+                    </div>
+
+                    <!-- Message Field -->
+                    <div class="flex flex-col gap-2">
+                        <label for="message" class="label">
+                            Nachricht
+                            <span class="text-[var(--color-error)]" aria-hidden="true">*</span>
+                        </label>
+                        <textarea
+                            name="message"
+                            id="message"
+                            required
+                            aria-required="true"
+                            rows="5"
+                            class="input min-h-32 resize-y"
+                            placeholder="Ihre Nachricht..."
+                        ></textarea>
+                    </div>
+
+                    <!-- reCAPTCHA -->
+                    <div data-netlify-recaptcha="true"></div>
+
+                    <!-- Error message container (populated by JS) -->
+                    <div
+                        id="form-error"
+                        role="alert"
+                        aria-live="polite"
+                        class="hidden rounded-lg bg-[color-mix(in_srgb,var(--color-error)_15%,transparent)] p-4 text-[length:var(--text-sm)] text-[var(--color-error)]"
                     >
-                        <input type="hidden" name="form-name" value="contact" />
-                        <div class="flex flex-col">
-                            <label for="name" class="hidden">Vollständiger Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                placeholder="Vollständiger Name"
-                                class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                            />
-                        </div>
+                    </div>
 
-                        <div class="flex flex-col">
-                            <label for="email" class="hidden">E-Mail</label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                placeholder="E-Mail"
-                                class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                            />
-                        </div>
+                    <!-- Success message container (populated by JS) -->
+                    <div
+                        id="form-success"
+                        role="status"
+                        aria-live="polite"
+                        class="hidden rounded-lg bg-[color-mix(in_srgb,var(--color-success)_15%,transparent)] p-4 text-[length:var(--text-sm)] text-[var(--color-success)]"
+                    >
+                    </div>
 
-                        <div class="flex flex-col">
-                            <label for="tel" class="hidden">Telefonnummer</label>
-                            <input
-                                type="tel"
-                                name="tel"
-                                id="tel"
-                                placeholder="Telefonnummer"
-                                class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                            />
-                        </div>
-
-                        <div class="flex flex-col">
-                            <label for="message" class="hidden">Nachricht</label>
-                            <textarea
-                                name="message"
-                                id="message"
-                                placeholder="Ihre Nachricht"
-                                rows="4"
-                                class="w-full rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                            ></textarea>
-                        </div>
-
-                        <div data-netlify-recaptcha="true"></div>
-
-                        <button
-                            type="submit"
-                            class="hover:bg-blue-dark mt-3 w-full rounded-lg bg-indigo-600 px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:bg-indigo-500 md:w-auto"
-                        >
-                            Absenden
-                        </button>
-                    </form>
-                </div>
+                    <button
+                        type="submit"
+                        class="btn btn-primary mt-2 w-full py-3 text-[length:var(--text-base)] font-bold sm:w-auto sm:px-8"
+                    >
+                        Absenden
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
+    </section>
 </Layout>
 
 <script>
-    const form = document.querySelector('form');
+    function initContactForm() {
+        const form = document.querySelector<HTMLFormElement>('form[name="contact"]');
+        const errorContainer = document.getElementById('form-error');
+        const successContainer = document.getElementById('form-success');
 
-    form?.addEventListener('submit', (e) => {
-        e.preventDefault();
+        if (!form || !errorContainer || !successContainer) return;
 
-        const name = form.querySelector<HTMLInputElement>('#name')?.value;
-        const email = form.querySelector<HTMLInputElement>('#email')?.value.replace(/\s/g, '');
-        const tel = form.querySelector<HTMLInputElement>('#tel')?.value.replace(/\s/g, '');
-        const message = form.querySelector<HTMLTextAreaElement>('#message')?.value;
-
-        // Check values
-        if (!name || !email || !tel || !message) {
-            alert('Bitte füllen Sie alle Felder aus.');
-            return;
+        function showError(message: string) {
+            if (!errorContainer || !successContainer) return;
+            errorContainer.textContent = message;
+            errorContainer.classList.remove('hidden');
+            successContainer.classList.add('hidden');
         }
 
-        if (email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/g) === null) {
-            alert('Bitte geben Sie eine gültige E-Mail-Adresse an.');
-            return;
+        function showSuccess(message: string) {
+            if (!errorContainer || !successContainer) return;
+            successContainer.textContent = message;
+            successContainer.classList.remove('hidden');
+            errorContainer.classList.add('hidden');
         }
 
-        if (!tel.match(/^[0-9\-\+]{9,15}$/g)) {
-            alert('Bitte geben Sie eine gültige Telefonnummer an.');
-            return;
+        function hideMessages() {
+            if (!errorContainer || !successContainer) return;
+            errorContainer.classList.add('hidden');
+            successContainer.classList.add('hidden');
         }
 
-        const formData: Record<string, string> = {
-            name,
-            email,
-            tel,
-            message,
-        };
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
 
-        fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData).toString(),
-        })
-            .then(() => alert('Form successfully submitted'))
-            .catch((error) => alert(error));
-    });
+            const nameInput = form.querySelector<HTMLInputElement>('#name');
+            const emailInput = form.querySelector<HTMLInputElement>('#email');
+            const telInput = form.querySelector<HTMLInputElement>('#tel');
+            const messageInput = form.querySelector<HTMLTextAreaElement>('#message');
+
+            const name = nameInput?.value.trim() ?? '';
+            const email = emailInput?.value.trim() ?? '';
+            const tel = telInput?.value.replace(/\s/g, '') ?? '';
+            const message = messageInput?.value.trim() ?? '';
+
+            // Validation
+            if (!name || !email || !tel || !message) {
+                showError('Bitte füllen Sie alle Pflichtfelder aus.');
+                return;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('Bitte geben Sie eine gültige E-Mail-Adresse an.');
+                emailInput?.focus();
+                return;
+            }
+
+            if (!/^[0-9\-+]{9,15}$/.test(tel)) {
+                showError('Bitte geben Sie eine gültige Telefonnummer an (9-15 Ziffern).');
+                telInput?.focus();
+                return;
+            }
+
+            const formData = new URLSearchParams({
+                'form-name': 'contact',
+                name,
+                email,
+                tel,
+                message,
+            });
+
+            try {
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData.toString(),
+                });
+
+                if (response.ok) {
+                    showSuccess('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.');
+                    form.reset();
+                } else {
+                    showError('Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+                }
+            } catch {
+                showError('Netzwerkfehler. Bitte überprüfen Sie Ihre Internetverbindung.');
+            }
+        });
+    }
+
+    // Initialize on load and after Astro page transitions
+    document.addEventListener('DOMContentLoaded', initContactForm);
+    document.addEventListener('astro:after-swap', initContactForm);
+    initContactForm();
 </script>
