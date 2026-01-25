@@ -53,6 +53,7 @@ if (project.data.fullImage) {
     }}
 >
     <script
+        is:inline
         type="application/ld+json"
         set:html={JSON.stringify({
             '@context': 'https://schema.org',
@@ -394,7 +395,7 @@ if (project.data.fullImage) {
 </style>
 
 <script>
-    import { animate } from 'motion';
+    import { animate, type AnimationSequence } from 'motion';
     import { animateCliTyping } from '../../utils/cliAnimations';
 
     const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
@@ -422,7 +423,7 @@ if (project.data.fullImage) {
         const content = document.querySelector<HTMLElement>('.content-card');
         const photo = document.querySelector<HTMLElement>('.case-study-photos');
 
-        const sequence: Parameters<typeof animate>[0] = [];
+        const sequence: AnimationSequence = [];
 
         if (cli) {
             cli.style.cssText = 'opacity:0; transform: translate3d(-8px,0,0)';

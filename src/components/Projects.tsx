@@ -1,7 +1,7 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
-import { getMotionPreference } from '../utils/cliAnimations';
+import { animateCliTyping, getMotionPreference } from '../utils/cliAnimations';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
@@ -114,7 +114,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     let cliHeader: HTMLDivElement | undefined;
     let preHeader: HTMLParagraphElement | undefined;
     let header: HTMLHeadingElement | undefined;
-    let projectsContainer: HTMLDivElement | undefined;
     let filterButtons: HTMLButtonElement[] = [];
 
     const useHeaderVisibilityObserver = createVisibilityObserver(
@@ -173,6 +172,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 ] as const,
             ];
 
+            animateCliTyping('#portfolio .font-mono span:last-child', 500, 40);
             animate(sequence as any).finished.then(() => {
                 setHeaderAnimationComplete(true);
             });
@@ -259,21 +259,21 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 <div class="mb-16 text-left">
                     {/* CLI header */}
                     <div
-                        ref={cliHeader}
-                        class="mb-6 flex items-center gap-3 font-(family-name:--font-mono) text-(length:--text-sm) text-(--text-secondary)"
+                        ref={(el) => (cliHeader = el)}
+                        class="mb-6 flex items-center gap-3 font-mono text-(length:--text-sm) text-(--text-secondary)"
                     >
                         <span class="font-bold text-(--color-accent)">$</span>
                         <span>cd ~/portfolio && ls</span>
                     </div>
 
                     <p
-                        ref={preHeader}
+                        ref={(el) => (preHeader = el)}
                         class="text-(length:--text-sm) font-semibold tracking-(--tracking-caps) text-(--color-text-tertiary) uppercase"
                     >
                         Meine
                     </p>
                     <h1
-                        ref={header}
+                        ref={(el) => (header = el)}
                         id="portfolio-heading"
                         class="mt-2 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
                     >
@@ -306,7 +306,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 </div>
 
                 <div
-                    ref={projectsContainer}
                     class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-5 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-6 lg:gap-5"
                     role="list"
                     aria-label="Projektliste"

@@ -172,7 +172,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     return (
         <article class={wrapperClass}>
             <div
-                ref={cardRef}
+                ref={(el) => (cardRef = el)}
                 class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl"
                 style={{
                     background: 'var(--bg-card)',
@@ -240,7 +240,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                     {/* Content */}
                     <div
-                        ref={contentRef}
+                        ref={(el) => (contentRef = el)}
                         class="absolute bottom-0 left-0 z-10 w-full p-6"
                         style={{
                             transform: isHovered() ? 'translateY(0)' : 'translateY(4px)',

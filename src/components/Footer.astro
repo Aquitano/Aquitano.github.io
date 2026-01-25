@@ -32,7 +32,7 @@ const sections: FooterSection[] = [
 ];
 ---
 
-<footer class="relative z-10 mt-(--space-section) w-full" role="contentinfo">
+<footer class="relative z-10 mt-(--space-section) w-full">
     <div class="w-full px-(--gutter) py-12 lg:py-16">
         <nav aria-label="Footer Navigation">
             <div class="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:gap-16">
@@ -42,7 +42,7 @@ const sections: FooterSection[] = [
                             <p class="text-lg font-bold tracking-tight text-(--text-primary) sm:text-xl md:text-2xl">
                                 {section.title}
                             </p>
-                            <div class="mb-2 h-0.5 w-full bg-(--border-default)" role="presentation" />
+                            <div class="mb-2 h-0.5 w-full bg-(--border-default)" aria-hidden="true" />
                             <ul class="mt-5 space-y-3" role="list">
                                 {section.items.map((item) => (
                                     <li>
