@@ -300,13 +300,12 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 </nav>
 
                 {/* Status announcement for screen readers */}
-                <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                <output class="sr-only" aria-live="polite" aria-atomic="true">
                     {projects().length} Projekte gefunden
-                </div>
+                </output>
 
-                <div
+                <menu
                     class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-5 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-6 lg:gap-5"
-                    role="list"
                     aria-label="Projektliste"
                 >
                     <Show
@@ -346,7 +345,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                             }}
                         </For>
                     </Show>
-                </div>
+                </menu>
             </div>
         </section>
     );
