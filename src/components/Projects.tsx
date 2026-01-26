@@ -283,7 +283,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
                 {/* Filter buttons */}
                 <nav class="mb-12" aria-label="Projektfilter">
-                    <ul class="flex list-none flex-wrap gap-3 p-0" role="list">
+                    <ul class="flex list-none flex-wrap gap-3 p-0">
                         <For each={FILTER_OPTIONS}>
                             {(option, index) => (
                                 <li>
@@ -292,7 +292,6 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                                         label={option.label}
                                         isActive={filter() === option.value}
                                         onClick={() => handleFilterChange(option.value)}
-                                        aria-pressed={filter() === option.value}
                                     />
                                 </li>
                             )}

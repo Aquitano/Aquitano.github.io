@@ -158,14 +158,6 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
                 url: new URL('/', Astro.site).toString(),
                 inLanguage: 'de',
                 publisher: { '@id': new URL('/#person', Astro.site).toString() },
-                potentialAction: {
-                    '@type': 'SearchAction',
-                    target: {
-                        '@type': 'EntryPoint',
-                        urlTemplate: new URL('/search?q={search_term_string}', Astro.site).toString(),
-                    },
-                    'query-input': 'required name=search_term_string',
-                },
             })}
         />
 

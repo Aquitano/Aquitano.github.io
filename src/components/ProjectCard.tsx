@@ -198,7 +198,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         style={{ color: 'rgba(255, 255, 255, 0.15)', 'letter-spacing': '0.05em' }}
                         aria-hidden="true"
                     >
-                        /////
+                        {'/////'}
                     </div>
 
                     {/* Subtle gradient overlay */}
