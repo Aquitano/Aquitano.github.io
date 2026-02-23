@@ -419,15 +419,6 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         margin-bottom: var(--space-component);
     }
 
-    .section-tag {
-        display: block;
-        font-family: var(--font-mono);
-        font-size: var(--text-md);
-        color: var(--color-accent);
-        letter-spacing: var(--tracking-wide);
-        margin-bottom: var(--space-3);
-    }
-
     .skills-header h2 {
         font-size: var(--text-4xl);
         font-weight: var(--font-black);
@@ -766,9 +757,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         initAllAnimations();
     }
 
-    scheduleAnimations();
     document.addEventListener('astro:page-load', scheduleAnimations);
-    document.addEventListener('astro:after-swap', scheduleAnimations);
     document.addEventListener('astro:before-swap', () => {
         resetCliTyping('.cli-command');
     });

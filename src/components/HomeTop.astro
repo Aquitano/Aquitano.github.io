@@ -339,9 +339,7 @@ import CliHeader from './CliHeader.astro';
 
     // Initialize
     initHeroSection();
-    window.addEventListener('load', runHeroLetters);
-    document.addEventListener('astro:page-load', runHeroLetters);
-    document.addEventListener('astro:after-swap', () => {
+    document.addEventListener('astro:page-load', () => {
         initHeroSection();
         runHeroLetters();
     });

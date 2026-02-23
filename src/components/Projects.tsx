@@ -1,7 +1,7 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate } from 'motion';
-import { For, Show, createEffect, createSignal, onMount, type Component } from 'solid-js';
-import { animateCliTyping, getMotionPreference } from '../utils/cliAnimations';
+import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { animateCliTyping, getMotionPreference, resetCliTyping } from '../utils/cliAnimations';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
@@ -102,6 +102,11 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     const motionOK = getMotionPreference();
 
     const currentYear = new Date().getFullYear();
+    const cliSelector = '#portfolio .font-mono span:last-child';
+
+    let headerAnimController: ReturnType<typeof animate> | null = null;
+    let buttonsAnimController: ReturnType<typeof animate> | null = null;
+    let exitAnimController: ReturnType<typeof animate> | null = null;
 
     const HEIGHT_CLASSES: Record<GridSize, string> = {
         small: 'h-[340px]',
@@ -172,8 +177,9 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 ] as const,
             ];
 
-            animateCliTyping('#portfolio .font-mono span:last-child', 500, 40);
-            animate(sequence as any).finished.then(() => {
+            animateCliTyping(cliSelector, 500, 40);
+            headerAnimController = animate(sequence as any);
+            headerAnimController.finished.then(() => {
                 setHeaderAnimationComplete(true);
             });
 
@@ -190,7 +196,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                             { duration: 0.6, at: 0.5 + i * 0.08 },
                         ] as const,
                 );
-                animate(buttonsSequence as any);
+                buttonsAnimController = animate(buttonsSequence as any);
             }
         });
     };
@@ -225,7 +231,8 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                     { duration: ANIMATION_CONFIG.exit.duration, at: i * 0.04 },
                 ] as const,
         );
-        animate(exitSequence as any).finished.then(() => applyFilter(option));
+        exitAnimController = animate(exitSequence as any);
+        exitAnimController.finished.then(() => applyFilter(option));
     };
 
     const applyFilter = (option: FilterOption) => {
@@ -246,6 +253,18 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                 setHeaderAnimationComplete(true);
             }
             useHeaderVisibilityObserver(() => preHeader);
+        }
+    });
+
+    onCleanup(() => {
+        headerAnimController?.stop();
+        buttonsAnimController?.stop();
+        exitAnimController?.stop();
+        headerAnimController = null;
+        buttonsAnimController = null;
+        exitAnimController = null;
+        if (typeof document !== 'undefined') {
+            resetCliTyping(cliSelector);
         }
     });
 
