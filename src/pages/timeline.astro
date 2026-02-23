@@ -619,7 +619,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
 </style>
 
 <script>
-    import { animateCliTyping, getMotionPreference } from '../utils/cliAnimations';
+    import { animateCliTyping, getMotionPreference, resetCliTyping } from '../utils/cliAnimations';
     import { animate, inView } from 'motion';
 
     const motionOK = getMotionPreference();
@@ -769,4 +769,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     scheduleAnimations();
     document.addEventListener('astro:page-load', scheduleAnimations);
     document.addEventListener('astro:after-swap', scheduleAnimations);
+    document.addEventListener('astro:before-swap', () => {
+        resetCliTyping('.cli-command');
+    });
 </script>

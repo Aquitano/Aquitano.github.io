@@ -104,11 +104,11 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     const currentYear = new Date().getFullYear();
 
     const HEIGHT_CLASSES: Record<GridSize, string> = {
-        small: 'h-[320px]',
-        medium: 'h-[360px]',
-        large: 'h-[400px]',
-        wide: 'h-[360px]',
-        tall: 'h-[460px]',
+        small: 'h-[340px]',
+        medium: 'h-[380px]',
+        large: 'h-[420px]',
+        wide: 'h-[380px]',
+        tall: 'h-[480px]',
     };
 
     let cliHeader: HTMLDivElement | undefined;

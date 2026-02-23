@@ -19,11 +19,11 @@ export interface ProjectCardProps {
 }
 
 export const GRID_SIZE_CLASSES: Record<GridSize, string> = {
-    small: 'md:col-span-2 h-[320px]',
-    medium: 'md:col-span-2 h-[360px]',
-    large: 'md:col-span-2 h-[400px]',
-    wide: 'md:col-span-4 h-[360px]',
-    tall: 'md:col-span-2 h-[460px]',
+    small: 'md:col-span-2 h-[340px]',
+    medium: 'md:col-span-2 h-[380px]',
+    large: 'md:col-span-2 h-[420px]',
+    wide: 'md:col-span-4 h-[380px]',
+    tall: 'md:col-span-2 h-[480px]',
 };
 
 export const ANIMATION_CONFIG = {
@@ -205,8 +205,9 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     <div
                         class="absolute inset-0 z-0 transition-opacity duration-200"
                         style={{
-                            background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)',
-                            opacity: isHovered() ? 0.9 : 1,
+                            background:
+                                'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.85) 100%)',
+                            opacity: isHovered() ? 0.95 : 1,
                         }}
                         aria-hidden="true"
                     />
@@ -225,12 +226,13 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                     {/* New badge */}
                     <Show when={props.isNew}>
-                        <div class="absolute top-4 left-4 z-10" aria-label="New project">
+                        <div class="absolute top-5 left-5 z-10" aria-label="New project">
                             <div
-                                class="rounded px-2 py-1 font-mono text-xs font-bold tracking-wider uppercase"
+                                class="rounded-md px-3 py-1.5 font-mono text-xs font-bold tracking-wider uppercase shadow-lg"
                                 style={{
                                     background: 'var(--color-accent)',
                                     color: '#fff',
+                                    'box-shadow': '0 4px 12px rgba(224, 122, 58, 0.4)',
                                 }}
                             >
                                 NEW
@@ -241,15 +243,15 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     {/* Content */}
                     <div
                         ref={(el) => (contentRef = el)}
-                        class="absolute bottom-0 left-0 z-10 w-full p-6"
+                        class="absolute bottom-0 left-0 z-10 w-full p-7"
                         style={{
-                            transform: isHovered() ? 'translateY(0)' : 'translateY(4px)',
+                            transform: isHovered() ? 'translateY(0)' : 'translateY(2px)',
                             transition: 'transform 300ms ease-out',
                         }}
                     >
                         {/* Year label */}
                         <span
-                            class="mb-2 block font-mono text-xs tracking-wider uppercase"
+                            class="mb-3 block font-mono text-sm font-semibold tracking-wider uppercase"
                             style={{ color: 'var(--color-accent)' }}
                         >
                             {props.year}
@@ -257,25 +259,27 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                         {/* Title */}
                         <h2
-                            class="mb-4 text-xl font-bold md:text-2xl"
+                            class="mb-5 text-2xl font-bold md:text-3xl"
                             style={{
                                 color: '#fafaf9',
-                                'line-height': '1.25',
+                                'line-height': '1.2',
+                                'letter-spacing': '-0.01em',
                             }}
                         >
                             {props.title}
                         </h2>
 
                         {/* Tags */}
-                        <ul class="mb-4 flex list-none flex-wrap gap-2 p-0" aria-label="Project tags">
+                        <ul class="mb-5 flex list-none flex-wrap gap-2 p-0" aria-label="Project tags">
                             <For each={props.tags}>
                                 {(tag) => (
                                     <li
-                                        class="project-tag rounded px-2 py-1 font-mono text-xs"
+                                        class="project-tag rounded px-2.5 py-1.5 font-mono text-xs font-medium"
                                         style={{
-                                            color: 'rgba(255, 255, 255, 0.7)',
-                                            background: 'transparent',
+                                            color: 'rgba(255, 255, 255, 0.85)',
+                                            background: 'rgba(255, 255, 255, 0.08)',
                                             border: '1px solid rgba(255, 255, 255, 0.15)',
+                                            'letter-spacing': '0.01em',
                                         }}
                                     >
                                         {tag}
@@ -286,11 +290,11 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                         {/* View link */}
                         <div
-                            class="flex items-center font-mono text-sm font-medium"
+                            class="flex items-center font-mono text-base font-semibold"
                             style={{
                                 color: 'var(--color-accent)',
-                                opacity: isHovered() ? 1 : 0.7,
-                                transform: isHovered() ? 'translateY(0)' : 'translateY(4px)',
+                                opacity: isHovered() ? 1 : 0.8,
+                                transform: isHovered() ? 'translateY(0)' : 'translateY(2px)',
                                 transition: 'opacity 200ms ease-out, transform 200ms ease-out',
                             }}
                         >

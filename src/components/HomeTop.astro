@@ -211,7 +211,7 @@ import CliHeader from './CliHeader.astro';
 
 <script>
     import { animate, stagger } from 'motion';
-    import { animateCliTyping } from '../utils/cliAnimations';
+    import { animateCliTyping, resetCliTyping } from '../utils/cliAnimations';
 
     function initHeroSection() {
         const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
@@ -288,14 +288,6 @@ import CliHeader from './CliHeader.astro';
 
         const sequence = [
             [
-                '.cli-prompt',
-                {
-                    opacity: [0, 1],
-                    scale: [0.8, 1],
-                },
-                { duration: 0.3, delay: 0.1, ease: 'easeOut' },
-            ],
-            [
                 Array.from(letters),
                 {
                     y: [50, 0],
@@ -356,5 +348,6 @@ import CliHeader from './CliHeader.astro';
     document.addEventListener('astro:before-swap', () => {
         heroAnim?.stop();
         heroAnim = null;
+        resetCliTyping('.cli-command');
     });
 </script>
