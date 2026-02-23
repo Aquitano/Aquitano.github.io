@@ -510,9 +510,6 @@
         border: 1px solid var(--border-default);
         color: var(--text-secondary);
         overflow-wrap: anywhere;
-        transition:
-            border-color var(--duration-fast) var(--ease-out),
-            color var(--duration-fast) var(--ease-out);
     }
 
     .chip:hover {
@@ -670,7 +667,6 @@
         display: flex;
         align-items: flex-start;
         gap: var(--space-3);
-        transition: opacity var(--duration-fast) var(--ease-out);
     }
 
     .task-index {
@@ -688,6 +684,7 @@
         font-family: var(--font-mono);
         font-size: var(--text-xs);
         color: rgba(255, 255, 255, 0.4);
+        transition: color var(--duration-fast) var(--ease-out);
     }
 
     .task-text {
@@ -778,6 +775,163 @@
         content: '\2713';
         color: var(--color-accent);
         flex-shrink: 0;
+    }
+}
+
+@layer components {
+    /* ── Scroll-triggered reveal system ─────────────────────────── */
+    .reveal {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+        transition:
+            opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        will-change: auto;
+    }
+
+    .reveal-left {
+        opacity: 0;
+        transform: translate3d(-16px, 0, 0);
+        transition:
+            opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    .reveal-left.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        will-change: auto;
+    }
+
+    .reveal-scale {
+        opacity: 0;
+        transform: translate3d(0, 12px, 0) scale(0.97);
+        transition:
+            opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+
+    .reveal-scale.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+        will-change: auto;
+    }
+
+    /* Stagger delays for children inside .reveal-stagger */
+    .reveal-stagger > :nth-child(1) { transition-delay: 0s; }
+    .reveal-stagger > :nth-child(2) { transition-delay: 0.06s; }
+    .reveal-stagger > :nth-child(3) { transition-delay: 0.12s; }
+    .reveal-stagger > :nth-child(4) { transition-delay: 0.18s; }
+    .reveal-stagger > :nth-child(5) { transition-delay: 0.24s; }
+    .reveal-stagger > :nth-child(6) { transition-delay: 0.3s; }
+    .reveal-stagger > :nth-child(7) { transition-delay: 0.36s; }
+    .reveal-stagger > :nth-child(8) { transition-delay: 0.42s; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal,
+        .reveal-left,
+        .reveal-scale {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+            will-change: auto !important;
+        }
+    }
+
+    /* ── Enhanced micro-interactions ────────────────────────────── */
+
+    /* Task item hover: subtle slide + highlight */
+    .task-item {
+        padding: var(--space-1) var(--space-2);
+        margin-left: calc(-1 * var(--space-2));
+        margin-right: calc(-1 * var(--space-2));
+        border-radius: var(--radius-sm);
+        transition:
+            transform var(--duration-fast) var(--ease-out),
+            background var(--duration-fast) var(--ease-out),
+            opacity var(--duration-fast) var(--ease-out);
+    }
+
+    .task-item:hover {
+        transform: translate3d(4px, 0, 0);
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .task-item:hover .task-arrow {
+        color: var(--color-accent);
+    }
+
+    /* Link card: accent left border reveal */
+    .link-card {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .link-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--color-accent);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform var(--duration-normal) cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .link-card:hover::before {
+        transform: scaleY(1);
+        transform-origin: top;
+    }
+
+    /* Terminal dots: subtle pulse on card hover */
+    .tasks-card-dots span {
+        transition: transform var(--duration-fast) var(--ease-out);
+    }
+
+    .tasks-card:hover .tasks-card-dots span:first-child {
+        transform: scale(1.25);
+    }
+
+    .tasks-card:hover .tasks-card-dots span:nth-child(2) {
+        transform: scale(1.2);
+    }
+
+    .tasks-card:hover .tasks-card-dots span:last-child {
+        transform: scale(1.15);
+    }
+
+    /* Image frame: subtle lift on hover */
+    .image-frame {
+        transition:
+            box-shadow var(--duration-normal) var(--ease-out),
+            transform var(--duration-normal) var(--ease-out);
+    }
+
+    .image-frame:hover {
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+        transform: translate3d(0, -2px, 0);
+    }
+
+    /* Chip: subtle background fill on hover */
+    .chip {
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
+            color var(--duration-fast) var(--ease-out),
+            background var(--duration-fast) var(--ease-out);
+    }
+
+    .chip:hover {
+        background: var(--color-accent-muted);
     }
 }
 

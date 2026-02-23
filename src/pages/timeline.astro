@@ -112,7 +112,6 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                         <li class="exp-card" style={`--card-index: ${index}`}>
                             <div class="exp-marker" aria-hidden="true">
                                 <span class="marker-dot" />
-                                <span class="marker-line" />
                             </div>
                             <article class="exp-content">
                                 <div class="exp-header">
@@ -138,15 +137,15 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         </section>
 
         <section class="skills-section" aria-labelledby="skills-heading">
-            <div class="skills-header">
+            <div class="skills-header reveal">
                 <span class="section-tag">// Stack</span>
                 <h2 id="skills-heading">Skills & Tools</h2>
             </div>
 
-            <div class="core-stack">
+            <div class="core-stack reveal-stagger">
                 {
                     coreSkills.map((skill) => (
-                        <div class="core-card">
+                        <div class="core-card reveal-scale">
                             <span class="core-name">{skill.name}</span>
                             <span class="core-years">{skill.years} years</span>
                         </div>
@@ -154,10 +153,10 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                 }
             </div>
 
-            <div class="skill-grid" role="list">
+            <div class="skill-grid reveal-stagger" role="list">
                 {
                     skillGroups.map((group) => (
-                        <article class="skill-card" role="listitem">
+                        <article class="skill-card reveal-scale" role="listitem">
                             <h3 class="skill-title">{group.title}</h3>
                             <ul class="skill-tags">
                                 {group.items.map((item) => (
@@ -169,12 +168,12 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                 }
             </div>
 
-            <div class="lang-section">
+            <div class="lang-section reveal">
                 <h3 class="lang-title">Languages</h3>
-                <ul class="lang-list">
+                <ul class="lang-list reveal-stagger">
                     {
                         languages.map((lang) => (
-                            <li class="lang-item">
+                            <li class="lang-item reveal-left">
                                 <p class="text-md">{lang}</p>
                             </li>
                         ))
@@ -318,20 +317,15 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         border: 2px solid var(--color-accent);
         transition:
             border-color var(--duration-fast) var(--ease-out),
-            background var(--duration-fast) var(--ease-out);
+            background var(--duration-fast) var(--ease-out),
+            box-shadow var(--duration-normal) var(--ease-out);
     }
 
     .exp-card:hover .marker-dot,
     .exp-card:focus-within .marker-dot {
         border-color: var(--color-accent);
         background: var(--color-accent);
-    }
-
-    .marker-line {
-        flex: 1;
-        width: 1px;
-        background: var(--border-strong);
-        margin-top: var(--space-2);
+        box-shadow: 0 0 0 4px rgba(224, 122, 58, 0.15);
     }
 
     .exp-content {
@@ -341,7 +335,10 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         padding: var(--space-6);
         position: relative;
         overflow: hidden;
-        transition: border-color var(--duration-fast) var(--ease-out);
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
+            transform var(--duration-normal) var(--ease-out),
+            box-shadow var(--duration-normal) var(--ease-out);
     }
 
     .exp-content::before {
@@ -360,6 +357,8 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     .exp-card:hover .exp-content,
     .exp-card:focus-within .exp-content {
         border-color: var(--bg-card-border-hover);
+        transform: translate3d(0, -2px, 0);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 
     .exp-header {
@@ -435,7 +434,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
     }
 
     .core-card {
-        padding: var(--space-6) var(--space-5);
+        padding: var(--space-6) var(--space-2);
         background: var(--bg-card);
         border: 1px solid var(--bg-card-border);
         border-radius: var(--radius-lg);
@@ -499,9 +498,8 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         background: var(--bg-card);
         border: 1px solid var(--bg-card-border);
         border-radius: var(--radius-lg);
-        padding: var(--space-5);
+        padding: var(--space-6);
         position: relative;
-        overflow: hidden;
         transition: border-color var(--duration-fast) var(--ease-out);
     }
 
@@ -547,12 +545,16 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         border-radius: var(--radius-sm);
         transition:
             border-color var(--duration-fast) var(--ease-out),
-            color var(--duration-fast) var(--ease-out);
+            color var(--duration-fast) var(--ease-out),
+            background var(--duration-fast) var(--ease-out),
+            transform var(--duration-fast) var(--ease-out);
     }
 
     .skill-tag:hover {
         border-color: var(--color-accent);
         color: var(--text-inverse);
+        background: rgba(224, 122, 58, 0.08);
+        transform: translate3d(0, -1px, 0);
     }
 
     .lang-section {
@@ -587,7 +589,9 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         .skill-tag,
         .exp-content,
         .marker-dot {
-            transition: none;
+            transition: none !important;
+            transform: none !important;
+            box-shadow: none !important;
         }
     }
 
@@ -602,7 +606,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1280px) {
         .skill-grid {
             grid-template-columns: repeat(4, 1fr);
         }
@@ -627,7 +631,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         const heroSub = document.querySelector<HTMLElement>('.hero-sub');
 
         const heroItems = [
-            { el: heroTag, y: 12, duration: 0.5, delay: 0.7 },
+            { el: heroTag, y: 12, duration: 0.6, delay: 0.7 },
             { el: heroTitle, y: 16, duration: 0.8, delay: 0.9 },
             { el: heroSub, y: 12, duration: 0.8, delay: 1.1 },
         ];
@@ -645,7 +649,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
             if (!el) return;
             el.style.opacity = '0';
             el.style.transform = `translate3d(0, ${y}px, 0)`;
-            animate(el, { opacity: [0, 1], y: [y, 0] }, { duration, delay, ease: 'anticipate' });
+            animate(el, { opacity: [0, 1], y: [y, 0] }, { duration, delay, ease: [0.16, 1, 0.3, 1] });
         });
     }
 
@@ -680,7 +684,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
             const controls = animate(
                 card,
                 { opacity: [0, 1], y: [20, 0] },
-                { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+                { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
             );
             controls.finished.then(() => {
                 card.style.opacity = '1';
@@ -693,7 +697,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
             if (card.dataset.motion) return;
             card.dataset.motion = 'pending';
             card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
+            card.style.transform = 'translate3d(0, 20px, 0)';
             card.style.willChange = 'opacity, transform';
 
             let stop: VoidFunction | undefined;
@@ -716,10 +720,36 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         });
     }
 
+    function initRevealAnimations() {
+        const revealElements = document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-scale');
+
+        if (!motionOK) {
+            revealElements.forEach((el) => {
+                el.classList.add('is-visible');
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+        );
+
+        revealElements.forEach((el) => observer.observe(el));
+    }
+
     function initAllAnimations() {
         initCliAnimation();
         initHeroAnimations();
         initCardAnimations();
+        initRevealAnimations();
     }
 
     function waitForLoader() {

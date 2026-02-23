@@ -85,6 +85,16 @@ export function resetCliTyping(selector: string): void {
     }
 }
 
+/**
+ * Detects Safari browser (including iOS Safari).
+ * Used to avoid CSS filter animations that Safari composites poorly.
+ */
+export const isSafari = (): boolean => {
+    if (typeof navigator === 'undefined') return false;
+    const ua = navigator.userAgent;
+    return /safari/i.test(ua) && !/chrome|chromium|edg|opera|opr/i.test(ua);
+};
+
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 export const getReducedMotionMQL = (): MediaQueryList | null => {
     if (typeof globalThis.matchMedia !== 'function') {

@@ -93,14 +93,12 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         if (!motionOK()) {
             cardRef.style.opacity = '1';
             cardRef.style.transform = 'none';
-            cardRef.style.filter = 'none';
             return;
         }
 
         cardRef.style.opacity = '0';
-        cardRef.style.transform = 'translateY(30px) scale(0.95)';
-        cardRef.style.filter = 'blur(4px)';
-        cardRef.style.willChange = 'transform, opacity, filter';
+        cardRef.style.transform = 'translate3d(0, 24px, 0) scale(0.97)';
+        cardRef.style.willChange = 'transform, opacity';
 
         requestAnimationFrame(() => {
             if (!cardRef) return;
@@ -110,12 +108,13 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     cardRef,
                     {
                         opacity: [0, 1],
-                        transform: ['translateY(30px) scale(0.95)', 'translateY(0) scale(1)'],
-                        filter: ['blur(4px)', 'blur(0px)'],
+                        y: [24, 0],
+                        scale: [0.97, 1],
                     },
                     {
                         duration: ANIMATION_CONFIG.entrance.duration,
                         at: (props.index % 6) * ANIMATION_CONFIG.staggerDelay,
+                        ease: [0.16, 1, 0.3, 1],
                     },
                 ],
             ];
@@ -124,8 +123,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
             animationController.finished.then(() => {
                 if (cardRef) {
                     cardRef.style.opacity = '1';
-                    cardRef.style.transform = 'translateY(0) scale(1)';
-                    cardRef.style.filter = 'blur(0px)';
+                    cardRef.style.transform = '';
                     cardRef.style.willChange = 'auto';
                 }
             });
@@ -139,11 +137,11 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         el,
                         {
                             opacity: [0.7, 1],
-                            transform: ['translateY(8px)', 'translateY(0)'],
+                            y: [6, 0],
                         },
                         {
                             duration: 0.5,
-                            ease: 'easeOut',
+                            ease: [0.16, 1, 0.3, 1],
                             at: i * 0.03,
                         },
                     ] as const,
@@ -156,8 +154,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
         if (cardRef) {
             if (motionOK()) {
                 cardRef.style.opacity = '0';
-                cardRef.style.transform = 'translateY(30px) scale(0.95)';
-                cardRef.style.filter = 'blur(4px)';
+                cardRef.style.transform = 'translate3d(0, 24px, 0) scale(0.97)';
             }
             useVisibilityObserver(() => cardRef);
         }

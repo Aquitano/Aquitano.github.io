@@ -255,7 +255,7 @@ import CliHeader from './CliHeader.astro';
             return;
         }
 
-        animateCliTyping('.cli-command', 200, 50);
+        animateCliTyping('.cli-command', 120, 35);
 
         if (!document.querySelector('.title .letter')) {
             const words = document.querySelectorAll<HTMLElement>('.title .word');
@@ -277,50 +277,46 @@ import CliHeader from './CliHeader.astro';
         const letters = document.querySelectorAll<HTMLElement>('.title .letter');
         letters.forEach((el) => {
             el.style.opacity = '0';
-            el.style.transform = 'translate3d(0, 25px, 0)';
-            el.style.filter = 'blur(5px)';
-            el.style.willChange = 'opacity, transform, filter';
+            el.style.transform = 'translate3d(0, 20px, 0)';
+            el.style.willChange = 'opacity, transform';
         });
 
-        const step = 0.075;
-        const letterDuration = 0.8;
+        const step = 0.055;
+        const letterDuration = 0.6;
         const lastLetterEndAt = letters.length ? (letters.length - 1) * step + letterDuration : 0;
 
         const sequence = [
             [
                 Array.from(letters),
                 {
-                    y: [50, 0],
+                    y: [30, 0],
                     opacity: [0, 1],
-                    filter: ['blur(5px)', 'blur(0)'],
                 },
-                { duration: letterDuration, delay: stagger(step, { startDelay: 0.5 }), ease: 'easeOut' },
+                { duration: letterDuration, delay: stagger(step, { startDelay: 0.25 }), ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.hero-subtitle',
                 {
                     opacity: [0, 1],
-                    y: [50, 0],
-                    filter: ['blur(5px)', 'blur(0)'],
+                    y: [16, 0],
                 },
-                { at: Math.max(0, lastLetterEndAt - 0.3), duration: 0.75, ease: 'easeOut' },
+                { at: Math.max(0, lastLetterEndAt - 0.35), duration: 0.7, ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.links',
                 {
                     opacity: [0, 1],
-                    y: [25, 0],
-                    filter: ['blur(5px)', 'blur(0)'],
+                    y: [12, 0],
                 },
-                { at: Math.max(0, lastLetterEndAt - 0.05), duration: 0.7, ease: 'easeOut' },
+                { at: Math.max(0, lastLetterEndAt - 0.15), duration: 0.65, ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.animate',
                 {
                     opacity: [0, 1],
-                    y: [25, 0],
+                    y: [12, 0],
                 },
-                { at: lastLetterEndAt + 0.1, duration: 0.7, ease: 'easeOut' },
+                { at: lastLetterEndAt, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
             ],
         ];
 
@@ -332,6 +328,7 @@ import CliHeader from './CliHeader.astro';
             );
             all.forEach((el) => {
                 el.style.willChange = 'auto';
+                el.style.transform = '';
             });
             document.dispatchEvent(new CustomEvent('hero:sequence-done'));
         });

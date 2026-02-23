@@ -151,7 +151,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
         }
 
         if (cliHeader) cliHeader.style.cssText = 'opacity: 0; transform: translateX(-8px);';
-        preHeader.style.cssText = 'opacity: 0; transform: translateY(20px);';
+        preHeader.style.cssText = 'opacity: 0; transform: translateY(16px);';
         header.style.cssText = 'opacity: 0; transform: translateY(20px);';
 
         requestAnimationFrame(() => {
@@ -160,20 +160,20 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                     ? [
                           [
                               cliHeader,
-                              { opacity: [0, 1], transform: ['translateX(-8px)', 'translateX(0)'] },
-                              { duration: 0.6 },
+                              { opacity: [0, 1], x: [-8, 0] },
+                              { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
                           ] as const,
                       ]
                     : []),
                 [
                     preHeader,
-                    { opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0)'] },
-                    { duration: 0.8, at: '-0.3' },
+                    { opacity: [0, 1], y: [16, 0] },
+                    { duration: 0.8, at: '-0.3', ease: [0.16, 1, 0.3, 1] },
                 ] as const,
                 [
                     header,
-                    { opacity: [0, 1], transform: ['translateY(25px)', 'translateY(0)'] },
-                    { duration: 0.8, at: '-0.4' },
+                    { opacity: [0, 1], y: [20, 0] },
+                    { duration: 0.8, at: '-0.4', ease: [0.16, 1, 0.3, 1] },
                 ] as const,
             ];
 
@@ -185,15 +185,15 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
             if (filterButtons.length) {
                 filterButtons.forEach((button) => {
-                    button.style.cssText = 'opacity: 0; transform: translateY(15px)';
+                    button.style.cssText = 'opacity: 0; transform: translateY(12px)';
                 });
 
                 const buttonsSequence = filterButtons.map(
                     (btn, i) =>
                         [
                             btn,
-                            { opacity: [0, 1], transform: ['translateY(15px)', 'translateY(0)'] },
-                            { duration: 0.6, at: 0.5 + i * 0.08 },
+                            { opacity: [0, 1], y: [12, 0] },
+                            { duration: 0.6, at: 0.5 + i * 0.08, ease: [0.16, 1, 0.3, 1] },
                         ] as const,
                 );
                 buttonsAnimController = animate(buttonsSequence as any);
@@ -225,10 +225,10 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                     el,
                     {
                         opacity: 0,
-                        transform: 'translateY(-15px) scale(0.95)',
-                        filter: 'blur(4px)',
+                        y: -12,
+                        scale: 0.97,
                     },
-                    { duration: ANIMATION_CONFIG.exit.duration, at: i * 0.04 },
+                    { duration: ANIMATION_CONFIG.exit.duration, at: i * 0.04, ease: [0.4, 0, 1, 1] },
                 ] as const,
         );
         exitAnimController = animate(exitSequence as any);
