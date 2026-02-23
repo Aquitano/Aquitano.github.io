@@ -85,15 +85,17 @@ const sections: FooterSection[] = [
             </div>
         </nav>
 
-        <div class="mt-16 grid grid-cols-1 items-end gap-10 sm:mt-20 lg:grid-cols-2">
+        <div class="mt-12 grid grid-cols-1 items-end gap-6 border-t border-(--border-default) pt-8 sm:mt-16 sm:gap-8 sm:pt-10 lg:grid-cols-2">
             <p
-                class="text-(length:--text-4xl) leading-tight font-extrabold tracking-(--tracking-tight) text-(--text-primary) sm:text-(length:--text-5xl) lg:text-(length:--text-6xl)"
+                class="text-(length:--text-2xl) leading-snug font-extrabold tracking-(--tracking-tight) text-(--text-primary) sm:text-(length:--text-3xl) md:text-(length:--text-4xl) lg:text-(length:--text-5xl)"
             >
                 &copy; {year} Thomas Breindl
                 <br class="hidden md:block" />
-                All rights reserved.
+                <span class="block text-(length:--text-lg) font-semibold text-(--text-secondary) sm:text-(length:--text-xl) md:inline md:text-(length:--text-4xl) md:font-extrabold md:text-(--text-primary) lg:text-(length:--text-5xl)">
+                    All rights reserved.
+                </span>
             </p>
-            <div class="justify-self-start text-(--text-secondary) md:justify-self-end">
+            <div class="justify-self-start text-(--text-secondary) lg:justify-self-end">
                 <p class="text-(length:--text-xs) font-bold tracking-widest text-(--text-tertiary) uppercase">
                     Local time
                 </p>

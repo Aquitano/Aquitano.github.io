@@ -243,7 +243,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     {/* Content */}
                     <div
                         ref={(el) => (contentRef = el)}
-                        class="absolute bottom-0 left-0 z-10 w-full p-7"
+                        class="absolute bottom-0 left-0 z-10 w-full min-w-0 p-7"
                         style={{
                             transform: isHovered() ? 'translateY(0)' : 'translateY(2px)',
                             transition: 'transform 300ms ease-out',
@@ -264,6 +264,8 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                                 color: '#fafaf9',
                                 'line-height': '1.2',
                                 'letter-spacing': '-0.01em',
+                                'overflow-wrap': 'anywhere',
+                                'text-wrap': 'balance',
                             }}
                         >
                             {props.title}

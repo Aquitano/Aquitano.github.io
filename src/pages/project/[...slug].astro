@@ -116,8 +116,8 @@ if (project.data.fullImage) {
 
                         <!-- Tags and Year -->
                         <div class="hero-animation flex flex-wrap items-center gap-2.5 pt-4 opacity-0">
-                            <span class="mr-1 font-mono text-xs text-(--text-tertiary)">{'$ '}tags --list</span>
-                            <span class="mr-1 font-mono text-xs text-(--text-muted)">|</span>
+                            <span class="mr-1 hidden font-mono text-xs text-(--text-tertiary) sm:inline">{'$ '}tags --list</span>
+                            <span class="mr-1 hidden font-mono text-xs text-(--text-muted) sm:inline">|</span>
                             {
                                 project.data.tags.map((tag: string) => (
                                     <span class="chip">
@@ -125,7 +125,7 @@ if (project.data.fullImage) {
                                     </span>
                                 ))
                             }
-                            <span class="ml-auto rounded-sm bg-(--color-accent-muted) px-3 py-1 font-mono text-xs font-semibold text-(--color-accent)">
+                            <span class="rounded-sm bg-(--color-accent-muted) px-3 py-1 font-mono text-xs font-semibold text-(--color-accent) sm:ml-auto">
                                 {project.data.year}
                             </span>
                         </div>
@@ -282,6 +282,8 @@ if (project.data.fullImage) {
         line-height: var(--leading-none);
         letter-spacing: var(--tracking-tight);
         color: var(--text-primary);
+        overflow-wrap: anywhere;
+        text-wrap: balance;
     }
 
     /* Prose styling for content */
