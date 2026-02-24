@@ -1,9 +1,17 @@
+---
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+export interface Props { lang?: Lang; }
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
+---
+
 <button
     id="theme-toggle"
     type="button"
     class="theme-toggle"
-    aria-label="Farbschema umschalten"
-    title="Farbschema umschalten"
+    aria-label={t('general.themeToggle')}
+    title={t('general.themeToggle')}
 >
     <span class="toggle-flag" aria-hidden="true"></span>
     <span class="toggle-icon-wrap">

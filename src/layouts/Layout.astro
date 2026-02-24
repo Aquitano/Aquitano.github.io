@@ -10,6 +10,8 @@ import '@fontsource-variable/roboto-slab';
 import '@fontsource/young-serif';
 
 import '../styles/global.css';
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations, getLocalePath, getAlternateLang } from '../i18n/utils';
 
 const defaultKeywords = [
     'Thomas Breindl',
@@ -27,8 +29,11 @@ const defaultKeywords = [
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
+export type ActivePage = 'home' | 'about' | 'projects' | 'contact';
+
 export interface Props {
     title: string;
+    lang?: Lang;
     SEO?: {
         title?: string;
         description?: string;
@@ -46,17 +51,21 @@ export interface Props {
             };
         };
     };
-    active: 'Home' | 'Über mich' | 'Projekte' | 'Kontakt';
+    active: ActivePage;
     location?: string;
 }
 
 const { title, SEO: SEOData, active, location } = Astro.props;
-const pageDescription = SEOData?.description || 'Herzlich Willkommen zu dem Portfolio von Thomas Breindl!';
-const pageTitle = title || 'Thomas Breindl | Portfolio';
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
+const altLang = getAlternateLang(lang);
+const pageDescription = SEOData?.description || t('seo.defaultDesc');
+const pageTitle = title || t('seo.homeTitle');
+const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/, '') || '/'), Astro.site);
 ---
 
 <!doctype html>
-<html lang="de" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -69,6 +78,8 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
         <meta name="generator" content={Astro.generator} />
 
         <link rel="canonical" href={canonicalURL} />
+        <link rel="alternate" hreflang={altLang} href={altUrl} />
+        <link rel="alternate" hreflang={lang} href={canonicalURL} />
 
         <meta name="theme-color" content="#faf5ef" id="meta-theme-color" />
 
@@ -103,7 +114,7 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
                     url: canonicalURL.toString(),
                 },
                 optional: {
-                    locale: 'de_DE',
+                    locale: lang === 'de' ? 'de_DE' : 'en_US',
                     siteName: 'Thomas Breindl Portfolio',
                 },
             }}
@@ -155,13 +166,13 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
                 '@id': new URL('/#website', Astro.site).toString(),
                 name: 'Thomas Breindl | Portfolio',
                 url: new URL('/', Astro.site).toString(),
-                inLanguage: 'de',
+                inLanguage: lang,
                 publisher: { '@id': new URL('/#person', Astro.site).toString() },
             })}
         />
 
         {
-            active !== 'Home' && (
+            active !== 'home' && (
                 <script
                     is:inline
                     type="application/ld+json"
@@ -178,7 +189,7 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
                             {
                                 '@type': 'ListItem',
                                 position: 2,
-                                name: active,
+                                name: t(`nav.${active}`),
                                 item: canonicalURL.toString(),
                             },
                         ],
@@ -207,17 +218,17 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
     </head>
     <body class="overflow-x-hidden antialiased">
         <!-- Skip to main content link for accessibility -->
-        <a href="#main-content" class="skip-link"> Zum Inhalt springen </a>
+        <a href="#main-content" class="skip-link"> {t('general.skipToContent')} </a>
 
-        <Loader />
-        <Header active={active} location={location} />
-        <ScrollToTop />
+        <Loader lang={lang} />
+        <Header active={active} location={location} lang={lang} />
+        <ScrollToTop lang={lang} />
 
         <main id="main-content" tabindex="-1">
             <slot />
         </main>
 
-        <Footer />
+        <Footer lang={lang} />
 
         <style is:global>
             @view-transition {

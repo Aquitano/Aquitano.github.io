@@ -1,7 +1,7 @@
 ---
 title: 'BetterGaming - Onlineshop'
 name: 'BetterGaming'
-description: 'Hochmoderne und funktionsfähige E-Commerce-Plattform für Videospiele'
+description: 'E-Commerce-Plattform für Videospiele mit Echtzeit-Suche und Benutzerverwaltung'
 featured: true
 tags: ['PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript']
 tasks: ['Frontend', 'Backend']
@@ -18,10 +18,10 @@ fullImage: 'BetterGaming-full.jpg'
 year: 2021
 ---
 
-**„BetterGaming“** - eine **hochmoderne und funktionsfähige E-Commerce-Plattform** für Videospiele. Die Plattform nutzt serverseitiges **PHP-Scripting** und eine **relationale SQL-Datenbank**, um dynamische Inhalte basierend auf den neuesten verfügbaren Informationen zu generieren.
+**BetterGaming** ist eine **E-Commerce-Plattform** für Videospiele. Die Anwendung nutzt serverseitiges **PHP** und eine **MySQL-Datenbank**, um Produktdaten dynamisch zu laden und darzustellen.
 
-Für eine herausragende Benutzererfahrung habe ich **elegante Animationen** integriert, die durch JavaScript-ES6, das Framework PaceJS und Scroll-Out Animationen zum Leben erweckt werden.
+Das Frontend setzt auf **JavaScript ES6**, PaceJS und Scroll-basierte Animationen für ein flüssiges Nutzererlebnis.
 
-Ein besonderes Highlight von BetterGaming ist die **„Live Search“-Funktion**. Mithilfe der modernen **JavaScript-Ajax-Technologie** werden den Nutzern in Echtzeit Suchergebnisse präsentiert, die sie mit intuitiven Ajax-basierten Sortierungsoptionen verfeinern können.
+Ein zentrales Feature ist die **Live-Suche**: Per **Ajax** werden Suchergebnisse in Echtzeit angezeigt und lassen sich über Sortieroptionen weiter eingrenzen.
 
-In puncto Sicherheit mache ich keine Kompromisse: Der Anmelde- und Registrierungsprozess profitiert von gehashten und gesalteten Passwörtern und einer fortschrittlichen clientseitigen HTML5-Validierung, die höchste Sicherheitsstandards für Passwortanforderungen gewährleistet.
+Die Benutzerverwaltung arbeitet mit gehashten und gesalzenen Passwörtern sowie clientseitiger HTML5-Validierung für sichere Registrierung und Anmeldung.

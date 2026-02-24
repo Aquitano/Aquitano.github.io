@@ -1,5 +1,14 @@
 ---
 import CliHeader from './CliHeader.astro';
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations, getLocalePath } from '../i18n/utils';
+
+export interface Props {
+    lang?: Lang;
+}
+
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
 ---
 
 <section class="home-top landingpage" aria-labelledby="hero-title">
@@ -12,15 +21,15 @@ import CliHeader from './CliHeader.astro';
                 <span class="word">Breindl</span>
             </h1>
             <p class="hero-subtitle text-(--color-text-secondary)">
-                Hallo, ich bin Programmierer, Designer und Student.
+                {t('hero.subtitle')}
             </p>
-            <nav class="links" aria-label="Hauptlinks im Hero">
-                <a href="#portfolio" class="link link-underline scroll-to projects cursor-pointer"> Projekte </a>
-                <span class="links-sep" aria-hidden="true">oder</span>
-                <a href="/timeline" class="link link-underline" data-astro-prefetch>Über Mich</a>
+            <nav class="links" aria-label={t('hero.mainLinks')}>
+                <a href="#portfolio" class="link link-underline scroll-to projects cursor-pointer"> {t('hero.projects')} </a>
+                <span class="links-sep" aria-hidden="true">{t('hero.or')}</span>
+                <a href={getLocalePath(lang, '/timeline')} class="link link-underline" data-astro-prefetch>{t('hero.aboutMe')}</a>
             </nav>
         </div>
-        <button type="button" class="scroll-trigger animate" aria-label="Zum Portfolio scrollen">
+        <button type="button" class="scroll-trigger animate" aria-label={t('hero.scrollToPortfolio')}>
             <span class="scroll-to-icon" aria-hidden="true"></span>
         </button>
     </div>

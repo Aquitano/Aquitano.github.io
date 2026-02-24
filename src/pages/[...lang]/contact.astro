@@ -1,16 +1,25 @@
 ---
 import { Icon } from 'astro-icon/components';
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
+import { defaultLang, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+    return [{ params: { lang: undefined } }, { params: { lang: 'en' } }];
+}
+
+const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
+const t = useTranslations(lang);
 ---
 
 <Layout
-    title="Kontakt | Breindl Thomas"
-    active="Kontakt"
+    title={t('seo.contactTitle')}
+    active="contact"
+    lang={lang}
     SEO={{
-        description:
-            'Kontaktieren Sie Thomas Breindl für Webentwicklung, Design und Programmierungsprojekte. Portfolio-Anfragen willkommen.',
+        description: t('seo.contactDesc'),
         openGraph: {
-            title: 'Kontakt - Thomas Breindl',
+            title: t('seo.contactTitle'),
             type: 'website',
         },
     }}
@@ -19,95 +28,60 @@ import Layout from '../layouts/Layout.astro';
         <div class="mx-auto w-full max-w-6xl">
             <div class="contact-header">
                 <span class="section-tag">// Contact</span>
-                <h1>Kontaktieren Sie mich</h1>
-                <p class="contact-subtitle">Füllen Sie das Formular aus, um ein Gespräch zu beginnen</p>
+                <h1>{t('contact.title')}</h1>
+                <p class="contact-subtitle">{t('contact.subtitle')}</p>
             </div>
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-                <!-- Contact Info -->
                 <div class="contact-card">
                     <div class="card-ascii" aria-hidden="true">$$$$$</div>
-                    <h2 class="card-title">Kontaktdaten</h2>
+                    <h2 class="card-title">{t('contact.details')}</h2>
 
                     <address class="contact-list not-italic">
-                        <!-- Location -->
                         <div class="contact-item">
                             <div class="contact-icon" aria-hidden="true">
-                                <svg
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    viewBox="0 0 24 24"
-                                    class="h-5 w-5"
-                                >
-                                    <path
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                    ></path>
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-5 w-5">
+                                    <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                             </div>
                             <div>
-                                <p class="contact-label">Standort</p>
-                                <p class="contact-value">Passau, Deutschland</p>
+                                <p class="contact-label">{t('contact.location')}</p>
+                                <p class="contact-value">{t('contact.locationValue')}</p>
                             </div>
                         </div>
 
-                        <!-- Twitter / X -->
                         <div class="contact-item">
                             <div class="contact-icon" aria-hidden="true">
                                 <Icon name="mdi:twitter" class="h-5 w-5" />
                             </div>
                             <div>
                                 <p class="contact-label">Twitter / X</p>
-                                <a
-                                    href="https://twitter.com/BreindlThomas"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="contact-link"
-                                >
+                                <a href="https://twitter.com/BreindlThomas" target="_blank" rel="noopener noreferrer" class="contact-link">
                                     @BreindlThomas
                                 </a>
                             </div>
                         </div>
 
-                        <!-- GitHub -->
                         <div class="contact-item">
                             <div class="contact-icon" aria-hidden="true">
                                 <Icon name="mdi:github" class="h-5 w-5" />
                             </div>
                             <div>
                                 <p class="contact-label">GitHub</p>
-                                <a
-                                    href="https://github.com/Aquitano"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="contact-link"
-                                >
+                                <a href="https://github.com/Aquitano" target="_blank" rel="noopener noreferrer" class="contact-link">
                                     Aquitano
                                 </a>
                             </div>
                         </div>
 
-                        <!-- Email -->
                         <div class="contact-item">
                             <div class="contact-icon" aria-hidden="true">
-                                <svg
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="1.5"
-                                    viewBox="0 0 24 24"
-                                    class="h-5 w-5"
-                                >
-                                    <path
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                    ></path>
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" class="h-5 w-5">
+                                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                 </svg>
                             </div>
                             <div>
-                                <p class="contact-label">E-Mail</p>
+                                <p class="contact-label">{t('contact.email')}</p>
                                 <a href="mailto:ThomasBreindl@proton.me" class="contact-link">
                                     ThomasBreindl@proton.me
                                 </a>
@@ -116,7 +90,6 @@ import Layout from '../layouts/Layout.astro';
                     </address>
                 </div>
 
-                <!-- Contact Form -->
                 <form
                     class="contact-card"
                     name="contact"
@@ -124,95 +97,52 @@ import Layout from '../layouts/Layout.astro';
                     data-netlify="true"
                     method="POST"
                     novalidate
-                    aria-label="Kontaktformular"
+                    aria-label={t('contact.form')}
+                    data-lang={lang}
                 >
                     <div class="card-ascii" aria-hidden="true">////</div>
                     <input type="hidden" name="form-name" value="contact" />
 
-                    <!-- Name Field -->
                     <div class="form-field">
                         <label for="name" class="form-label">
-                            Vollständiger Name
+                            {t('contact.fullName')}
                             <span class="required" aria-hidden="true">*</span>
                         </label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            autocomplete="name"
-                            required
-                            aria-required="true"
-                            class="form-input"
-                            placeholder="Max Mustermann"
-                        />
+                        <input type="text" name="name" id="name" autocomplete="name" required aria-required="true" class="form-input" placeholder={t('contact.namePlaceholder')} />
                     </div>
 
-                    <!-- Email Field -->
                     <div class="form-field">
                         <label for="email" class="form-label">
-                            E-Mail
+                            {t('contact.email')}
                             <span class="required" aria-hidden="true">*</span>
                         </label>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            autocomplete="email"
-                            required
-                            aria-required="true"
-                            aria-describedby="email-hint"
-                            class="form-input"
-                            placeholder="max@beispiel.de"
-                        />
-                        <p id="email-hint" class="form-hint">Ihre E-Mail wird nur für die Kontaktaufnahme verwendet.</p>
+                        <input type="email" name="email" id="email" autocomplete="email" required aria-required="true" aria-describedby="email-hint" class="form-input" placeholder={t('contact.emailPlaceholder')} />
+                        <p id="email-hint" class="form-hint">{t('contact.emailHint')}</p>
                     </div>
 
-                    <!-- Phone Field -->
                     <div class="form-field">
                         <label for="tel" class="form-label">
-                            Telefonnummer
+                            {t('contact.phone')}
                             <span class="required" aria-hidden="true">*</span>
                         </label>
-                        <input
-                            type="tel"
-                            name="tel"
-                            id="tel"
-                            autocomplete="tel"
-                            required
-                            aria-required="true"
-                            class="form-input"
-                            placeholder="+49 123 456789"
-                        />
+                        <input type="tel" name="tel" id="tel" autocomplete="tel" required aria-required="true" class="form-input" placeholder={t('contact.phonePlaceholder')} />
                     </div>
 
-                    <!-- Message Field -->
                     <div class="form-field">
                         <label for="message" class="form-label">
-                            Nachricht
+                            {t('contact.message')}
                             <span class="required" aria-hidden="true">*</span>
                         </label>
-                        <textarea
-                            name="message"
-                            id="message"
-                            required
-                            aria-required="true"
-                            rows="5"
-                            class="form-input form-textarea"
-                            placeholder="Ihre Nachricht..."></textarea>
+                        <textarea name="message" id="message" required aria-required="true" rows="5" class="form-input form-textarea" placeholder={t('contact.messagePlaceholder')}></textarea>
                     </div>
 
-                    <!-- reCAPTCHA -->
                     <div data-netlify-recaptcha="true"></div>
 
-                    <!-- Error message container -->
                     <div id="form-error" role="alert" aria-live="polite" class="form-message form-error hidden"></div>
-
-                    <!-- Success message container -->
-                    <div id="form-success" role="status" aria-live="polite" class="form-message form-success hidden">
-                    </div>
+                    <div id="form-success" role="status" aria-live="polite" class="form-message form-success hidden"></div>
 
                     <button type="submit" class="btn btn-primary submit-btn">
-                        Absenden
+                        {t('contact.submit')}
                         <span class="btn-arrow" aria-hidden="true">&rarr;</span>
                     </button>
                 </form>
@@ -222,6 +152,19 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <script>
+    import { ui, defaultLang, type Lang, type TranslationKey } from '../../i18n/ui';
+
+    function getFormLang(): Lang {
+        const form = document.querySelector<HTMLFormElement>('form[name="contact"]');
+        const lang = form?.dataset.lang as Lang | undefined;
+        return lang && lang in ui ? lang : defaultLang;
+    }
+
+    function ft(key: TranslationKey): string {
+        const lang = getFormLang();
+        return ui[lang][key] ?? ui[defaultLang][key];
+    }
+
     function initContactForm() {
         const form = document.querySelector<HTMLFormElement>('form[name="contact"]');
         const errorContainer = document.getElementById('form-error');
@@ -264,20 +207,19 @@ import Layout from '../layouts/Layout.astro';
             const tel = telInput?.value.replace(/\s/g, '') ?? '';
             const message = messageInput?.value.trim() ?? '';
 
-            // Validation
             if (!name || !email || !tel || !message) {
-                showError('Bitte füllen Sie alle Pflichtfelder aus.');
+                showError(ft('contact.errorRequired'));
                 return;
             }
 
             if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showError('Bitte geben Sie eine gültige E-Mail-Adresse an.');
+                showError(ft('contact.errorEmail'));
                 emailInput?.focus();
                 return;
             }
 
             if (!/^[0-9\-+]{9,15}$/.test(tel)) {
-                showError('Bitte geben Sie eine gültige Telefonnummer an (9-15 Ziffern).');
+                showError(ft('contact.errorPhone'));
                 telInput?.focus();
                 return;
             }
@@ -301,20 +243,19 @@ import Layout from '../layouts/Layout.astro';
                 });
 
                 if (response.ok) {
-                    showSuccess('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.');
+                    showSuccess(ft('contact.success'));
                     form.reset();
                 } else {
-                    showError('Beim Senden ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+                    showError(ft('contact.errorSend'));
                 }
             } catch {
-                showError('Netzwerkfehler. Bitte überprüfen Sie Ihre Internetverbindung.');
+                showError(ft('contact.errorNetwork'));
             }
         });
 
         form.dataset.contactInitialized = 'true';
     }
 
-    // Initialize on load and after Astro page transitions
     document.addEventListener('DOMContentLoaded', initContactForm);
     document.addEventListener('astro:after-swap', initContactForm);
     initContactForm();

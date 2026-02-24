@@ -2,27 +2,27 @@ import { createVisibilityObserver, withOccurrence } from '@solid-primitives/inte
 import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
 import { animateCliTyping, getMotionPreference, resetCliTyping } from '../utils/cliAnimations';
+import { ui, defaultLang, type Lang } from '../i18n/ui';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
 type FilterOption = 'all' | 'featured' | 'frontend' | 'backend' | 'productdesign';
 
-const FILTERS: {
+function t(lang: Lang, key: keyof (typeof ui)[typeof defaultLang]): string {
+    return ui[lang][key] ?? ui[defaultLang][key];
+}
+
+const getFilters = (lang: Lang): {
     value: FilterOption;
     label: string;
     tester: (p: Project) => boolean;
-}[] = [
-    { value: 'all', label: 'Alle', tester: () => true },
-    { value: 'featured', label: 'Featured', tester: (p) => p.data.featured },
+}[] => [
+    { value: 'all', label: t(lang, 'portfolio.all'), tester: () => true },
+    { value: 'featured', label: t(lang, 'portfolio.featured'), tester: (p) => p.data.featured },
     { value: 'frontend', label: 'Frontend', tester: (p) => p.data.tasks.includes('Frontend') },
     { value: 'backend', label: 'Backend', tester: (p) => p.data.tasks.includes('Backend') },
-    { value: 'productdesign', label: 'Product Design', tester: (p) => p.data.tasks.includes('Produktdesign') },
+    { value: 'productdesign', label: t(lang, 'portfolio.productDesign'), tester: (p) => p.data.tasks.includes('Produktdesign') || p.data.tasks.includes('Product Design') },
 ];
-const FILTER_OPTIONS = FILTERS.map(({ value, label }) => ({ value, label }));
-const TESTERS = Object.fromEntries(FILTERS.map(({ value, tester }) => [value, tester])) as Record<
-    FilterOption,
-    (p: Project) => boolean
->;
 
 type Project = {
     id: string;
@@ -83,17 +83,27 @@ const sortProjects = (projects: Project[]): Project[] => {
     });
 };
 
-const filterProjects = (projects: Project[], option: FilterOption) => {
+const filterProjects = (projects: Project[], option: FilterOption, lang: Lang) => {
+    const filters = getFilters(lang);
+    const testers = Object.fromEntries(filters.map(({ value, tester }) => [value, tester])) as Record<
+        FilterOption,
+        (p: Project) => boolean
+    >;
     const sorted = sortProjects(projects);
     const baseProjects = assignGridSizes(sorted);
-    return baseProjects.filter(TESTERS[option]);
+    return baseProjects.filter(testers[option]);
 };
 
-const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
+const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) => {
+    const lang = (props.lang ?? defaultLang) as Lang;
+    const filters = getFilters(lang);
+    const FILTER_OPTIONS = filters.map(({ value, label }) => ({ value, label }));
+
     const computeInitial = () => {
-        const featured = filterProjects(allProjects, 'featured');
-        return featured.length > 0 ? featured : filterProjects(allProjects, 'all');
+        const featured = filterProjects(allProjects, 'featured', lang);
+        return featured.length > 0 ? featured : filterProjects(allProjects, 'all', lang);
     };
+    const allProjects = props.allProjects;
     const [projects, setProjects] = createSignal<Project[]>(computeInitial());
     const [filter, setFilter] = createSignal<FilterOption>('featured');
     const [isAnimating, setIsAnimating] = createSignal(false);
@@ -236,7 +246,7 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
     };
 
     const applyFilter = (option: FilterOption) => {
-        const filteredProjects = filterProjects(allProjects, option);
+        const filteredProjects = filterProjects(allProjects, option, lang);
         setProjects(filteredProjects);
         setIsAnimating(false);
     };
@@ -289,19 +299,19 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                         ref={(el) => (preHeader = el)}
                         class="text-(length:--text-sm) font-semibold tracking-(--tracking-caps) text-(--color-text-tertiary) uppercase"
                     >
-                        Meine
+                        {t(lang, 'portfolio.my')}
                     </p>
                     <h1
                         ref={(el) => (header = el)}
                         id="portfolio-heading"
                         class="mt-2 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
                     >
-                        Projekte
+                        {t(lang, 'portfolio.projects')}
                     </h1>
                 </div>
 
                 {/* Filter buttons */}
-                <nav class="mb-12" aria-label="Projektfilter">
+                <nav class="mb-12" aria-label={t(lang, 'portfolio.filter')}>
                     <ul class="flex list-none flex-wrap gap-3 p-0">
                         <For each={FILTER_OPTIONS}>
                             {(option, index) => (
@@ -320,18 +330,18 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
 
                 {/* Status announcement for screen readers */}
                 <output class="sr-only" aria-live="polite" aria-atomic="true">
-                    {projects().length} Projekte gefunden
+                    {projects().length} {t(lang, 'portfolio.found')}
                 </output>
 
                 <menu
                     class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-5 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-6 lg:gap-5"
-                    aria-label="Projektliste"
+                    aria-label={t(lang, 'portfolio.list')}
                 >
                     <Show
                         when={projects().length > 0}
                         fallback={
                             <div class="col-span-full py-8 text-center text-(--color-text-tertiary)">
-                                Keine Projekte gefunden
+                                {t(lang, 'portfolio.notFound')}
                             </div>
                         }
                     >
@@ -347,18 +357,21 @@ const Projects: Component<{ allProjects: Project[] }> = ({ allProjects }) => {
                                     wrapperClassOverride = `relative md:col-span-3 ${HEIGHT_CLASSES[size]}`;
                                 }
 
+                                const langPrefix = lang === 'de' ? '' : `/${lang}`;
+
                                 return (
                                     <ProjectCard
                                         title={project.data.title}
                                         name={project.data.name}
                                         year={project.data.year}
                                         isNew={project.data.year === currentYear}
-                                        url={`project/${project.slug}`}
+                                        url={`${langPrefix}/project/${project.slug}`}
                                         tags={project.data.tags}
                                         index={index()}
                                         gridSize={project.data.gridSize}
                                         headerAnimationComplete={headerAnimationComplete()}
                                         wrapperClassOverride={wrapperClassOverride}
+                                        lang={lang}
                                     />
                                 );
                             }}

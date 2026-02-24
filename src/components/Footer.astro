@@ -1,4 +1,13 @@
 ---
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations, getLocalePath } from '../i18n/utils';
+
+export interface Props {
+    lang?: Lang;
+}
+
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
 const year = new Date().getFullYear();
 
 interface FooterItem {
@@ -14,15 +23,15 @@ interface FooterSection {
 
 const sections: FooterSection[] = [
     {
-        title: 'Menu',
+        title: t('footer.menu'),
         items: [
-            { label: 'Über mich', href: '/timeline' },
-            { label: 'Projekte', href: '/#portfolio' },
-            { label: 'Kontakt', href: '/contact' },
+            { label: t('nav.about'), href: getLocalePath(lang, '/timeline') },
+            { label: t('nav.projects'), href: `${getLocalePath(lang, '/')}#portfolio` },
+            { label: t('nav.contact'), href: getLocalePath(lang, '/contact') },
         ],
     },
     {
-        title: 'Socials',
+        title: t('footer.socials'),
         items: [
             { label: 'LinkedIn', href: 'https://www.linkedin.com/in/thomas-breindl/', external: true },
             { label: 'GitHub', href: 'https://github.com/Aquitano', external: true },
@@ -74,7 +83,7 @@ const sections: FooterSection[] = [
                                                     />
                                                 </svg>
                                             )}
-                                            {item.external && <span class="sr-only">(öffnet in neuem Tab)</span>}
+                                            {item.external && <span class="sr-only">({t('footer.opensNewTab')})</span>}
                                         </a>
                                     </li>
                                 ))}
@@ -92,18 +101,18 @@ const sections: FooterSection[] = [
                 &copy; {year} Thomas Breindl
                 <br class="hidden md:block" />
                 <span class="block text-(length:--text-lg) font-semibold text-(--text-secondary) sm:text-(length:--text-xl) md:inline md:text-(length:--text-4xl) md:font-extrabold md:text-(--text-primary) lg:text-(length:--text-5xl)">
-                    All rights reserved.
+                    {t('footer.allRights')}
                 </span>
             </p>
             <div class="justify-self-start text-(--text-secondary) lg:justify-self-end">
                 <p class="text-(length:--text-xs) font-bold tracking-widest text-(--text-tertiary) uppercase">
-                    Local time
+                    {t('footer.localTime')}
                 </p>
                 <time
                     id="local-time"
                     class="mt-2 block font-mono text-(length:--text-lg) font-semibold tabular-nums sm:text-(length:--text-xl)"
                     aria-live="off"
-                    aria-label="Current local time"
+                    aria-label={t('footer.localTimeLabel')}
                 >
                     --:--:-- --
                 </time>

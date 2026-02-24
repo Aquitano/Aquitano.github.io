@@ -1,7 +1,7 @@
 ---
 title: 'FrontiersToSpace - Stratosphärenmission'
 name: 'FrontiersToSpace'
-description: 'Innovative webbasierte Plattform zur Visualisierung von Stratosphärendaten'
+description: 'Webplattform zur Visualisierung von Messdaten einer Stratosphärenballon-Mission'
 featured: true
 tags: ['React', 'TypeScript', 'Leaflet', 'Chart.js', 'TailwindCSS']
 tasks: ['Frontend', 'Backend', 'Datenvisualisierung', 'Hardware-Entwicklung']
@@ -19,14 +19,12 @@ fullImage: 'FrontiersToSpace-full.jpg'
 year: 2023
 ---
 
-Im Rahmen des P-Seminars Geographie unter der Leitung von Dr. Megis am Adalbert Stifter Gymnasium habe ich die Entwicklung der Webplattform „**FrontiersToSpace**“ geleitet. Diese innovative Plattform wurde geschaffen, um Daten einer Stratosphärenballon-Mission visuell darzustellen und die faszinierenden Aspekte der Stratosphärenforschung zugänglich zu machen.
+Im P-Seminar Geographie am Adalbert Stifter Gymnasium habe ich die Webplattform **FrontiersToSpace** entwickelt. Sie stellt die Messdaten einer Stratosphärenballon-Mission visuell dar und macht die Ergebnisse der Stratosphärenforschung zugänglich.
 
-Ich war verantwortlich für das gesamte **Frontend** und die **Architektur der Webseite**, welche modernste Technologien wie **React.js** für interaktive Benutzeroberflächen, **TailwindCSS** für ein ansprechendes Design und **Astro.js** für optimierte Ladezeiten nutzt. Des Weiteren habe ich durch den Einsatz von **Leaflet** für interaktive Karten und **Chart.js** für dynamische Diagramme eine Plattform geschaffen, die es ermöglicht, komplexe wissenschaftliche Daten **effektiv zu visualisieren** und zu interpretieren.
+Ich war verantwortlich für das gesamte **Frontend** und die **Architektur der Webseite**. Zum Einsatz kamen **React.js** für interaktive Oberflächen, **TailwindCSS** für das Design und **Astro.js** für optimierte Ladezeiten. Mit **Leaflet** für interaktive Karten und **Chart.js** für Diagramme können die gesammelten Messdaten anschaulich dargestellt werden.
 
-Neben meiner Rolle als Webentwickler war ich auch aktiv an der **Konstruktion und Programmierung der Sonde** beteiligt. Hierbei habe ich insbesondere bei der Implementierung der Sensoren und der Datenübertragungstechnologie mitgewirkt, was den Einsatz von APRS-Technologie und das Programmieren des TTGO T-Beam-Boards umfasste.
+Neben der Webentwicklung war ich an der **Konstruktion und Programmierung der Sonde** beteiligt – insbesondere bei der Sensorintegration und der Datenübertragung per APRS-Technologie auf dem TTGO T-Beam-Board.
 
-Die Zusammenarbeit mit dem **Deutschen Amateur-Radio-Club** (DARC) und die Kooperation mit der Sternwarte Passau waren integraler Bestandteil des Projekts. Diese Partnerschaften haben nicht nur technisches Know-how geliefert, sondern auch den wissenschaftlichen Austausch und das Lernen gefördert.
+Das Projekt entstand in Zusammenarbeit mit dem **Deutschen Amateur-Radio-Club** (DARC) und der Sternwarte Passau. Es gipfelte am 8. Juli 2023 im „Tag der Wissenschaft“, einem gemeinsam organisierten Event am ASG.
 
-Das Projekt gipfelte im „**Tag der Wissenschaft**“ am 8. Juli 2023, einem Event, das vom ASG und unseren Partnern gemeinsam ausgerichtet wurde. Dieser Tag war nicht nur eine Demonstration unserer technischen Fähigkeiten, sondern auch eine hervorragende Gelegenheit, die Öffentlichkeit für die Wissenschaft zu begeistern und die Bedeutung der Stratosphärenforschung hervorzuheben.
-
-Dieses Projekt war eine herausfordernde und lohnende Erfahrung, die meine Fähigkeiten in **Webentwicklung**, **Teamführung** und **technischer Problemlösung** erheblich erweitert hat. Es steht als Beispiel dafür, wie technologische Innovationen und interdisziplinäre Zusammenarbeit genutzt werden können, um unser Verständnis der Welt zu vertiefen und zu bereichern.
+Durch das Projekt konnte ich meine Fähigkeiten in **Webentwicklung**, **Teamarbeit** und **technischer Problemlösung** deutlich ausbauen.

@@ -1,24 +1,32 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import type { ActivePage } from '../layouts/Layout.astro';
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations, getLocalePath, getAlternateLang } from '../i18n/utils';
 
 export interface Props {
-    active?: 'Home' | 'Über mich' | 'Projekte' | 'Kontakt';
+    active?: ActivePage;
     location?: string;
+    lang?: Lang;
 }
 
-const { location = '/' } = Astro.props;
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
+const altLang = getAlternateLang(lang);
+const { location = getLocalePath(lang, '/') } = Astro.props;
 
-const menus = [
-    { name: 'Home', href: location },
-    { name: 'Über mich', href: `${location}timeline` },
-    { name: 'Projekte', href: `${location}#portfolio` },
-    { name: 'Kontakt', href: `${location}contact` },
-].map((menu) => {
-    return {
-        ...menu,
-        active: Astro.props.active === menu.name,
-    };
-});
+const navKeys: { key: ActivePage; href: string }[] = [
+    { key: 'home', href: getLocalePath(lang, '/') },
+    { key: 'about', href: getLocalePath(lang, '/timeline') },
+    { key: 'projects', href: `${getLocalePath(lang, '/')}#portfolio` },
+    { key: 'contact', href: getLocalePath(lang, '/contact') },
+];
+
+const menus = navKeys.map((item) => ({
+    name: t(`nav.${item.key}`),
+    href: item.href,
+    active: Astro.props.active === item.key,
+}));
 ---
 
 <header
@@ -31,19 +39,28 @@ const menus = [
         class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-none border border-t-0 border-r-0 border-l-0 border-white/10 px-4 py-4 md:rounded-2xl md:border md:px-8 md:py-5"
     >
         <a
-            href="/"
+            href={getLocalePath(lang, '/')}
             class="logo scroll-to focus-visible:ring-accent rounded-md focus-visible:ring-2 focus-visible:ring-offset-2"
-            aria-label="Thomas Breindl - Zur Startseite"
+            aria-label={t('nav.toHome')}
         >
             <span class="text-lg font-bold text-white transition-all duration-300 md:text-xl">Thomas Breindl</span>
         </a>
 
         <div class="flex items-center gap-3 md:gap-4">
-            <ThemeToggle />
+            <!-- Language switcher -->
+            <a
+                href={getLocalePath(altLang, Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/')}
+                class="lang-switch focus-visible:ring-accent rounded-md px-1.5 py-0.5 font-mono text-xs font-bold tracking-wider text-white/70 uppercase transition-colors duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2"
+                aria-label={t('general.switchLang')}
+                data-astro-prefetch
+            >
+                {altLang.toUpperCase()}
+            </a>
+            <ThemeToggle lang={lang} />
             <button
                 type="button"
                 class="menu focus-visible:ring-accent flex cursor-pointer items-center space-x-2 rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 md:space-x-4"
-                aria-label="Menu öffnen"
+                aria-label={t('nav.openMenu')}
                 aria-expanded="false"
                 aria-controls="nav-content"
             >
@@ -51,7 +68,7 @@ const menus = [
                 class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
                 aria-hidden="true"
             >
-                Menu
+                {t('nav.menu')}
             </span>
             <div class="menu-icon" aria-hidden="true">
                 <div class="menu-lines">
@@ -71,14 +88,14 @@ const menus = [
 </div>
 
 <!-- Navigation menu content -->
-<nav id="nav-content" class="pointer-events-none fixed inset-0 z-50" aria-label="Hauptnavigation" aria-hidden="true">
+<nav id="nav-content" class="pointer-events-none fixed inset-0 z-50" aria-label={t('nav.mainNav')} aria-hidden="true">
     <div class="flex h-full w-full items-center justify-center">
         <div class="content mx-auto flex max-w-4xl flex-col items-center justify-center px-4 text-center sm:px-6">
             <h2
                 class="mb-8 text-base font-semibold tracking-wider text-white/60 uppercase opacity-0 transition-opacity duration-400 md:mb-12 md:text-xl"
                 id="nav-heading"
             >
-                Menu
+                {t('nav.menu')}
             </h2>
             <ul id="mi" class="flex w-full flex-col gap-6 text-center" role="list">
                 {
@@ -106,13 +123,13 @@ const menus = [
     id="nav-close"
     type="button"
     class="close focus-visible:ring-accent fixed top-8 right-4 z-60 flex hidden -translate-y-4 cursor-pointer items-center justify-center rounded-full opacity-0 transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 md:top-10 md:right-10"
-    aria-label="Menu schließen"
+    aria-label={t('nav.closeMenu')}
     tabindex="-1"
 >
     <div class="close-container">
         <div class="close-bg"></div>
         <div class="close-content">
-            <span class="close-text">Close</span>
+            <span class="close-text">{t('nav.close')}</span>
             <div class="close-icon" aria-hidden="true">
                 <span class="close-line close-line-1"></span>
                 <span class="close-line close-line-2"></span>

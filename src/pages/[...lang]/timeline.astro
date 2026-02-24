@@ -1,6 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import CliHeader from '../components/CliHeader.astro';
+import Layout from '../../layouts/Layout.astro';
+import CliHeader from '../../components/CliHeader.astro';
+import { defaultLang, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+    return [{ params: { lang: undefined } }, { params: { lang: 'en' } }];
+}
+
+const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
+const t = useTranslations(lang);
 
 interface ExperienceEntry {
     role: string;
@@ -14,35 +23,68 @@ interface SkillGroup {
     items: string[];
 }
 
-const experiences: ExperienceEntry[] = [
-    {
-        role: 'Software Development Intern & Working Student',
-        company: 'itestra GmbH',
-        period: 'Mar 2025 - Present',
-        highlights: [
-            'Migrated ~12K LOC COBOL contract logic to Java/Quarkus, reducing codebase by 40%',
-            'Validated multi-stage batch workflows (JBeret, Panache, Hibernate) for consistent outputs',
-        ],
-    },
-    {
-        role: 'Software Engineering Intern',
-        company: 'CHECK24 Vergleichsportal GmbH',
-        period: 'Aug 2025 - Sep 2025',
-        highlights: [
-            'Designed async ActiveMQ pipeline decoupling critical provider responses',
-            'Cut P95 latency to ~150ms at 1.5M events/day with new Grafana metrics',
-        ],
-    },
-    {
-        role: 'Software Development Intern',
-        company: '4process AG',
-        period: 'Jul 2024 - Aug 2024',
-        highlights: [
-            'Built internal idea portal with SAP Fiori Elements for structured proposals',
-            'Implemented Java tool for SAP Sales Cloud with >5k validated Excel updates/sec',
-        ],
-    },
-];
+const experiencesData: Record<Lang, ExperienceEntry[]> = {
+    de: [
+        {
+            role: 'Softwareentwickler (Praktikant & Werkstudent)',
+            company: 'itestra GmbH',
+            period: `Mär 2025 - ${t('timeline.present')}`,
+            highlights: [
+                'Migration von ca. 12.000 Zeilen COBOL-Vertragslogik nach Java/Quarkus, Reduktion der Codebasis um 40 %',
+                'Validierung mehrstufiger Batch-Workflows (JBeret, Panache, Hibernate) mit konsistenter Ausgabe',
+            ],
+        },
+        {
+            role: 'Softwareentwickler (Praktikant)',
+            company: 'CHECK24 Vergleichsportal GmbH',
+            period: 'Aug 2025 - Sep 2025',
+            highlights: [
+                'Entwurf einer asynchronen ActiveMQ-Pipeline zur Entkopplung kritischer Anbieterantworten',
+                'P95-Latenz auf ca. 150 ms bei 1,5 Mio. Events/Tag gesenkt, dank neuer Grafana-Metriken',
+            ],
+        },
+        {
+            role: 'Softwareentwickler (Praktikant)',
+            company: '4process AG',
+            period: 'Jul 2024 - Aug 2024',
+            highlights: [
+                'Internes Ideenportal mit SAP Fiori Elements zur strukturierten Erfassung von Vorschlägen entwickelt',
+                'Java-Tool für SAP Sales Cloud implementiert, über 5.000 validierte Excel-Updates pro Sekunde',
+            ],
+        },
+    ],
+    en: [
+        {
+            role: 'Software Development Intern & Working Student',
+            company: 'itestra GmbH',
+            period: `Mar 2025 - ${t('timeline.present')}`,
+            highlights: [
+                'Migrated ~12K LOC COBOL contract logic to Java/Quarkus, reducing codebase by 40%',
+                'Validated multi-stage batch workflows (JBeret, Panache, Hibernate) for consistent outputs',
+            ],
+        },
+        {
+            role: 'Software Engineering Intern',
+            company: 'CHECK24 Vergleichsportal GmbH',
+            period: 'Aug 2025 - Sep 2025',
+            highlights: [
+                'Designed async ActiveMQ pipeline decoupling critical provider responses',
+                'Cut P95 latency to ~150ms at 1.5M events/day with new Grafana metrics',
+            ],
+        },
+        {
+            role: 'Software Development Intern',
+            company: '4process AG',
+            period: 'Jul 2024 - Aug 2024',
+            highlights: [
+                'Built internal idea portal with SAP Fiori Elements for structured proposals',
+                'Implemented Java tool for SAP Sales Cloud with >5k validated Excel updates/sec',
+            ],
+        },
+    ],
+};
+
+const experiences = experiencesData[lang];
 
 const skillGroups: SkillGroup[] = [
     {
@@ -68,17 +110,21 @@ const coreSkills = [
     { name: 'TypeScript', years: '4+' },
 ];
 
-const languages = ['German (Native)', 'English (C1)', 'Latin'];
+const languagesData: Record<Lang, string[]> = {
+    de: ['Deutsch (Muttersprache)', 'Englisch (C1)', 'Latein'],
+    en: ['German (Native)', 'English (C1)', 'Latin'],
+};
+const spokenLanguages = languagesData[lang];
 ---
 
 <Layout
-    title="Timeline | Breindl Thomas"
-    active="Über mich"
+    title={t('seo.timelineTitle')}
+    active="about"
+    lang={lang}
     SEO={{
-        description:
-            'Work experience, skills and tools - Thomas Breindl, Software Developer focused on Java, TypeScript and cloud technologies.',
+        description: t('seo.timelineDesc'),
         openGraph: {
-            title: 'About - Thomas Breindl',
+            title: t('seo.timelineTitle'),
             type: 'website',
         },
     }}
@@ -87,9 +133,9 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         <section class="hero" aria-labelledby="page-title">
             <div class="hero-content">
                 <CliHeader command="ls -la ~/experience" class="mb-6" />
-                <span class="hero-tag">// About</span>
-                <h1 id="page-title">Work Experience</h1>
-                <p class="hero-sub">Building systems that scale</p>
+                <span class="hero-tag">// {t('timeline.about')}</span>
+                <h1 id="page-title">{t('timeline.title')}</h1>
+                <p class="hero-sub">{t('timeline.subtitle')}</p>
             </div>
             <div class="hero-pattern" aria-hidden="true">
                 <svg viewBox="0 0 400 200" preserveAspectRatio="none">
@@ -104,7 +150,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         </section>
 
         <section class="experience-section" aria-labelledby="experience-heading">
-            <h2 id="experience-heading" class="sr-only">Professional Experience</h2>
+            <h2 id="experience-heading" class="sr-only">{t('timeline.experience')}</h2>
             <div class="timeline-track" aria-hidden="true"></div>
             <ol class="experience-list" role="list">
                 {
@@ -119,7 +165,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                                     <h3 class="exp-role">{exp.role}</h3>
                                     <p class="exp-company">{exp.company}</p>
                                 </div>
-                                <ul class="exp-highlights" aria-label="Key achievements">
+                                <ul class="exp-highlights" aria-label={t('timeline.achievements')}>
                                     {exp.highlights.map((h) => (
                                         <li>
                                             <span class="highlight-arrow" aria-hidden="true">
@@ -139,7 +185,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
         <section class="skills-section" aria-labelledby="skills-heading">
             <div class="skills-header reveal">
                 <span class="section-tag">// Stack</span>
-                <h2 id="skills-heading">Skills & Tools</h2>
+                <h2 id="skills-heading">{t('timeline.skills')}</h2>
             </div>
 
             <div class="core-stack reveal-stagger">
@@ -147,7 +193,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
                     coreSkills.map((skill) => (
                         <div class="core-card reveal-scale">
                             <span class="core-name">{skill.name}</span>
-                            <span class="core-years">{skill.years} years</span>
+                            <span class="core-years">{skill.years} {t('timeline.years')}</span>
                         </div>
                     ))
                 }
@@ -169,12 +215,12 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
             </div>
 
             <div class="lang-section reveal">
-                <h3 class="lang-title">Languages</h3>
+                <h3 class="lang-title">{t('timeline.languages')}</h3>
                 <ul class="lang-list reveal-stagger">
                     {
-                        languages.map((lang) => (
+                        spokenLanguages.map((spokenLang) => (
                             <li class="lang-item reveal-left">
-                                <p class="text-md">{lang}</p>
+                                <p class="text-md">{spokenLang}</p>
                             </li>
                         ))
                     }
@@ -614,7 +660,7 @@ const languages = ['German (Native)', 'English (C1)', 'Latin'];
 </style>
 
 <script>
-    import { animateCliTyping, getMotionPreference, resetCliTyping } from '../utils/cliAnimations';
+    import { animateCliTyping, getMotionPreference, resetCliTyping } from '../../utils/cliAnimations';
     import { animate, inView } from 'motion';
 
     const motionOK = getMotionPreference();

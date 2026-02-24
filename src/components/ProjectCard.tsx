@@ -2,6 +2,7 @@ import { createVisibilityObserver, withOccurrence } from '@solid-primitives/inte
 import { animate, type Easing } from 'motion';
 import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
 import { getMotionPreference, getReducedMotionMQL } from '../utils/cliAnimations';
+import { ui, defaultLang, type Lang } from '../i18n/ui';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 
@@ -16,6 +17,7 @@ export interface ProjectCardProps {
     gridSize?: GridSize;
     headerAnimationComplete?: boolean;
     wrapperClassOverride?: string;
+    lang?: string;
 }
 
 export const GRID_SIZE_CLASSES: Record<GridSize, string> = {
@@ -35,6 +37,11 @@ export const ANIMATION_CONFIG = {
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
     const gridSize = props.gridSize ?? 'medium';
+    const lang = (props.lang ?? defaultLang) as Lang;
+    const viewLabel = ui[lang]?.['project.viewProject'] ?? ui[defaultLang]['project.viewProject'];
+    const newLabel = ui[lang]?.['project.new'] ?? ui[defaultLang]['project.new'];
+    const newAriaLabel = ui[lang]?.['project.newLabel'] ?? ui[defaultLang]['project.newLabel'];
+    const tagsLabel = ui[lang]?.['project.tags'] ?? ui[defaultLang]['project.tags'];
     const [motionOK, setMotionOK] = createSignal(getMotionPreference());
 
     let cardRef: HTMLDivElement | undefined;
@@ -223,7 +230,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                     {/* New badge */}
                     <Show when={props.isNew}>
-                        <div class="absolute top-5 left-5 z-10" aria-label="New project">
+                        <div class="absolute top-5 left-5 z-10" aria-label={newAriaLabel}>
                             <div
                                 class="rounded-md px-3 py-1.5 font-mono text-xs font-bold tracking-wider uppercase shadow-lg"
                                 style={{
@@ -232,7 +239,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                                     'box-shadow': '0 4px 12px rgba(224, 122, 58, 0.4)',
                                 }}
                             >
-                                NEW
+                                {newLabel}
                             </div>
                         </div>
                     </Show>
@@ -269,7 +276,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         </h2>
 
                         {/* Tags */}
-                        <ul class="mb-5 flex list-none flex-wrap gap-2 p-0" aria-label="Project tags">
+                        <ul class="mb-5 flex list-none flex-wrap gap-2 p-0" aria-label={tagsLabel}>
                             <For each={props.tags}>
                                 {(tag) => (
                                     <li
@@ -297,7 +304,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                                 transition: 'opacity 200ms ease-out, transform 200ms ease-out',
                             }}
                         >
-                            <span>View Project</span>
+                            <span>{viewLabel}</span>
                             <span
                                 class="ml-2"
                                 style={{

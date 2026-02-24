@@ -2,14 +2,25 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../../layouts/Layout.astro';
+import { defaultLang, type Lang } from '../../../i18n/ui';
+import { useTranslations, getLocalePath } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
     const projects = await getCollection('project');
-    return projects.map((project) => ({
-        params: { slug: project.slug },
-        props: { project },
-    }));
+    const deProjects = projects.filter((p) => !p.slug.startsWith('en/'));
+    const enProjects = projects.filter((p) => p.slug.startsWith('en/'));
+
+    return [
+        ...deProjects.map((project) => ({
+            params: { lang: undefined, slug: project.slug },
+            props: { project },
+        })),
+        ...enProjects.map((project) => ({
+            params: { lang: 'en', slug: project.slug.replace(/^en\//, '') },
+            props: { project },
+        })),
+    ];
 }
 
 interface Props {
@@ -17,6 +28,8 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
+const t = useTranslations(lang);
 const { Content } = await project.render();
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp}');
@@ -34,8 +47,9 @@ if (project.data.fullImage) {
 ---
 
 <Layout
-    title={`${project.data.title} | Breindl Thomas`}
-    active="Projekte"
+    title={`${project.data.title} | Thomas Breindl`}
+    active="projects"
+    lang={lang}
     SEO={{
         description: project.data.description,
         openGraph: {
@@ -70,15 +84,13 @@ if (project.data.fullImage) {
 
     <div class="project-page pb-(--space-section)">
         <article>
-            <!-- Ambient glow behind hero -->
             <div class="project-glow" aria-hidden="true"></div>
 
             <section class="relative pt-14 md:pt-24 lg:pt-32" aria-labelledby="project-title">
                 <div class="mx-auto max-w-6xl px-(--gutter)">
-                    <!-- Back link -->
-                    <nav class="hero-animation mb-10 opacity-0" aria-label="Zurück">
+                    <nav class="hero-animation mb-10 opacity-0" aria-label={t('project.back')}>
                         <a
-                            href="/#portfolio"
+                            href={`${getLocalePath(lang, '/')}#portfolio`}
                             class="group/back inline-flex items-center gap-2 font-mono text-xs text-(--text-tertiary) transition-colors duration-200 hover:text-(--color-accent)"
                             data-astro-prefetch
                         >
@@ -93,7 +105,7 @@ if (project.data.fullImage) {
                                 <div class="hero-animation mb-6 flex items-center gap-3 opacity-0">
                                     <span class="font-mono text-(--color-accent)">{'['}</span>
                                     <span class="font-mono text-xs font-semibold tracking-wider text-(--color-accent) uppercase">
-                                        Featured Project
+                                        {t('project.featured')}
                                     </span>
                                     <span class="font-mono text-(--color-accent)">{']'}</span>
                                     <div class="h-px flex-1 bg-linear-to-r from-[rgba(224,122,58,0.3)] to-transparent" />
@@ -101,7 +113,6 @@ if (project.data.fullImage) {
                             )
                         }
 
-                        <!-- Title with CLI decoration -->
                         <div class="hero-animation mb-8 opacity-0">
                             <div class="mb-3 font-mono text-sm text-(--text-tertiary)">
                                 {'$ '}cat ./projects/{project.data.name.toLowerCase()}/README.md
@@ -114,7 +125,6 @@ if (project.data.fullImage) {
                             </h1>
                         </div>
 
-                        <!-- Tags and Year -->
                         <div class="hero-animation flex flex-wrap items-center gap-2.5 pt-4 opacity-0">
                             <span class="mr-1 hidden font-mono text-xs text-(--text-tertiary) sm:inline">{'$ '}tags --list</span>
                             <span class="mr-1 hidden font-mono text-xs text-(--text-muted) sm:inline">|</span>
@@ -131,15 +141,13 @@ if (project.data.fullImage) {
                         </div>
                     </div>
 
-                    <!-- Main content grid -->
                     <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_380px] lg:gap-16">
-                        <!-- Left column - Description -->
                         <div>
                             <section class="hero-animation mb-8 opacity-0">
                                 <div class="section-heading mb-6">
                                     <span class="font-mono text-xs text-(--color-accent)">{'>'}</span>
                                     <span class="font-mono text-xs font-semibold tracking-wider text-(--text-secondary) uppercase">
-                                        Overview
+                                        {t('project.overview')}
                                     </span>
                                     <div class="section-heading-line"></div>
                                 </div>
@@ -149,14 +157,12 @@ if (project.data.fullImage) {
                             </section>
                         </div>
 
-                        <!-- Right column - Tasks & Links -->
                         <div class="order-first lg:order-last">
-                            <!-- Tasks card -->
                             <section class="hero-animation mb-8 opacity-0">
                                 <div class="section-heading mb-4">
                                     <span class="font-mono text-xs text-(--color-accent)">{'>'}</span>
                                     <span class="font-mono text-xs font-semibold tracking-wider text-(--text-secondary) uppercase">
-                                        Key Contributions
+                                        {t('project.contributions')}
                                     </span>
                                     <div class="section-heading-line"></div>
                                 </div>
@@ -184,19 +190,18 @@ if (project.data.fullImage) {
                                     </ul>
                                     <div class="tasks-card-footer">
                                         <span>exit code: 0</span>
-                                        <span>{project.data.tasks.length} tasks completed</span>
+                                        <span>{project.data.tasks.length} {t('project.tasksCompleted')}</span>
                                     </div>
                                 </div>
                             </section>
 
-                            <!-- Links section -->
                             {
                                 project.data.links && project.data.links.length > 0 && (
                                     <section class="hero-animation mb-8 opacity-0">
                                         <div class="section-heading mb-4">
                                             <span class="font-mono text-xs text-(--color-accent)">{'>'}</span>
                                             <span class="font-mono text-xs font-semibold tracking-wider text-(--text-secondary) uppercase">
-                                                Links
+                                                {t('project.links')}
                                             </span>
                                             <div class="section-heading-line" />
                                         </div>
@@ -233,12 +238,12 @@ if (project.data.fullImage) {
 
             {
                 fullImageSrc && (
-                    <section class="hero-animation mt-16 opacity-0 md:mt-20" aria-label="Projektbild">
+                    <section class="hero-animation mt-16 opacity-0 md:mt-20" aria-label={t('project.image')}>
                         <div class="mx-auto max-w-6xl px-(--gutter)">
                             <div class="image-frame">
                                 <figure class="m-0">
                                     <Image
-                                        alt={`${project.data.title} - Vollständige Projektansicht`}
+                                        alt={`${project.data.title} – ${t('project.fullView')}`}
                                         src={fullImageSrc}
                                         height={820}
                                         width={1420}
@@ -256,13 +261,11 @@ if (project.data.fullImage) {
 </Layout>
 
 <style>
-    /* Page container */
     .project-page {
         position: relative;
         overflow: hidden;
     }
 
-    /* Ambient glow behind hero area */
     .project-glow {
         position: absolute;
         top: -120px;
@@ -275,7 +278,6 @@ if (project.data.fullImage) {
         z-index: 0;
     }
 
-    /* Project title */
     .project-title {
         font-size: var(--text-5xl);
         font-weight: var(--font-black);
@@ -286,7 +288,6 @@ if (project.data.fullImage) {
         text-wrap: balance;
     }
 
-    /* Prose styling for content */
     .prose :global(p) {
         margin-bottom: var(--space-5);
     }
@@ -296,13 +297,11 @@ if (project.data.fullImage) {
         color: var(--text-primary);
     }
 
-    /* Animations */
     .hero-animation {
         opacity: 0;
         transition: none;
     }
 
-    /* Back link arrow bounce */
     .group\/back:hover span:first-child {
         animation: arrow-bounce 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -335,7 +334,7 @@ if (project.data.fullImage) {
 
 <script>
     import { animate, type AnimationSequence } from 'motion';
-    import { getMotionPreference } from '../../utils/cliAnimations';
+    import { getMotionPreference } from '../../../utils/cliAnimations';
 
     const motionOK = getMotionPreference();
 
@@ -369,7 +368,6 @@ if (project.data.fullImage) {
     }
 
     function runProjectAnimations() {
-        // Only run on project pages
         if (!document.querySelector('.project-page')) return;
 
         if (!motionOK) {
@@ -409,7 +407,6 @@ if (project.data.fullImage) {
         }
     }
 
-    // astro:page-load fires on both initial load and client-side navigation
     let animationRunId = 0;
     document.addEventListener('astro:page-load', async () => {
         const runId = ++animationRunId;

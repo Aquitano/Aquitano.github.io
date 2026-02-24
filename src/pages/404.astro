@@ -1,15 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { defaultLang, type Lang, ui } from '../i18n/ui';
+
+// 404 is always served from root; detect language from referrer or accept-language
+const lang: Lang = defaultLang;
+const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
 ---
 
 <Layout
-    title="404 - Seite nicht gefunden | Thomas Breindl"
-    active="Home"
+    title={t('seo.404Title')}
+    active="home"
+    lang={lang}
     SEO={{
-        description:
-            "Die angeforderte Seite wurde nicht gefunden. Zurück zur Startseite von Thomas Breindl's Portfolio.",
+        description: t('seo.404Desc'),
         openGraph: {
-            title: '404 - Seite nicht gefunden',
+            title: t('seo.404Title'),
             type: 'website',
         },
     }}
@@ -18,13 +23,11 @@ import Layout from '../layouts/Layout.astro';
         <div class="error-content">
             <span class="error-tag">// Error</span>
             <h1 class="error-code">404</h1>
-            <h2 class="error-title">Seite nicht gefunden</h2>
-            <p class="error-message">
-                Die angeforderte Seite existiert nicht oder wurde verschoben.
-            </p>
+            <h2 class="error-title">{t('error.title')}</h2>
+            <p class="error-message">{t('error.message')}</p>
             <a href="/" class="btn btn-primary">
                 <span class="btn-arrow" aria-hidden="true">&larr;</span>
-                Zurück zur Startseite
+                {t('error.back')}
             </a>
         </div>
         <div class="ascii-deco ascii-deco-left" aria-hidden="true">&gt;&gt;&gt;</div>

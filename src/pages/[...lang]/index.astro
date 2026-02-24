@@ -1,30 +1,42 @@
 ---
 import { getCollection } from 'astro:content';
-import HomeTop from '../components/HomeTop.astro';
-import Projects from '../components/Projects.tsx';
-import Layout from '../layouts/Layout.astro';
+import HomeTop from '../../components/HomeTop.astro';
+import Projects from '../../components/Projects.tsx';
+import Layout from '../../layouts/Layout.astro';
 import type { CollectionEntry } from 'astro:content';
+import { defaultLang, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
 
-const allProjects = await getCollection('project');
+export function getStaticPaths() {
+    return [{ params: { lang: undefined } }, { params: { lang: 'en' } }];
+}
+
+const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
+const t = useTranslations(lang);
+
+const allProjectsRaw = await getCollection('project');
+const allProjects = lang === 'en'
+    ? allProjectsRaw.filter((p) => p.slug.startsWith('en/')).map((p) => ({ ...p, slug: p.slug.replace(/^en\//, '') }))
+    : allProjectsRaw.filter((p) => !p.slug.startsWith('en/'));
 export type product = CollectionEntry<'project'>;
 ---
 
 <Layout
-    title="Breindl Thomas | Portfolio"
-    active="Home"
+    title={t('seo.homeTitle')}
+    active="home"
+    lang={lang}
     SEO={{
-        description:
-            'Thomas Breindl - Programmierer, Designer und Student aus Deutschland. Entdecken Sie meine Projekte in Webentwicklung, React, TypeScript und mehr.',
+        description: t('seo.homeDesc'),
         openGraph: {
-            title: 'Thomas Breindl | Portfolio - Webentwickler & Designer',
+            title: t('seo.homeOgTitle'),
             type: 'website',
         },
     }}
 >
     <div id="Welcome">
-        <HomeTop />
+        <HomeTop lang={lang} />
 
-        <Projects allProjects={allProjects} client:load />
+        <Projects allProjects={allProjects} client:load lang={lang} />
     </div>
 </Layout>
 
@@ -483,9 +495,5 @@ export type product = CollectionEntry<'project'>;
             stroke-dasharray: 295.16;
             stroke-dashoffset: 0;
         }
-    }
-
-    .hidden {
-        visibility: hidden;
     }
 </style>

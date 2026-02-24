@@ -1,7 +1,12 @@
-<div class="loader on" id="loader" role="status" aria-live="polite" aria-label="Page loading">
+---
+import type { Lang } from '../i18n/ui';
+export interface Props { lang?: Lang; }
+---
+
+<div class="loader on" id="loader" role="status" aria-live="polite" aria-label="Loading">
     <div class="loader-preloader">
         <div class="swiper-lazy-preloader" aria-hidden="true"></div>
-        <span class="visually-hidden">Loading…</span>
+        <span class="visually-hidden">Loading</span>
     </div>
 </div>
 
