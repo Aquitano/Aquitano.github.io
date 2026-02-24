@@ -11,10 +11,8 @@ const TagButton: Component<TagButtonProps> = (props) => {
     return (
         <button
             ref={props.ref}
-            class={`relative flex h-10 items-center rounded-lg px-4 py-2 text-xs font-semibold tracking-wide uppercase transition-all duration-200 ease-out ${
-                props.isActive
-                    ? 'bg-neutral-900 text-white shadow-sm ring-1 ring-black/10'
-                    : 'bg-white/70 text-stone-700 ring-1 ring-black/5 hover:bg-white/90 hover:text-stone-900 hover:ring-black/10'
+            class={`tag-button relative flex h-10 items-center rounded-lg px-4 py-2 text-xs font-semibold tracking-wide uppercase transition-all duration-200 ease-out ${
+                props.isActive ? 'tag-button--active' : 'tag-button--inactive'
             }`}
             onClick={props.onClick}
             aria-pressed={props.isActive}

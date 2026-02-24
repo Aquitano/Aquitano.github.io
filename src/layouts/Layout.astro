@@ -70,8 +70,7 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
 
         <link rel="canonical" href={canonicalURL} />
 
-        <meta name="theme-color" content="#faf5ef" media="(prefers-color-scheme: light)" />
-        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#faf5ef" id="meta-theme-color" />
 
         <!-- Color scheme declaration for scrollbars and form controls -->
         <meta name="color-scheme" content="light dark" />
@@ -189,6 +188,22 @@ const pageTitle = title || 'Thomas Breindl | Portfolio';
         }
 
         <ClientRouter />
+
+        <!-- Theme: prevent FOUC by setting data-theme before paint -->
+        <script is:inline>
+            (function() {
+                function applyTheme() {
+                    var stored = localStorage.getItem('theme');
+                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    var theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+                    document.documentElement.setAttribute('data-theme', theme);
+                    var meta = document.getElementById('meta-theme-color');
+                    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c0a09' : '#faf5ef');
+                }
+                applyTheme();
+                document.addEventListener('astro:after-swap', applyTheme);
+            })();
+        </script>
     </head>
     <body class="overflow-x-hidden antialiased">
         <!-- Skip to main content link for accessibility -->

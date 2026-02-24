@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 export interface Props {
     active?: 'Home' | 'Über mich' | 'Projekte' | 'Kontakt';
     location?: string;
@@ -36,13 +38,15 @@ const menus = [
             <span class="text-lg font-bold text-white transition-all duration-300 md:text-xl">Thomas Breindl</span>
         </a>
 
-        <button
-            type="button"
-            class="menu focus-visible:ring-accent flex cursor-pointer items-center space-x-2 rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 md:space-x-4"
-            aria-label="Menu öffnen"
-            aria-expanded="false"
-            aria-controls="nav-content"
-        >
+        <div class="flex items-center gap-3 md:gap-4">
+            <ThemeToggle />
+            <button
+                type="button"
+                class="menu focus-visible:ring-accent flex cursor-pointer items-center space-x-2 rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 md:space-x-4"
+                aria-label="Menu öffnen"
+                aria-expanded="false"
+                aria-controls="nav-content"
+            >
             <span
                 class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
                 aria-hidden="true"
@@ -57,6 +61,7 @@ const menus = [
                 </div>
             </div>
         </button>
+        </div>
     </div>
 </header>
 

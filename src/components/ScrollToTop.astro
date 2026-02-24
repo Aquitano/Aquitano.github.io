@@ -8,7 +8,8 @@
 
 <style lang="scss">
     .scroll-top {
-        background: rgba(15, 20, 30, 0.5);
+        background: var(--neutral-900);
+        color: var(--neutral-100);
         opacity: 0;
         bottom: 14px;
         border: 0 none;
@@ -16,7 +17,16 @@
         transition: background 0.2s ease-in-out;
 
         &:hover {
-            background: rgba(15, 20, 30, 0.65);
+            background: var(--neutral-800);
+        }
+    }
+
+    :global([data-theme='dark']) .scroll-top {
+        background: rgba(255, 255, 255, 0.12);
+        color: var(--neutral-100);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
     }
 
