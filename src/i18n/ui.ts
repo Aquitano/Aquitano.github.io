@@ -13,10 +13,10 @@ export const ui = {
         'nav.about': 'Über mich',
         'nav.projects': 'Projekte',
         'nav.contact': 'Kontakt',
-        'nav.menu': 'Menü',
+        'nav.menu': 'Menu',
         'nav.close': 'Schließen',
-        'nav.openMenu': 'Menü öffnen',
-        'nav.closeMenu': 'Menü schließen',
+        'nav.openMenu': 'Menu öffnen',
+        'nav.closeMenu': 'Menu schließen',
         'nav.toHome': 'Thomas Breindl – Zur Startseite',
         'nav.mainNav': 'Hauptnavigation',
 
@@ -91,7 +91,7 @@ export const ui = {
         'contact.phonePlaceholder': '+49 123 456789',
 
         // Footer
-        'footer.menu': 'Menü',
+        'footer.menu': 'Menu',
         'footer.socials': 'Soziale Netzwerke',
         'footer.allRights': 'Alle Rechte vorbehalten.',
         'footer.localTime': 'Ortszeit',

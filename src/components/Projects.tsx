@@ -290,6 +290,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <div
                         ref={(el) => (cliHeader = el)}
                         class="mb-6 flex items-center gap-3 font-mono text-(length:--text-sm) text-(--text-secondary)"
+                        style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         <span class="font-bold text-(--color-accent)">$</span>
                         <span>cd ~/portfolio && ls</span>
@@ -298,6 +299,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <p
                         ref={(el) => (preHeader = el)}
                         class="text-(length:--text-sm) font-semibold tracking-(--tracking-caps) text-(--color-text-tertiary) uppercase"
+                        style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.my')}
                     </p>
@@ -305,6 +307,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                         ref={(el) => (header = el)}
                         id="portfolio-heading"
                         class="mt-2 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
+                        style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.projects')}
                     </h1>
@@ -317,7 +320,10 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                             {(option, index) => (
                                 <li>
                                     <TagButton
-                                        ref={(el) => (filterButtons[index()] = el)}
+                                        ref={(el) => {
+                                            filterButtons[index()] = el;
+                                            if (motionOK) el.style.opacity = '0';
+                                        }}
                                         label={option.label}
                                         isActive={filter() === option.value}
                                         onClick={() => handleFilterChange(option.value)}

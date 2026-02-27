@@ -266,7 +266,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                             class="mb-5 text-2xl font-bold md:text-3xl"
                             style={{
                                 color: '#fafaf9',
-                                'line-height': '1.2',
+                                'line-height': '1.35',
                                 'letter-spacing': '-0.01em',
                                 'overflow-wrap': 'anywhere',
                                 'text-wrap': 'balance',
@@ -317,12 +317,12 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         </div>
                     </div>
 
-                    {/* Bottom halftone decoration */}
+                    {/* Bottom line decoration */}
                     <div
                         class="pointer-events-none absolute right-0 bottom-0 left-0 h-px"
                         style={{
                             background:
-                                'repeating-linear-gradient(90deg, rgba(224, 122, 58, 0.3) 0, rgba(224, 122, 58, 0.3) 2px, transparent 2px, transparent 6px)',
+                                'repeating-linear-gradient(90deg, rgba(224, 122, 58, 0.3) 0, rgba(224, 122, 58, 0.3) 8px, transparent 8px, transparent 16px)',
                         }}
                         aria-hidden="true"
                     />

@@ -199,7 +199,6 @@ const menus = navKeys.map((item) => ({
 
     .menu:hover .menu-text {
         color: white;
-        letter-spacing: 0.15em;
     }
 
     .menu-lines {
@@ -293,8 +292,8 @@ const menus = navKeys.map((item) => ({
 
     .close-container {
         position: relative;
-        width: 100px;
-        height: 50px;
+        width: auto;
+        height: auto;
         border-radius: 20px;
         overflow: hidden;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -302,8 +301,6 @@ const menus = navKeys.map((item) => ({
 
     @media (min-width: 768px) {
         .close-container {
-            width: 120px;
-            height: 60px;
             border-radius: 30px;
         }
     }
@@ -381,18 +378,19 @@ const menus = navKeys.map((item) => ({
     }
 
     .close-text {
-        font-size: 0.75rem;
+        font-size: 0.65rem;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
     }
 
     @media (min-width: 768px) {
         .close-text {
-            font-size: var(--step--1, 0.889rem);
+            font-size: 0.75rem;
         }
     }
 
