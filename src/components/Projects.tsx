@@ -1,8 +1,8 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate } from 'motion';
 import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { defaultLang, ui, type Lang } from '../i18n/ui';
 import { animateCliTyping, getMotionPreference, resetCliTyping } from '../utils/cliAnimations';
-import { ui, defaultLang, type Lang } from '../i18n/ui';
 import ProjectCard, { ANIMATION_CONFIG, type GridSize } from './ProjectCard';
 import TagButton from './TagButton';
 
@@ -12,7 +12,9 @@ function t(lang: Lang, key: keyof (typeof ui)[typeof defaultLang]): string {
     return ui[lang][key] ?? ui[defaultLang][key];
 }
 
-const getFilters = (lang: Lang): {
+const getFilters = (
+    lang: Lang,
+): {
     value: FilterOption;
     label: string;
     tester: (p: Project) => boolean;
@@ -21,7 +23,11 @@ const getFilters = (lang: Lang): {
     { value: 'featured', label: t(lang, 'portfolio.featured'), tester: (p) => p.data.featured },
     { value: 'frontend', label: 'Frontend', tester: (p) => p.data.tasks.includes('Frontend') },
     { value: 'backend', label: 'Backend', tester: (p) => p.data.tasks.includes('Backend') },
-    { value: 'productdesign', label: t(lang, 'portfolio.productDesign'), tester: (p) => p.data.tasks.includes('Produktdesign') || p.data.tasks.includes('Product Design') },
+    {
+        value: 'productdesign',
+        label: t(lang, 'portfolio.productDesign'),
+        tester: (p) => p.data.tasks.includes('Produktdesign') || p.data.tasks.includes('Product Design'),
+    },
 ];
 
 type Project = {
@@ -280,16 +286,16 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
 
     return (
         <section
-            class="relative z-3 overflow-hidden py-(--space-section)"
+            class="relative z-3 overflow-hidden pt-14 pb-(--space-section) md:pt-16 lg:pt-20"
             id="portfolio"
             aria-labelledby="portfolio-heading"
         >
             <div class="mx-auto w-full max-w-7xl px-(--gutter)">
-                <div class="mb-16 text-left">
+                <div class="mb-10 text-left">
                     {/* CLI header */}
                     <div
                         ref={(el) => (cliHeader = el)}
-                        class="mb-6 flex items-center gap-3 font-mono text-(length:--text-sm) text-(--text-secondary)"
+                        class="mb-4 flex items-center gap-3 font-mono text-(length:--text-sm) text-(--text-secondary)"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         <span class="font-bold text-(--color-accent)">$</span>
@@ -306,7 +312,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <h1
                         ref={(el) => (header = el)}
                         id="portfolio-heading"
-                        class="mt-2 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
+                        class="mt-1.5 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.projects')}
@@ -314,7 +320,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                 </div>
 
                 {/* Filter buttons */}
-                <nav class="mb-12" aria-label={t(lang, 'portfolio.filter')}>
+                <nav class="mb-8" aria-label={t(lang, 'portfolio.filter')}>
                     <ul class="flex list-none flex-wrap gap-3 p-0">
                         <For each={FILTER_OPTIONS}>
                             {(option, index) => (
@@ -340,7 +346,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                 </output>
 
                 <menu
-                    class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-5 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-6 lg:gap-5"
+                    class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-4 transition-all duration-500 sm:grid-cols-2 md:grid-cols-6 md:gap-5"
                     aria-label={t(lang, 'portfolio.list')}
                 >
                     <Show

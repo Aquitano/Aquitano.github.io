@@ -247,7 +247,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     {/* Content */}
                     <div
                         ref={(el) => (contentRef = el)}
-                        class="absolute bottom-0 left-0 z-10 w-full min-w-0 p-7"
+                        class="absolute bottom-0 left-0 z-10 w-full min-w-0 p-7 md:p-8"
                         style={{
                             transform: isHovered() ? 'translateY(0)' : 'translateY(2px)',
                             transition: 'transform 300ms ease-out',
@@ -255,7 +255,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                     >
                         {/* Year label */}
                         <span
-                            class="mb-3 block font-mono text-sm font-semibold tracking-wider uppercase"
+                            class="mb-2 block font-mono text-sm font-semibold tracking-wider uppercase"
                             style={{ color: 'var(--color-accent)' }}
                         >
                             {props.year}
@@ -263,7 +263,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
 
                         {/* Title */}
                         <h2
-                            class="mb-5 text-2xl font-bold md:text-3xl"
+                            class="mb-4 text-2xl font-bold md:text-3xl"
                             style={{
                                 color: '#fafaf9',
                                 'line-height': '1.35',
@@ -276,7 +276,7 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                         </h2>
 
                         {/* Tags */}
-                        <ul class="mb-5 flex list-none flex-wrap gap-2 p-0" aria-label={tagsLabel}>
+                        <ul class="mb-4 flex list-none flex-wrap gap-2 p-0" aria-label={tagsLabel}>
                             <For each={props.tags}>
                                 {(tag) => (
                                     <li
