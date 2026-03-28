@@ -30,6 +30,7 @@ interface Props {
 const { project } = Astro.props;
 const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
 const t = useTranslations(lang);
+const normalizedSlug = project.slug.replace(/^en\//, '');
 const { Content } = await project.render();
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp}');
@@ -78,7 +79,7 @@ if (project.data.fullImage) {
             },
             dateCreated: project.data.year.toString(),
             keywords: [...project.data.tags, ...project.data.tasks].join(', '),
-            url: new URL(`/project/${project.slug}`, Astro.site).toString(),
+            url: new URL(getLocalePath(lang, `/project/${normalizedSlug}`), Astro.site).toString(),
         })}
     />
 

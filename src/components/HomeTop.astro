@@ -222,14 +222,18 @@ const t = useTranslations(lang);
     import { animate, stagger } from 'motion';
     import { animateCliTyping, resetCliTyping } from '../utils/cliAnimations';
 
+    function onScrollTriggerClick(event: Event) {
+        event.preventDefault();
+        scrollToPortfolio();
+    }
+
     function initHeroSection() {
         const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
-        scrollTriggers.forEach((el) =>
-            el.addEventListener('click', (event) => {
-                event.preventDefault();
-                scrollToPortfolio();
-            }),
-        );
+        scrollTriggers.forEach((el) => {
+            if (el.dataset.scrollBound === 'true') return;
+            el.dataset.scrollBound = 'true';
+            el.addEventListener('click', onScrollTriggerClick);
+        });
     }
 
     function scrollToPortfolio() {

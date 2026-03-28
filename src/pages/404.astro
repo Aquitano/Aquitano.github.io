@@ -1,9 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { defaultLang, type Lang, ui } from '../i18n/ui';
+import { defaultLang, languages, type Lang, ui } from '../i18n/ui';
+import { getLocalePath } from '../i18n/utils';
 
-// 404 is always served from root; detect language from referrer or accept-language
-const lang: Lang = defaultLang;
+// 404 is always served from root; detect language from URL path
+const pathLang = Astro.url.pathname.split('/').filter(Boolean)[0];
+const lang: Lang =
+    pathLang && Object.hasOwn(languages, pathLang) ? (pathLang as Lang) : defaultLang;
 const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
 ---
 
@@ -25,7 +28,7 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
             <h1 class="error-code">404</h1>
             <h2 class="error-title">{t('error.title')}</h2>
             <p class="error-message">{t('error.message')}</p>
-            <a href="/" class="btn btn-primary">
+            <a href={getLocalePath(lang, '/')} class="btn btn-primary">
                 <span class="btn-arrow" aria-hidden="true">&larr;</span>
                 {t('error.back')}
             </a>

@@ -169,7 +169,7 @@ const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/
                                 '@type': 'ListItem',
                                 position: 1,
                                 name: 'Home',
-                                item: new URL('/', Astro.site).toString(),
+                                item: new URL(getLocalePath(lang, '/'), Astro.site).toString(),
                             },
                             {
                                 '@type': 'ListItem',

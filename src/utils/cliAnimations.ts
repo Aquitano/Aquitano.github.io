@@ -36,6 +36,13 @@ export function animateCliTyping(selector: string, delay: number = 100, charDela
     const timeouts: ReturnType<typeof setTimeout>[] = [];
     const chars = originalText.split('');
 
+    if (chars.length === 0) {
+        element.dataset.cliAnimating = 'false';
+        element.dataset.cliAnimated = 'true';
+        animationTimeouts.delete(element);
+        return;
+    }
+
     chars.forEach((char, index) => {
         const timeoutId = globalThis.setTimeout(
             () => {

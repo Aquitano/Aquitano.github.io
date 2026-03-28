@@ -1,12 +1,14 @@
 ---
 import type { Lang } from '../i18n/ui';
 export interface Props { lang?: Lang; }
+const { lang = 'de' } = Astro.props;
+const loadingLabel = lang === 'en' ? 'Loading' : 'Laden';
 ---
 
-<div class="loader on" id="loader" role="status" aria-live="polite" aria-label="Loading">
+<div class="loader on" id="loader" role="status" aria-live="polite" aria-label={loadingLabel}>
     <div class="loader-preloader">
         <div class="swiper-lazy-preloader" aria-hidden="true"></div>
-        <span class="visually-hidden">Loading</span>
+        <span class="visually-hidden">{loadingLabel}</span>
     </div>
 </div>
 

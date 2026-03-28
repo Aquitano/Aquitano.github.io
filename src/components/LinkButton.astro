@@ -14,20 +14,29 @@ export interface Props {
 const { text, icon, href, style, target, rel, variant = 'pill' } = Astro.props;
 ---
 
-<a href={href} class="special" target={target} rel={rel} aria-label={text}>
+<a
+    href={href}
+    class:list={[
+        'special',
+        variant === 'icon'
+            ? 'link-btn-icon flex h-10 w-10 items-center justify-center rounded-full transition-transform duration-200 hover:-translate-y-0.5'
+            : 'link-btn-pill flex items-center justify-center rounded-xl px-4 py-2 transition-all duration-300',
+    ]}
+    target={target}
+    rel={rel}
+    aria-label={text}
+>
     {
         variant === 'icon' ? (
-            <button class="link-btn-icon flex h-10 w-10 items-center justify-center rounded-full transition-transform duration-200 hover:-translate-y-0.5">
-                <Icon name={icon} style={style} />
-            </button>
+            <Icon name={icon} style={style} />
         ) : (
-            <button class="link-btn-pill flex items-center justify-center rounded-xl px-4 py-2 transition-all duration-300">
+            <>
                 <div>
                     <Icon name={icon} style={style} />
                 </div>
                 <div class="link-btn-divider mx-3 h-4 border-l" />
                 <div class="link-btn-text">{text}</div>
-            </button>
+            </>
         )
     }
 </a>

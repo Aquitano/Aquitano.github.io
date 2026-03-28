@@ -485,7 +485,6 @@ const spokenLanguages = languagesData[lang];
         border: 1px solid var(--bg-card-border);
         border-radius: var(--radius-lg);
         text-align: center;
-        cursor: pointer;
         position: relative;
         overflow: hidden;
         transition:
@@ -505,15 +504,9 @@ const spokenLanguages = languagesData[lang];
         pointer-events: none;
     }
 
-    .core-card:hover,
-    .core-card:focus-visible {
+    .core-card:hover {
         border-color: var(--color-accent);
         transform: translateY(-2px);
-    }
-
-    .core-card:focus-visible {
-        outline: var(--focus-ring-width) solid var(--focus-ring-color);
-        outline-offset: var(--focus-ring-offset);
     }
 
     .core-name {
