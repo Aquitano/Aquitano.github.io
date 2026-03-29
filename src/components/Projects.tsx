@@ -32,7 +32,6 @@ const getFilters = (
 
 type Project = {
     id: string;
-    slug: string;
     body: string;
     collection: 'project';
     data: {
@@ -370,6 +369,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                                 }
 
                                 const langPrefix = lang === 'de' ? '' : `/${lang}`;
+                                const projectSlug = project.id.replace(/^en\//, '').replace(/\.md$/, '');
 
                                 return (
                                     <ProjectCard
@@ -377,7 +377,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                                         name={project.data.name}
                                         year={project.data.year}
                                         isNew={project.data.year === currentYear}
-                                        url={`${langPrefix}/project/${project.slug}`}
+                                        url={`${langPrefix}/project/${projectSlug}`}
                                         tags={project.data.tags}
                                         index={index()}
                                         gridSize={project.data.gridSize}

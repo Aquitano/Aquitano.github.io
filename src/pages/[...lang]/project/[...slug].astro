@@ -1,23 +1,23 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import { defaultLang, type Lang } from '../../../i18n/ui';
 import { useTranslations, getLocalePath } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
     const projects = await getCollection('project');
-    const deProjects = projects.filter((p) => !p.slug.startsWith('en/'));
-    const enProjects = projects.filter((p) => p.slug.startsWith('en/'));
+    const deProjects = projects.filter((p) => !p.id.startsWith('en/'));
+    const enProjects = projects.filter((p) => p.id.startsWith('en/'));
 
     return [
         ...deProjects.map((project) => ({
-            params: { lang: undefined, slug: project.slug },
+            params: { lang: undefined, slug: project.id.replace(/\.md$/, '') },
             props: { project },
         })),
         ...enProjects.map((project) => ({
-            params: { lang: 'en', slug: project.slug.replace(/^en\//, '') },
+            params: { lang: 'en', slug: project.id.replace(/^en\//, '').replace(/\.md$/, '') },
             props: { project },
         })),
     ];
@@ -30,8 +30,8 @@ interface Props {
 const { project } = Astro.props;
 const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
 const t = useTranslations(lang);
-const normalizedSlug = project.slug.replace(/^en\//, '');
-const { Content } = await project.render();
+const normalizedSlug = project.id.replace(/^en\//, '').replace(/\.md$/, '');
+const { Content } = await render(project);
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpg,jpeg,png,webp}');
 const imagePath = `/src/assets/images/${project.data.fullImage}`;

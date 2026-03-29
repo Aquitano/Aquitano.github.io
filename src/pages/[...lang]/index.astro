@@ -16,8 +16,8 @@ const t = useTranslations(lang);
 
 const allProjectsRaw = await getCollection('project');
 const allProjects = lang === 'en'
-    ? allProjectsRaw.filter((p) => p.slug.startsWith('en/')).map((p) => ({ ...p, slug: p.slug.replace(/^en\//, '') }))
-    : allProjectsRaw.filter((p) => !p.slug.startsWith('en/'));
+    ? allProjectsRaw.filter((p) => p.id.startsWith('en/')).map((p) => ({ ...p, id: p.id.replace(/^en\//, '') }))
+    : allProjectsRaw.filter((p) => !p.id.startsWith('en/'));
 export type product = CollectionEntry<'project'>;
 ---
 
