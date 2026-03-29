@@ -8,6 +8,8 @@
         "build": "astro build",
         "preview": "astro preview",
         "astro": "astro",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "format": "prettier --write ./**/*.{astro,js,jsx,ts,tsx,md,mdx,css,scss,sass,less,html,json,graphql,yaml,yml,mdx}"
     },
     "dependencies": {
@@ -39,9 +41,14 @@
         "tailwindcss": "^4.1.18"
     },
     "devDependencies": {
+        "@eslint/css": "^1.0.0",
+        "@eslint/js": "^10.0.1",
         "@types/lodash-es": "^4.17.12",
+        "eslint": "^10.1.0",
+        "globals": "^17.4.0",
         "solid-devtools": "^0.34.5",
-        "svgo": "^3.3.2"
+        "svgo": "^3.3.2",
+        "typescript-eslint": "^8.57.2"
     },
     "trustedDependencies": [
         "@parcel/watcher",

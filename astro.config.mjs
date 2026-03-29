@@ -7,8 +7,6 @@ import icon from 'astro-icon';
 import { astroImageTools } from 'astro-imagetools';
 import { defineConfig } from 'astro/config';
 
-import devtools from 'solid-devtools/vite';
-
 // const dev = process.env.NODE_ENV !== 'production';
 
 export default defineConfig({

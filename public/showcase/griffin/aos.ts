@@ -167,7 +167,7 @@ const handleScroll = (elements: any[]): void => {
 };
 
 const getInlineOption = (element: HTMLElement, attrName: string, defaultValue?: any): boolean | string => {
-    let attrValue = element.getAttribute(`data-aos-${attrName}`);
+    const attrValue = element.getAttribute(`data-aos-${attrName}`);
     if (attrValue !== null) {
         if (attrValue === 'true') return true;
         if (attrValue === 'false') return false;

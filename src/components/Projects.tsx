@@ -135,7 +135,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
     let cliHeader: HTMLDivElement | undefined;
     let preHeader: HTMLParagraphElement | undefined;
     let header: HTMLHeadingElement | undefined;
-    let filterButtons: HTMLButtonElement[] = [];
+    const filterButtons: HTMLButtonElement[] = [];
 
     const useHeaderVisibilityObserver = createVisibilityObserver(
         { threshold: 0.2 },
