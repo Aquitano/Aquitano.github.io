@@ -10,7 +10,7 @@ export const collections = {
             name: z.string(),
             description: z.string(),
             featured: z.boolean(),
-            tags: z.array(z.string().default('Project')),
+            tags: z.array(z.string()),
             tasks: z.array(z.string()),
             fullImage: z.string().optional(),
             year: z.number(),

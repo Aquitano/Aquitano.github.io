@@ -6,14 +6,12 @@ import { useTranslations, getLocalePath, getAlternateLang } from '../i18n/utils'
 
 export interface Props {
     active?: ActivePage;
-    location?: string;
     lang?: Lang;
 }
 
 const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
 const t = useTranslations(lang);
 const altLang = getAlternateLang(lang);
-const { location = getLocalePath(lang, '/') } = Astro.props;
 
 const navKeys: { key: ActivePage; href: string }[] = [
     { key: 'home', href: getLocalePath(lang, '/') },
@@ -122,7 +120,7 @@ const menus = navKeys.map((item) => ({
 <button
     id="nav-close"
     type="button"
-    class="close focus-visible:ring-accent fixed top-8 right-4 z-60 flex hidden -translate-y-4 cursor-pointer items-center justify-center rounded-full opacity-0 transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 md:top-10 md:right-10"
+    class="close focus-visible:ring-accent fixed top-8 right-4 z-60 hidden -translate-y-4 cursor-pointer items-center justify-center rounded-full opacity-0 transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 md:top-10 md:right-10"
     aria-label={t('nav.closeMenu')}
     tabindex="-1"
 >
@@ -460,6 +458,7 @@ const menus = navKeys.map((item) => ({
     }
 
     .close.show {
+        display: flex;
         opacity: 1;
         transform: translateY(0);
     }

@@ -52,10 +52,9 @@ export interface Props {
         };
     };
     active: ActivePage;
-    location?: string;
 }
 
-const { title, SEO: SEOData, active, location } = Astro.props;
+const { title, SEO: SEOData, active } = Astro.props;
 const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
 const t = useTranslations(lang);
 const altLang = getAlternateLang(lang);
@@ -215,7 +214,7 @@ const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/
         <a href="#main-content" class="skip-link"> {t('general.skipToContent')} </a>
 
         <Loader lang={lang} />
-        <Header active={active} location={location} lang={lang} />
+        <Header active={active} lang={lang} />
         <ScrollToTop lang={lang} />
 
         <main id="main-content" tabindex="-1">

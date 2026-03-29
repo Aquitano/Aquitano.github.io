@@ -32,7 +32,7 @@ const getFilters = (
 
 type Project = {
     id: string;
-    body: string;
+    body?: string;
     collection: 'project';
     data: {
         featured: boolean;
