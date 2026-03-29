@@ -1,8 +1,8 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, type Easing } from 'motion';
 import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { defaultLang, ui, type Lang } from '../i18n/ui';
 import { getMotionPreference, getReducedMotionMQL } from '../utils/cliAnimations';
-import { ui, defaultLang, type Lang } from '../i18n/ui';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 
@@ -316,16 +316,6 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
                             </span>
                         </div>
                     </div>
-
-                    {/* Bottom line decoration */}
-                    <div
-                        class="pointer-events-none absolute right-0 bottom-0 left-0 h-px"
-                        style={{
-                            background:
-                                'repeating-linear-gradient(90deg, rgba(224, 122, 58, 0.3) 0, rgba(224, 122, 58, 0.3) 8px, transparent 8px, transparent 16px)',
-                        }}
-                        aria-hidden="true"
-                    />
                 </a>
             </div>
         </article>

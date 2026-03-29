@@ -1,5 +1,20 @@
-// Store timeout IDs for each element to allow cleanup
-const animationTimeouts = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>[]>();
+let animationTimeouts = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>[]>();
+
+/**
+ * Aborts all running CLI typing animations
+ * Useful when navigating away to prevent timeout leaks
+ */
+export function abortAllCliAnimations(): void {
+    animationTimeouts = new WeakMap<HTMLElement, ReturnType<typeof setTimeout>[]>();
+
+    if (typeof document !== 'undefined') {
+        const allCli = document.querySelectorAll<HTMLElement>('[data-cli-animating="true"], [data-cli-animated="true"]');
+        allCli.forEach(element => {
+            delete element.dataset.cliAnimating;
+            delete element.dataset.cliAnimated;
+        });
+    }
+}
 
 /**
  * Animates a CLI command with a typing effect
@@ -113,4 +128,56 @@ export const getReducedMotionMQL = (): MediaQueryList | null => {
 export const getMotionPreference = (): boolean => {
     const mql = getReducedMotionMQL();
     return mql ? !mql.matches : true;
+};
+
+/**
+ * Gets adaptive animation duration based on device performance and user preferences
+ * Respects reduced-motion preference and adjusts for device capabilities
+ * @param baseDuration - Base duration in seconds
+ * @returns Adjusted duration in seconds
+ */
+export const getAdaptiveDuration = (baseDuration: number): number => {
+    if (!getMotionPreference()) return 0;
+
+    if (typeof navigator === 'undefined' || typeof window === 'undefined') {
+        return baseDuration;
+    }
+
+    let multiplier = 1;
+    const nav = navigator as Navigator & {
+        deviceMemory?: number;
+        connection?: {
+            saveData?: boolean;
+            effectiveType?: string;
+        };
+    };
+
+    if ('deviceMemory' in navigator && typeof nav.deviceMemory === 'number') {
+        if ('deviceMemory' in navigator) {
+            if (nav?.deviceMemory < 4) multiplier *= 0.7;
+        }
+
+        if ('hardwareConcurrency' in navigator) {
+            const cores = navigator.hardwareConcurrency;
+            if (cores < 4) multiplier *= 0.8;
+        }
+    }
+
+    if ('connection' in navigator && typeof nav.connection === 'object') {
+        const conn = nav.connection;
+        if (conn?.saveData) multiplier *= 0.6;
+        if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
+            multiplier *= 0.5;
+        }
+    }
+
+    return baseDuration * multiplier;
+};
+
+/**
+ * Checks if the device is likely a mobile device
+ */
+export const isMobileDevice = (): boolean => {
+    if (typeof navigator === 'undefined') return false;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 };

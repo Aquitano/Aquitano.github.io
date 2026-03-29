@@ -1,6 +1,8 @@
 ---
 import type { Lang } from '../i18n/ui';
-export interface Props { lang?: Lang; }
+export interface Props {
+    lang?: Lang;
+}
 const { lang = 'de' } = Astro.props;
 const loadingLabel = lang === 'en' ? 'Loading' : 'Laden';
 ---
@@ -236,18 +238,41 @@ const loadingLabel = lang === 'en' ? 'Loading' : 'Laden';
 </style>
 
 <script>
-    const $: (selector: string) => Element | null = (selector: string) => {
-        document.querySelector(selector);
-        return document.querySelector(selector);
+    const $: (selector: string) => HTMLElement | null = (selector: string) => {
+        return document.querySelector<HTMLElement>(selector);
     };
 
-    function loader() {
+    function closeLoader() {
         const element = $('#loader');
-        element?.classList.remove('on');
-        element?.classList.add('fully-closed');
+        if (!element) return;
+        element.classList.remove('on');
+        element.classList.add('fully-closed');
     }
 
-    window.addEventListener('load', loader);
+    function initLoader() {
+        const hasLoadedBefore = sessionStorage.getItem('site-loaded');
+        const loader = $('#loader');
+        
+        if (hasLoadedBefore) {
+            if (loader) {
+                loader.classList.remove('on');
+                loader.classList.add('fully-closed');
+                loader.style.display = 'none';
+            }
+        } else {
+            sessionStorage.setItem('site-loaded', 'true');
+            window.addEventListener('load', closeLoader);
+        }
+    }
 
-    document.addEventListener('astro:after-swap', loader);
+    initLoader();
+
+    document.addEventListener('astro:after-swap', () => {
+        const loader = $('#loader');
+        if (loader) {
+            loader.classList.remove('on');
+            loader.classList.add('fully-closed');
+            loader.style.display = 'none';
+        }
+    });
 </script>

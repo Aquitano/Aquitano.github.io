@@ -220,7 +220,7 @@ const t = useTranslations(lang);
 
 <script>
     import { animate, stagger } from 'motion';
-    import { animateCliTyping, resetCliTyping } from '../utils/cliAnimations';
+    import { animateCliTyping, abortAllCliAnimations } from '../utils/cliAnimations';
 
     function onScrollTriggerClick(event: Event) {
         event.preventDefault();
@@ -313,7 +313,7 @@ const t = useTranslations(lang);
                     opacity: [0, 1],
                     y: [16, 0],
                 },
-                { at: Math.max(0, lastLetterEndAt - 0.35), duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+                { at: Math.max(0, lastLetterEndAt - 0.25), duration: 1, ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.links',
@@ -321,7 +321,7 @@ const t = useTranslations(lang);
                     opacity: [0, 1],
                     y: [12, 0],
                 },
-                { at: Math.max(0, lastLetterEndAt - 0.15), duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+                { at: Math.max(0, lastLetterEndAt), duration: 0.65, ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.animate',
@@ -329,7 +329,7 @@ const t = useTranslations(lang);
                     opacity: [0, 1],
                     y: [12, 0],
                 },
-                { at: lastLetterEndAt, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                { at: lastLetterEndAt + 0.25, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
             ],
         ];
 
@@ -356,6 +356,6 @@ const t = useTranslations(lang);
     document.addEventListener('astro:before-swap', () => {
         heroAnim?.stop();
         heroAnim = null;
-        resetCliTyping('.cli-command');
+        abortAllCliAnimations();
     });
 </script>

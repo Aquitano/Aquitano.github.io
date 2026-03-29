@@ -778,7 +778,9 @@ const spokenLanguages = languagesData[lang];
     function waitForLoader() {
         return new Promise<void>((resolve) => {
             const loader = document.querySelector<HTMLElement>('#loader');
-            if (!loader || !loader.classList.contains('on')) {
+            const hasLoadedBefore = sessionStorage.getItem('site-loaded');
+            
+            if (!loader || !loader.classList.contains('on') || hasLoadedBefore) {
                 resolve();
                 return;
             }
@@ -798,7 +800,7 @@ const spokenLanguages = languagesData[lang];
             loader.addEventListener('transitionend', finish, { once: true });
             observer.observe(loader, { attributes: true, attributeFilter: ['class'] });
 
-            setTimeout(finish, 1200);
+            setTimeout(finish, 600);
         });
     }
 

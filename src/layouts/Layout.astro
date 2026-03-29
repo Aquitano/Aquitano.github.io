@@ -185,6 +185,15 @@ const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/
 
         <ClientRouter />
 
+        <!-- Global animation cleanup on navigation -->
+        <script>
+            import { abortAllCliAnimations } from '../utils/cliAnimations';
+            
+            document.addEventListener('astro:before-swap', () => {
+                abortAllCliAnimations();
+            });
+        </script>
+
         <!-- Theme: prevent FOUC by setting data-theme before paint -->
         <script is:inline>
             (function() {

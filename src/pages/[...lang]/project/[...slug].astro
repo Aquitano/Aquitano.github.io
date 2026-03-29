@@ -348,7 +348,9 @@ if (project.data.fullImage) {
     function waitForLoader() {
         return new Promise<void>((resolve) => {
             const loader = document.querySelector<HTMLElement>('#loader');
-            if (!loader || !loader.classList.contains('on')) {
+            const hasLoadedBefore = sessionStorage.getItem('site-loaded');
+            
+            if (!loader || !loader.classList.contains('on') || hasLoadedBefore) {
                 resolve();
                 return;
             }
@@ -368,7 +370,7 @@ if (project.data.fullImage) {
             loader.addEventListener('transitionend', finish, { once: true });
             observer.observe(loader, { attributes: true, attributeFilter: ['class'] });
 
-            setTimeout(finish, 1200);
+            setTimeout(finish, 600);
         });
     }
 
