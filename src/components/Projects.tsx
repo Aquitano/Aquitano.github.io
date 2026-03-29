@@ -286,25 +286,25 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
 
     return (
         <section
-            class="relative z-3 overflow-hidden pt-14 pb-(--space-section) md:pt-16 lg:pt-20"
+            class="relative z-3 overflow-hidden pt-14 pb-section md:pt-16 lg:pt-20"
             id="portfolio"
             aria-labelledby="portfolio-heading"
         >
-            <div class="mx-auto w-full max-w-7xl px-(--gutter)">
+            <div class="mx-auto w-full max-w-7xl px-gutter">
                 <div class="mb-10 text-left">
                     {/* CLI header */}
                     <div
                         ref={(el) => (cliHeader = el)}
-                        class="mb-4 flex items-center gap-3 font-mono text-(length:--text-sm) text-(--text-secondary)"
+                        class="mb-4 flex items-center gap-3 font-mono text-sm text-text-secondary"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
-                        <span class="font-bold text-(--color-accent)">$</span>
+                        <span class="font-bold text-accent-ui">$</span>
                         <span>cd ~/portfolio && ls</span>
                     </div>
 
                     <p
                         ref={(el) => (preHeader = el)}
-                        class="text-(length:--text-sm) font-semibold tracking-(--tracking-caps) text-(--color-text-tertiary) uppercase"
+                        class="text-sm font-semibold tracking-caps text-text-tertiary uppercase"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.my')}
@@ -312,7 +312,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <h1
                         ref={(el) => (header = el)}
                         id="portfolio-heading"
-                        class="mt-1.5 font-(family-name:--font-display) text-(length:--text-5xl) leading-tight font-extrabold text-(--color-text-primary)"
+                        class="mt-1.5 font-display text-5xl leading-tight font-extrabold text-text-primary"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.projects')}
@@ -352,7 +352,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <Show
                         when={projects().length > 0}
                         fallback={
-                            <div class="col-span-full py-8 text-center text-(--color-text-tertiary)">
+                            <div class="col-span-full py-8 text-center text-text-tertiary">
                                 {t(lang, 'portfolio.notFound')}
                             </div>
                         }

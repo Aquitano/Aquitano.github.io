@@ -41,26 +41,26 @@ const sections: FooterSection[] = [
 ];
 ---
 
-<footer class="relative z-10 mt-(--space-section) w-full">
-    <div class="w-full px-(--gutter) py-12 lg:py-16">
+<footer class="relative z-10 mt-section w-full">
+    <div class="w-full px-gutter py-12 lg:py-16">
         <nav aria-label="Footer Navigation">
             <div class="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:gap-16">
                 {
                     sections.map((section) => (
                         <div>
-                            <p class="text-lg font-bold tracking-tight text-(--text-primary) sm:text-xl md:text-2xl">
+                            <p class="text-lg font-bold tracking-tight text-text-primary sm:text-xl md:text-2xl">
                                 {section.title}
                             </p>
-                            <div class="mt-3 h-0.5 w-full bg-(--border-default)" aria-hidden="true" />
+                            <div class="mt-3 h-0.5 w-full bg-border-default" aria-hidden="true" />
                             <ul class="mt-4 space-y-3" role="list">
                                 {section.items.map((item) => (
                                     <li>
                                         <a
                                             href={item.href}
                                             {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                                            class="group inline-flex items-center gap-1.5 text-(length:--text-base) font-semibold text-(--text-secondary) transition-colors duration-(--duration-fast) hover:text-(--color-accent) sm:text-(length:--text-lg) md:text-(length:--text-xl)"
+                                            class="group inline-flex items-center gap-1.5 text-base font-semibold text-text-secondary transition-colors duration-150 hover:text-accent-ui sm:text-lg md:text-xl"
                                         >
-                                            <span class="bg-linear-to-r from-(--color-accent) to-(--color-accent) bg-size-[0%_2px] bg-bottom-left bg-no-repeat transition-[background-size] duration-(--duration-normal) ease-out group-hover:bg-size-[100%_2px]">
+                                            <span class="bg-linear-to-r from-accent-ui to-accent-ui bg-size-[0%_2px] bg-bottom-left bg-no-repeat transition-[background-size] duration-300 ease-out group-hover:bg-size-[100%_2px]">
                                                 {item.label}
                                             </span>
                                             {item.external && (
@@ -96,23 +96,23 @@ const sections: FooterSection[] = [
 
         <div class="mt-12 grid grid-cols-1 items-end gap-6 pt-8 sm:mt-16 sm:gap-8 sm:pt-10 lg:grid-cols-2">
             <p
-                class="text-(length:--text-2xl) leading-snug font-extrabold tracking-(--tracking-tight) text-(--text-primary) sm:text-(length:--text-3xl) md:text-(length:--text-4xl) lg:text-(length:--text-5xl)"
+                class="text-2xl leading-snug font-extrabold tracking-tight text-text-primary sm:text-3xl md:text-4xl lg:text-5xl"
             >
                 &copy; {year} Thomas Breindl
                 <br class="hidden md:block" />
                 <span
-                    class="block text-(length:--text-lg) font-semibold text-(--text-secondary) sm:text-(length:--text-xl) md:inline md:text-(length:--text-4xl) md:font-extrabold md:text-(--text-primary) lg:text-(length:--text-5xl)"
+                    class="block text-lg font-semibold text-text-secondary sm:text-xl md:inline md:text-4xl md:font-extrabold md:text-text-primary lg:text-5xl"
                 >
                     {t('footer.allRights')}
                 </span>
             </p>
-            <div class="justify-self-start text-(--text-secondary) lg:justify-self-end">
-                <p class="text-(length:--text-xs) font-bold tracking-widest text-(--text-tertiary) uppercase">
+            <div class="justify-self-start text-text-secondary lg:justify-self-end">
+                <p class="text-xs font-bold tracking-widest text-text-tertiary uppercase">
                     {t('footer.localTime')}
                 </p>
                 <time
                     id="local-time"
-                    class="mt-2 block font-mono text-(length:--text-lg) font-semibold tabular-nums sm:text-(length:--text-xl)"
+                    class="mt-2 block font-mono text-lg font-semibold tabular-nums sm:text-xl"
                     aria-live="off"
                     aria-label={t('footer.localTimeLabel')}
                 >

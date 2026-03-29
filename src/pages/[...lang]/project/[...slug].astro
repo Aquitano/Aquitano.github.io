@@ -83,16 +83,16 @@ if (project.data.fullImage) {
         })}
     />
 
-    <div class="project-page pb-(--space-section)">
+    <div class="project-page pb-section">
         <article>
             <div class="project-glow" aria-hidden="true"></div>
 
             <section class="relative pt-14 md:pt-24 lg:pt-32" aria-labelledby="project-title">
-                <div class="mx-auto max-w-6xl px-(--gutter)">
+                <div class="mx-auto max-w-6xl px-gutter">
                     <nav class="hero-animation mb-10 opacity-0" aria-label={t('project.back')}>
                         <a
                             href={`${getLocalePath(lang, '/')}#portfolio`}
-                            class="group/back inline-flex items-center gap-2 font-mono text-xs text-(--text-tertiary) transition-colors duration-200 hover:text-(--color-accent)"
+                            class="group/back inline-flex items-center gap-2 font-mono text-xs text-text-tertiary transition-colors duration-200 hover:text-accent-ui"
                             data-astro-prefetch
                         >
                             <span class="transition-transform duration-200 group-hover/back:-translate-x-1">&larr;</span>
@@ -104,18 +104,18 @@ if (project.data.fullImage) {
                         {
                             project.data.featured && (
                                 <div class="hero-animation mb-6 flex items-center gap-3 opacity-0">
-                                    <span class="font-mono text-(--color-accent)">{'['}</span>
-                                    <span class="font-mono text-xs font-semibold tracking-wider text-(--color-accent) uppercase">
+                                    <span class="font-mono text-accent-ui">{'['}</span>
+                                    <span class="font-mono text-xs font-semibold tracking-wider text-accent-ui uppercase">
                                         {t('project.featured')}
                                     </span>
-                                    <span class="font-mono text-(--color-accent)">{']'}</span>
+                                    <span class="font-mono text-accent-ui">{']'}</span>
                                     <div class="h-px flex-1 bg-linear-to-r from-[rgba(224,122,58,0.3)] to-transparent" />
                                 </div>
                             )
                         }
 
                         <div class="hero-animation mb-8 opacity-0">
-                            <div class="mb-3 font-mono text-sm text-(--text-tertiary)">
+                            <div class="mb-3 font-mono text-sm text-text-tertiary">
                                 {'$ '}cat ./projects/{project.data.name.toLowerCase()}/README.md
                             </div>
                             <h1
@@ -127,8 +127,8 @@ if (project.data.fullImage) {
                         </div>
 
                         <div class="hero-animation flex flex-wrap items-center gap-2.5 pt-4 opacity-0">
-                            <span class="mr-1 hidden font-mono text-xs text-(--text-tertiary) sm:inline">{'$ '}tags --list</span>
-                            <span class="mr-1 hidden font-mono text-xs text-(--text-muted) sm:inline">|</span>
+                            <span class="mr-1 hidden font-mono text-xs text-text-tertiary sm:inline">{'$ '}tags --list</span>
+                            <span class="mr-1 hidden font-mono text-xs text-text-muted sm:inline">|</span>
                             {
                                 project.data.tags.map((tag: string) => (
                                     <span class="chip">
@@ -136,7 +136,7 @@ if (project.data.fullImage) {
                                     </span>
                                 ))
                             }
-                            <span class="rounded-sm bg-(--color-accent-muted) px-3.5 py-1.5 font-mono text-sm font-semibold text-(--color-accent) sm:ml-auto">
+                            <span class="rounded-sm bg-accent-muted-ui px-3.5 py-1.5 font-mono text-sm font-semibold text-accent-ui sm:ml-auto">
                                 {project.data.year}
                             </span>
                         </div>
@@ -146,13 +146,13 @@ if (project.data.fullImage) {
                         <div>
                             <section class="hero-animation mb-8 opacity-0">
                                 <div class="section-heading mb-6">
-                                    <span class="font-mono text-xs text-(--color-accent)">{'>'}</span>
-                                    <span class="font-mono text-xs font-semibold tracking-wider text-(--text-secondary) uppercase">
+                                    <span class="font-mono text-xs text-accent-ui">{'>'}</span>
+                                    <span class="font-mono text-xs font-semibold tracking-wider text-text-secondary uppercase">
                                         {t('project.overview')}
                                     </span>
                                     <div class="section-heading-line"></div>
                                 </div>
-                                <div class="prose text-base leading-relaxed text-(--text-secondary)">
+                                <div class="prose text-base leading-relaxed text-text-secondary">
                                     <Content />
                                 </div>
                             </section>
@@ -161,8 +161,8 @@ if (project.data.fullImage) {
                         <div class="order-first lg:order-last">
                             <section class="hero-animation mb-8 opacity-0">
                                 <div class="section-heading mb-4">
-                                    <span class="font-mono text-xs text-(--color-accent)">{'>'}</span>
-                                    <span class="font-mono text-xs font-semibold tracking-wider text-(--text-secondary) uppercase">
+                                    <span class="font-mono text-xs text-accent-ui">{'>'}</span>
+                                    <span class="font-mono text-xs font-semibold tracking-wider text-text-secondary uppercase">
                                         {t('project.contributions')}
                                     </span>
                                     <div class="section-heading-line"></div>
@@ -200,8 +200,8 @@ if (project.data.fullImage) {
                                 project.data.links && project.data.links.length > 0 && (
                                     <section class="hero-animation mb-8 opacity-0">
                                         <div class="section-heading mb-4">
-                                            <span class="font-mono text-xs text-(--color-accent)">{'>'}</span>
-                                            <span class="font-mono text-xs font-semibold tracking-wider text-(--text-secondary) uppercase">
+                                            <span class="font-mono text-xs text-accent-ui">{'>'}</span>
+                                            <span class="font-mono text-xs font-semibold tracking-wider text-text-secondary uppercase">
                                                 {t('project.links')}
                                             </span>
                                             <div class="section-heading-line" />
@@ -240,7 +240,7 @@ if (project.data.fullImage) {
             {
                 fullImageSrc && (
                     <section class="hero-animation mt-16 opacity-0 md:mt-20" aria-label={t('project.image')}>
-                        <div class="mx-auto max-w-6xl px-(--gutter)">
+                        <div class="mx-auto max-w-6xl px-gutter">
                             <div class="image-frame">
                                 <figure class="m-0">
                                     <Image
@@ -281,7 +281,7 @@ if (project.data.fullImage) {
 
     .project-title {
         font-size: var(--text-5xl);
-        font-weight: var(--font-black);
+        font-weight: 900;
         line-height: var(--leading-none);
         letter-spacing: var(--tracking-tight);
         color: var(--text-primary);
@@ -290,11 +290,11 @@ if (project.data.fullImage) {
     }
 
     .prose :global(p) {
-        margin-bottom: var(--space-5);
+        margin-bottom: 1.25rem;
     }
 
     .prose :global(strong) {
-        font-weight: var(--font-semibold);
+        font-weight: 600;
         color: var(--text-primary);
     }
 

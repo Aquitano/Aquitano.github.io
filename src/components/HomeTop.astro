@@ -16,11 +16,11 @@ const t = useTranslations(lang);
         <div class="text-center">
             <CliHeader command="whoami" class="mb-6 justify-center" />
 
-            <h1 id="hero-title" class="title font-extrabold text-(--color-text-primary)">
+            <h1 id="hero-title" class="title font-extrabold text-text-primary">
                 <span class="word">Thomas</span>
                 <span class="word">Breindl</span>
             </h1>
-            <p class="hero-subtitle text-(--color-text-secondary)">
+            <p class="hero-subtitle text-text-secondary">
                 {t('hero.subtitle')}
             </p>
             <nav class="links" aria-label={t('hero.mainLinks')}>
@@ -75,7 +75,7 @@ const t = useTranslations(lang);
     .hero-subtitle {
         font-size: var(--text-2xl);
         font-family: var(--font-body);
-        margin-bottom: var(--space-4);
+        margin-bottom: 1rem;
         max-width: 34ch;
         margin-left: auto;
         margin-right: auto;
@@ -84,7 +84,7 @@ const t = useTranslations(lang);
     }
 
     .link {
-        font-weight: var(--font-extrabold);
+        font-weight: 800;
         letter-spacing: normal;
         text-transform: uppercase;
         font-size: var(--text-lg);
@@ -117,13 +117,13 @@ const t = useTranslations(lang);
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: var(--space-5);
-        margin-top: var(--space-2);
+        gap: 1.25rem;
+        margin-top: 0.5rem;
         flex-direction: column;
     }
 
     .links-sep {
-        font-weight: var(--font-bold);
+        font-weight: 700;
         letter-spacing: var(--tracking-wide);
         color: var(--color-text-tertiary);
         text-transform: uppercase;
@@ -146,7 +146,7 @@ const t = useTranslations(lang);
         align-items: center;
         justify-content: center;
         outline: none;
-        margin-top: var(--space-8);
+        margin-top: 2rem;
     }
 
     .scroll-trigger:focus-visible .scroll-to-icon {

@@ -60,38 +60,38 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
         font-size: var(--text-sm);
         color: var(--color-accent);
         letter-spacing: var(--tracking-wide);
-        margin-bottom: var(--space-4);
+        margin-bottom: 1rem;
     }
 
     .error-code {
         font-family: var(--font-display);
         font-size: clamp(6rem, 20vw, 12rem);
-        font-weight: var(--font-black);
+        font-weight: 900;
         line-height: var(--leading-none);
         color: var(--text-primary);
         letter-spacing: var(--tracking-tight);
-        margin-bottom: var(--space-4);
+        margin-bottom: 1rem;
     }
 
     .error-title {
         font-family: var(--font-heading);
         font-size: var(--text-2xl);
-        font-weight: var(--font-bold);
+        font-weight: 700;
         color: var(--text-primary);
-        margin-bottom: var(--space-4);
+        margin-bottom: 1rem;
     }
 
     .error-message {
         font-size: var(--text-lg);
         color: var(--text-secondary);
-        margin-bottom: var(--space-8);
+        margin-bottom: 2rem;
         line-height: var(--leading-relaxed);
     }
 
     .btn {
         display: inline-flex;
         align-items: center;
-        gap: var(--space-2);
+        gap: 0.5rem;
     }
 
     .btn-arrow {
@@ -115,12 +115,12 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
     }
 
     .ascii-deco-left {
-        bottom: var(--space-8);
+        bottom: 2rem;
         left: var(--gutter);
     }
 
     .ascii-deco-right {
-        bottom: var(--space-8);
+        bottom: 2rem;
         right: var(--gutter);
     }
 
