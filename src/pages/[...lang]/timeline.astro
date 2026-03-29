@@ -231,6 +231,8 @@ const spokenLanguages = languagesData[lang];
 </Layout>
 
 <style>
+    @reference "../../styles/global.css";
+
     .timeline-page {
         padding-top: 3rem;
         padding-bottom: var(--space-section);
@@ -251,26 +253,23 @@ const spokenLanguages = languagesData[lang];
 
     .hero-tag {
         display: block;
-        font-family: var(--font-mono);
-        font-size: var(--text-base);
+        @apply font-mono text-base tracking-wide;
         color: var(--color-accent);
-        letter-spacing: var(--tracking-wide);
         margin-bottom: 1rem;
     }
 
     .hero h1 {
-        font-size: var(--text-6xl);
+        @apply text-6xl tracking-tight;
         font-weight: 900;
-        letter-spacing: var(--tracking-tight);
-        line-height: var(--leading-none);
+        line-height: 1;
         margin-bottom: 1rem;
-        color: var(--text-primary);
+        @apply text-text-primary;
     }
 
     .hero-sub {
-        font-family: var(--font-mono);
-        font-size: var(--text-lg);
-        color: var(--text-secondary);
+        @apply font-mono;
+        @apply text-lg;
+        @apply text-text-secondary;
     }
 
     .hero-pattern {
@@ -358,7 +357,7 @@ const spokenLanguages = languagesData[lang];
     .marker-dot {
         width: 12px;
         height: 12px;
-        border-radius: var(--radius-full);
+        border-radius: 9999px;
         background: var(--bg-primary);
         border: 2px solid var(--color-accent);
         transition:
@@ -377,7 +376,7 @@ const spokenLanguages = languagesData[lang];
     .exp-content {
         background: var(--bg-card);
         border: 1px solid var(--bg-card-border);
-        border-radius: var(--radius-lg);
+        border-radius: 0.5rem;
         padding: 1.5rem;
         position: relative;
         overflow: hidden;
@@ -392,8 +391,8 @@ const spokenLanguages = languagesData[lang];
         position: absolute;
         top: 0;
         right: 0;
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono;
+        @apply text-xs;
         color: rgba(255, 255, 255, 0.15);
         letter-spacing: -0.05em;
         padding: 0.5rem 0.75rem;
@@ -413,24 +412,21 @@ const spokenLanguages = languagesData[lang];
 
     .exp-period {
         display: block;
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-wider;
         color: var(--color-accent);
-        letter-spacing: var(--tracking-wider);
         text-transform: uppercase;
         margin-bottom: 0.5rem;
     }
 
     .exp-role {
-        font-size: var(--text-xl);
+        @apply text-xl leading-snug;
+        @apply text-text-inverse;
         font-weight: 700;
-        color: var(--text-inverse);
         margin-bottom: 0.25rem;
-        line-height: var(--leading-snug);
     }
 
     .exp-company {
-        font-size: var(--text-sm);
+        @apply text-sm;
         color: rgba(255, 255, 255, 0.6);
     }
 
@@ -443,14 +439,13 @@ const spokenLanguages = languagesData[lang];
     .exp-highlights li {
         display: flex;
         gap: 0.75rem;
-        font-size: var(--text-sm);
+        @apply text-sm leading-relaxed;
         color: rgba(255, 255, 255, 0.7);
-        line-height: var(--leading-relaxed);
     }
 
     .highlight-arrow {
         flex-shrink: 0;
-        font-family: var(--font-mono);
+        @apply font-mono;
         color: var(--color-accent);
     }
 
@@ -465,10 +460,9 @@ const spokenLanguages = languagesData[lang];
     }
 
     .skills-header h2 {
-        font-size: var(--text-4xl);
+        @apply text-4xl tracking-tight;
         font-weight: 900;
-        letter-spacing: var(--tracking-tight);
-        color: var(--text-primary);
+        @apply text-text-primary;
     }
 
     .core-stack {
@@ -483,7 +477,7 @@ const spokenLanguages = languagesData[lang];
         padding: 1.5rem 0.5rem;
         background: var(--bg-card);
         border: 1px solid var(--bg-card-border);
-        border-radius: var(--radius-lg);
+        border-radius: 0.5rem;
         text-align: center;
         position: relative;
         overflow: hidden;
@@ -497,10 +491,8 @@ const spokenLanguages = languagesData[lang];
         position: absolute;
         top: 0.5rem;
         left: 0.75rem;
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-widest;
         color: rgba(255, 255, 255, 0.15);
-        letter-spacing: 0.1em;
         pointer-events: none;
     }
 
@@ -511,19 +503,17 @@ const spokenLanguages = languagesData[lang];
 
     .core-name {
         display: block;
-        font-family: var(--font-heading);
-        font-size: var(--text-2xl);
+        @apply font-heading;
+        @apply text-2xl;
         font-weight: 700;
         color: var(--color-accent);
         margin-bottom: 0.5rem;
     }
 
     .core-years {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-wider;
         color: rgba(255, 255, 255, 0.6);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-wider);
     }
 
     .skill-grid {
@@ -536,7 +526,7 @@ const spokenLanguages = languagesData[lang];
     .skill-card {
         background: var(--bg-card);
         border: 1px solid var(--bg-card-border);
-        border-radius: var(--radius-lg);
+        border-radius: 0.5rem;
         padding: 1.5rem;
         position: relative;
         transition: border-color var(--duration-fast) var(--ease-out);
@@ -547,10 +537,8 @@ const spokenLanguages = languagesData[lang];
         position: absolute;
         top: 0.5rem;
         right: 0.75rem;
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-wider;
         color: rgba(255, 255, 255, 0.15);
-        letter-spacing: 0.05em;
         pointer-events: none;
     }
 
@@ -559,12 +547,10 @@ const spokenLanguages = languagesData[lang];
     }
 
     .skill-title {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-caps;
         font-weight: 500;
         color: var(--color-accent);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-caps);
         margin-bottom: 1rem;
     }
 
@@ -576,12 +562,12 @@ const spokenLanguages = languagesData[lang];
 
     .skill-tag {
         padding: 0.25rem 0.75rem;
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono;
+        @apply text-xs;
         color: rgba(255, 255, 255, 0.8);
         background: transparent;
         border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: var(--radius-sm);
+        border-radius: 0.125rem;
         transition:
             border-color var(--duration-fast) var(--ease-out),
             color var(--duration-fast) var(--ease-out),
@@ -591,7 +577,7 @@ const spokenLanguages = languagesData[lang];
 
     .skill-tag:hover {
         border-color: var(--color-accent);
-        color: var(--text-inverse);
+        @apply text-text-inverse;
         background: rgba(224, 122, 58, 0.08);
         transform: translate3d(0, -1px, 0);
     }
@@ -602,12 +588,10 @@ const spokenLanguages = languagesData[lang];
     }
 
     .lang-title {
-        font-family: var(--font-mono);
-        font-size: var(--text-lg);
+        @apply font-mono text-lg tracking-caps;
         font-weight: 500;
         color: var(--color-accent);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-caps);
         margin-bottom: 1rem;
     }
 
@@ -618,8 +602,8 @@ const spokenLanguages = languagesData[lang];
     }
 
     .lang-item {
-        font-size: var(--text-sm);
-        color: var(--text-secondary);
+        @apply text-sm;
+        @apply text-text-secondary;
     }
 
     @media (prefers-reduced-motion: reduce) {

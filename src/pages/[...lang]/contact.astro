@@ -262,6 +262,8 @@ const t = useTranslations(lang);
 </script>
 
 <style>
+    @reference "../../styles/global.css";
+
     .contact-page {
         min-height: 100vh;
         display: flex;
@@ -276,23 +278,21 @@ const t = useTranslations(lang);
     }
 
     .contact-header h1 {
-        font-family: var(--font-display);
-        font-size: var(--text-5xl);
+        @apply font-display text-5xl tracking-tight;
         font-weight: 900;
-        color: var(--text-primary);
-        letter-spacing: var(--tracking-tight);
+        @apply text-text-primary;
         margin-bottom: 1rem;
     }
 
     .contact-subtitle {
-        font-size: var(--text-lg);
-        color: var(--text-secondary);
+        @apply text-lg;
+        @apply text-text-secondary;
     }
 
     .contact-card {
         background: var(--bg-card);
         border: 1px solid var(--bg-card-border);
-        border-radius: var(--radius-xl);
+        border-radius: 0.75rem;
         padding: 2rem;
         position: relative;
         overflow: hidden;
@@ -305,21 +305,17 @@ const t = useTranslations(lang);
         position: absolute;
         top: 0.75rem;
         right: 1rem;
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-wider;
         color: rgba(255, 255, 255, 0.15);
-        letter-spacing: 0.05em;
         pointer-events: none;
         user-select: none;
     }
 
     .card-title {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-caps;
         font-weight: 500;
         color: var(--color-accent);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-caps);
     }
 
     .contact-list {
@@ -342,29 +338,27 @@ const t = useTranslations(lang);
         align-items: center;
         justify-content: center;
         background: rgba(224, 122, 58, 0.15);
-        border-radius: var(--radius-md);
+        border-radius: 0.375rem;
         color: var(--color-accent);
     }
 
     .contact-label {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-wider;
         color: rgba(255, 255, 255, 0.6);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-wider);
         margin-bottom: 0.25rem;
     }
 
     .contact-value {
-        font-size: var(--text-base);
+        @apply text-base;
+        @apply text-text-inverse;
         font-weight: 600;
-        color: var(--text-inverse);
     }
 
     .contact-link {
-        font-size: var(--text-base);
+        @apply text-base;
+        @apply text-text-inverse;
         font-weight: 600;
-        color: var(--text-inverse);
         text-decoration: underline;
         text-decoration-color: rgba(255, 255, 255, 0.3);
         text-underline-offset: 2px;
@@ -385,12 +379,10 @@ const t = useTranslations(lang);
     }
 
     .form-label {
-        font-family: var(--font-mono);
-        font-size: var(--text-xs);
+        @apply font-mono text-xs tracking-wider;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.7);
         text-transform: uppercase;
-        letter-spacing: var(--tracking-wider);
     }
 
     .required {
@@ -400,12 +392,12 @@ const t = useTranslations(lang);
     .form-input {
         width: 100%;
         padding: 0.75rem 1rem;
-        font-size: var(--text-base);
+        @apply text-base;
+        @apply text-text-inverse;
         font-weight: 500;
-        color: var(--text-inverse);
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: var(--radius-md);
+        border-radius: 0.375rem;
         transition: border-color var(--duration-fast) var(--ease-out);
     }
 
@@ -428,14 +420,14 @@ const t = useTranslations(lang);
     }
 
     .form-hint {
-        font-size: var(--text-xs);
+        @apply text-xs;
         color: rgba(255, 255, 255, 0.5);
     }
 
     .form-message {
         padding: 1rem;
-        border-radius: var(--radius-md);
-        font-size: var(--text-sm);
+        border-radius: 0.375rem;
+        @apply text-sm;
     }
 
     .form-error {
@@ -457,7 +449,7 @@ const t = useTranslations(lang);
     }
 
     .btn-arrow {
-        font-family: var(--font-mono);
+        @apply font-mono;
         transition: transform var(--duration-fast) var(--ease-out);
     }
 

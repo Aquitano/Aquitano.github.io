@@ -88,14 +88,15 @@ if (project.data.fullImage) {
             <div class="project-glow" aria-hidden="true"></div>
 
             <section class="relative pt-14 md:pt-24 lg:pt-32" aria-labelledby="project-title">
-                <div class="mx-auto max-w-6xl px-gutter">
+                <div class="px-gutter mx-auto max-w-6xl">
                     <nav class="hero-animation mb-10 opacity-0" aria-label={t('project.back')}>
                         <a
                             href={`${getLocalePath(lang, '/')}#portfolio`}
-                            class="group/back inline-flex items-center gap-2 font-mono text-xs text-text-tertiary transition-colors duration-200 hover:text-accent-ui"
+                            class="group/back text-text-tertiary hover:text-accent-ui inline-flex items-center gap-2 font-mono text-xs transition-colors duration-200"
                             data-astro-prefetch
                         >
-                            <span class="transition-transform duration-200 group-hover/back:-translate-x-1">&larr;</span>
+                            <span class="transition-transform duration-200 group-hover/back:-translate-x-1">&larr;</span
+                            >
                             <span>cd ~/portfolio</span>
                         </a>
                     </nav>
@@ -104,39 +105,34 @@ if (project.data.fullImage) {
                         {
                             project.data.featured && (
                                 <div class="hero-animation mb-6 flex items-center gap-3 opacity-0">
-                                    <span class="font-mono text-accent-ui">{'['}</span>
-                                    <span class="font-mono text-xs font-semibold tracking-wider text-accent-ui uppercase">
+                                    <span class="text-accent-ui font-mono">{'['}</span>
+                                    <span class="text-accent-ui font-mono text-xs font-semibold tracking-wider uppercase">
                                         {t('project.featured')}
                                     </span>
-                                    <span class="font-mono text-accent-ui">{']'}</span>
+                                    <span class="text-accent-ui font-mono">{']'}</span>
                                     <div class="h-px flex-1 bg-linear-to-r from-[rgba(224,122,58,0.3)] to-transparent" />
                                 </div>
                             )
                         }
 
                         <div class="hero-animation mb-8 opacity-0">
-                            <div class="mb-3 font-mono text-sm text-text-tertiary">
+                            <div class="text-text-tertiary mb-3 font-mono text-sm">
                                 {'$ '}cat ./projects/{project.data.name.toLowerCase()}/README.md
                             </div>
-                            <h1
-                                id="project-title"
-                                class="project-title font-display"
-                            >
+                            <h1 id="project-title" class="project-title font-display">
                                 {project.data.title}
                             </h1>
                         </div>
 
                         <div class="hero-animation flex flex-wrap items-center gap-2.5 pt-4 opacity-0">
-                            <span class="mr-1 hidden font-mono text-xs text-text-tertiary sm:inline">{'$ '}tags --list</span>
-                            <span class="mr-1 hidden font-mono text-xs text-text-muted sm:inline">|</span>
-                            {
-                                project.data.tags.map((tag: string) => (
-                                    <span class="chip">
-                                        {tag}
-                                    </span>
-                                ))
-                            }
-                            <span class="rounded-sm bg-accent-muted-ui px-3.5 py-1.5 font-mono text-sm font-semibold text-accent-ui sm:ml-auto">
+                            <span class="text-text-tertiary mr-1 hidden font-mono text-xs sm:inline"
+                                >{'$ '}tags --list</span
+                            >
+                            <span class="text-text-muted mr-1 hidden font-mono text-xs sm:inline">|</span>
+                            {project.data.tags.map((tag: string) => <span class="chip">{tag}</span>)}
+                            <span
+                                class="bg-accent-muted-ui text-accent-ui rounded-sm px-3.5 py-1.5 font-mono text-sm font-semibold sm:ml-auto"
+                            >
                                 {project.data.year}
                             </span>
                         </div>
@@ -146,13 +142,15 @@ if (project.data.fullImage) {
                         <div>
                             <section class="hero-animation mb-8 opacity-0">
                                 <div class="section-heading mb-6">
-                                    <span class="font-mono text-xs text-accent-ui">{'>'}</span>
-                                    <span class="font-mono text-xs font-semibold tracking-wider text-text-secondary uppercase">
+                                    <span class="text-accent-ui font-mono text-xs">{'>'}</span>
+                                    <span
+                                        class="text-text-secondary font-mono text-xs font-semibold tracking-wider uppercase"
+                                    >
                                         {t('project.overview')}
                                     </span>
                                     <div class="section-heading-line"></div>
                                 </div>
-                                <div class="prose text-base leading-relaxed text-text-secondary">
+                                <div class="prose text-text-secondary text-base leading-relaxed">
                                     <Content />
                                 </div>
                             </section>
@@ -161,8 +159,10 @@ if (project.data.fullImage) {
                         <div class="order-first lg:order-last">
                             <section class="hero-animation mb-8 opacity-0">
                                 <div class="section-heading mb-4">
-                                    <span class="font-mono text-xs text-accent-ui">{'>'}</span>
-                                    <span class="font-mono text-xs font-semibold tracking-wider text-text-secondary uppercase">
+                                    <span class="text-accent-ui font-mono text-xs">{'>'}</span>
+                                    <span
+                                        class="text-text-secondary font-mono text-xs font-semibold tracking-wider uppercase"
+                                    >
                                         {t('project.contributions')}
                                     </span>
                                     <div class="section-heading-line"></div>
@@ -178,13 +178,11 @@ if (project.data.fullImage) {
                                         {
                                             project.data.tasks.map((task: string, index: number) => (
                                                 <li class="task-item">
-                                                    <span class="task-index">
-                                                        {String(index + 1).padStart(2, '0')}
+                                                    <span class="task-index">{String(index + 1).padStart(2, '0')}</span>
+                                                    <span class="task-arrow" aria-hidden="true">
+                                                        ->
                                                     </span>
-                                                    <span class="task-arrow" aria-hidden="true">-></span>
-                                                    <span class="task-text">
-                                                        {task}
-                                                    </span>
+                                                    <span class="task-text">{task}</span>
                                                 </li>
                                             ))
                                         }
@@ -200,8 +198,8 @@ if (project.data.fullImage) {
                                 project.data.links && project.data.links.length > 0 && (
                                     <section class="hero-animation mb-8 opacity-0">
                                         <div class="section-heading mb-4">
-                                            <span class="font-mono text-xs text-accent-ui">{'>'}</span>
-                                            <span class="font-mono text-xs font-semibold tracking-wider text-text-secondary uppercase">
+                                            <span class="text-accent-ui font-mono text-xs">{'>'}</span>
+                                            <span class="text-text-secondary font-mono text-xs font-semibold tracking-wider uppercase">
                                                 {t('project.links')}
                                             </span>
                                             <div class="section-heading-line" />
@@ -218,12 +216,8 @@ if (project.data.fullImage) {
                                                         <span class="link-card-index">
                                                             {String(index + 1).padStart(2, '0')}
                                                         </span>
-                                                        <span class="link-card-text">
-                                                            {link.text}
-                                                        </span>
-                                                        <span class="link-card-arrow">
-                                                            ->
-                                                        </span>
+                                                        <span class="link-card-text">{link.text}</span>
+                                                        <span class="link-card-arrow">-></span>
                                                     </a>
                                                 ),
                                             )}
@@ -240,7 +234,7 @@ if (project.data.fullImage) {
             {
                 fullImageSrc && (
                     <section class="hero-animation mt-16 opacity-0 md:mt-20" aria-label={t('project.image')}>
-                        <div class="mx-auto max-w-6xl px-gutter">
+                        <div class="px-gutter mx-auto max-w-6xl">
                             <div class="image-frame">
                                 <figure class="m-0">
                                     <Image
@@ -262,6 +256,8 @@ if (project.data.fullImage) {
 </Layout>
 
 <style>
+    @reference "../../../styles/global.css";
+
     .project-page {
         position: relative;
         overflow: hidden;
@@ -280,11 +276,9 @@ if (project.data.fullImage) {
     }
 
     .project-title {
-        font-size: var(--text-5xl);
+        @apply text-5xl leading-none tracking-tight;
         font-weight: 900;
-        line-height: var(--leading-none);
-        letter-spacing: var(--tracking-tight);
-        color: var(--text-primary);
+        @apply text-text-primary;
         overflow-wrap: anywhere;
         text-wrap: balance;
     }
@@ -295,7 +289,7 @@ if (project.data.fullImage) {
 
     .prose :global(strong) {
         font-weight: 600;
-        color: var(--text-primary);
+        @apply text-text-primary;
     }
 
     .hero-animation {
@@ -308,9 +302,16 @@ if (project.data.fullImage) {
     }
 
     @keyframes arrow-bounce {
-        0%, 100% { transform: translate3d(0, 0, 0); }
-        30% { transform: translate3d(-6px, 0, 0); }
-        60% { transform: translate3d(-2px, 0, 0); }
+        0%,
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+        30% {
+            transform: translate3d(-6px, 0, 0);
+        }
+        60% {
+            transform: translate3d(-2px, 0, 0);
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -328,7 +329,10 @@ if (project.data.fullImage) {
         }
 
         @keyframes arrow-bounce {
-            0%, 100% { transform: none; }
+            0%,
+            100% {
+                transform: none;
+            }
         }
     }
 </style>

@@ -44,7 +44,7 @@ const { text, icon, href, style, target, rel, variant = 'pill' } = Astro.props;
 <style lang="scss">
     [data-icon] {
         color: currentColor;
-        font-size: var(--step-0);
+        @apply text-base;
     }
 
     .link-btn-icon {

@@ -39,6 +39,8 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
 </Layout>
 
 <style>
+    @reference "../styles/global.css";
+
     .error-page {
         display: flex;
         align-items: center;
@@ -56,36 +58,32 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
 
     .error-tag {
         display: block;
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
+        @apply font-mono text-sm tracking-wide;
         color: var(--color-accent);
-        letter-spacing: var(--tracking-wide);
         margin-bottom: 1rem;
     }
 
     .error-code {
-        font-family: var(--font-display);
+        @apply font-display tracking-tight;
         font-size: clamp(6rem, 20vw, 12rem);
         font-weight: 900;
-        line-height: var(--leading-none);
-        color: var(--text-primary);
-        letter-spacing: var(--tracking-tight);
+        line-height: 1;
+        @apply text-text-primary;
         margin-bottom: 1rem;
     }
 
     .error-title {
-        font-family: var(--font-heading);
-        font-size: var(--text-2xl);
+        @apply font-heading;
+        @apply text-2xl;
         font-weight: 700;
-        color: var(--text-primary);
+        @apply text-text-primary;
         margin-bottom: 1rem;
     }
 
     .error-message {
-        font-size: var(--text-lg);
-        color: var(--text-secondary);
+        @apply text-lg leading-relaxed;
+        @apply text-text-secondary;
         margin-bottom: 2rem;
-        line-height: var(--leading-relaxed);
     }
 
     .btn {
@@ -95,7 +93,7 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
     }
 
     .btn-arrow {
-        font-family: var(--font-mono);
+        @apply font-mono;
         transition: transform var(--duration-fast) var(--ease-out);
     }
 
@@ -105,10 +103,9 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
 
     .ascii-deco {
         position: absolute;
-        font-family: var(--font-mono);
-        font-size: var(--text-sm);
-        color: var(--text-muted);
-        letter-spacing: 0.1em;
+        @apply font-mono;
+        @apply text-sm tracking-widest;
+        @apply text-text-muted;
         opacity: 0.4;
         pointer-events: none;
         user-select: none;

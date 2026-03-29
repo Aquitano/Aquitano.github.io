@@ -64,20 +64,20 @@ const menus = navKeys.map((item) => ({
                 aria-expanded="false"
                 aria-controls="nav-content"
             >
-            <span
-                class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
-                aria-hidden="true"
-            >
-                {t('nav.menu')}
-            </span>
-            <div class="menu-icon" aria-hidden="true">
-                <div class="menu-lines">
-                    <span class="line line-1"></span>
-                    <span class="line line-2"></span>
-                    <span class="line line-3"></span>
+                <span
+                    class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
+                    aria-hidden="true"
+                >
+                    {t('nav.menu')}
+                </span>
+                <div class="menu-icon" aria-hidden="true">
+                    <div class="menu-lines">
+                        <span class="line line-1"></span>
+                        <span class="line line-2"></span>
+                        <span class="line line-3"></span>
+                    </div>
                 </div>
-            </div>
-        </button>
+            </button>
         </div>
     </div>
 </header>
@@ -139,6 +139,8 @@ const menus = navKeys.map((item) => ({
 </button>
 
 <style lang="scss">
+    @reference "../styles/global.css";
+
     .header-bg {
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
         backdrop-filter: blur(20px);
@@ -378,10 +380,10 @@ const menus = navKeys.map((item) => ({
     }
 
     .close-text {
-        font-size: 0.65rem;
+        @apply text-xs;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        @apply tracking-widest;
         color: rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -390,13 +392,13 @@ const menus = navKeys.map((item) => ({
 
     @media (min-width: 768px) {
         .close-text {
-            font-size: var(--text-xs);
+            @apply text-sm;
         }
     }
 
     .close:hover .close-text {
         color: white;
-        letter-spacing: 0.15em;
+        @apply tracking-caps;
     }
 
     .close-icon {
