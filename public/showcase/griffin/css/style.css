@@ -248,13 +248,13 @@ th {
 }
 @font-face {
     font-family: 'Glyphicons Halflings';
-    src: url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular.html);
+    src: url(../fonts/bootstrap/glyphicons-halflings-regular.html);
     src:
-        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regulard41d.html?#iefix) format('embedded-opentype'),
-        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-2.html) format('woff2'),
-        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-3.html) format('woff'),
-        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-4.html) format('truetype'),
-        url(/showcase/griffin/fonts/bootstrap/glyphicons-halflings-regular-5.html#glyphicons_halflingsregular)
+        url(../fonts/bootstrap/glyphicons-halflings-regulard41d.html?#iefix) format('embedded-opentype'),
+        url(../fonts/bootstrap/glyphicons-halflings-regular-2.html) format('woff2'),
+        url(../fonts/bootstrap/glyphicons-halflings-regular-3.html) format('woff'),
+        url(../fonts/bootstrap/glyphicons-halflings-regular-4.html) format('truetype'),
+        url(../fonts/bootstrap/glyphicons-halflings-regular-5.html#glyphicons_halflingsregular)
             format('svg');
 }
 .glyphicon {
@@ -9536,7 +9536,7 @@ header {
     top: 0;
     left: 0;
     bottom: 0;
-    background: url(/showcase/griffin/images/arrow.png) no-repeat center;
+    background: url(../images/arrow.png) no-repeat center;
 }
 .page-cart .coupon {
     position: relative;

@@ -1,9 +1,8 @@
 ---
-import '@assets/griffin/css/preloader.css';
-import '@assets/griffin/css/slider-pro.css';
-import '@assets/griffin/css/slick.css';
-import '@assets/griffin/css/style.css';
-import '@assets/griffin/css/magnific-popup.css';
+import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo/assets';
+
+const heroImageUrl = getGriffinAsset('images/Callicarpa_acuminata_Woodlanders_2_1_1024x1024@2x.jpg');
+const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
 ---
 
 <!doctype html>
@@ -13,12 +12,13 @@ import '@assets/griffin/css/magnific-popup.css';
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
-        <link rel="shortcut icon" type="image/x-icon" href="/showcase/griffin/favicon.jpg" />
+        <link rel="shortcut icon" type="image/x-icon" href={getGriffinAsset('favicon.jpg')} />
         <meta
             name="keywords"
             content="Brummselbeere, Griffin, GreenGriffin, Griffin Energy, ASG, ASG Passau, GriffinEnergy, Onlineshop, Energy Drink"
         />
         <title>Griffin Energy</title>
+        {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
         <!-- font-awesome CSS -->
         <link
             rel="stylesheet"
@@ -47,7 +47,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="navbar-brand">
                                 <a class="logo" href="index.html">
                                     <img
-                                        src="/showcase/griffin/images/2logo.png"
+                                        src={getGriffinAsset('images/2logo.png')}
                                         alt="Griffin Energy Drink Markenlogo"
                                         style="width: 73%;"
                                         loading="lazy"
@@ -112,7 +112,7 @@ import '@assets/griffin/css/magnific-popup.css';
                     ><!-- logo -->
                     <div class="navbar-brand">
                         <a class="logo" href="index.html"
-                            ><img src="/showcase/griffin/images/2logo.png" alt="Griffin Energy Drink Markenlogo" loading="lazy" />
+                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Drink Markenlogo" loading="lazy" />
                             <!-- logo -->
                         </a>
                         <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
@@ -160,7 +160,7 @@ import '@assets/griffin/css/magnific-popup.css';
                     <div class="sp-slides text-white">
                         <div
                             class="sp-slide section-bg"
-                            style="background-image: url(/showcase/griffin/images/Callicarpa_acuminata_Woodlanders_2_1_1024x1024@2x.jpg);"
+                            style={`background-image: url(${heroImageUrl});`}
                         >
                             <div class="container">
                                 <div style="z-index: 10; position: relative; text-shadow: 2px 2px 50px #000;">
@@ -218,7 +218,7 @@ import '@assets/griffin/css/magnific-popup.css';
                                     data-hide-delay="400"
                                     id="main-slider__img"
                                     ><img
-                                        src="/showcase/griffin/images/untitled2.png"
+                                        src={getGriffinAsset('images/untitled2.png')}
                                         alt="Zwei Dosen Griffin Energy Drink"
                                         loading="lazy"
                                         class="img-responsive"
@@ -238,7 +238,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="features_list">
                                 <div class="features-images">
                                     <img
-                                        src="/showcase/griffin/images/icon-feature2.png"
+                                        src={getGriffinAsset('images/icon-feature2.png')}
                                         alt="Symbol Blitz für Energie"
                                         loading="lazy"
                                     />
@@ -253,7 +253,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="features_list">
                                 <div class="features-images">
                                     <img
-                                        src="/showcase/griffin/images/icon-feature1.png"
+                                        src={getGriffinAsset('images/icon-feature1.png')}
                                         alt="Icon Blatt für Bio-Zutaten"
                                         loading="lazy"
                                     />
@@ -268,7 +268,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="features_list">
                                 <div class="features-images">
                                     <img
-                                        src="/showcase/griffin/images/icon-feature3.png"
+                                        src={getGriffinAsset('images/icon-feature3.png')}
                                         alt="Icon Dose Größe"
                                         loading="lazy"
                                     />
@@ -283,7 +283,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="features_list">
                                 <div class="features-images">
                                     <img
-                                        src="/showcase/griffin/images/icon-feature9.png"
+                                        src={getGriffinAsset('images/icon-feature9.png')}
                                         alt="Icon Recycling-Symbol"
                                         loading="lazy"
                                     />
@@ -302,7 +302,7 @@ import '@assets/griffin/css/magnific-popup.css';
             <!-- ==== Start features-taste -->
             <section
                 class="features skin1 features-taste section-bg clearfix pt-100 pb-100 text-white"
-                style="background-image: url(/showcase/griffin/images/home2_bg2.png)"
+                style={`background-image: url(${homeBackgroundUrl})`}
             >
                 <div class="container">
                     <div class="features-heading">
@@ -313,7 +313,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="features_list pt-50 pb-50">
                                 <div class="features-images">
                                     <img
-                                        src="/showcase/griffin/images/icon-feature5.png"
+                                        src={getGriffinAsset('images/icon-feature5.png')}
                                         alt="Coffein"
                                         loading="lazy"
                                     />
@@ -328,7 +328,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             </div>
                             <div class="features_list pt-50 pb-50" style="margin-top: 60px">
                                 <div class="features-images">
-                                    <img src="/showcase/griffin/images/icon-feature10.png" alt="Icon Baum Nachhaltigkeit" loading="lazy" />
+                                    <img src={getGriffinAsset('images/icon-feature10.png')} alt="Icon Baum Nachhaltigkeit" loading="lazy" />
                                 </div>
                                 <div class="features-description">
                                     <h4>Nachhaltigkeit</h4>
@@ -344,7 +344,7 @@ import '@assets/griffin/css/magnific-popup.css';
                         <div class="col-md-4">
                             <div class="features_list pt-50 pb-50">
                                 <div class="features-images">
-                                    <img src="/showcase/griffin/images/icon-feature2.png" alt="Icon Vitamin Blitz" loading="lazy" />
+                                    <img src={getGriffinAsset('images/icon-feature2.png')} alt="Icon Vitamin Blitz" loading="lazy" />
                                 </div>
                                 <div class="features-description">
                                     <h4>Vitamine und Minerale</h4>
@@ -357,7 +357,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             </div>
                             <div class="features_list pt-50 pb-50">
                                 <div class="features-images">
-                                    <img src="/showcase/griffin/images/icon-feature11.png" alt="Icon Spenden Hand Herz" loading="lazy" />
+                                    <img src={getGriffinAsset('images/icon-feature11.png')} alt="Icon Spenden Hand Herz" loading="lazy" />
                                 </div>
                                 <div class="features-description">
                                     <h4>Spenden</h4>
@@ -386,7 +386,7 @@ import '@assets/griffin/css/magnific-popup.css';
                                             <div class="product-thumbnail">
                                                 <a href="Product"
                                                     ><img
-                                                        src="/showcase/griffin/images/untitled5-min.png"
+                                                        src={getGriffinAsset('images/untitled5-min.png')}
                                                         alt="Griffin Energy"
                                                         loading="lazy"
                                                         class="product-featured-image"
@@ -422,7 +422,7 @@ import '@assets/griffin/css/magnific-popup.css';
                                             <div class="product-thumbnail">
                                                 <a href="Product2.html" title=""
                                                     ><img
-                                                        src="/showcase/griffin/images/untitled5b-min.png"
+                                                        src={getGriffinAsset('images/untitled5b-min.png')}
                                                         alt=""
                                                         loading="lazy"
                                                         class="product-featured-image"
@@ -510,7 +510,7 @@ import '@assets/griffin/css/magnific-popup.css';
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                            <img src="/showcase/griffin/images/logo.png" alt="Griffin Energy Wortmarke" loading="lazy" />
+                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" loading="lazy" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke.<br />
                             </p>
@@ -546,17 +546,9 @@ import '@assets/griffin/css/magnific-popup.css';
             <div class="preloader"><span></span><span></span><span></span><span></span></div>
         </div>
         <!-- ====End Preloader -->
-        <script src="/showcase/griffin/js/jquery.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/bootstrap.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/slick.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery-ui.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/fastclick.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/timber.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.waypoints.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.counterup.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/custom.js" defer is:inline></script>
+        {
+            griffinPageScripts.map((scriptUrl) => <script src={scriptUrl} defer is:inline></script>)
+        }
         <script defer is:inline>
             const setMainSlider = () => {
                 const mainSliderImg = document.getElementById('main-slider__img');
