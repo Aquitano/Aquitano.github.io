@@ -107,16 +107,6 @@ export function resetCliTyping(selector: string): void {
     }
 }
 
-/**
- * Detects Safari browser (including iOS Safari).
- * Used to avoid CSS filter animations that Safari composites poorly.
- */
-export const isSafari = (): boolean => {
-    if (typeof navigator === 'undefined') return false;
-    const ua = navigator.userAgent;
-    return /safari/i.test(ua) && !/chrome|chromium|edg|opera|opr/i.test(ua);
-};
-
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 export const getReducedMotionMQL = (): MediaQueryList | null => {
     if (typeof globalThis.matchMedia !== 'function') {
@@ -128,50 +118,6 @@ export const getReducedMotionMQL = (): MediaQueryList | null => {
 export const getMotionPreference = (): boolean => {
     const mql = getReducedMotionMQL();
     return mql ? !mql.matches : true;
-};
-
-/**
- * Gets adaptive animation duration based on device performance and user preferences
- * Respects reduced-motion preference and adjusts for device capabilities
- * @param baseDuration - Base duration in seconds
- * @returns Adjusted duration in seconds
- */
-export const getAdaptiveDuration = (baseDuration: number): number => {
-    if (!getMotionPreference()) return 0;
-
-    if (typeof navigator === 'undefined' || typeof window === 'undefined') {
-        return baseDuration;
-    }
-
-    let multiplier = 1;
-    const nav = navigator as Navigator & {
-        deviceMemory?: number;
-        connection?: {
-            saveData?: boolean;
-            effectiveType?: string;
-        };
-    };
-
-    if ('deviceMemory' in navigator && typeof nav.deviceMemory === 'number') {
-        if ('deviceMemory' in navigator) {
-            if (nav?.deviceMemory < 4) multiplier *= 0.7;
-        }
-
-        if ('hardwareConcurrency' in navigator) {
-            const cores = navigator.hardwareConcurrency;
-            if (cores < 4) multiplier *= 0.8;
-        }
-    }
-
-    if ('connection' in navigator && typeof nav.connection === 'object') {
-        const conn = nav.connection;
-        if (conn?.saveData) multiplier *= 0.6;
-        if (conn?.effectiveType === 'slow-2g' || conn?.effectiveType === '2g') {
-            multiplier *= 0.5;
-        }
-    }
-
-    return baseDuration * multiplier;
 };
 
 /**

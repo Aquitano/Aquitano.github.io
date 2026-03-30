@@ -20,7 +20,7 @@ export interface ProjectCardProps {
     lang?: string;
 }
 
-export const GRID_SIZE_CLASSES: Record<GridSize, string> = {
+const GRID_SIZE_CLASSES: Record<GridSize, string> = {
     small: 'md:col-span-2 h-[340px]',
     medium: 'md:col-span-2 h-[380px]',
     large: 'md:col-span-2 h-[420px]',
