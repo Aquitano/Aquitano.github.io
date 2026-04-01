@@ -1,9 +1,5 @@
 ---
-import '@assets/griffin/css/preloader.css';
-import '@assets/griffin/css/slider-pro.css';
-import '@assets/griffin/css/slick.css';
-import '@assets/griffin/css/style.css';
-import '@assets/griffin/css/magnific-popup.css';
+import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo/assets';
 ---
 
 <!doctype html>
@@ -13,13 +9,14 @@ import '@assets/griffin/css/magnific-popup.css';
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
-        <link rel="shortcut icon" type="image/x-icon" href="/showcase/griffin/favicon.jpg" />
+        <link rel="shortcut icon" type="image/x-icon" href={getGriffinAsset('favicon.jpg')} />
 
         <meta
             name="keywords"
             content="Brummselbeere, Griffin, GreenGriffin, Griffin Energy, ASG, ASG Passau, GriffinEnergy, Onlineshop, Energy Drink"
         />
         <title>Unser Produkt - Griffin Energy</title>
+        {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
         <!-- font-awesome CSS -->
         <link
             rel="stylesheet"
@@ -48,7 +45,7 @@ import '@assets/griffin/css/magnific-popup.css';
                             <div class="navbar-brand">
                                 <a class="logo" href="../">
                                     <img
-                                        src="/showcase/griffin/images/2logo.png"
+                                        src={getGriffinAsset('images/2logo.png')}
                                         alt="Griffin Energy Drink Markenlogo"
                                         style="width: 73%;"
                                         loading="lazy"
@@ -113,7 +110,7 @@ import '@assets/griffin/css/magnific-popup.css';
                     ><!-- logo -->
                     <div class="navbar-brand">
                         <a class="logo" href="../"
-                            ><img src="/showcase/griffin/images/2logo.png" alt="Griffin Energy Logo" loading="lazy" /></a
+                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Logo" loading="lazy" /></a
                         >
                     </div>
                     <!-- logo -->
@@ -163,7 +160,7 @@ import '@assets/griffin/css/magnific-popup.css';
                                 <ul class="featuredPostSlider col-md-10 col-sm-11" style="margin-top: 50px">
                                     <li>
                                         <img
-                                            src="/showcase/griffin/images/untitled5-min.png"
+                                            src={getGriffinAsset('images/untitled5-min.png')}
                                             alt="Dose Griffin Energy Drink No Caffeine Vorderansicht"
                                             style="margin-left: 40px"
                                         />
@@ -278,7 +275,7 @@ import '@assets/griffin/css/magnific-popup.css';
                                         <li>Vitamin B2: Aufrechterhaltung des Sehvermögens</li>
                                         <li>Vitamin B3: Erhaltung gesunder Haut</li>
                                         <li>Vitamin B5: Verbesserung der geistigen Leistungsfähigkeit</li>
-                                        <li>Vitamin 12: Unterstützt Energie erzeugenden Stoffwechsel</li>
+                                        <li>Vitamin B12: Unterstützt Energie erzeugenden Stoffwechsel</li>
                                         <li>Magnesium: Verbessert den Schlaf; Erhaltung gesunder Knochen</li>
                                     </ul>
                                 </span>
@@ -313,7 +310,7 @@ import '@assets/griffin/css/magnific-popup.css';
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                            <img src="/showcase/griffin/images/logo.png" alt="Griffin Energy Wortmarke" />
+                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke.<br />
                             </p>
@@ -353,17 +350,9 @@ import '@assets/griffin/css/magnific-popup.css';
             <div class="preloader"><span></span> <span></span> <span></span> <span></span></div>
         </div>
         <!-- ====Start all js here -->
-        <script src="/showcase/griffin/js/jquery.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/bootstrap.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/slick.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery-ui.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.sliderPro.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/fastclick.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/timber.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.magnific-popup.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.waypoints.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/jquery.counterup.min.js" defer is:inline></script>
-        <script src="/showcase/griffin/js/custom.js" defer is:inline></script>
+        {
+            griffinPageScripts.map((scriptUrl) => <script src={scriptUrl} defer is:inline></script>)
+        }
         <script defer is:inline>
             document.addEventListener('DOMContentLoaded', () => {
                 $('#preloader').delay(600).fadeOut();

@@ -1,0 +1,819 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CliHeader from '../../components/CliHeader.astro';
+import { defaultLang, type Lang } from '../../i18n/ui';
+import { useTranslations } from '../../i18n/utils';
+
+export function getStaticPaths() {
+    return [{ params: { lang: undefined } }, { params: { lang: 'en' } }];
+}
+
+const lang: Lang = Astro.params.lang === 'en' ? 'en' : defaultLang;
+const t = useTranslations(lang);
+
+interface ExperienceEntry {
+    role: string;
+    company: string;
+    period: string;
+    highlights: string[];
+}
+
+interface SkillGroup {
+    title: string;
+    items: string[];
+}
+
+const experiencesData: Record<Lang, ExperienceEntry[]> = {
+    de: [
+        {
+            role: 'Softwareentwickler (Praktikant & Werkstudent)',
+            company: 'itestra GmbH',
+            period: `Mär 2025 - ${t('timeline.present')}`,
+            highlights: [
+                'Migration von ca. 12.000 Zeilen COBOL-Vertragslogik nach Java/Quarkus, Reduktion der Codebasis um 40 %',
+                'Validierung mehrstufiger Batch-Workflows (JBeret, Panache, Hibernate) mit konsistenter Ausgabe',
+            ],
+        },
+        {
+            role: 'Softwareentwickler (Praktikant)',
+            company: 'CHECK24 Vergleichsportal GmbH',
+            period: 'Aug 2025 - Sep 2025',
+            highlights: [
+                'Entwurf einer asynchronen ActiveMQ-Pipeline zur Entkopplung kritischer Anbieterantworten',
+                'P95-Latenz auf ca. 150 ms bei 1,5 Mio. Events/Tag gesenkt, dank neuer Grafana-Metriken',
+            ],
+        },
+        {
+            role: 'Softwareentwickler (Praktikant)',
+            company: '4process AG',
+            period: 'Jul 2024 - Aug 2024',
+            highlights: [
+                'Internes Ideenportal mit SAP Fiori Elements zur strukturierten Erfassung von Vorschlägen entwickelt',
+                'Java-Tool für SAP Sales Cloud implementiert, über 5.000 validierte Excel-Updates pro Sekunde',
+            ],
+        },
+    ],
+    en: [
+        {
+            role: 'Software Development Intern & Working Student',
+            company: 'itestra GmbH',
+            period: `Mar 2025 - ${t('timeline.present')}`,
+            highlights: [
+                'Migrated ~12K LOC COBOL contract logic to Java/Quarkus, reducing codebase by 40%',
+                'Validated multi-stage batch workflows (JBeret, Panache, Hibernate) for consistent outputs',
+            ],
+        },
+        {
+            role: 'Software Engineering Intern',
+            company: 'CHECK24 Vergleichsportal GmbH',
+            period: 'Aug 2025 - Sep 2025',
+            highlights: [
+                'Designed async ActiveMQ pipeline decoupling critical provider responses',
+                'Cut P95 latency to ~150ms at 1.5M events/day with new Grafana metrics',
+            ],
+        },
+        {
+            role: 'Software Development Intern',
+            company: '4process AG',
+            period: 'Jul 2024 - Aug 2024',
+            highlights: [
+                'Built internal idea portal with SAP Fiori Elements for structured proposals',
+                'Implemented Java tool for SAP Sales Cloud with >5k validated Excel updates/sec',
+            ],
+        },
+    ],
+};
+
+const experiences = experiencesData[lang];
+
+const skillGroups: SkillGroup[] = [
+    {
+        title: 'Backend',
+        items: ['Java', 'Spring Boot', 'Quarkus', 'JPA/Hibernate', 'Node.js', 'Python', 'SQL'],
+    },
+    {
+        title: 'Frontend',
+        items: ['TypeScript', 'React', 'Next.js', 'SolidJS', 'Astro', 'Tailwind'],
+    },
+    {
+        title: 'Infrastructure',
+        items: ['Docker', 'Kubernetes', 'Terraform', 'GitHub Actions', 'Grafana', 'PostgreSQL'],
+    },
+    {
+        title: 'Self-Hosted',
+        items: ['NixOS', 'Proxmox', 'Traefik', 'WireGuard', 'Ansible'],
+    },
+];
+
+const coreSkills = [
+    { name: 'Java', years: '3+' },
+    { name: 'TypeScript', years: '4+' },
+];
+
+const languagesData: Record<Lang, string[]> = {
+    de: ['Deutsch (Muttersprache)', 'Englisch (C1)', 'Latein'],
+    en: ['German (Native)', 'English (C1)', 'Latin'],
+};
+const spokenLanguages = languagesData[lang];
+---
+
+<Layout
+    title={t('seo.timelineTitle')}
+    active="about"
+    lang={lang}
+    SEO={{
+        description: t('seo.timelineDesc'),
+        openGraph: {
+            title: t('seo.timelineTitle'),
+            type: 'website',
+        },
+    }}
+>
+    <div class="timeline-page">
+        <section class="hero" aria-labelledby="page-title">
+            <div class="hero-content">
+                <CliHeader command="ls -la ~/experience" class="mb-6" />
+                <span class="hero-tag">// {t('timeline.about')}</span>
+                <h1 id="page-title">{t('timeline.title')}</h1>
+                <p class="hero-sub">{t('timeline.subtitle')}</p>
+            </div>
+            <div class="hero-pattern" aria-hidden="true">
+                <svg viewBox="0 0 400 200" preserveAspectRatio="none">
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1" opacity="0.06"></path>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)"></rect>
+                </svg>
+            </div>
+        </section>
+
+        <section class="experience-section" aria-labelledby="experience-heading">
+            <h2 id="experience-heading" class="sr-only">{t('timeline.experience')}</h2>
+            <div class="timeline-track" aria-hidden="true"></div>
+            <ol class="experience-list" role="list">
+                {
+                    experiences.map((exp, index) => (
+                        <li class="exp-card" style={`--card-index: ${index}`}>
+                            <div class="exp-marker" aria-hidden="true">
+                                <span class="marker-dot" />
+                            </div>
+                            <article class="exp-content">
+                                <div class="exp-header">
+                                    <time class="exp-period">{exp.period}</time>
+                                    <h3 class="exp-role">{exp.role}</h3>
+                                    <p class="exp-company">{exp.company}</p>
+                                </div>
+                                <ul class="exp-highlights" aria-label={t('timeline.achievements')}>
+                                    {exp.highlights.map((h) => (
+                                        <li>
+                                            <span class="highlight-arrow" aria-hidden="true">
+                                                &rarr;
+                                            </span>
+                                            {h}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </article>
+                        </li>
+                    ))
+                }
+            </ol>
+        </section>
+
+        <section class="skills-section" aria-labelledby="skills-heading">
+            <div class="skills-header reveal">
+                <span class="section-tag">// Stack</span>
+                <h2 id="skills-heading">{t('timeline.skills')}</h2>
+            </div>
+
+            <div class="core-stack reveal-stagger">
+                {
+                    coreSkills.map((skill) => (
+                        <div class="core-card reveal-scale">
+                            <span class="core-name">{skill.name}</span>
+                            <span class="core-years">{skill.years} {t('timeline.years')}</span>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <div class="skill-grid reveal-stagger" role="list">
+                {
+                    skillGroups.map((group) => (
+                        <article class="skill-card reveal-scale" role="listitem">
+                            <h3 class="skill-title">{group.title}</h3>
+                            <ul class="skill-tags">
+                                {group.items.map((item) => (
+                                    <li class="skill-tag">{item}</li>
+                                ))}
+                            </ul>
+                        </article>
+                    ))
+                }
+            </div>
+
+            <div class="lang-section reveal">
+                <h3 class="lang-title">{t('timeline.languages')}</h3>
+                <ul class="lang-list reveal-stagger">
+                    {
+                        spokenLanguages.map((spokenLang) => (
+                            <li class="lang-item reveal-left">
+                                <p class="text-base">{spokenLang}</p>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<style>
+    @reference "../../styles/global.css";
+
+    .timeline-page {
+        padding-top: 3rem;
+        padding-bottom: var(--space-section);
+    }
+
+    .hero {
+        position: relative;
+        padding: var(--space-section) var(--gutter);
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: var(--container-6xl);
+        margin: 0 auto;
+    }
+
+    .hero-tag {
+        display: block;
+        @apply font-mono text-base tracking-wide;
+        color: var(--color-accent);
+        margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+        @apply text-6xl tracking-tight;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 1rem;
+        @apply text-text-primary;
+    }
+
+    .hero-sub {
+        @apply font-mono;
+        @apply text-lg;
+        @apply text-text-secondary;
+    }
+
+    .hero-pattern {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .hero-pattern svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .experience-section {
+        position: relative;
+        max-width: var(--container-6xl);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+        padding-bottom: var(--space-section);
+    }
+
+    .timeline-track {
+        position: absolute;
+        left: calc(var(--gutter) + 6px);
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            var(--border-strong) 10%,
+            var(--border-strong) 90%,
+            transparent 100%
+        );
+    }
+
+    @media (min-width: 768px) {
+        .timeline-track {
+            left: calc(var(--gutter) + 8px);
+        }
+    }
+
+    .experience-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .exp-card {
+        display: grid;
+        grid-template-columns: 16px 1fr;
+        gap: 1.5rem;
+    }
+
+    .js-motion .exp-card {
+        opacity: 0;
+        transform: translateY(20px);
+        will-change: opacity, transform;
+    }
+
+    /* Hero animations */
+    .js-motion .hero-tag,
+    .js-motion .hero h1,
+    .js-motion .hero-sub {
+        opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .exp-card,
+        .hero-tag,
+        .hero h1,
+        .hero-sub {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+    }
+
+    .exp-marker {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 0.25rem;
+    }
+
+    .marker-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 9999px;
+        background: var(--bg-primary);
+        border: 2px solid var(--color-accent);
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
+            background var(--duration-fast) var(--ease-out),
+            box-shadow var(--duration-normal) var(--ease-out);
+    }
+
+    .exp-card:hover .marker-dot,
+    .exp-card:focus-within .marker-dot {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+        box-shadow: 0 0 0 4px rgba(224, 122, 58, 0.15);
+    }
+
+    .exp-content {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
+            transform var(--duration-normal) var(--ease-out),
+            box-shadow var(--duration-normal) var(--ease-out);
+    }
+
+    .exp-content::before {
+        content: '////////////////////';
+        position: absolute;
+        top: 0;
+        right: 0;
+        @apply font-mono;
+        @apply text-xs;
+        color: rgba(255, 255, 255, 0.15);
+        letter-spacing: -0.05em;
+        padding: 0.5rem 0.75rem;
+        pointer-events: none;
+    }
+
+    .exp-card:hover .exp-content,
+    .exp-card:focus-within .exp-content {
+        border-color: var(--bg-card-border-hover);
+        transform: translate3d(0, -2px, 0);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .exp-header {
+        margin-bottom: 1rem;
+    }
+
+    .exp-period {
+        display: block;
+        @apply font-mono text-xs tracking-wider;
+        color: var(--color-accent);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+    }
+
+    .exp-role {
+        @apply text-xl leading-snug;
+        @apply text-text-inverse;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .exp-company {
+        @apply text-sm;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .exp-highlights {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .exp-highlights li {
+        display: flex;
+        gap: 0.75rem;
+        @apply text-sm leading-relaxed;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .highlight-arrow {
+        flex-shrink: 0;
+        @apply font-mono;
+        color: var(--color-accent);
+    }
+
+    .skills-section {
+        max-width: var(--container-6xl);
+        margin: 0 auto;
+        padding: 0 var(--gutter);
+    }
+
+    .skills-header {
+        margin-bottom: var(--space-component);
+    }
+
+    .skills-header h2 {
+        @apply text-4xl tracking-tight;
+        font-weight: 900;
+        @apply text-text-primary;
+    }
+
+    .core-stack {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin-bottom: 2.5rem;
+        max-width: 400px;
+    }
+
+    .core-card {
+        padding: 1.5rem 0.5rem;
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: 0.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
+            transform var(--duration-fast) var(--ease-out);
+    }
+
+    .core-card::before {
+        content: '$$$$$';
+        position: absolute;
+        top: 0.5rem;
+        left: 0.75rem;
+        @apply font-mono text-xs tracking-widest;
+        color: rgba(255, 255, 255, 0.15);
+        pointer-events: none;
+    }
+
+    .core-card:hover {
+        border-color: var(--color-accent);
+        transform: translateY(-2px);
+    }
+
+    .core-name {
+        display: block;
+        @apply font-heading;
+        @apply text-2xl;
+        font-weight: 700;
+        color: var(--color-accent);
+        margin-bottom: 0.5rem;
+    }
+
+    .core-years {
+        @apply font-mono text-xs tracking-wider;
+        color: rgba(255, 255, 255, 0.6);
+        text-transform: uppercase;
+    }
+
+    .skill-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .skill-card {
+        background: var(--bg-card);
+        border: 1px solid var(--bg-card-border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        position: relative;
+        transition: border-color var(--duration-fast) var(--ease-out);
+    }
+
+    .skill-card::before {
+        content: '>>>>';
+        position: absolute;
+        top: 0.5rem;
+        right: 0.75rem;
+        @apply font-mono text-xs tracking-wider;
+        color: rgba(255, 255, 255, 0.15);
+        pointer-events: none;
+    }
+
+    .skill-card:hover {
+        border-color: var(--bg-card-border-hover);
+    }
+
+    .skill-title {
+        @apply font-mono text-xs tracking-caps;
+        font-weight: 500;
+        color: var(--color-accent);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .skill-tag {
+        padding: 0.25rem 0.75rem;
+        @apply font-mono;
+        @apply text-xs;
+        color: rgba(255, 255, 255, 0.8);
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.125rem;
+        transition:
+            border-color var(--duration-fast) var(--ease-out),
+            color var(--duration-fast) var(--ease-out),
+            background var(--duration-fast) var(--ease-out),
+            transform var(--duration-fast) var(--ease-out);
+    }
+
+    .skill-tag:hover {
+        border-color: var(--color-accent);
+        @apply text-text-inverse;
+        background: rgba(224, 122, 58, 0.08);
+        transform: translate3d(0, -1px, 0);
+    }
+
+    .lang-section {
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-default);
+    }
+
+    .lang-title {
+        @apply font-mono text-lg tracking-caps;
+        font-weight: 500;
+        color: var(--color-accent);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+    }
+
+    .lang-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .lang-item {
+        @apply text-sm;
+        @apply text-text-secondary;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .core-card,
+        .skill-card,
+        .skill-tag,
+        .exp-content,
+        .marker-dot {
+            transition: none !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .exp-card {
+            grid-template-columns: 20px 1fr;
+        }
+
+        .marker-dot {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .skill-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+</style>
+
+<script>
+    import { animateCliTyping, getMotionPreference, resetCliTyping } from '../../utils/cliAnimations';
+    import { animate, inView } from 'motion';
+
+    const motionOK = getMotionPreference();
+    const root = document.documentElement;
+    if (motionOK) {
+        root.classList.add('js-motion');
+    } else {
+        root.classList.remove('js-motion');
+    }
+
+    function initHeroAnimations() {
+        const heroTag = document.querySelector<HTMLElement>('.hero-tag');
+        const heroTitle = document.querySelector<HTMLElement>('.hero h1');
+        const heroSub = document.querySelector<HTMLElement>('.hero-sub');
+
+        const heroItems = [
+            { el: heroTag, y: 12, duration: 0.6, delay: 0.7 },
+            { el: heroTitle, y: 16, duration: 0.8, delay: 0.9 },
+            { el: heroSub, y: 12, duration: 0.8, delay: 1.1 },
+        ];
+
+        if (!motionOK) {
+            heroItems.forEach(({ el }) => {
+                if (!el) return;
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+            return;
+        }
+
+        heroItems.forEach(({ el, y, duration, delay }) => {
+            if (!el) return;
+            el.style.opacity = '0';
+            el.style.transform = `translate3d(0, ${y}px, 0)`;
+            animate(el, { opacity: [0, 1], y: [y, 0] }, { duration, delay, ease: [0.16, 1, 0.3, 1] });
+        });
+    }
+
+    function initCliAnimation() {
+        if (!motionOK) return;
+
+        const cliPrompt = document.querySelector<HTMLElement>('.cli-prompt');
+
+        if (cliPrompt) {
+            animate(cliPrompt, { scale: [1, 1.2, 1] }, { duration: 0.5, delay: 0.1, ease: 'easeOut' });
+
+            animateCliTyping('.cli-command', 100, 50);
+        }
+    }
+
+    function initCardAnimations() {
+        const cards = document.querySelectorAll<HTMLElement>('.exp-card');
+
+        if (!motionOK) {
+            cards.forEach((card) => {
+                card.style.opacity = '1';
+                card.style.transform = 'none';
+                card.style.willChange = 'auto';
+            });
+            return;
+        }
+
+        const animateCard = (card: HTMLElement, index: number) => {
+            if (card.dataset.motion === 'done') return;
+            card.dataset.motion = 'done';
+            const delay = (index % 4) * 0.08;
+            const controls = animate(
+                card,
+                { opacity: [0, 1], y: [20, 0] },
+                { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
+            );
+            controls.finished.then(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'none';
+                card.style.willChange = 'auto';
+            });
+        };
+
+        cards.forEach((card, index) => {
+            if (card.dataset.motion) return;
+            card.dataset.motion = 'pending';
+            card.style.opacity = '0';
+            card.style.transform = 'translate3d(0, 20px, 0)';
+            card.style.willChange = 'opacity, transform';
+
+            let stop: VoidFunction | undefined;
+            stop = inView(
+                card,
+                () => {
+                    if (card.dataset.motion === 'done') return;
+                    animateCard(card, index);
+                    stop?.();
+                },
+                { margin: '0px 0px -80px 0px', amount: 0.2 },
+            );
+
+            const rect = card.getBoundingClientRect();
+            const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+            if (rect.top < viewHeight && rect.bottom > 0) {
+                animateCard(card, index);
+                stop?.();
+            }
+        });
+    }
+
+    function initRevealAnimations() {
+        const revealElements = document.querySelectorAll<HTMLElement>('.reveal, .reveal-left, .reveal-scale');
+
+        if (!motionOK) {
+            revealElements.forEach((el) => {
+                el.classList.add('is-visible');
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+        );
+
+        revealElements.forEach((el) => observer.observe(el));
+    }
+
+    function initAllAnimations() {
+        initCliAnimation();
+        initHeroAnimations();
+        initCardAnimations();
+        initRevealAnimations();
+    }
+
+    function waitForLoader() {
+        return new Promise<void>((resolve) => {
+            const loader = document.querySelector<HTMLElement>('#loader');
+            const hasLoadedBefore = sessionStorage.getItem('site-loaded');
+            
+            if (!loader || !loader.classList.contains('on') || hasLoadedBefore) {
+                resolve();
+                return;
+            }
+
+            const finish = () => {
+                loader.removeEventListener('transitionend', finish);
+                observer?.disconnect();
+                resolve();
+            };
+
+            const observer = new MutationObserver(() => {
+                if (!loader.classList.contains('on')) {
+                    finish();
+                }
+            });
+
+            loader.addEventListener('transitionend', finish, { once: true });
+            observer.observe(loader, { attributes: true, attributeFilter: ['class'] });
+
+            setTimeout(finish, 600);
+        });
+    }
+
+    let animationRunId = 0;
+    async function scheduleAnimations() {
+        const runId = ++animationRunId;
+        await waitForLoader();
+        if (runId !== animationRunId) return;
+        initAllAnimations();
+    }
+
+    document.addEventListener('astro:page-load', scheduleAnimations);
+    document.addEventListener('astro:before-swap', () => {
+        resetCliTyping('.cli-command');
+    });
+</script>

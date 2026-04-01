@@ -1,75 +1,110 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+import type { ActivePage } from '../layouts/Layout.astro';
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations, getLocalePath, getAlternateLang } from '../i18n/utils';
+
 export interface Props {
-    active?: 'Home' | 'Über mich' | 'Projekte' | 'Kontakt';
-    location?: string;
+    active?: ActivePage;
+    lang?: Lang;
 }
 
-const { location = '/' } = Astro.props;
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
+const altLang = getAlternateLang(lang);
 
-const menus = [
-    { name: 'Home', href: location },
-    { name: 'Über mich', href: `${location}timeline` },
-    { name: 'Projekte', href: `${location}#portfolio` },
-    { name: 'Kontakt', href: `${location}contact` },
-].map((menu) => {
-    return {
-        ...menu,
-        active: Astro.props.active === menu.name,
-    };
-});
+const navKeys: { key: ActivePage; href: string }[] = [
+    { key: 'home', href: getLocalePath(lang, '/') },
+    { key: 'about', href: getLocalePath(lang, '/timeline') },
+    { key: 'projects', href: `${getLocalePath(lang, '/')}#portfolio` },
+    { key: 'contact', href: getLocalePath(lang, '/contact') },
+];
+
+const menus = navKeys.map((item) => ({
+    name: t(`nav.${item.key}`),
+    href: item.href,
+    active: Astro.props.active === item.key,
+}));
 ---
 
 <header
+    id="site-header"
     class="header fixed top-0 right-0 left-0 z-20 w-full px-4 py-3 transition-all duration-300 ease-out md:top-6 md:right-auto md:left-1/2 md:w-full md:max-w-4xl md:-translate-x-1/2 md:px-6 md:py-0"
     style="visibility: hidden"
+    role="banner"
 >
     <div
         class="header-bg group relative z-10 mx-auto flex items-center justify-between rounded-none border border-t-0 border-r-0 border-l-0 border-white/10 px-4 py-4 md:rounded-2xl md:border md:px-8 md:py-5"
     >
-        <a href="/" class="logo scroll-to">
-            <p class="text-lg font-bold text-white transition-all duration-300 md:text-xl">Thomas Breindl</p>
+        <a
+            href={getLocalePath(lang, '/')}
+            class="logo scroll-to focus-visible:ring-accent rounded-md focus-visible:ring-2 focus-visible:ring-offset-2"
+            aria-label={t('nav.toHome')}
+        >
+            <span class="text-lg font-bold text-white transition-all duration-300 md:text-xl">Thomas Breindl</span>
         </a>
 
-        <btn class="menu flex cursor-pointer items-center space-x-2 md:space-x-4" style="cursor: pointer">
-            <span
-                class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
-                >Menu</span
+        <div class="flex items-center gap-3 md:gap-4">
+            <!-- Language switcher -->
+            <a
+                href={getLocalePath(altLang, Astro.url.pathname.replace(/^\/en(?=\/|$)/, '') || '/')}
+                class="lang-switch focus-visible:ring-accent rounded-md px-1.5 py-0.5 font-mono text-xs font-bold tracking-wider text-white/70 uppercase transition-colors duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2"
+                aria-label={t('general.switchLang')}
+                data-astro-prefetch
             >
-            <div class="menu-icon">
-                <div class="menu-lines">
-                    <span class="line line-1"></span>
-                    <span class="line line-2"></span>
-                    <span class="line line-3"></span>
+                {altLang.toUpperCase()}
+            </a>
+            <ThemeToggle lang={lang} />
+            <button
+                type="button"
+                class="menu focus-visible:ring-accent flex cursor-pointer items-center space-x-2 rounded-md focus-visible:ring-2 focus-visible:ring-offset-2 md:space-x-4"
+                aria-label={t('nav.openMenu')}
+                aria-expanded="false"
+                aria-controls="nav-content"
+            >
+                <span
+                    class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
+                    aria-hidden="true"
+                >
+                    {t('nav.menu')}
+                </span>
+                <div class="menu-icon" aria-hidden="true">
+                    <div class="menu-lines">
+                        <span class="line line-1"></span>
+                        <span class="line line-2"></span>
+                        <span class="line line-3"></span>
+                    </div>
                 </div>
-            </div>
-        </btn>
+            </button>
+        </div>
     </div>
 </header>
 
-<nav
-    id="nav"
-    aria-label="loader"
-    class="fixed inset-0 z-50 h-0 overflow-hidden transition-all duration-500 ease-in-out"
->
+<!-- Navigation overlay background -->
+<div id="nav" class="fixed inset-0 z-50 h-0 overflow-hidden transition-all duration-500 ease-in-out" aria-hidden="true">
     <div class="menu-bg h-full w-full bg-black/95 backdrop-blur-xl"></div>
-</nav>
+</div>
 
-<nav id="nav-content" aria-label="menu" class="fixed inset-0 z-50">
+<!-- Navigation menu content -->
+<nav id="nav-content" class="pointer-events-none fixed inset-0 z-50" aria-label={t('nav.mainNav')} aria-hidden="true">
     <div class="flex h-full w-full items-center justify-center">
         <div class="content mx-auto flex max-w-4xl flex-col items-center justify-center px-4 text-center sm:px-6">
-            <h5
+            <h2
                 class="mb-8 text-base font-semibold tracking-wider text-white/60 uppercase opacity-0 transition-opacity duration-400 md:mb-12 md:text-xl"
+                id="nav-heading"
             >
-                Menu
-            </h5>
-            <ul id="mi" class="flex w-full flex-col gap-6 text-center">
+                {t('nav.menu')}
+            </h2>
+            <ul id="mi" class="flex w-full flex-col gap-6 text-center" role="list">
                 {
                     menus.map((menu) => (
                         <li class="menu-item transform text-stone-700 opacity-0 transition-all duration-400">
                             <a
                                 href={menu.href}
-                                id={menu.name}
-                                class={`menu-link block text-4xl font-bold text-white transition-all duration-500 sm:text-5xl md:text-6xl lg:text-7xl ${menu.active ? 'menu-link-active text-white' : 'text-white/80'}`}
+                                id={`menu-${menu.name.toLowerCase().replace(/\s/g, '-')}`}
+                                class={`menu-link focus-visible:ring-accent block rounded-lg text-4xl font-bold text-white transition-all duration-500 focus-visible:ring-2 focus-visible:ring-offset-4 sm:text-5xl md:text-6xl lg:text-7xl ${menu.active ? 'menu-link-active text-white' : 'text-white/80'}`}
+                                aria-current={menu.active ? 'page' : undefined}
+                                tabindex="-1"
                             >
                                 <span class="menu-link-text">{menu.name}</span>
                             </a>
@@ -81,25 +116,29 @@ const menus = [
     </div>
 </nav>
 
-<btn
-    class="close fixed top-8 right-4 z-60 flex hidden -translate-y-4 cursor-pointer items-center justify-center opacity-0 transition-all duration-300 ease-out md:top-10 md:right-10"
+<!-- Close button for navigation -->
+<button
+    id="nav-close"
     type="button"
-    aria-label="Close menu"
-    style="cursor: pointer"
+    class="close focus-visible:ring-accent fixed top-8 right-4 z-60 hidden -translate-y-4 cursor-pointer items-center justify-center rounded-full opacity-0 transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 md:top-10 md:right-10"
+    aria-label={t('nav.closeMenu')}
+    tabindex="-1"
 >
     <div class="close-container">
         <div class="close-bg"></div>
         <div class="close-content">
-            <span class="close-text">Close</span>
-            <div class="close-icon">
+            <span class="close-text">{t('nav.close')}</span>
+            <div class="close-icon" aria-hidden="true">
                 <span class="close-line close-line-1"></span>
                 <span class="close-line close-line-2"></span>
             </div>
         </div>
     </div>
-</btn>
+</button>
 
 <style lang="scss">
+    @reference "../styles/global.css";
+
     .header-bg {
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3));
         backdrop-filter: blur(20px);
@@ -160,7 +199,6 @@ const menus = [
 
     .menu:hover .menu-text {
         color: white;
-        letter-spacing: 0.15em;
     }
 
     .menu-lines {
@@ -254,8 +292,8 @@ const menus = [
 
     .close-container {
         position: relative;
-        width: 100px;
-        height: 50px;
+        width: auto;
+        height: auto;
         border-radius: 20px;
         overflow: hidden;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -263,8 +301,6 @@ const menus = [
 
     @media (min-width: 768px) {
         .close-container {
-            width: 120px;
-            height: 60px;
             border-radius: 30px;
         }
     }
@@ -342,25 +378,25 @@ const menus = [
     }
 
     .close-text {
-        /* Using modular scale step -1 approximation (~0.79rem); keeping 0.75rem for tight nav look */
-        font-size: 0.75rem;
+        @apply text-xs;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        @apply tracking-widest;
         color: rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
     }
 
     @media (min-width: 768px) {
         .close-text {
-            font-size: var(--step--1);
+            @apply text-sm;
         }
     }
 
     .close:hover .close-text {
         color: white;
-        letter-spacing: 0.15em;
+        @apply tracking-caps;
     }
 
     .close-icon {
@@ -422,6 +458,7 @@ const menus = [
     }
 
     .close.show {
+        display: flex;
         opacity: 1;
         transform: translateY(0);
     }
@@ -431,7 +468,7 @@ const menus = [
         transform: translateY(-1rem);
     }
 
-    nav#nav {
+    #nav {
         background: rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(30px);
         -webkit-backdrop-filter: blur(30px);
@@ -443,38 +480,42 @@ const menus = [
         -webkit-backdrop-filter: blur(30px) saturate(1.2);
     }
 
-    nav#nav.on {
+    #nav.on {
         height: 100vh;
         transition: height 0.5s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
-    nav#nav.on + #nav-content .content {
+    #nav.on + #nav-content {
+        pointer-events: auto;
+    }
+
+    #nav.on + #nav-content .content {
         visibility: visible;
     }
 
-    nav#nav.on + #nav-content .content h5 {
+    #nav.on + #nav-content .content h2 {
         opacity: 1;
         transition: opacity 0.4s cubic-bezier(0.3, 0, 0.5, 1) 0.4s;
     }
 
-    nav#nav.on + #nav-content .content ul > li {
+    #nav.on + #nav-content .content ul > li {
         opacity: 1;
         transform: translateX(0);
     }
 
-    nav#nav.on + #nav-content .content ul > li:nth-child(1) {
+    #nav.on + #nav-content .content ul > li:nth-child(1) {
         transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
     }
 
-    nav#nav.on + #nav-content .content ul > li:nth-child(2) {
+    #nav.on + #nav-content .content ul > li:nth-child(2) {
         transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
     }
 
-    nav#nav.on + #nav-content .content ul > li:nth-child(3) {
+    #nav.on + #nav-content .content ul > li:nth-child(3) {
         transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
     }
 
-    nav#nav.on + #nav-content .content ul > li:nth-child(4) {
+    #nav.on + #nav-content .content ul > li:nth-child(4) {
         transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.6s;
     }
 
@@ -558,16 +599,16 @@ const menus = [
         transition: visibility 0s linear 0.4s;
     }
 
-    .logo p {
+    .logo span {
         text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         position: relative;
-        overflow: hidden;
+        display: inline-block;
     }
 
-    .logo p::after {
+    .logo span::after {
         content: '';
         position: absolute;
-        bottom: 0;
+        bottom: -3px;
         left: 0;
         width: 0;
         height: 2px;
@@ -575,7 +616,7 @@ const menus = [
         transition: width 0.3s ease;
     }
 
-    .logo:hover p::after {
+    .logo:hover span::after {
         width: 100%;
     }
 
@@ -585,6 +626,7 @@ const menus = [
 
     body {
         padding-top: 72px;
+        transition: padding-top 0.3s cubic-bezier(0.3, 0, 0.5, 1);
     }
 
     @media (min-width: 768px) {
@@ -617,44 +659,137 @@ const menus = [
     }
 
     function openNav() {
+        const nav = $('#nav');
+        const navContent = $('#nav-content');
+        const header = $('header');
+        const closeBtn = $('#nav-close');
+        const menuBtn = $('.menu');
+        const menuLinks = document.querySelectorAll('#mi a');
+
+        // Remove fade-out classes if present
         if ($('a')?.classList.contains('Fade-out')) {
             $('a')?.classList.remove('Fade-out');
             $('b')?.classList.remove('Fade-out');
             $('#mi')?.classList.remove('Fade-out');
         }
 
-        const closeBtn = $('.close');
+        // Show close button
         closeBtn?.classList.remove('hidden');
         closeBtn?.classList.remove('hide');
         closeBtn?.classList.add('show');
+        (closeBtn as HTMLElement)?.setAttribute('tabindex', '0');
 
-        $('nav#nav')?.classList.add('on');
-        $('header')?.classList.add('nav-on');
+        // Enable nav
+        nav?.classList.add('on');
+        header?.classList.add('nav-on');
+
+        // Update ARIA attributes
+        (menuBtn as HTMLElement)?.setAttribute('aria-expanded', 'true');
+        navContent?.setAttribute('aria-hidden', 'false');
+
+        // Make menu links focusable
+        menuLinks.forEach((link) => {
+            (link as HTMLElement).setAttribute('tabindex', '0');
+        });
+
+        // Focus first menu link after animation
+        setTimeout(() => {
+            (menuLinks[0] as HTMLElement)?.focus();
+        }, 500);
+
+        // Trap focus in nav
+        document.addEventListener('keydown', handleNavKeydown);
     }
 
     function closeNav() {
+        const nav = $('#nav');
+        const navContent = $('#nav-content');
+        const header = $('header');
+        const closeBtn = $('#nav-close');
+        const menuBtn = $('.menu');
+        const menuLinks = document.querySelectorAll('#mi a');
+
         $('a')?.classList.add('Fade-out');
         $('b')?.classList.add('Fade-out');
         $('#mi')?.classList.add('Fade-out');
-        $('nav#nav')?.classList.remove('on');
-        $('header')?.classList.remove('nav-on');
+        nav?.classList.remove('on');
+        header?.classList.remove('nav-on');
 
-        const closeBtn = $('.close');
         closeBtn?.classList.remove('show');
         closeBtn?.classList.add('hide');
 
+        // Update ARIA attributes
+        (menuBtn as HTMLElement)?.setAttribute('aria-expanded', 'false');
+        navContent?.setAttribute('aria-hidden', 'true');
+
+        // Make menu links unfocusable
+        menuLinks.forEach((link) => {
+            (link as HTMLElement).setAttribute('tabindex', '-1');
+        });
+
         setTimeout(() => {
             closeBtn?.classList.add('hidden');
+            (closeBtn as HTMLElement)?.setAttribute('tabindex', '-1');
         }, 300);
+
+        // Return focus to menu button
+        (menuBtn as HTMLElement)?.focus();
+
+        // Remove focus trap
+        document.removeEventListener('keydown', handleNavKeydown);
+    }
+
+    function handleNavKeydown(e: KeyboardEvent) {
+        // Close on Escape
+        if (e.key === 'Escape') {
+            closeNav();
+            return;
+        }
+
+        // Trap focus
+        if (e.key === 'Tab') {
+            const focusableElements = document.querySelectorAll(
+                '#nav-content a:not([tabindex="-1"]), #nav-close:not(.hidden)',
+            );
+            const firstElement = focusableElements[0] as HTMLElement;
+            const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+            if (e.shiftKey && document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
     }
 
     function addListeners() {
-        $('.menu')?.addEventListener('click', () => {
+        const menuBtn = $('.menu');
+        const closeBtn = $('#nav-close');
+
+        menuBtn?.addEventListener('click', () => {
             openNav();
         });
 
-        $('.close')?.addEventListener('click', () => {
+        // Keyboard support for menu button
+        menuBtn?.addEventListener('keydown', (e) => {
+            if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
+                e.preventDefault();
+                openNav();
+            }
+        });
+
+        closeBtn?.addEventListener('click', () => {
             closeNav();
+        });
+
+        // Keyboard support for close button
+        closeBtn?.addEventListener('keydown', (e) => {
+            if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
+                e.preventDefault();
+                closeNav();
+            }
         });
 
         document.querySelectorAll('#mi > li > a').forEach((menu) => {
@@ -666,7 +801,6 @@ const menus = [
 
     function initializeHeader(duration: number, delay: number) {
         animateHeaderIn(duration, delay);
-
         addListeners();
     }
 

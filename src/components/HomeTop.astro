@@ -1,118 +1,119 @@
-<section class="home-top landingpage text-stone-700" aria-labelledby="hero-title">
+---
+import CliHeader from './CliHeader.astro';
+import { defaultLang, type Lang } from '../i18n/ui';
+import { useTranslations, getLocalePath } from '../i18n/utils';
+
+export interface Props {
+    lang?: Lang;
+}
+
+const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
+const t = useTranslations(lang);
+---
+
+<section class="home-top landingpage" aria-labelledby="hero-title">
     <div class="flex flex-col items-center">
         <div class="text-center">
-            <h1 id="hero-title" class="title font-extrabold text-stone-700">
+            <CliHeader command="whoami" class="mb-6 justify-center" />
+
+            <h1 id="hero-title" class="title text-text-primary font-extrabold">
                 <span class="word">Thomas</span>
                 <span class="word">Breindl</span>
             </h1>
-            <h2 class="header-light hero-subtitle text-stone-700">
-                Hallo, ich bin Programmierer, Designer und Student.
-            </h2>
-            <nav class="links" aria-label="Hauptlinks im Hero">
-                <a href="#portfolio" class="projects scroll-to link link-underline cursor-pointer">Projekte</a>
-                <span class="links-sep" aria-hidden="true">oder</span>
-                <a href="/timeline" class="link link-underline" rel="prefetch">Über Mich</a>
+            <p class="hero-subtitle text-text-secondary">
+                {t('hero.subtitle')}
+            </p>
+            <nav class="links" aria-label={t('hero.mainLinks')}>
+                <a href="#portfolio" class="link link-underline scroll-to projects cursor-pointer">
+                    {t('hero.projects')}
+                </a>
+                <span class="links-sep" aria-hidden="true">{t('hero.or')}</span>
+                <a href={getLocalePath(lang, '/timeline')} class="link link-underline" data-astro-prefetch
+                    >{t('hero.aboutMe')}</a
+                >
             </nav>
         </div>
-        <button
-            type="button"
-            class="scroll-to animate"
-            aria-label="Zum Portfolio scrollen"
-            title="Zum Portfolio scrollen scroll-trigger"
-        >
-            <div class="scroll-to-icon" aria-hidden="true"></div>
+        <button type="button" class="scroll-trigger animate" aria-label={t('hero.scrollToPortfolio')}>
+            <span class="scroll-to-icon" aria-hidden="true"></span>
         </button>
     </div>
 </section>
 
-<style lang="scss">
+<style>
+    @reference "../styles/global.css";
+
     .home-top {
-        font-family: 'Roboto Slab Variable', serif;
+        @apply font-body;
         position: relative;
         overflow: hidden;
-
-        &::before {
-            content: '';
-            position: absolute;
-            inset: -60px 0 0;
-            pointer-events: none;
-            background: radial-gradient(900px 200px at 50% 0, rgba(0, 0, 0, 0.06), transparent 65%);
-        }
-        &::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: 0.08;
-            mix-blend-mode: multiply;
-        }
-    }
-    .link {
-        font-weight: 800;
-        letter-spacing: normal;
-        text-transform: uppercase;
-        font-size: var(--step-1);
-    }
-    .link-underline {
-        border-bottom-width: 0;
-        background-image: linear-gradient(transparent, transparent), linear-gradient(#0f141e, #0f141e);
-        background-size: 0 3px;
-        background-position: 0 100%;
-        background-repeat: no-repeat;
-        transition: background-size 0.25s ease-in-out;
-
-        &:hover {
-            background-size: 100% 3px;
-            background-position: 0 100%;
-            text-shadow: 0 0 0.25px #0f141e80;
-        }
-    }
-
-    section.home-top {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        position: relative;
+        min-height: 100dvh;
+        padding-top: clamp(60px, 8vh, 100px);
         z-index: 2;
     }
+
+    .home-top::before {
+        content: '';
+        position: absolute;
+        inset: -60px 0 0;
+        pointer-events: none;
+        background: radial-gradient(900px 200px at 50% 0, var(--color-border-subtle), transparent 65%);
+    }
+
     .title {
-        font-family: 'Syne Variable', sans-serif;
-        line-height: 0.9;
-        letter-spacing: -0.01em;
+        @apply font-display leading-none tracking-tight;
         font-size: clamp(2.75rem, 7vw + 1rem, 7.5rem);
         margin-bottom: clamp(0.5rem, 1vw, 1rem);
         text-wrap: balance;
     }
+
     .title .word {
         display: block;
     }
+
     .hero-subtitle {
-        font-size: clamp(var(--step-2), 1.2rem + 1.8vw, 2.25rem);
-        font-family: 'Roboto Slab Variable', serif;
+        @apply font-body text-2xl leading-snug;
         margin-bottom: 1rem;
         max-width: 34ch;
         margin-left: auto;
         margin-right: auto;
-        line-height: 1.3;
         text-wrap: balance;
     }
-    button.scroll-trigger {
-        background: transparent;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        outline: none;
+
+    .link {
+        font-weight: 800;
+        letter-spacing: normal;
+        text-transform: uppercase;
+        @apply text-lg;
+        color: var(--color-text-primary);
+        transition: color var(--duration-fast) var(--ease-out);
     }
-    button.scroll-trigger:focus-visible .scroll-to-icon {
-        box-shadow:
-            inset 0 0 0 2px #0f141e,
-            0 0 0 3px rgba(15, 20, 30, 0.15);
+
+    .link:hover {
+        color: var(--color-accent);
     }
+
+    .link-underline {
+        border-bottom-width: 0;
+        background-image:
+            linear-gradient(transparent, transparent), linear-gradient(var(--color-accent), var(--color-accent));
+        background-size: 0 3px;
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        transition:
+            background-size var(--duration-normal) var(--ease-out),
+            color var(--duration-fast) var(--ease-out);
+    }
+
+    .link-underline:hover {
+        background-size: 100% 3px;
+        background-position: 0 100%;
+    }
+
     .links {
         display: flex;
         align-items: center;
@@ -121,87 +122,78 @@
         margin-top: 0.5rem;
         flex-direction: column;
     }
+
     .links-sep {
         font-weight: 700;
-        letter-spacing: 0.06em;
-        color: #6b7280;
+        color: var(--color-text-tertiary);
         text-transform: uppercase;
-        font-size: clamp(0.95rem, 0.2vw + 0.85rem, 1.05rem);
+        @apply text-sm tracking-wide;
     }
+
     @media (min-width: 640px) {
         .links {
             flex-direction: row;
         }
     }
-    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
-        section.home-top button.scroll-trigger {
-            background: 0 0;
-            width: 20px;
-            margin: 30px auto 20px auto;
-        }
-        section.home-top button.scroll-trigger:after {
-            display: none;
-        }
-        section.home-top button.scroll-trigger svg {
-            width: 20px;
-            height: 20px;
-            margin: 20px;
-        }
-        section.home-top button.scroll-trigger svg path {
-            transition: fill 0.2s linear;
-        }
-        section.home-top button.scroll-trigger:active svg path {
-            fill: #878a8f;
-        }
-        section.home-top button.scroll-trigger:active .scroll-to-icon {
-            box-shadow: inset 0 0 0 2px #878a8f;
-        }
-        section.home-top button.scroll-trigger:active .scroll-to-icon:after {
-            background: #878a8f;
-        }
-        section.home-top .scroll-to-icon {
-            width: 20px;
-            height: 30px;
-            box-shadow: inset 0 0 0 2px #0f141e;
-            border-radius: 25px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out 0s;
-            transform: translateY(0);
-            position: relative;
-        }
-        section.home-top .scroll-to-icon:after {
-            content: '';
-            width: 4px;
-            height: 6px;
-            background: #0f141e;
-            top: 8px;
-            right: 8px;
-            border-radius: 2px;
-            animation-duration: 1.5s;
-            animation-iteration-count: infinite;
-            animation-name: scroll;
-            position: absolute;
-        }
-        section.home-top.keep-arrow button.scroll-trigger {
-            visibility: visible;
-        }
+
+    /* Scroll trigger button */
+    .scroll-trigger {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+        margin-top: 2rem;
     }
-    @media (min-width: 1280px) {
-        section.home-top button.scroll-trigger {
-            margin-top: 30px;
-        }
-        section.home-top button.scroll-trigger:hover svg path {
-            fill: #878a8f;
-        }
-        section.home-top button.scroll-trigger:hover .scroll-to-icon {
-            box-shadow: inset 0 0 0 2px #878a8f;
-        }
-        section.home-top button.scroll-trigger:hover .scroll-to-icon:after {
-            background: #878a8f;
+
+    .scroll-trigger:focus-visible .scroll-to-icon {
+        box-shadow:
+            inset 0 0 0 2px var(--color-text-primary),
+            0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+    }
+
+    .scroll-to-icon {
+        width: 20px;
+        height: 30px;
+        box-shadow: inset 0 0 0 2px var(--color-text-primary);
+        @apply rounded-full;
+        cursor: pointer;
+        transition: box-shadow var(--duration-fast) var(--ease-out);
+        position: relative;
+    }
+
+    .scroll-to-icon::after {
+        content: '';
+        width: 4px;
+        height: 6px;
+        background: var(--color-text-primary);
+        top: 8px;
+        right: 8px;
+        border-radius: 2px;
+        position: absolute;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        animation-name: scroll;
+    }
+
+    .scroll-trigger:hover .scroll-to-icon {
+        box-shadow: inset 0 0 0 2px var(--color-accent);
+    }
+
+    .scroll-trigger:hover .scroll-to-icon::after {
+        background: var(--color-accent);
+    }
+
+    @media (min-width: 768px) and (min-height: 620px), (min-width: 1280px) {
+        .scroll-trigger {
+            display: inline-flex;
         }
     }
 
+    /* Scroll animation - respect reduced motion */
     @media (prefers-reduced-motion: no-preference) {
         @keyframes scroll {
             0% {
@@ -212,23 +204,40 @@
                 opacity: 1;
                 transform: translateY(7px);
             }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-to-icon::after {
+            animation: none;
         }
     }
 </style>
 
 <script>
     import { animate, stagger } from 'motion';
+    import { animateCliTyping, abortAllCliAnimations } from '../utils/cliAnimations';
 
-    const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
-    scrollTriggers.forEach((el) =>
-        el.addEventListener('click', (event) => {
-            (event as Event & { preventDefault?: () => void }).preventDefault?.();
-            scrollToPortfolio();
-        }),
-    );
+    function onScrollTriggerClick(event: Event) {
+        event.preventDefault();
+        scrollToPortfolio();
+    }
+
+    function initHeroSection() {
+        const scrollTriggers = document.querySelectorAll<HTMLElement>('.scroll-trigger, button.scroll-to, a.projects');
+        scrollTriggers.forEach((el) => {
+            if (el.dataset.scrollBound === 'true') return;
+            el.dataset.scrollBound = 'true';
+            el.addEventListener('click', onScrollTriggerClick);
+        });
+    }
 
     function scrollToPortfolio() {
-        const portfolio: HTMLElement | null = document.querySelector('#portfolio');
+        const portfolio = document.querySelector<HTMLElement>('#portfolio');
         if (!portfolio) return;
         const stickyHeader = document.querySelector('header');
         const headerOffset = stickyHeader instanceof HTMLElement ? stickyHeader.offsetHeight : 150;
@@ -242,13 +251,24 @@
         node.textContent = text;
         return node;
     };
+
     const splitByLetter = (text: string | null | undefined) => (text ? [...text].map(createSpan) : []);
 
-    const { matches: motionOK } = window.matchMedia('(prefers-reduced-motion: no-preference)');
-    let heroAnim: any = null;
+    const motionOK = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+    let heroAnim: ReturnType<typeof animate> | null = null;
 
     function runHeroLetters() {
-        if (!motionOK) return;
+        if (!motionOK) {
+            const elements = document.querySelectorAll<HTMLElement>(
+                '.cli-header, .header-light, .hero-subtitle, .links, .animate',
+            );
+            elements.forEach((el) => {
+                el.style.opacity = '1';
+            });
+            return;
+        }
+
+        animateCliTyping('.cli-command', 120, 35);
 
         if (!document.querySelector('.title .letter')) {
             const words = document.querySelectorAll<HTMLElement>('.title .word');
@@ -260,8 +280,8 @@
                         wordEl.append(' ');
                         return;
                     }
-                    (node as HTMLElement).classList.add('letter');
-                    (node as HTMLElement).style.display = 'inline-block';
+                    node.classList.add('letter');
+                    node.style.display = 'inline-block';
                     wordEl.appendChild(node);
                 });
             });
@@ -270,73 +290,72 @@
         const letters = document.querySelectorAll<HTMLElement>('.title .letter');
         letters.forEach((el) => {
             el.style.opacity = '0';
-            el.style.transform = 'translate3d(0, 25px, 0)';
-            el.style.filter = 'blur(5px)';
-            el.style.willChange = 'opacity, transform, filter';
+            el.style.transform = 'translate3d(0, 20px, 0)';
+            el.style.willChange = 'opacity, transform';
         });
 
-        const step = 0.075;
-        const letterDuration = 0.8;
-
+        const step = 0.055;
+        const letterDuration = 0.6;
         const lastLetterEndAt = letters.length ? (letters.length - 1) * step + letterDuration : 0;
 
         const sequence = [
             [
                 Array.from(letters),
                 {
-                    y: [50, 0],
+                    y: [30, 0],
                     opacity: [0, 1],
-                    filter: ['blur(5px)', 'blur(0)'],
                 },
-                { duration: letterDuration, delay: stagger(step, { startDelay: 0.3 }), ease: 'easeOut' },
+                { duration: letterDuration, delay: stagger(step, { startDelay: 0.25 }), ease: [0.16, 1, 0.3, 1] },
             ],
             [
-                '.header-light',
+                '.hero-subtitle',
                 {
                     opacity: [0, 1],
-                    y: [50, 0],
-                    filter: ['blur(5px)', 'blur(0)'],
+                    y: [16, 0],
                 },
-                { at: Math.max(0, lastLetterEndAt - 0.3), duration: 0.75, ease: 'easeOut' },
+                { at: Math.max(0, lastLetterEndAt - 0.25), duration: 1, ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.links',
                 {
                     opacity: [0, 1],
-                    y: [25, 0],
-                    filter: ['blur(5px)', 'blur(0)'],
+                    y: [12, 0],
                 },
-                { at: Math.max(0, lastLetterEndAt - 0.05), duration: 0.7, ease: 'easeOut' },
+                { at: Math.max(0, lastLetterEndAt), duration: 0.65, ease: [0.16, 1, 0.3, 1] },
             ],
             [
                 '.animate',
                 {
                     opacity: [0, 1],
-                    y: [25, 0],
+                    y: [12, 0],
                 },
-                { at: lastLetterEndAt + 0.1, duration: 0.7, ease: 'easeOut' },
+                { at: lastLetterEndAt + 0.25, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
             ],
-            ['.animate', { at: lastLetterEndAt + 0.6, duration: 0.2, ease: 'linear' }],
         ];
 
         heroAnim?.stop();
         heroAnim = animate(sequence as any);
         heroAnim.finished.then(() => {
-            const all = document.querySelectorAll<HTMLElement>('.title .letter, .header-light, .links, .animate');
+            const all = document.querySelectorAll<HTMLElement>(
+                '.cli-header, .title .letter, .hero-subtitle, .links, .animate',
+            );
             all.forEach((el) => {
                 el.style.willChange = 'auto';
+                el.style.transform = '';
             });
             document.dispatchEvent(new CustomEvent('hero:sequence-done'));
         });
     }
 
-    window.addEventListener('load', runHeroLetters);
-    document.addEventListener('astro:page-load', runHeroLetters);
-    document.addEventListener('astro:after-swap', runHeroLetters);
+    // Initialize
+    initHeroSection();
+    document.addEventListener('astro:page-load', () => {
+        initHeroSection();
+        runHeroLetters();
+    });
     document.addEventListener('astro:before-swap', () => {
         heroAnim?.stop();
         heroAnim = null;
+        abortAllCliAnimations();
     });
 </script>
-
-<script></script>

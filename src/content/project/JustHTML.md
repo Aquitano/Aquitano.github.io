@@ -1,7 +1,7 @@
 ---
 title: 'JustHTML - Framework'
 name: 'JustHTML'
-description: 'Innovatives Framework zur Vereinfachung der Webseiten-Erstellung'
+description: 'Leichtgewichtiges Framework für einfache Webseiten ohne aufwendiges JavaScript oder CSS'
 featured: true
 tags: ['HTML', 'CSS', 'JavaScript']
 tasks: ['Frontend', 'Framework']
@@ -10,4 +10,6 @@ fullImage: 'JustHTML-full.jpg'
 year: 2020
 ---
 
-**JustHTML** repräsentiert ein **bahnbrechendes Framework**, das ins Leben gerufen wurde, um die Webentwicklung zu demokratisieren und den Bedarf an JavaScript und CSS drastisch zu reduzieren. Im Kern setzt es auf reines HTML, angereichert durch **maßgeschneiderte JS- und CSS-Klassen**, stilvolle **Designs** und intuitive **Funktionen**. Dies garantiert ein unvergleichliches Benutzererlebnis. Werfen Sie einen Blick auf die GitHub-Seite, um tiefer in den Quellcode einzutauchen und die aktuellste Version herunterzuladen. Lassen Sie sich von JustHTML inspirieren und erleben Sie, wie es die Landschaft Ihrer Webprojekte verändert.
+**JustHTML** ist ein **leichtgewichtiges Framework**, das die Erstellung einfacher Webseiten vereinfacht und den Bedarf an separatem JavaScript und CSS deutlich reduziert. Es stellt vorgefertigte **CSS-Klassen** und **JavaScript-Funktionen** bereit, die sich direkt im HTML einsetzen lassen.
+
+Den Quellcode und die aktuelle Version gibt es auf der GitHub-Seite.

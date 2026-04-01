@@ -1,6 +1,8 @@
 import { createVisibilityObserver, withOccurrence } from '@solid-primitives/intersection-observer';
 import { animate, type Easing } from 'motion';
-import { Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { For, Show, createEffect, createSignal, onCleanup, onMount, type Component } from 'solid-js';
+import { defaultLang, ui, type Lang } from '../i18n/ui';
+import { getMotionPreference, getReducedMotionMQL } from '../utils/cliAnimations';
 
 export type GridSize = 'small' | 'medium' | 'large' | 'wide' | 'tall';
 
@@ -15,16 +17,15 @@ export interface ProjectCardProps {
     gridSize?: GridSize;
     headerAnimationComplete?: boolean;
     wrapperClassOverride?: string;
+    lang?: string;
 }
 
-const CARD_BG_CLASS = 'bg-neutral-600';
-
-export const GRID_SIZE_CLASSES = {
-    small: 'md:col-span-2 h-[320px]',
-    medium: 'md:col-span-2 h-[360px]',
-    large: 'md:col-span-2 h-[400px]',
-    wide: 'md:col-span-4 h-[360px]',
-    tall: 'md:col-span-2 h-[460px]',
+const GRID_SIZE_CLASSES: Record<GridSize, string> = {
+    small: 'md:col-span-2 h-[340px]',
+    medium: 'md:col-span-2 h-[380px]',
+    large: 'md:col-span-2 h-[420px]',
+    wide: 'md:col-span-4 h-[380px]',
+    tall: 'md:col-span-2 h-[480px]',
 };
 
 export const ANIMATION_CONFIG = {
@@ -36,35 +37,40 @@ export const ANIMATION_CONFIG = {
 
 const ProjectCard: Component<ProjectCardProps> = (props) => {
     const gridSize = props.gridSize ?? 'medium';
+    const lang = (props.lang ?? defaultLang) as Lang;
+    const viewLabel = ui[lang]?.['project.viewProject'] ?? ui[defaultLang]['project.viewProject'];
+    const newLabel = ui[lang]?.['project.new'] ?? ui[defaultLang]['project.new'];
+    const newAriaLabel = ui[lang]?.['project.newLabel'] ?? ui[defaultLang]['project.newLabel'];
+    const tagsLabel = ui[lang]?.['project.tags'] ?? ui[defaultLang]['project.tags'];
+    const [motionOK, setMotionOK] = createSignal(getMotionPreference());
 
     let cardRef: HTMLDivElement | undefined;
     let contentRef: HTMLDivElement | undefined;
     let animationController: ReturnType<typeof animate> | null = null;
     const [hasAnimated, setHasAnimated] = createSignal(false);
 
-    // Spotlight hover/focus effect
-    const [isSpotlightFocused, setIsSpotlightFocused] = createSignal(false);
-    const [spotlightOpacity, setSpotlightOpacity] = createSignal(0);
+    const [isHovered, setIsHovered] = createSignal(false);
     const [spotlightPosition, setSpotlightPosition] = createSignal({ x: 0, y: 0 });
 
+    onMount(() => {
+        const mq = getReducedMotionMQL();
+        if (!mq) return;
+
+        setMotionOK(!mq.matches);
+
+        const handler = (e: MediaQueryListEvent) => setMotionOK(!e.matches);
+        mq.addEventListener('change', handler);
+        onCleanup(() => mq.removeEventListener('change', handler));
+    });
+
     const handleMouseMove = (e: MouseEvent) => {
-        if (!cardRef || isSpotlightFocused()) return;
+        if (!cardRef || !motionOK()) return;
         const rect = cardRef.getBoundingClientRect();
         setSpotlightPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
 
-    const handleFocus = () => {
-        setIsSpotlightFocused(true);
-        setSpotlightOpacity(0.6);
-    };
-
-    const handleBlur = () => {
-        setIsSpotlightFocused(false);
-        setSpotlightOpacity(0);
-    };
-
-    const handleMouseEnter = () => setSpotlightOpacity(0.6);
-    const handleMouseLeave = () => setSpotlightOpacity(0);
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
     const useVisibilityObserver = createVisibilityObserver(
         { threshold: ANIMATION_CONFIG.viewportThreshold },
@@ -89,69 +95,74 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     });
 
     const animateIn = () => {
-        if (cardRef && !hasAnimated()) {
-            cardRef.style.opacity = '0';
-            cardRef.style.transform = 'translateY(30px) scale(0.95)';
-            cardRef.style.filter = 'blur(4px)';
-            cardRef.style.willChange = 'transform, opacity, filter';
+        if (!cardRef || hasAnimated()) return;
 
-            requestAnimationFrame(() => {
+        if (!motionOK()) {
+            cardRef.style.opacity = '1';
+            cardRef.style.transform = 'none';
+            return;
+        }
+
+        cardRef.style.opacity = '0';
+        cardRef.style.transform = 'translate3d(0, 24px, 0) scale(0.97)';
+        cardRef.style.willChange = 'transform, opacity';
+
+        requestAnimationFrame(() => {
+            if (!cardRef) return;
+
+            const seq = [
+                [
+                    cardRef,
+                    {
+                        opacity: [0, 1],
+                        y: [24, 0],
+                        scale: [0.97, 1],
+                    },
+                    {
+                        duration: ANIMATION_CONFIG.entrance.duration,
+                        at: (props.index % 6) * ANIMATION_CONFIG.staggerDelay,
+                        ease: [0.16, 1, 0.3, 1],
+                    },
+                ],
+            ];
+            animationController = animate(seq as any);
+
+            animationController.finished.then(() => {
                 if (cardRef) {
-                    const seq = [
-                        [
-                            cardRef,
-                            {
-                                opacity: [0, 1],
-                                transform: ['translateY(30px) scale(0.95)', 'translateY(0) scale(1)'],
-                                filter: ['blur(4px)', 'blur(0px)'],
-                            },
-                            {
-                                duration: ANIMATION_CONFIG.entrance.duration,
-                                at: (props.index % 6) * ANIMATION_CONFIG.staggerDelay,
-                            },
-                        ],
-                    ];
-                    animationController = animate(seq as any);
-
-                    animationController.finished.then(() => {
-                        if (cardRef) {
-                            cardRef.style.opacity = '1';
-                            cardRef.style.transform = 'translateY(0) scale(1)';
-                            cardRef.style.filter = 'blur(0px)';
-                            cardRef.style.willChange = 'auto';
-                        }
-                    });
+                    cardRef.style.opacity = '1';
+                    cardRef.style.transform = '';
+                    cardRef.style.willChange = 'auto';
                 }
             });
+        });
 
-            if (contentRef && props.tags?.length && props.headerAnimationComplete) {
-                const tagElements = contentRef.querySelectorAll('.project-tag');
-                const tagsSeq = Array.from(tagElements).map(
-                    (el, i) =>
-                        [
-                            el,
-                            {
-                                opacity: [0.7, 1],
-                                transform: ['translateY(8px)', 'translateY(0)'],
-                            },
-                            {
-                                duration: 0.5,
-                                ease: 'easeOut',
-                                at: i * 0.03,
-                            },
-                        ] as const,
-                );
-                animate(tagsSeq as any);
-            }
+        if (contentRef && props.tags?.length && props.headerAnimationComplete && motionOK()) {
+            const tagElements = contentRef.querySelectorAll('.project-tag');
+            const tagsSeq = Array.from(tagElements).map(
+                (el, i) =>
+                    [
+                        el,
+                        {
+                            opacity: [0.7, 1],
+                            y: [6, 0],
+                        },
+                        {
+                            duration: 0.5,
+                            ease: [0.16, 1, 0.3, 1],
+                            at: i * 0.03,
+                        },
+                    ] as const,
+            );
+            animate(tagsSeq as any);
         }
     };
 
     onMount(() => {
         if (cardRef) {
-            cardRef.style.opacity = '0';
-            cardRef.style.transform = 'translateY(30px) scale(0.95)';
-            cardRef.style.filter = 'blur(4px)';
-
+            if (motionOK()) {
+                cardRef.style.opacity = '0';
+                cardRef.style.transform = 'translate3d(0, 24px, 0) scale(0.97)';
+            }
             useVisibilityObserver(() => cardRef);
         }
     });
@@ -163,88 +174,152 @@ const ProjectCard: Component<ProjectCardProps> = (props) => {
     const wrapperClass = props.wrapperClassOverride ?? `relative ${GRID_SIZE_CLASSES[gridSize]}`;
 
     return (
-        <div class={wrapperClass}>
+        <article class={wrapperClass}>
             <div
-                ref={cardRef}
-                class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl shadow-none ring-1 ring-white/10 transition-all duration-300 hover:ring-white/20"
+                ref={(el) => (cardRef = el)}
+                class="perspective-2000 h-full w-full transform-gpu overflow-hidden rounded-xl"
+                style={{
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--bg-card-border)',
+                    transition: 'border-color 150ms ease-out',
+                    'border-color': isHovered() ? 'var(--bg-card-border-hover)' : 'var(--bg-card-border)',
+                }}
             >
                 <a
                     href={props.url}
-                    class="decoration-none group interactive-card relative block h-full w-full overflow-hidden text-white"
-                    rel="prefetch"
+                    class="group relative block h-full w-full overflow-hidden no-underline"
+                    data-astro-prefetch
                     onMouseMove={handleMouseMove}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
+                    onFocus={handleMouseEnter}
+                    onBlur={handleMouseLeave}
+                    aria-label={`${props.title} - ${props.year}. ${props.tags?.join(', ') || ''}`}
                 >
-                    <div class={`absolute inset-0 ${CARD_BG_CLASS}`}></div>
-                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.10),transparent_70%)] mix-blend-overlay"></div>
-
-                    <div class="absolute inset-0 z-0 bg-linear-to-b from-black/10 via-transparent to-black/60 transition-opacity duration-200 group-hover:opacity-90"></div>
-
-                    {/* Spotlight overlay */}
+                    {/* ASCII pattern decoration */}
                     <div
-                        class="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 ease-in-out"
+                        class="pointer-events-none absolute top-3 right-4 font-mono text-xs tracking-tight select-none"
+                        style={{ color: 'rgba(255, 255, 255, 0.15)', 'letter-spacing': '0.05em' }}
+                        aria-hidden="true"
+                    >
+                        {'/////'}
+                    </div>
+
+                    {/* Subtle gradient overlay */}
+                    <div
+                        class="absolute inset-0 z-0 transition-opacity duration-200"
                         style={{
-                            opacity: spotlightOpacity(),
-                            background: `radial-gradient(circle at ${spotlightPosition().x}px ${spotlightPosition().y}px, rgba(255,255,255,0.25), transparent 80%)`,
+                            background:
+                                'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.85) 100%)',
+                            opacity: isHovered() ? 0.95 : 1,
                         }}
+                        aria-hidden="true"
                     />
+
+                    {/* Spotlight effect */}
+                    <Show when={motionOK()}>
+                        <div
+                            class="pointer-events-none absolute inset-0 z-1 transition-opacity duration-500 ease-in-out"
+                            style={{
+                                opacity: isHovered() ? 0.5 : 0,
+                                background: `radial-gradient(circle at ${spotlightPosition().x}px ${spotlightPosition().y}px, rgba(224, 122, 58, 0.15), transparent 60%)`,
+                            }}
+                            aria-hidden="true"
+                        />
+                    </Show>
 
                     {/* New badge */}
                     <Show when={props.isNew}>
-                        <div class="absolute top-5 right-5 z-10">
-                            <div class="relative">
-                                <div class="flex h-[50px] w-[50px] items-center justify-center rounded-full bg-white text-xs font-bold tracking-wider text-stone-800 uppercase shadow-md">
-                                    new
-                                </div>
-                                <svg viewBox="0 0 100 100" class="absolute top-0 left-0 h-[50px] w-[50px] -rotate-90">
-                                    <circle cx="50" cy="50" r="47" stroke-width="6" class="fill-none stroke-white/30" />
-                                </svg>
+                        <div class="absolute top-5 left-5 z-10" aria-label={newAriaLabel}>
+                            <div
+                                class="rounded-md px-3 py-1.5 font-mono text-xs font-bold tracking-wider uppercase shadow-lg"
+                                style={{
+                                    background: 'var(--color-accent)',
+                                    color: '#fff',
+                                    'box-shadow': '0 4px 12px rgba(224, 122, 58, 0.4)',
+                                }}
+                            >
+                                {newLabel}
                             </div>
                         </div>
                     </Show>
 
                     {/* Content */}
                     <div
-                        ref={contentRef}
-                        class="absolute bottom-0 left-0 z-10 w-full translate-y-2 transform p-8 transition-transform duration-500 ease-out group-hover:translate-y-0"
+                        ref={(el) => (contentRef = el)}
+                        class="absolute bottom-0 left-0 z-10 w-full min-w-0 p-7 md:p-8"
+                        style={{
+                            transform: isHovered() ? 'translateY(0)' : 'translateY(2px)',
+                            transition: 'transform 300ms ease-out',
+                        }}
                     >
-                        <span class="mb-2 block text-sm font-medium text-white/85 opacity-80 transition-opacity duration-400 group-hover:opacity-95">
+                        {/* Year label */}
+                        <span
+                            class="mb-2 block font-mono text-sm font-semibold tracking-wider uppercase"
+                            style={{ color: 'var(--color-accent)' }}
+                        >
                             {props.year}
                         </span>
 
-                        <h2 class="mb-4 text-xl font-bold text-white transition-transform duration-200 ease-out group-hover:-translate-y-0.5 md:text-2xl">
+                        {/* Title */}
+                        <h2
+                            class="mb-4 text-2xl font-bold md:text-3xl"
+                            style={{
+                                color: '#fafaf9',
+                                'line-height': '1.35',
+                                'letter-spacing': '-0.01em',
+                                'overflow-wrap': 'anywhere',
+                                'text-wrap': 'balance',
+                            }}
+                        >
                             {props.title}
                         </h2>
 
-                        <div class="mb-6 flex flex-wrap gap-2">
-                            {props.tags?.map((tag) => (
-                                <span class="project-tag translate-y-2 rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur-md transition-all duration-400">
-                                    {tag}
-                                </span>
-                            ))}
-                        </div>
+                        {/* Tags */}
+                        <ul class="mb-4 flex list-none flex-wrap gap-2 p-0" aria-label={tagsLabel}>
+                            <For each={props.tags}>
+                                {(tag) => (
+                                    <li
+                                        class="project-tag rounded px-2.5 py-1.5 font-mono text-xs font-medium"
+                                        style={{
+                                            color: 'rgba(255, 255, 255, 0.85)',
+                                            background: 'rgba(255, 255, 255, 0.08)',
+                                            border: '1px solid rgba(255, 255, 255, 0.15)',
+                                            'letter-spacing': '0.01em',
+                                        }}
+                                    >
+                                        {tag}
+                                    </li>
+                                )}
+                            </For>
+                        </ul>
 
-                        <div class="flex translate-y-3 transform items-center font-medium opacity-0 transition-all duration-200 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-                            <span>View Project</span>
-                            <span class="ml-2 text-xl transition-transform duration-300 group-hover:translate-x-1">
-                                →
+                        {/* View link */}
+                        <div
+                            class="flex items-center font-mono text-base font-semibold"
+                            style={{
+                                color: 'var(--color-accent)',
+                                opacity: isHovered() ? 1 : 0.8,
+                                transform: isHovered() ? 'translateY(0)' : 'translateY(2px)',
+                                transition: 'opacity 200ms ease-out, transform 200ms ease-out',
+                            }}
+                        >
+                            <span>{viewLabel}</span>
+                            <span
+                                class="ml-2"
+                                style={{
+                                    transform: isHovered() ? 'translateX(4px)' : 'translateX(0)',
+                                    transition: 'transform 200ms ease-out',
+                                }}
+                            >
+                                &rarr;
                             </span>
                         </div>
                     </div>
                 </a>
             </div>
-        </div>
+        </article>
     );
 };
-
-if (typeof window !== 'undefined') {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reduce.matches) {
-        document.documentElement.classList.add('prm');
-    }
-}
 
 export default ProjectCard;
