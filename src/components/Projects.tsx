@@ -294,7 +294,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     {/* CLI header */}
                     <div
                         ref={(el) => (cliHeader = el)}
-                        class="mb-4 flex items-center gap-3 font-mono text-sm text-text-secondary"
+                        class="mb-4 flex items-center gap-3 font-mono text-sm text-secondary"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         <span class="font-bold text-accent-ui">$</span>
@@ -303,7 +303,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
 
                     <p
                         ref={(el) => (preHeader = el)}
-                        class="text-sm font-semibold tracking-caps text-text-tertiary uppercase"
+                        class="text-sm font-semibold tracking-caps text-tertiary uppercase"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.my')}
@@ -311,7 +311,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <h1
                         ref={(el) => (header = el)}
                         id="portfolio-heading"
-                        class="mt-1.5 font-display text-5xl leading-tight font-extrabold text-text-primary"
+                        class="mt-1.5 font-display text-5xl leading-tight font-extrabold text-primary"
                         style={{ opacity: motionOK ? '0' : '1' }}
                     >
                         {t(lang, 'portfolio.projects')}
@@ -351,7 +351,7 @@ const Projects: Component<{ allProjects: Project[]; lang?: string }> = (props) =
                     <Show
                         when={projects().length > 0}
                         fallback={
-                            <div class="col-span-full py-8 text-center text-text-tertiary">
+                            <div class="col-span-full py-8 text-center text-tertiary">
                                 {t(lang, 'portfolio.notFound')}
                             </div>
                         }

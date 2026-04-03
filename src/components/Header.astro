@@ -61,6 +61,10 @@ const menus = navKeys.map((item) => ({
                 aria-label={t('nav.openMenu')}
                 aria-expanded="false"
                 aria-controls="nav-content"
+                data-label-open={t('nav.openMenu')}
+                data-label-close={t('nav.closeMenu')}
+                data-text-open={t('nav.menu')}
+                data-text-close={t('nav.close')}
             >
                 <span
                     class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
@@ -115,26 +119,6 @@ const menus = navKeys.map((item) => ({
         </div>
     </div>
 </nav>
-
-<!-- Close button for navigation -->
-<button
-    id="nav-close"
-    type="button"
-    class="close focus-visible:ring-accent fixed top-8 right-4 z-60 hidden -translate-y-4 cursor-pointer items-center justify-center rounded-full opacity-0 transition-all duration-300 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 md:top-10 md:right-10"
-    aria-label={t('nav.closeMenu')}
-    tabindex="-1"
->
-    <div class="close-container">
-        <div class="close-bg"></div>
-        <div class="close-content">
-            <span class="close-text">{t('nav.close')}</span>
-            <div class="close-icon" aria-hidden="true">
-                <span class="close-line close-line-1"></span>
-                <span class="close-line close-line-2"></span>
-            </div>
-        </div>
-    </div>
-</button>
 
 <style lang="scss">
     @reference "../styles/global.css";
@@ -221,7 +205,10 @@ const menus = navKeys.map((item) => ({
         width: 24px;
         height: 2px;
         border-radius: 1px;
-        transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+        transition:
+            top 0.2s ease,
+            bottom 0.2s ease,
+            transform 0.2s ease;
         transform-origin: center;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
@@ -234,18 +221,30 @@ const menus = navKeys.map((item) => ({
 
     .line-1 {
         top: 0;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+            top 0.2s ease 0.2s,
+            transform 0.2s ease 0s,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
     }
 
     .line-2 {
         top: 50%;
         transform: translateY(-50%);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+            opacity 0.2s ease 0.2s,
+            transform 0.2s ease 0s,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
     }
 
     .line-3 {
         bottom: 0;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+            bottom 0.2s ease 0.2s,
+            transform 0.2s ease 0s,
+            background-color 0.3s ease,
+            box-shadow 0.3s ease;
     }
 
     .menu:hover .line {
@@ -253,219 +252,66 @@ const menus = navKeys.map((item) => ({
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    .menu:hover .line-1 {
+    header:not(.nav-on) .menu:hover .line-1 {
         transform: translateX(3px);
     }
 
-    .menu:hover .line-2 {
+    header:not(.nav-on) .menu:hover .line-2 {
         transform: translateY(-50%) translateX(-3px);
     }
 
-    .menu:hover .line-3 {
+    header:not(.nav-on) .menu:hover .line-3 {
         transform: translateX(3px);
     }
 
     header.nav-on .line-1 {
-        transform: rotate(45deg) translate(5px, 5px);
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        transition:
+            top 0.2s ease 0s,
+            transform 0.2s ease 0.2s,
+            background-color 0.3s ease;
+    }
+
+    header.nav-on {
+        z-index: 60;
     }
 
     @media (min-width: 768px) {
         header.nav-on .line-1 {
-            transform: rotate(45deg) translate(7px, 7px);
+            transform: translateY(-50%) rotate(45deg);
         }
     }
 
     header.nav-on .line-2 {
         opacity: 0;
-        transform: translateY(-50%) scale(0);
+        transform: translateY(-50%) scale(0.1);
+        transition:
+            opacity 0.2s ease 0s,
+            transform 0.2s ease 0s;
     }
 
     header.nav-on .line-3 {
-        transform: rotate(-45deg) translate(5px, -5px);
+        bottom: 50%;
+        transform: translateY(50%) rotate(-45deg);
+        transition:
+            bottom 0.2s ease 0s,
+            transform 0.2s ease 0.2s,
+            background-color 0.3s ease;
     }
 
     @media (min-width: 768px) {
         header.nav-on .line-3 {
-            transform: rotate(-45deg) translate(7px, -7px);
+            transform: translateY(50%) rotate(-45deg);
         }
     }
 
-    .close-container {
-        position: relative;
-        width: auto;
-        height: auto;
-        border-radius: 20px;
-        overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    header.nav-on .menu:hover .line-1 {
+        transform: translateY(-50%) rotate(135deg);
     }
 
-    @media (min-width: 768px) {
-        .close-container {
-            border-radius: 30px;
-        }
-    }
-
-    .close-bg {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.15) 0%,
-            rgba(255, 255, 255, 0.05) 50%,
-            rgba(255, 255, 255, 0.1) 100%
-        );
-        backdrop-filter: blur(20px) saturate(1.2);
-        -webkit-backdrop-filter: blur(20px) saturate(1.2);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @media (min-width: 768px) {
-        .close-bg {
-            border-radius: 30px;
-        }
-    }
-
-    .close-bg::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        transition: left 0.6s ease;
-    }
-
-    .close:hover .close-bg {
-        background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.25) 0%,
-            rgba(255, 255, 255, 0.1) 50%,
-            rgba(255, 255, 255, 0.2) 100%
-        );
-        border-color: rgba(255, 255, 255, 0.3);
-        box-shadow:
-            0 10px 40px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    }
-
-    .close:hover .close-bg::before {
-        left: 100%;
-    }
-
-    .close:hover .close-container {
-        transform: scale(1.05);
-    }
-
-    .close-content {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 12px 16px;
-        height: 100%;
-    }
-
-    @media (min-width: 768px) {
-        .close-content {
-            gap: 12px;
-            padding: 16px 20px;
-        }
-    }
-
-    .close-text {
-        @apply text-xs;
-        font-weight: 600;
-        text-transform: uppercase;
-        @apply tracking-widest;
-        color: rgba(255, 255, 255, 0.9);
-        transition: all 0.3s ease;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        white-space: nowrap;
-    }
-
-    @media (min-width: 768px) {
-        .close-text {
-            @apply text-sm;
-        }
-    }
-
-    .close:hover .close-text {
-        color: white;
-        @apply tracking-caps;
-    }
-
-    .close-icon {
-        width: 18px;
-        height: 18px;
-        position: relative;
-        display: inline-block;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @media (min-width: 768px) {
-        .close-icon {
-            width: 24px;
-            height: 24px;
-        }
-    }
-
-    .close-line {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.9);
-        display: block;
-        width: 16px;
-        height: 2px;
-        border-radius: 1px;
-        top: 50%;
-        left: 50%;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    @media (min-width: 768px) {
-        .close-line {
-            width: 20px;
-        }
-    }
-
-    .close-line-1 {
-        transform: translate(-50%, -50%) rotate(45deg);
-    }
-
-    .close-line-2 {
-        transform: translate(-50%, -50%) rotate(-45deg);
-    }
-
-    .close:hover .close-line {
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        width: 20px;
-    }
-
-    @media (min-width: 768px) {
-        .close:hover .close-line {
-            width: 24px;
-        }
-    }
-
-    .close:hover .close-icon {
-        transform: rotate(90deg) scale(1.1);
-    }
-
-    .close.show {
-        display: flex;
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .close.hide {
-        opacity: 0;
-        transform: translateY(-1rem);
+    header.nav-on .menu:hover .line-3 {
+        transform: translateY(50%) rotate(45deg);
     }
 
     #nav {
@@ -643,6 +489,8 @@ const menus = navKeys.map((item) => ({
         return document.querySelector(selector);
     };
 
+    let navFocusTimeout: ReturnType<typeof setTimeout> | null = null;
+
     function animateHeaderIn(duration: number, delay: number) {
         if ($('header')) {
             const seq = [
@@ -662,7 +510,6 @@ const menus = navKeys.map((item) => ({
         const nav = $('#nav');
         const navContent = $('#nav-content');
         const header = $('header');
-        const closeBtn = $('#nav-close');
         const menuBtn = $('.menu');
         const menuLinks = document.querySelectorAll('#mi a');
 
@@ -673,18 +520,18 @@ const menus = navKeys.map((item) => ({
             $('#mi')?.classList.remove('Fade-out');
         }
 
-        // Show close button
-        closeBtn?.classList.remove('hidden');
-        closeBtn?.classList.remove('hide');
-        closeBtn?.classList.add('show');
-        (closeBtn as HTMLElement)?.setAttribute('tabindex', '0');
-
         // Enable nav
         nav?.classList.add('on');
         header?.classList.add('nav-on');
 
         // Update ARIA attributes
-        (menuBtn as HTMLElement)?.setAttribute('aria-expanded', 'true');
+        if (menuBtn) {
+            const btn = menuBtn as HTMLElement;
+            btn.setAttribute('aria-expanded', 'true');
+            if (btn.dataset.labelClose) btn.setAttribute('aria-label', btn.dataset.labelClose);
+            const menuText = btn.querySelector('.menu-text');
+            if (menuText && btn.dataset.textClose) menuText.textContent = btn.dataset.textClose;
+        }
         navContent?.setAttribute('aria-hidden', 'false');
 
         // Make menu links focusable
@@ -693,8 +540,11 @@ const menus = navKeys.map((item) => ({
         });
 
         // Focus first menu link after animation
-        setTimeout(() => {
-            (menuLinks[0] as HTMLElement)?.focus();
+        if (navFocusTimeout) clearTimeout(navFocusTimeout);
+        navFocusTimeout = setTimeout(() => {
+            if (nav?.classList.contains('on')) {
+                (menuLinks[0] as HTMLElement)?.focus();
+            }
         }, 500);
 
         // Trap focus in nav
@@ -702,10 +552,11 @@ const menus = navKeys.map((item) => ({
     }
 
     function closeNav() {
+        if (navFocusTimeout) clearTimeout(navFocusTimeout);
+
         const nav = $('#nav');
         const navContent = $('#nav-content');
         const header = $('header');
-        const closeBtn = $('#nav-close');
         const menuBtn = $('.menu');
         const menuLinks = document.querySelectorAll('#mi a');
 
@@ -715,11 +566,14 @@ const menus = navKeys.map((item) => ({
         nav?.classList.remove('on');
         header?.classList.remove('nav-on');
 
-        closeBtn?.classList.remove('show');
-        closeBtn?.classList.add('hide');
-
         // Update ARIA attributes
-        (menuBtn as HTMLElement)?.setAttribute('aria-expanded', 'false');
+        if (menuBtn) {
+            const btn = menuBtn as HTMLElement;
+            btn.setAttribute('aria-expanded', 'false');
+            if (btn.dataset.labelOpen) btn.setAttribute('aria-label', btn.dataset.labelOpen);
+            const menuText = btn.querySelector('.menu-text');
+            if (menuText && btn.dataset.textOpen) menuText.textContent = btn.dataset.textOpen;
+        }
         navContent?.setAttribute('aria-hidden', 'true');
 
         // Make menu links unfocusable
@@ -727,16 +581,22 @@ const menus = navKeys.map((item) => ({
             (link as HTMLElement).setAttribute('tabindex', '-1');
         });
 
-        setTimeout(() => {
-            closeBtn?.classList.add('hidden');
-            (closeBtn as HTMLElement)?.setAttribute('tabindex', '-1');
-        }, 300);
-
         // Return focus to menu button
         (menuBtn as HTMLElement)?.focus();
 
         // Remove focus trap
         document.removeEventListener('keydown', handleNavKeydown);
+    }
+
+    function toggleNav() {
+        const header = $('header');
+        const isOpen = header?.classList.contains('nav-on');
+
+        if (isOpen) {
+            closeNav();
+        } else {
+            openNav();
+        }
     }
 
     function handleNavKeydown(e: KeyboardEvent) {
@@ -748,9 +608,7 @@ const menus = navKeys.map((item) => ({
 
         // Trap focus
         if (e.key === 'Tab') {
-            const focusableElements = document.querySelectorAll(
-                '#nav-content a:not([tabindex="-1"]), #nav-close:not(.hidden)',
-            );
+            const focusableElements = document.querySelectorAll('#nav-content a:not([tabindex="-1"]), .menu');
             const firstElement = focusableElements[0] as HTMLElement;
             const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
 
@@ -766,30 +624,9 @@ const menus = navKeys.map((item) => ({
 
     function addListeners() {
         const menuBtn = $('.menu');
-        const closeBtn = $('#nav-close');
 
         menuBtn?.addEventListener('click', () => {
-            openNav();
-        });
-
-        // Keyboard support for menu button
-        menuBtn?.addEventListener('keydown', (e) => {
-            if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
-                e.preventDefault();
-                openNav();
-            }
-        });
-
-        closeBtn?.addEventListener('click', () => {
-            closeNav();
-        });
-
-        // Keyboard support for close button
-        closeBtn?.addEventListener('keydown', (e) => {
-            if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
-                e.preventDefault();
-                closeNav();
-            }
+            toggleNav();
         });
 
         document.querySelectorAll('#mi > li > a').forEach((menu) => {

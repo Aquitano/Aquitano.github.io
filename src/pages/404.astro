@@ -68,7 +68,7 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
         font-size: clamp(6rem, 20vw, 12rem);
         font-weight: 900;
         line-height: 1;
-        @apply text-text-primary;
+        @apply text-primary;
         margin-bottom: 1rem;
     }
 
@@ -76,13 +76,13 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
         @apply font-heading;
         @apply text-2xl;
         font-weight: 700;
-        @apply text-text-primary;
+        @apply text-primary;
         margin-bottom: 1rem;
     }
 
     .error-message {
         @apply text-lg leading-relaxed;
-        @apply text-text-secondary;
+        @apply text-secondary;
         margin-bottom: 2rem;
     }
 
@@ -105,7 +105,7 @@ const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
         position: absolute;
         @apply font-mono;
         @apply text-sm tracking-widest;
-        @apply text-text-muted;
+        @apply text-muted;
         opacity: 0.4;
         pointer-events: none;
         user-select: none;

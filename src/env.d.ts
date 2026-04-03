@@ -1,5 +1,6 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
+declare module '@fontsource-variable/*';
 declare module 'astro-imagetools/components' {
     // const Img: import('astro-imagetools').ImgConfigOptions;
     // const Picture: import('astro-imagetools').PictureConfigOptions;

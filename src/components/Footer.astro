@@ -48,7 +48,7 @@ const sections: FooterSection[] = [
                 {
                     sections.map((section) => (
                         <div>
-                            <p class="text-lg font-bold tracking-tight text-text-primary sm:text-xl md:text-2xl">
+                            <p class="text-lg font-bold tracking-tight text-primary sm:text-xl md:text-2xl">
                                 {section.title}
                             </p>
                             <div class="mt-3 h-0.5 w-full bg-border-default" aria-hidden="true" />
@@ -58,7 +58,7 @@ const sections: FooterSection[] = [
                                         <a
                                             href={item.href}
                                             {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                                            class="group inline-flex items-center gap-1.5 text-base font-semibold text-text-secondary transition-colors duration-150 hover:text-accent-ui sm:text-lg md:text-xl"
+                                            class="group inline-flex items-center gap-1.5 text-base font-semibold text-secondary transition-colors duration-150 hover:text-accent-ui sm:text-lg md:text-xl"
                                         >
                                             <span class="bg-linear-to-r from-accent-ui to-accent-ui bg-size-[0%_2px] bg-bottom-left bg-no-repeat transition-[background-size] duration-300 ease-out group-hover:bg-size-[100%_2px]">
                                                 {item.label}
@@ -96,18 +96,18 @@ const sections: FooterSection[] = [
 
         <div class="mt-12 grid grid-cols-1 items-end gap-6 pt-8 sm:mt-16 sm:gap-8 sm:pt-10 lg:grid-cols-2">
             <p
-                class="text-2xl leading-snug font-extrabold tracking-tight text-text-primary sm:text-3xl md:text-4xl lg:text-5xl"
+                class="text-2xl leading-snug font-extrabold tracking-tight text-primary sm:text-3xl md:text-4xl lg:text-5xl"
             >
                 &copy; {year} Thomas Breindl
                 <br class="hidden md:block" />
                 <span
-                    class="block text-lg font-semibold text-text-secondary sm:text-xl md:inline md:text-4xl md:font-extrabold md:text-text-primary lg:text-5xl"
+                    class="block text-lg font-semibold text-secondary sm:text-xl md:inline md:text-4xl md:font-extrabold md:text-primary lg:text-5xl"
                 >
                     {t('footer.allRights')}
                 </span>
             </p>
-            <div class="justify-self-start text-text-secondary lg:justify-self-end">
-                <p class="text-xs font-bold tracking-widest text-text-tertiary uppercase">
+            <div class="justify-self-start text-secondary lg:justify-self-end">
+                <p class="text-xs font-bold tracking-widest text-tertiary uppercase">
                     {t('footer.localTime')}
                 </p>
                 <time
