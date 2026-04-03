@@ -92,7 +92,7 @@ if (project.data.fullImage) {
                     <nav class="hero-animation mb-10 opacity-0" aria-label={t('project.back')}>
                         <a
                             href={`${getLocalePath(lang, '/')}#portfolio`}
-                            class="group/back text-text-tertiary hover:text-accent-ui inline-flex items-center gap-2 font-mono text-xs transition-colors duration-200"
+                            class="group/back text-tertiary hover:text-accent-ui inline-flex items-center gap-2 font-mono text-xs transition-colors duration-200"
                             data-astro-prefetch
                         >
                             <span class="transition-transform duration-200 group-hover/back:-translate-x-1">&larr;</span
@@ -116,7 +116,7 @@ if (project.data.fullImage) {
                         }
 
                         <div class="hero-animation mb-8 opacity-0">
-                            <div class="text-text-tertiary mb-3 font-mono text-sm">
+                            <div class="text-tertiary mb-3 font-mono text-sm">
                                 {'$ '}cat ./projects/{project.data.name.toLowerCase()}/README.md
                             </div>
                             <h1 id="project-title" class="project-title font-display">
@@ -125,10 +125,10 @@ if (project.data.fullImage) {
                         </div>
 
                         <div class="hero-animation flex flex-wrap items-center gap-2.5 pt-4 opacity-0">
-                            <span class="text-text-tertiary mr-1 hidden font-mono text-xs sm:inline"
+                            <span class="text-tertiary mr-1 hidden font-mono text-xs sm:inline"
                                 >{'$ '}tags --list</span
                             >
-                            <span class="text-text-muted mr-1 hidden font-mono text-xs sm:inline">|</span>
+                            <span class="text-muted mr-1 hidden font-mono text-xs sm:inline">|</span>
                             {project.data.tags.map((tag: string) => <span class="chip">{tag}</span>)}
                             <span
                                 class="bg-accent-muted-ui text-accent-ui rounded-sm px-3.5 py-1.5 font-mono text-sm font-semibold sm:ml-auto"
@@ -144,13 +144,13 @@ if (project.data.fullImage) {
                                 <div class="section-heading mb-6">
                                     <span class="text-accent-ui font-mono text-xs">{'>'}</span>
                                     <span
-                                        class="text-text-secondary font-mono text-xs font-semibold tracking-wider uppercase"
+                                        class="text-secondary font-mono text-xs font-semibold tracking-wider uppercase"
                                     >
                                         {t('project.overview')}
                                     </span>
                                     <div class="section-heading-line"></div>
                                 </div>
-                                <div class="prose text-text-secondary text-base leading-relaxed">
+                                <div class="prose text-secondary text-base leading-relaxed">
                                     <Content />
                                 </div>
                             </section>
@@ -161,7 +161,7 @@ if (project.data.fullImage) {
                                 <div class="section-heading mb-4">
                                     <span class="text-accent-ui font-mono text-xs">{'>'}</span>
                                     <span
-                                        class="text-text-secondary font-mono text-xs font-semibold tracking-wider uppercase"
+                                        class="text-secondary font-mono text-xs font-semibold tracking-wider uppercase"
                                     >
                                         {t('project.contributions')}
                                     </span>
@@ -199,7 +199,7 @@ if (project.data.fullImage) {
                                     <section class="hero-animation mb-8 opacity-0">
                                         <div class="section-heading mb-4">
                                             <span class="text-accent-ui font-mono text-xs">{'>'}</span>
-                                            <span class="text-text-secondary font-mono text-xs font-semibold tracking-wider uppercase">
+                                            <span class="text-secondary font-mono text-xs font-semibold tracking-wider uppercase">
                                                 {t('project.links')}
                                             </span>
                                             <div class="section-heading-line" />
@@ -278,7 +278,7 @@ if (project.data.fullImage) {
     .project-title {
         @apply text-5xl leading-none tracking-tight;
         font-weight: 900;
-        @apply text-text-primary;
+        @apply text-primary;
         overflow-wrap: anywhere;
         text-wrap: balance;
     }
@@ -289,7 +289,7 @@ if (project.data.fullImage) {
 
     .prose :global(strong) {
         font-weight: 600;
-        @apply text-text-primary;
+        @apply text-primary;
     }
 
     .hero-animation {

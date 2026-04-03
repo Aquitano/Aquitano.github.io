@@ -9,7 +9,7 @@ const { command, class: className } = Astro.props;
 
 <div class:list={['cli-header', className]}>
     <span class="cli-prompt">$</span>
-    <span class="text-text-secondary">{command}</span>
+    <span class="text-secondary">{command}</span>
 </div>
 
 <style>
@@ -19,7 +19,7 @@ const { command, class: className } = Astro.props;
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        @apply text-text-secondary font-mono text-sm;
+        @apply text-secondary font-mono text-sm;
     }
 
     .cli-prompt {
