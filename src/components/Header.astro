@@ -61,6 +61,10 @@ const menus = navKeys.map((item) => ({
                 aria-label={t('nav.openMenu')}
                 aria-expanded="false"
                 aria-controls="nav-content"
+                data-label-open={t('nav.openMenu')}
+                data-label-close={t('nav.closeMenu')}
+                data-text-open={t('nav.menu')}
+                data-text-close={t('nav.close')}
             >
                 <span
                     class="menu-text hidden text-xs font-bold tracking-wider text-white/90 uppercase transition-all duration-300 md:block md:text-sm"
@@ -485,6 +489,8 @@ const menus = navKeys.map((item) => ({
         return document.querySelector(selector);
     };
 
+    let navFocusTimeout: ReturnType<typeof setTimeout> | null = null;
+
     function animateHeaderIn(duration: number, delay: number) {
         if ($('header')) {
             const seq = [
@@ -519,7 +525,13 @@ const menus = navKeys.map((item) => ({
         header?.classList.add('nav-on');
 
         // Update ARIA attributes
-        (menuBtn as HTMLElement)?.setAttribute('aria-expanded', 'true');
+        if (menuBtn) {
+            const btn = menuBtn as HTMLElement;
+            btn.setAttribute('aria-expanded', 'true');
+            if (btn.dataset.labelClose) btn.setAttribute('aria-label', btn.dataset.labelClose);
+            const menuText = btn.querySelector('.menu-text');
+            if (menuText && btn.dataset.textClose) menuText.textContent = btn.dataset.textClose;
+        }
         navContent?.setAttribute('aria-hidden', 'false');
 
         // Make menu links focusable
@@ -528,8 +540,11 @@ const menus = navKeys.map((item) => ({
         });
 
         // Focus first menu link after animation
-        setTimeout(() => {
-            (menuLinks[0] as HTMLElement)?.focus();
+        if (navFocusTimeout) clearTimeout(navFocusTimeout);
+        navFocusTimeout = setTimeout(() => {
+            if (nav?.classList.contains('on')) {
+                (menuLinks[0] as HTMLElement)?.focus();
+            }
         }, 500);
 
         // Trap focus in nav
@@ -537,6 +552,8 @@ const menus = navKeys.map((item) => ({
     }
 
     function closeNav() {
+        if (navFocusTimeout) clearTimeout(navFocusTimeout);
+
         const nav = $('#nav');
         const navContent = $('#nav-content');
         const header = $('header');
@@ -550,7 +567,13 @@ const menus = navKeys.map((item) => ({
         header?.classList.remove('nav-on');
 
         // Update ARIA attributes
-        (menuBtn as HTMLElement)?.setAttribute('aria-expanded', 'false');
+        if (menuBtn) {
+            const btn = menuBtn as HTMLElement;
+            btn.setAttribute('aria-expanded', 'false');
+            if (btn.dataset.labelOpen) btn.setAttribute('aria-label', btn.dataset.labelOpen);
+            const menuText = btn.querySelector('.menu-text');
+            if (menuText && btn.dataset.textOpen) menuText.textContent = btn.dataset.textOpen;
+        }
         navContent?.setAttribute('aria-hidden', 'true');
 
         // Make menu links unfocusable
@@ -604,14 +627,6 @@ const menus = navKeys.map((item) => ({
 
         menuBtn?.addEventListener('click', () => {
             toggleNav();
-        });
-
-        // Keyboard support for menu button
-        menuBtn?.addEventListener('keydown', (e) => {
-            if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
-                e.preventDefault();
-                toggleNav();
-            }
         });
 
         document.querySelectorAll('#mi > li > a').forEach((menu) => {

@@ -37,7 +37,9 @@
     --color-tertiary: var(--text-tertiary);
     --color-muted: var(--text-muted);
     --color-inverse: var(--text-inverse);
+    --color-border-subtle: var(--border-subtle);
     --color-border-default: var(--border-default);
+    --color-border-strong: var(--border-strong);
     --color-accent-ui: var(--color-accent);
     --color-accent-muted-ui: var(--color-accent-muted);
 }
@@ -197,6 +199,12 @@
 
     html[data-theme='dark'] {
         background-size: 320px 320px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        html:not([data-theme='light']) {
+            background-size: 320px 320px;
+        }
     }
 
     body {
@@ -508,6 +516,17 @@
         background: var(--neutral-200);
     }
 
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) .btn-primary {
+            background: var(--neutral-100);
+            color: var(--neutral-900);
+        }
+
+        :root:not([data-theme='light']) .btn-primary:hover:not(:disabled) {
+            background: var(--neutral-200);
+        }
+    }
+
     .btn-secondary {
         background: transparent;
         @apply text-primary;
@@ -522,6 +541,13 @@
     [data-theme='dark'] .btn-secondary:hover:not(:disabled) {
         background: var(--neutral-800);
         border-color: var(--neutral-600);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) .btn-secondary:hover:not(:disabled) {
+            background: var(--neutral-800);
+            border-color: var(--neutral-600);
+        }
     }
 
     .card {
@@ -1005,6 +1031,25 @@
         background: rgba(255, 255, 255, 0.12);
         color: var(--neutral-200);
         box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) .tag-button--active {
+            background: var(--neutral-100);
+            color: var(--neutral-900);
+        }
+
+        :root:not([data-theme='light']) .tag-button--inactive {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--neutral-400);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        :root:not([data-theme='light']) .tag-button--inactive:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--neutral-200);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
     }
 }
 
