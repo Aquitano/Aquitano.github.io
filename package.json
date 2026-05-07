@@ -23,7 +23,7 @@
         "@iconify-json/mdi": "^1.2.3",
         "@solid-primitives/intersection-observer": "^2.2.4",
         "@tailwindcss/vite": "^4.2.2",
-        "astro": "6.1.2",
+        "astro": "6.3.1",
         "astro-compress": "^2.4.0",
         "astro-critters": "^2.2.1",
         "astro-icon": "^1.1.5",
