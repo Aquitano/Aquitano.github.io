@@ -1,0 +1,75 @@
+---
+const NAV = [
+    { label: 'Work', href: '/#work' },
+    { label: 'About', href: '/#about' },
+    { label: 'Stack', href: '/#stack' },
+    { label: 'Contact', href: '/#contact' },
+];
+---
+
+<header
+    data-header
+    class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent mix-blend-difference backdrop-blur-none transition-[background-color,border-color,backdrop-filter] duration-300"
+>
+    <div
+        data-header-inner
+        class="flex items-center justify-between px-5 py-4 transition-[padding] duration-300 md:px-10 md:py-5"
+    >
+        <a href="/#top" class="font-mono text-xs font-medium tracking-[0.14em] text-white uppercase">
+            TB<span class="text-white/50">©2026</span>
+        </a>
+        <div class="flex items-center gap-6 md:gap-10">
+            <span data-clock class="meta hidden tabular-nums sm:inline">Passau, DE</span>
+            <nav class="flex items-center gap-4 md:gap-6">
+                {
+                    NAV.map((item) => (
+                        <a
+                            href={item.href}
+                            class="link-line touch-target font-mono text-xs tracking-[0.14em] text-white uppercase"
+                        >
+                            {item.label}
+                        </a>
+                    ))
+                }
+            </nav>
+        </div>
+    </div>
+</header>
+
+<script>
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const inner = document.querySelector<HTMLElement>('[data-header-inner]');
+
+    if (header && inner) {
+        const apply = (scrolled: boolean) => {
+            header.classList.toggle('border-line/70', scrolled);
+            header.classList.toggle('bg-bg/65', scrolled);
+            header.classList.toggle('backdrop-blur-md', scrolled);
+            header.classList.toggle('border-transparent', !scrolled);
+            header.classList.toggle('bg-transparent', !scrolled);
+            header.classList.toggle('backdrop-blur-none', !scrolled);
+            header.classList.toggle('mix-blend-difference', !scrolled);
+            inner.classList.toggle('py-3', scrolled);
+            inner.classList.toggle('md:py-3.5', scrolled);
+            inner.classList.toggle('py-4', !scrolled);
+            inner.classList.toggle('md:py-5', !scrolled);
+        };
+        const onScroll = () => apply(window.scrollY > 32);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    const clock = document.querySelector<HTMLElement>('[data-clock]');
+    if (clock) {
+        const fmt = new Intl.DateTimeFormat('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Europe/Berlin',
+        });
+        const tick = () => {
+            clock.textContent = `Passau, DE — ${fmt.format(new Date())}`;
+        };
+        tick();
+        setInterval(tick, 30_000);
+    }
+</script>

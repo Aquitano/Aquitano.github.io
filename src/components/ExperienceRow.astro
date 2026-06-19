@@ -1,0 +1,32 @@
+---
+interface Props {
+    job: {
+        company: string;
+        role: string;
+        type: string;
+        period: string;
+        highlights: string[];
+    };
+    index: number;
+    inverted?: boolean;
+}
+
+const { job, index, inverted = false } = Astro.props;
+const subtle = inverted ? 'text-black/60' : 'text-muted';
+---
+
+<div class="grid gap-3 py-7 md:grid-cols-[3.5rem_1.2fr_1.5fr_auto] md:items-start md:gap-8 md:py-9">
+    <span class:list={['font-mono text-xs', inverted ? 'text-black/60' : 'text-acid']}>0{index + 1}</span>
+    <div>
+        <h3 class="display text-2xl md:text-3xl">{job.company}</h3>
+        <p class:list={['mt-2 font-mono text-[0.6875rem] tracking-[0.14em] uppercase', subtle]}>
+            {job.role} · {job.type}
+        </p>
+    </div>
+    <ul class:list={['space-y-1.5 text-sm leading-relaxed', subtle]}>
+        {job.highlights.map((h) => <li>{h}</li>)}
+    </ul>
+    <span class:list={['font-mono text-xs tracking-[0.14em] uppercase', inverted ? 'text-black' : 'text-fg/80']}>
+        {job.period}
+    </span>
+</div>

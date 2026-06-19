@@ -1,0 +1,56 @@
+---
+import { focusAreas } from '../lib/data';
+
+// Two oversized keyword strips that shear past each other, driven by scroll position.
+const ROWS = [focusAreas.slice(0, 3), focusAreas.slice(3)];
+---
+
+<div data-focus data-minimap="Focus" class="border-line overflow-hidden border-y py-7 md:py-10">
+    {
+        ROWS.map((items, i) => (
+            <div>
+                <div data-kw-row class:list={['flex w-max items-center', { 'mt-3 md:mt-5': i }]}>
+                    {[0, 1, 2].map((copy) => (
+                        <div class="flex items-center" aria-hidden={copy > 0 ? 'true' : undefined}>
+                            {items.map((item, j) => (
+                                <span class="flex items-center">
+                                    <span
+                                        class:list={[
+                                            'kw display px-5 text-4xl whitespace-nowrap md:px-9 md:text-6xl',
+                                            (i + j) % 2 ? 'kw-outline' : 'text-fg/90',
+                                        ]}
+                                    >
+                                        {item}
+                                    </span>
+                                    <span class="text-acid text-lg md:text-xl" aria-hidden="true">
+                                        ✦
+                                    </span>
+                                </span>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        ))
+    }
+</div>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const root = document.querySelector<HTMLElement>('[data-focus]');
+    if (root && !prefersReducedMotion()) {
+        const rows = gsap.utils.toArray<HTMLElement>('[data-kw-row]');
+        rows.forEach((row, i) => {
+            gsap.fromTo(
+                row,
+                { xPercent: i % 2 ? -7 : 0 },
+                {
+                    xPercent: i % 2 ? 0 : -7,
+                    ease: 'none',
+                    scrollTrigger: { trigger: root, start: 'top bottom', end: 'bottom top', scrub: true },
+                },
+            );
+        });
+    }
+</script>

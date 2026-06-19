@@ -1,0 +1,33 @@
+---
+interface Props {
+    strength?: number;
+    class?: string;
+}
+
+const { strength = 0.35, class: className } = Astro.props;
+---
+
+<div data-magnetic data-strength={strength} class={className}><slot /></div>
+
+<script>
+    import { gsap, supportsHover, prefersReducedMotion } from '../lib/gsap';
+
+    // Pulls each magnetic element toward the cursor while hovered, springs back on leave.
+    if (supportsHover() && !prefersReducedMotion()) {
+        for (const el of document.querySelectorAll<HTMLElement>('[data-magnetic]')) {
+            const strength = Number(el.dataset.strength) || 0.35;
+            const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
+            const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                xTo((e.clientX - (rect.left + rect.width / 2)) * strength);
+                yTo((e.clientY - (rect.top + rect.height / 2)) * strength);
+            });
+            el.addEventListener('mouseleave', () => {
+                xTo(0);
+                yTo(0);
+            });
+        }
+    }
+</script>

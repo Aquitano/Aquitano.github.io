@@ -1,27 +1,29 @@
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import solidJs from '@astrojs/solid-js';
 import tailwindcss from '@tailwindcss/vite';
 import compress from 'astro-compress';
 import critters from 'astro-critters';
-import icon from 'astro-icon';
-import { astroImageTools } from 'astro-imagetools';
 import { defineConfig } from 'astro/config';
-
-// const dev = process.env.NODE_ENV !== 'production';
 
 export default defineConfig({
     site: 'https://thomasbreindl.me',
 
     integrations: [
-        icon(),
-        solidJs(),
+        react({
+            babel: {
+                plugins: [['babel-plugin-react-compiler', {}]],
+            },
+        }),
         sitemap(),
-        astroImageTools,
         critters({
             exclude: ['./dist/showcase'],
             Logger: 1,
         }),
         compress({
+            // Astro's built-in compressHTML handles HTML minification safely;
+            // astro-compress strips HTML comments, which deletes React's
+            // hydration text-boundary markers and breaks island hydration.
+            HTML: false,
             Image: false,
             Logger: 1,
         }),
@@ -29,14 +31,6 @@ export default defineConfig({
 
     prefetch: {
         prefetchAll: true,
-    },
-
-    i18n: {
-        defaultLocale: 'de',
-        locales: ['de', 'en'],
-        routing: {
-            prefixDefaultLocale: false,
-        },
     },
 
     vite: {

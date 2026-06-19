@@ -1,0 +1,113 @@
+---
+import { site, socials } from '../lib/data';
+---
+
+<footer
+    id="contact"
+    data-footer
+    data-minimap="Contact"
+    class="relative overflow-hidden px-5 pt-24 pb-8 md:px-10 md:pt-36"
+>
+    <div class="mb-16 md:mb-24">
+        <p data-footer-reveal class="meta mb-6">/05 — Got an interesting problem?</p>
+        <a data-footer-reveal href={`mailto:${site.email}`} class="group block">
+            <span
+                class="display group-hover:text-acid block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300"
+            >
+                Let’s Talk
+                <span
+                    class="display-outline ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
+                >
+                    ↗
+                </span>
+            </span>
+        </a>
+        <div data-footer-reveal>
+            <button
+                data-copy-email
+                data-email={site.email}
+                type="button"
+                class="pressable group/copy text-muted hover:text-fg mt-6 flex cursor-pointer items-center gap-3 font-mono text-xs transition-colors duration-200"
+            >
+                {site.email}
+                <span
+                    data-copy-default
+                    class="border-line group-hover/copy:border-acid/60 group-hover/copy:text-acid rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.12em] uppercase transition-colors duration-200"
+                >
+                    Copy
+                </span>
+                <span
+                    data-copy-done
+                    class="pop-in bg-acid hidden rounded-full px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.12em] text-black uppercase"
+                >
+                    Copied ✓
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <div data-footer-reveal class="border-line grid gap-px border-y sm:grid-cols-3">
+        {
+            socials.map((social) => (
+                <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group border-line hover:bg-bg-raise flex items-center justify-between px-1 py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
+                >
+                    <div>
+                        <p class="text-sm font-medium">{social.label}</p>
+                        <p class="text-muted font-mono text-[0.6875rem]">{social.handle}</p>
+                    </div>
+                    <span class="text-muted group-hover:text-acid transition-all duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                        ↗
+                    </span>
+                </a>
+            ))
+        }
+    </div>
+
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="meta">©2026 {site.name} — {site.location}</p>
+        <div class="flex items-center gap-8">
+            <p class="meta hidden sm:block">Astro · React · GSAP · WebGL</p>
+            <a href="#top" class="link-line touch-target meta text-fg inline-block">Back to top ↑</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const root = document.querySelector<HTMLElement>('[data-footer]');
+    if (root && !prefersReducedMotion()) {
+        gsap.from('[data-footer-reveal]', {
+            autoAlpha: 0,
+            y: 48,
+            duration: 1,
+            stagger: 0.08,
+            scrollTrigger: { trigger: root, start: 'top 75%' },
+        });
+    }
+
+    const btn = document.querySelector<HTMLButtonElement>('[data-copy-email]');
+    const def = btn?.querySelector<HTMLElement>('[data-copy-default]');
+    const done = btn?.querySelector<HTMLElement>('[data-copy-done]');
+    if (btn && def && done) {
+        let timer: ReturnType<typeof setTimeout>;
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(btn.dataset.email ?? '');
+                def.classList.add('hidden');
+                done.classList.remove('hidden');
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    done.classList.add('hidden');
+                    def.classList.remove('hidden');
+                }, 2000);
+            } catch {
+                // clipboard unavailable — the mailto link above still works
+            }
+        });
+    }
+</script>

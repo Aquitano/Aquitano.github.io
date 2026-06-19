@@ -1,120 +1,75 @@
 ---
 import { SEO } from 'astro-seo';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import Loader from '../components/Loader.astro';
-import ScrollToTop from '../components/ScrollToTop.astro';
-import { ClientRouter } from 'astro:transitions';
-import '@fontsource-variable/syne';
-import '@fontsource-variable/roboto-slab';
-
-
+import '@fontsource-variable/archivo/standard.css';
+import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
-import { defaultLang, type Lang } from '../i18n/ui';
-import { useTranslations, getLocalePath, getAlternateLang } from '../i18n/utils';
+import { site, socials } from '../lib/data';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 
 const defaultKeywords = [
     'Thomas Breindl',
     'Thomas',
     'Breindl',
     'Portfolio',
-    'Portfolio of Thomas Breindl',
-    'Portfolio von Thomas Breindl',
     'Aquitano',
-    'Deutschland',
-    'Germany',
-    'Web Developer',
+    'Software Developer',
     'Software Engineer',
+    'Designer',
+    'Passau',
+    'Germany',
 ];
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
-export type ActivePage = 'home' | 'about' | 'projects' | 'contact';
-
 export interface Props {
-    title: string;
-    lang?: Lang;
-    SEO?: {
-        title?: string;
-        description?: string;
-        openGraph?: {
-            title?: string;
-            type?: string;
-            image?: string;
-        };
-        twitter?: {
-            creator?: string;
-        };
-        extend?: {
-            meta?: {
-                keywords?: string[];
-            };
-        };
-    };
-    active: ActivePage;
+    title?: string;
+    description?: string;
+    ogTitle?: string;
 }
 
-const { title, SEO: SEOData, active } = Astro.props;
-const lang: Lang = Astro.props.lang ?? (Astro.currentLocale as Lang) ?? defaultLang;
-const t = useTranslations(lang);
-const altLang = getAlternateLang(lang);
-const pageDescription = SEOData?.description || t('seo.defaultDesc');
-const pageTitle = title || t('seo.homeTitle');
-const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/, '') || '/'), Astro.site);
+const {
+    title = `${site.name} — ${site.role}`,
+    description = 'Software developer, designer and CS student in Passau, Germany. Building robust backend systems, event pipelines and interfaces people enjoy using.',
+    ogTitle,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-
         <meta name="generator" content={Astro.generator} />
-
-        <link rel="canonical" href={canonicalURL} />
-        <link rel="alternate" hreflang={altLang} href={altUrl} />
-        <link rel="alternate" hreflang={lang} href={canonicalURL} />
-
-        <meta name="theme-color" content="#faf5ef" id="meta-theme-color" />
-
-        <!-- Color scheme declaration for scrollbars and form controls -->
-        <meta name="color-scheme" content="light dark" />
-
+        <meta name="theme-color" content="#0a0a0b" />
+        <meta name="color-scheme" content="dark" />
 
         <SEO
-            title={pageTitle}
-            description={pageDescription}
+            title={title}
+            description={description}
             canonical={canonicalURL.toString()}
             openGraph={{
                 basic: {
-                    title: SEOData?.openGraph?.title || pageTitle,
-                    type: SEOData?.openGraph?.type || 'website',
-                    image: SEOData?.openGraph?.image || '/images/og-default.webp',
+                    title: ogTitle || title,
+                    type: 'website',
+                    image: new URL('/og-default.png', Astro.site).toString(),
                     url: canonicalURL.toString(),
                 },
                 optional: {
-                    locale: lang === 'de' ? 'de_DE' : 'en_US',
-                    siteName: 'Thomas Breindl Portfolio',
+                    locale: 'en_US',
+                    siteName: site.name,
+                    description,
                 },
             }}
             twitter={{
-                creator: SEOData?.twitter?.creator || '@breindlthomas',
+                creator: '@breindlthomas',
                 card: 'summary_large_image',
             }}
             extend={{
                 meta: [
-                    {
-                        name: 'keywords',
-                        content:
-                            SEOData?.extend?.meta?.keywords?.join(',')?.concat(',', defaultKeywords.join(',')) ||
-                            defaultKeywords.join(','),
-                    },
-                    { name: 'author', content: 'Thomas Breindl' },
+                    { name: 'keywords', content: defaultKeywords.join(',') },
+                    { name: 'author', content: site.name },
                     { name: 'robots', content: 'index, follow' },
                     { name: 'format-detection', content: 'telephone=no' },
                 ],
@@ -129,15 +84,12 @@ const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/
                 '@context': 'https://schema.org',
                 '@type': 'Person',
                 '@id': new URL('/#person', Astro.site).toString(),
-                name: 'Thomas Breindl',
+                name: site.name,
                 url: new URL('/', Astro.site).toString(),
                 jobTitle: 'Software Developer',
-                description: 'Software Developer and Designer from Germany',
-                sameAs: [
-                    'https://www.linkedin.com/in/thomas-breindl/',
-                    'https://github.com/Aquitano',
-                    'https://x.com/breindlthomas',
-                ],
+                description: 'Software Developer and Designer from Passau, Germany',
+                address: { '@type': 'PostalAddress', addressLocality: 'Passau', addressCountry: 'DE' },
+                sameAs: socials.map((s) => s.href),
             })}
         />
 
@@ -148,85 +100,25 @@ const altUrl = new URL(getLocalePath(altLang, Astro.url.pathname.replace(/^\/en/
                 '@context': 'https://schema.org',
                 '@type': 'WebSite',
                 '@id': new URL('/#website', Astro.site).toString(),
-                name: 'Thomas Breindl | Portfolio',
+                name: `${site.name} | Portfolio`,
                 url: new URL('/', Astro.site).toString(),
-                inLanguage: lang,
+                inLanguage: 'en',
                 publisher: { '@id': new URL('/#person', Astro.site).toString() },
             })}
         />
-
-        {
-            active !== 'home' && (
-                <script
-                    is:inline
-                    type="application/ld+json"
-                    set:html={JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'BreadcrumbList',
-                        itemListElement: [
-                            {
-                                '@type': 'ListItem',
-                                position: 1,
-                                name: 'Home',
-                                item: new URL(getLocalePath(lang, '/'), Astro.site).toString(),
-                            },
-                            {
-                                '@type': 'ListItem',
-                                position: 2,
-                                name: t(`nav.${active}`),
-                                item: canonicalURL.toString(),
-                            },
-                        ],
-                    })}
-                />
-            )
-        }
-
-        <ClientRouter />
-
-        <!-- Global animation cleanup on navigation -->
-        <script>
-            import { abortAllCliAnimations } from '../utils/cliAnimations';
-            
-            document.addEventListener('astro:before-swap', () => {
-                abortAllCliAnimations();
-            });
-        </script>
-
-        <!-- Theme: prevent FOUC by setting data-theme before paint -->
-        <script is:inline>
-            (function() {
-                function applyTheme() {
-                    var stored = localStorage.getItem('theme');
-                    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    var theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
-                    document.documentElement.setAttribute('data-theme', theme);
-                    var meta = document.getElementById('meta-theme-color');
-                    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c0a09' : '#faf5ef');
-                }
-                applyTheme();
-                document.addEventListener('astro:after-swap', applyTheme);
-            })();
-        </script>
     </head>
-    <body class="overflow-x-hidden antialiased">
-        <!-- Skip to main content link for accessibility -->
-        <a href="#main-content" class="skip-link"> {t('general.skipToContent')} </a>
+    <body class="bg-bg text-fg min-h-svh antialiased">
+        <a
+            href="#top"
+            class="bg-acid sr-only rounded-full px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100]"
+        >
+            Skip to content
+        </a>
 
-        <Loader lang={lang} />
-        <Header active={active} lang={lang} />
-        <ScrollToTop lang={lang} />
+        <SiteHeader />
+        <slot />
+        <SiteFooter />
 
-        <main id="main-content" tabindex="-1">
-            <slot />
-        </main>
-
-        <Footer lang={lang} />
-
-        <style is:global>
-            @view-transition {
-                navigation: auto;
-            }
-        </style>
+        <div class="grain" aria-hidden="true"></div>
     </body>
 </html>

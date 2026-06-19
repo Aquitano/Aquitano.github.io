@@ -4,13 +4,12 @@
         "baseUrl": ".",
         "moduleResolution": "Bundler",
         "paths": {
-            "@components/*": ["src/components/*"],
-            "@assets/*": ["src/assets/*"],
-            "@src/*": ["src/*"]
+            "@/*": ["src/*"],
+            "@assets/*": ["src/assets/*"]
         },
-        "jsx": "preserve",
-        "jsxImportSource": "solid-js"
+        "jsx": "react-jsx",
+        "jsxImportSource": "react"
     },
-    "include": ["src/**/*"],
-    "exclude": ["public/**/*"]
+    "include": ["src/**/*", ".astro/types.d.ts"],
+    "exclude": ["public/**/*", "dist/**/*"]
 }

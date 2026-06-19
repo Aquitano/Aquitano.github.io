@@ -1,0 +1,39 @@
+---
+import { experience } from '../lib/data';
+import ExperienceRow from './ExperienceRow.astro';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section data-experience data-minimap="Experience" class="px-5 py-24 md:px-10 md:py-36">
+    <SectionHeading index="02" title="Experience" />
+    <div>
+        {
+            experience.map((job, i) => (
+                <div data-row class="invert-row border-line relative border-b first:border-t">
+                    <ExperienceRow job={job} index={i} />
+                    {/* inverted duplicate revealed via clip-path on hover */}
+                    <div class="invert-layer bg-acid absolute inset-0 overflow-hidden text-black" aria-hidden="true">
+                        <ExperienceRow job={job} index={i} inverted />
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const root = document.querySelector<HTMLElement>('[data-experience]');
+    if (root && !prefersReducedMotion()) {
+        const rows = gsap.utils.toArray<HTMLElement>('[data-row]');
+        for (const row of rows) {
+            gsap.from(row, {
+                autoAlpha: 0,
+                y: 36,
+                duration: 0.9,
+                scrollTrigger: { trigger: row, start: 'top 88%' },
+            });
+        }
+    }
+</script>

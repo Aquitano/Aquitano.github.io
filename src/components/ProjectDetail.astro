@@ -1,0 +1,199 @@
+---
+interface DetailProject {
+    title: string;
+    wrap?: string[];
+    subtitle: string;
+    year: string;
+    description: string;
+    tags: string[];
+    tasks: string[];
+    links: { label: string; href: string }[];
+    accent: string;
+}
+
+interface Props {
+    project: DetailProject;
+    index: number;
+    total: number;
+    next: { title: string; wrap?: string[]; slug: string; accent: string };
+}
+
+const { project, index, total, next } = Astro.props;
+const titleLines = project.wrap ?? [project.title];
+const nextLines = next.wrap ?? [next.title];
+---
+
+<div id="top" data-detail class="relative overflow-x-clip">
+    {/* per-project glow */}
+    <div
+        class="pointer-events-none absolute top-0 -right-1/4 h-[60svh] w-[70%] rounded-full opacity-[0.1] blur-3xl"
+        style={`background: ${project.accent}`}
+        aria-hidden="true"
+    >
+    </div>
+
+    <header class="relative px-5 pt-28 pb-12 md:px-10 md:pt-40 md:pb-16">
+        <div data-detail-fade>
+            <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">← All Work</a>
+        </div>
+
+        <div class="mt-10 flex items-baseline justify-between gap-4 md:mt-14">
+            <p data-detail-fade class="meta" style={`color: ${project.accent}`}>{project.subtitle}</p>
+            <p data-detail-fade class="meta">©{project.year} — 0{index + 1}/0{total}</p>
+        </div>
+
+        <h1 class="display mt-4 text-[clamp(2.8rem,11vw,10.5rem)]">
+            {
+                titleLines.map((line) => (
+                    <span class="block overflow-hidden pb-[0.06em]">
+                        <span data-detail-line class="block">
+                            {line}
+                        </span>
+                    </span>
+                ))
+            }
+        </h1>
+
+        <p data-detail-fade class="text-muted mt-8 max-w-3xl text-base leading-relaxed md:text-xl">
+            {project.description}
+        </p>
+    </header>
+
+    <div
+        data-detail-body
+        class="border-line relative grid gap-12 border-t px-5 py-16 md:grid-cols-[minmax(16rem,1fr)_2fr] md:gap-20 md:px-10 md:py-24"
+    >
+        <aside class="md:sticky md:top-28 md:self-start">
+            <dl class="space-y-8">
+                <div data-detail-para>
+                    <dt class="meta mb-2">Year</dt>
+                    <dd class="text-fg/85 font-mono text-sm">{project.year}</dd>
+                </div>
+                <div data-detail-para>
+                    <dt class="meta mb-2">Scope</dt>
+                    <dd class="text-fg/85 font-mono text-sm leading-relaxed">{project.tasks.join(' · ')}</dd>
+                </div>
+                <div data-detail-para>
+                    <dt class="meta mb-3">Stack</dt>
+                    <dd>
+                        <ul class="flex flex-wrap gap-2">
+                            {
+                                project.tags.map((tag) => (
+                                    <li class="border-line text-fg/70 hover:border-acid/60 hover:text-acid rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 ease-[var(--ease-out-strong)] hover:-translate-y-0.5">
+                                        {tag}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </dd>
+                </div>
+                {
+                    project.links.length > 0 && (
+                        <div data-detail-para>
+                            <dt class="meta mb-3">Links</dt>
+                            <dd class="flex flex-col items-start gap-3">
+                                {project.links.map((link) => (
+                                    <a
+                                        href={link.href}
+                                        target={link.href.startsWith('/') ? undefined : '_blank'}
+                                        rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}
+                                        class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
+                                    >
+                                        {link.label} ↗
+                                    </a>
+                                ))}
+                            </dd>
+                        </div>
+                    )
+                }
+            </dl>
+        </aside>
+
+        <div
+            data-detail-prose
+            class="[&>p]:text-fg/85 max-w-3xl space-y-6 [&>p]:text-base [&>p]:leading-relaxed md:[&>p]:text-lg"
+        >
+            <slot />
+        </div>
+    </div>
+
+    <a
+        href={`/work/${next.slug}`}
+        data-detail-next
+        class="group border-line relative block overflow-hidden border-t px-5 py-16 md:px-10 md:py-24"
+    >
+        <div
+            class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12]"
+            style={`background: ${next.accent}`}
+            aria-hidden="true"
+        >
+        </div>
+        <p class="meta relative mb-4">Next Project</p>
+        <p class="display group-hover:text-acid relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300">
+            {
+                nextLines.map((part, j) => (
+                    <Fragment>
+                        {part}
+                        {j < nextLines.length - 1 && <wbr />}
+                    </Fragment>
+                ))
+            }
+            <span
+                class="display-outline ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
+            >
+                →
+            </span>
+        </p>
+    </a>
+</div>
+
+{/* Pre-hide intro elements so they don't flash before the timeline runs (motion users only) */}
+<style>
+    @media (prefers-reduced-motion: no-preference) {
+        [data-detail-line] {
+            transform: translateY(110%);
+        }
+        [data-detail-fade] {
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const root = document.querySelector<HTMLElement>('[data-detail]');
+    if (root && !prefersReducedMotion()) {
+        // y: 0 clears the px baseline GSAP would otherwise inherit from the
+        // pre-hide CSS matrix (translateY(110%)), which would survive the yPercent tween.
+        gsap.set('[data-detail-line]', { y: 0, yPercent: 110 });
+        gsap.set('[data-detail-fade]', { autoAlpha: 0, y: 24 });
+
+        const tl = gsap.timeline({ delay: 0.1 });
+        tl.to('[data-detail-line]', {
+            yPercent: 0,
+            duration: 1.1,
+            ease: 'power4.out',
+            stagger: 0.08,
+        }).to('[data-detail-fade]', { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06 }, '-=0.6');
+
+        const bodyItems = [
+            ...root.querySelectorAll('[data-detail-para]'),
+            ...root.querySelectorAll('[data-detail-prose] > *'),
+        ];
+        gsap.from(bodyItems, {
+            autoAlpha: 0,
+            y: 32,
+            duration: 0.9,
+            stagger: 0.1,
+            scrollTrigger: { trigger: '[data-detail-body]', start: 'top 82%' },
+        });
+
+        gsap.from('[data-detail-next]', {
+            autoAlpha: 0,
+            y: 40,
+            duration: 0.9,
+            scrollTrigger: { trigger: '[data-detail-next]', start: 'top 88%' },
+        });
+    }
+</script>

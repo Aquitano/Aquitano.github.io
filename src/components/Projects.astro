@@ -1,0 +1,183 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+    work: CollectionEntry<'work'>[];
+}
+
+const { work } = Astro.props;
+
+const STICKY_TOP = 88;
+const CASCADE = 14;
+---
+
+<section id="work" data-projects data-minimap="Work" class="px-5 py-24 md:px-10 md:py-36">
+    <SectionHeading index="03" title="Selected Work" />
+    <div class="flex flex-col gap-6 md:gap-10">
+        {
+            work.map((entry, i) => {
+                const p = entry.data;
+                const titleParts = p.wrap ?? [p.title];
+                return (
+                    <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
+                        <article
+                            data-card
+                            class="border-line bg-bg-raise hover:border-fg/25 relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-colors duration-300 md:min-h-[72svh] md:p-12"
+                        >
+                            {/* whole card opens the case study; real links sit above on z-20 */}
+                            <a
+                                href={`/work/${entry.id}`}
+                                aria-label={`View case study: ${p.title}`}
+                                class="absolute inset-0 z-10"
+                            />
+                            {/* per-project glow */}
+                            <div
+                                class="pointer-events-none absolute -top-1/3 -right-1/4 h-[80%] w-[80%] rounded-full opacity-[0.13] blur-3xl"
+                                style={`background: ${p.accent}`}
+                                aria-hidden="true"
+                            />
+                            {/* watermark index drawn via pseudo-element content */}
+                            <span
+                                data-num={`0${i + 1}`}
+                                class="display pointer-events-none absolute right-4 -bottom-6 text-[clamp(8rem,22vw,20rem)] leading-none opacity-[0.045] select-none before:content-[attr(data-num)] md:-bottom-12"
+                                aria-hidden="true"
+                            />
+
+                            <header class="relative flex items-start justify-between gap-4">
+                                <span class="meta">
+                                    ©{p.year} — 0{i + 1}/0{work.length}
+                                </span>
+                                <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
+                            </header>
+
+                            <div class="relative my-8 md:my-10">
+                                <p class="meta mb-4" style={`color: ${p.accent}`}>
+                                    {p.subtitle}
+                                </p>
+                                <h3 class="display text-[clamp(1.9rem,5.8vw,5.8rem)]">
+                                    {titleParts.map((part, j) => (
+                                        <Fragment>
+                                            {part}
+                                            {j < titleParts.length - 1 && <wbr />}
+                                        </Fragment>
+                                    ))}
+                                </h3>
+                                <p class="text-muted mt-6 max-w-2xl text-sm leading-relaxed md:text-base">
+                                    {p.description}
+                                </p>
+                            </div>
+
+                            <footer class="border-line relative z-20 flex flex-col gap-6 border-t pt-6 md:flex-row md:items-center md:justify-between">
+                                <ul class="flex flex-wrap gap-2">
+                                    {p.tags.map((tag) => (
+                                        <li class="border-line text-fg/70 hover:border-acid/60 hover:text-acid rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 ease-[var(--ease-out-strong)] hover:-translate-y-0.5">
+                                            {tag}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <div class="flex flex-wrap gap-x-6 gap-y-2">
+                                    <a
+                                        href={`/work/${entry.id}`}
+                                        class="link-line pressable touch-target text-acid font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
+                                    >
+                                        Case Study →
+                                    </a>
+                                    {p.links.map((link) => (
+                                        <a
+                                            href={link.href}
+                                            target={link.href.startsWith('/') ? undefined : '_blank'}
+                                            rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}
+                                            class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
+                                        >
+                                            {link.label} ↗
+                                        </a>
+                                    ))}
+                                </div>
+                            </footer>
+
+                            {/* cursor-following chip (desktop only, positioned via GSAP) */}
+                            <div
+                                data-card-chip
+                                class="bg-acid pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.12em] whitespace-nowrap text-black uppercase opacity-0 md:block"
+                                aria-hidden="true"
+                            >
+                                View Case ↗
+                            </div>
+
+                            {/* darkening veil while receding into the pile */}
+                            <div
+                                data-card-veil
+                                class="bg-bg pointer-events-none absolute inset-0 rounded-2xl opacity-0"
+                                aria-hidden="true"
+                            />
+                        </article>
+                    </div>
+                );
+            })
+        }
+    </div>
+</section>
+
+<script>
+    import { gsap, prefersReducedMotion, supportsHover } from '../lib/gsap';
+
+    const STICKY_TOP = 88;
+    const CASCADE = 14;
+
+    const root = document.querySelector<HTMLElement>('[data-projects]');
+    if (root) {
+        // Cursor-following "View Case" chip, one per card
+        if (supportsHover() && !prefersReducedMotion()) {
+            for (const card of root.querySelectorAll<HTMLElement>('[data-card]')) {
+                const chip = card.querySelector<HTMLElement>('[data-card-chip]');
+                if (!chip) continue;
+                gsap.set(chip, { xPercent: -50, yPercent: -140, autoAlpha: 0, scale: 0.6 });
+                const xTo = gsap.quickTo(chip, 'x', { duration: 0.35, ease: 'power3.out' });
+                const yTo = gsap.quickTo(chip, 'y', { duration: 0.35, ease: 'power3.out' });
+
+                const place = (e: MouseEvent) => {
+                    const rect = card.getBoundingClientRect();
+                    xTo(e.clientX - rect.left);
+                    yTo(e.clientY - rect.top);
+                };
+                const show = () => gsap.to(chip, { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' });
+                const hide = () => gsap.to(chip, { autoAlpha: 0, scale: 0.6, duration: 0.25 });
+
+                card.addEventListener('mouseenter', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    gsap.set(chip, { x: e.clientX - rect.left, y: e.clientY - rect.top });
+                    show();
+                });
+                card.addEventListener('mousemove', place);
+                card.addEventListener('mouseleave', hide);
+                // Get out of the way of the real links in the card footer
+                const footer = card.querySelector('footer');
+                footer?.addEventListener('mouseenter', hide);
+                footer?.addEventListener('mouseleave', show);
+            }
+        }
+
+        if (!prefersReducedMotion()) {
+            const wrappers = gsap.utils.toArray<HTMLElement>('[data-card-wrapper]');
+            wrappers.forEach((wrapper, i) => {
+                if (i === wrappers.length - 1) return;
+                const card = wrapper.querySelector('[data-card]');
+                const next = wrappers[i + 1];
+                const trigger = {
+                    trigger: next,
+                    start: 'top bottom',
+                    end: `top top+=${STICKY_TOP + i * CASCADE}`,
+                    scrub: true,
+                };
+                // As the next card arrives, recede this one into the pile
+                gsap.to(card, { scale: 0.94, ease: 'none', transformOrigin: 'center top', scrollTrigger: trigger });
+                gsap.to(wrapper.querySelector('[data-card-veil]'), {
+                    opacity: 0.55,
+                    ease: 'none',
+                    scrollTrigger: trigger,
+                });
+            });
+        }
+    }
+</script>
