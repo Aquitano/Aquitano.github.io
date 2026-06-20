@@ -85,7 +85,7 @@ const nextLines = next.wrap ?? [next.title];
                         <ul class="flex flex-wrap gap-2">
                             {
                                 project.tags.map((tag) => (
-                                    <li class="border-line text-fg/70 hover:border-acid/60 hover:text-acid ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 hover:-translate-y-0.5">
+                                    <li class="border-line text-fg/70 hover:border-accent/60 hover:text-accent ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 hover:-translate-y-0.5">
                                         {tag}
                                     </li>
                                 ))
@@ -135,7 +135,7 @@ const nextLines = next.wrap ?? [next.title];
         >
         </div>
         <p class="meta relative mb-4">Next Project</p>
-        <p class="display group-hover:text-acid relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300">
+        <p class="display group-hover:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300">
             {
                 nextLines.map((part, j) => {
                     if (j < nextLines.length - 1) {

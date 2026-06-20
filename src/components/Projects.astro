@@ -73,7 +73,7 @@ const CASCADE = 14;
                             <footer class="border-line relative z-20 flex flex-col gap-6 border-t pt-6 md:flex-row md:items-center md:justify-between">
                                 <ul class="flex flex-wrap gap-2">
                                     {p.tags.map((tag) => (
-                                        <li class="border-line text-fg/70 hover:border-acid/60 hover:text-acid ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 hover:-translate-y-0.5">
+                                        <li class="border-line text-fg/70 hover:border-accent/60 hover:text-accent ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 hover:-translate-y-0.5">
                                             {tag}
                                         </li>
                                     ))}
@@ -81,7 +81,7 @@ const CASCADE = 14;
                                 <div class="flex flex-wrap gap-x-6 gap-y-2">
                                     <a
                                         href={`/work/${entry.id}`}
-                                        class="link-line pressable touch-target text-acid font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
+                                        class="link-line pressable touch-target text-accent font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
                                     >
                                         Case Study →
                                     </a>
@@ -100,7 +100,7 @@ const CASCADE = 14;
 
                             <div
                                 data-card-chip
-                                class="bg-acid pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.12em] whitespace-nowrap text-black uppercase opacity-0 md:block"
+                                class="bg-accent pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.12em] whitespace-nowrap text-black uppercase opacity-0 md:block"
                                 aria-hidden="true"
                             >
                                 View Case ↗

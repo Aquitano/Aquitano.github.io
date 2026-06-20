@@ -9,13 +9,13 @@ import SectionHeading from './SectionHeading.astro';
         {
             stack.map((group) => (
                 <div data-stack-col class="bg-bg p-6 md:p-8">
-                    <h3 class="meta text-acid mb-5">{group.label}</h3>
+                    <h3 class="meta text-accent mb-5">{group.label}</h3>
                     <ul class="space-y-2">
                         {group.items.map((item) => (
                             <li class="group/item text-fg/85 hover:text-fg flex items-center text-sm transition-colors duration-200 md:text-base">
                                 <span
                                     aria-hidden="true"
-                                    class="text-acid ease-out-strong inline-block w-0 overflow-hidden opacity-0 transition-all duration-300 group-hover/item:w-5 group-hover/item:opacity-100"
+                                    class="text-accent ease-out-strong inline-block w-0 overflow-hidden opacity-0 transition-all duration-300 group-hover/item:w-5 group-hover/item:opacity-100"
                                 >
                                     ✦
                                 </span>
