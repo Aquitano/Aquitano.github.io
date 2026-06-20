@@ -256,8 +256,23 @@ const SHORTCUTS = [
                 hint.classList.remove('is-pulse');
             });
 
+            // Ping once per session.
+            const PULSE_KEY = 'kbd-hint-pulsed';
+            let pulsed = false;
+            try {
+                pulsed = sessionStorage.getItem(PULSE_KEY) === '1';
+            } catch {
+                /* storage blocked */
+            }
+
             setTimeout(() => {
                 hint.classList.add('is-shown');
+                if (pulsed) return;
+                try {
+                    sessionStorage.setItem(PULSE_KEY, '1');
+                } catch {
+                    /* storage blocked */
+                }
                 setTimeout(() => hint.classList.add('is-pulse'), reduce() ? 0 : 520);
             }, 5000);
         }
