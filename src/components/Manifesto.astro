@@ -22,7 +22,7 @@ import SectionHeading from './SectionHeading.astro';
             stats.map((stat) => (
                 <div data-stat class="bg-bg p-6 md:p-8">
                     <p class="display text-fg text-5xl md:text-7xl">
-                        <span data-count={stat.value}>00</span><span class="text-acid">{stat.suffix}</span>
+                        <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span><span class="text-acid">{stat.suffix}</span>
                     </p>
                     <p class="meta mt-3">{stat.label}</p>
                 </div>
@@ -36,15 +36,11 @@ import SectionHeading from './SectionHeading.astro';
 
     const reduce = prefersReducedMotion();
 
-    // Stats always show their real value; only the count-up tween is motion-gated,
-    // so reduced-motion visitors read the final figure instead of a frozen "00".
     const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
     for (const el of counters) {
         const target = Number(el.dataset.count);
-        if (reduce) {
-            el.textContent = String(target).padStart(2, '0');
-            continue;
-        }
+        if (reduce) continue;
+        el.textContent = '00';
         const obj = { value: 0 };
         gsap.to(obj, {
             value: target,
@@ -58,8 +54,6 @@ import SectionHeading from './SectionHeading.astro';
     }
 
     if (!reduce) {
-        // Split lazily as the section approaches, so the page's load state keeps
-        // full-contrast text (a11y) while scrollers still get the effect.
         document.fonts.ready.then(() => {
             ScrollTrigger.create({
                 trigger: '[data-manifesto]',
