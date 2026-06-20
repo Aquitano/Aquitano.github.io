@@ -85,6 +85,26 @@ body {
     }
 }
 
+:root {
+    --section-top: clamp(4.5rem, 8vw, 8rem);
+    --section-top-major: clamp(6rem, 12vw, 11rem);
+    --section-bottom: clamp(3rem, 6vw, 5.5rem);
+    --section-lead: clamp(2.75rem, 5vw, 4.5rem);
+}
+
+.section-y {
+    padding-top: var(--section-top);
+    padding-bottom: var(--section-bottom);
+}
+
+.section-y--lead {
+    padding-top: var(--section-lead);
+}
+
+.section-y--major {
+    padding-top: var(--section-top-major);
+}
+
 .display {
     font-stretch: 125%;
     font-weight: 800;
