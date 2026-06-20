@@ -1,12 +1,11 @@
-import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { defineCollection } from 'astro:content';
 
 const work = defineCollection({
     loader: glob({ pattern: '**/*.md', base: './src/content/work' }),
     schema: z.object({
         title: z.string(),
-        // optional manual line breaks for the oversized display title
         wrap: z.array(z.string()).optional(),
         subtitle: z.string(),
         year: z.string(),
@@ -15,7 +14,6 @@ const work = defineCollection({
         tasks: z.array(z.string()),
         links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
         accent: z.string(),
-        // display + navigation order across the work section
         order: z.number(),
     }),
 });

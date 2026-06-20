@@ -54,8 +54,6 @@ body {
     color: #0a0a0b;
 }
 
-/* One consistent keyboard focus ring across the dark UI. The outline follows
-   each element's own border-radius, so pills and cards stay correctly shaped. */
 :where(a, button, [tabindex]):focus-visible {
     outline: 2px solid var(--acid);
     outline-offset: 3px;
@@ -87,7 +85,6 @@ body {
     }
 }
 
-/* Expanded display type — Archivo variable width axis */
 .display {
     font-stretch: 125%;
     font-weight: 800;
@@ -107,8 +104,6 @@ body {
     }
 }
 
-/* Without text-stroke support the transparent fill would erase the surname and
-   keywords entirely; fall back to solid ink so the content never disappears. */
 @supports not ((-webkit-text-stroke: 1px var(--fg))) {
     .display-outline,
     .kw-outline {
@@ -125,12 +120,10 @@ body {
     color: var(--muted);
 }
 
-/* SplitText line masks */
 .split-line {
     will-change: transform;
 }
 
-/* Hero scroll cue — arrow drops through the circle on a loop */
 @keyframes cue-drop {
     0% {
         transform: translateY(-260%);
@@ -154,7 +147,6 @@ body {
     }
 }
 
-/* Focus-area keywords — outline fills acid on hover */
 .kw {
     transition:
         color 300ms var(--ease-out-strong),
@@ -173,7 +165,6 @@ body {
     }
 }
 
-/* Small pop for state-change feedback (e.g. "Copied") */
 @keyframes pop-in {
     0% {
         transform: scale(0.5);
@@ -198,7 +189,6 @@ body {
     }
 }
 
-/* Link with sliding underline */
 .link-line {
     position: relative;
 }
@@ -223,7 +213,6 @@ body {
     }
 }
 
-/* Keyboard parity: the same underline reveal on focus, not just hover */
 .link-line:focus-visible::after {
     transform: scaleX(1);
     transform-origin: left;
@@ -238,7 +227,6 @@ body {
     transform-origin: left;
 }
 
-/* Expand small link hit areas to ≥24px on touch devices without moving layout */
 @media (pointer: coarse) {
     .touch-target {
         padding-block: 0.5rem;
@@ -246,7 +234,6 @@ body {
     }
 }
 
-/* Primary CTA — label swaps up to a fresh copy, arrow glides right */
 .cta-glide-label {
     position: relative;
     display: inline-block;
@@ -320,7 +307,6 @@ body {
     transform: scale(0.97);
 }
 
-/* Experience rows — clip-path invert on hover (duplicate-layer technique) */
 .invert-row .invert-layer {
     clip-path: inset(100% 0 0 0);
     transition: clip-path 420ms var(--ease-out-strong);
@@ -344,7 +330,6 @@ body {
     animation: grain-jitter 0.7s steps(1, end) infinite;
 }
 
-/* translate is relative to the element (2x viewport), so ±12% stays within the -50% bleed */
 @keyframes grain-jitter {
     0% {
         transform: translate(0, 0);
@@ -381,12 +366,10 @@ body {
     }
 }
 
-/* Anchor offset below fixed header */
 section[id] {
     scroll-margin-top: 5rem;
 }
 
-/* Minimal scrollbar */
 @media (min-width: 768px) {
     ::-webkit-scrollbar {
         width: 10px;

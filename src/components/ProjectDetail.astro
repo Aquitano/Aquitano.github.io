@@ -85,7 +85,7 @@ const nextLines = next.wrap ?? [next.title];
                         <ul class="flex flex-wrap gap-2">
                             {
                                 project.tags.map((tag) => (
-                                    <li class="border-line text-fg/70 hover:border-acid/60 hover:text-acid rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 ease-[var(--ease-out-strong)] hover:-translate-y-0.5">
+                                    <li class="border-line text-fg/70 hover:border-acid/60 hover:text-acid ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 hover:-translate-y-0.5">
                                         {tag}
                                     </li>
                                 ))
@@ -126,7 +126,7 @@ const nextLines = next.wrap ?? [next.title];
     <a
         href={`/work/${next.slug}`}
         data-detail-next
-        class="group border-line relative block overflow-hidden border-t section-x py-16 md:py-24"
+        class="group border-line section-x relative block overflow-hidden border-t py-16 md:py-24"
     >
         <div
             class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12]"
@@ -150,7 +150,7 @@ const nextLines = next.wrap ?? [next.title];
                     return (
                         <span class="whitespace-nowrap">
                             {part}
-                            <span class="display-outline ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]">
+                            <span class="display-outline ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]">
                                 →
                             </span>
                         </span>
@@ -178,8 +178,6 @@ const nextLines = next.wrap ?? [next.title];
 
     const root = document.querySelector<HTMLElement>('[data-detail]');
     if (root && !prefersReducedMotion()) {
-        // y: 0 clears the px baseline GSAP would otherwise inherit from the
-        // pre-hide CSS matrix (translateY(110%)), which would survive the yPercent tween.
         gsap.set('[data-detail-line]', { y: 0, yPercent: 110 });
         gsap.set('[data-detail-fade]', { autoAlpha: 0, y: 24 });
 

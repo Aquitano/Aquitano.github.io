@@ -9,7 +9,7 @@ import SectionHeading from './SectionHeading.astro';
     <p
         data-manifesto
         aria-hidden="true"
-        class="max-w-5xl text-2xl leading-snug font-medium tracking-[-0.015em] [font-stretch:112%] md:text-5xl md:leading-[1.12]"
+        class="max-w-5xl text-2xl leading-snug font-medium tracking-[-0.015em] font-stretch-112% md:text-5xl md:leading-[1.12]"
     >
         {manifesto}
     </p>
@@ -22,7 +22,10 @@ import SectionHeading from './SectionHeading.astro';
             stats.map((stat) => (
                 <div data-stat class="bg-bg p-6 md:p-8">
                     <p class="display text-fg text-5xl md:text-7xl">
-                        <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span><span class="text-acid">{stat.suffix}</span>
+                        <>
+                            <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
+                            <span class="text-acid">{stat.suffix}</span>
+                        </>
                     </p>
                     <p class="meta mt-3">{stat.label}</p>
                 </div>

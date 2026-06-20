@@ -2,12 +2,7 @@
 import { site, socials } from '../lib/data';
 ---
 
-<footer
-    id="contact"
-    data-footer
-    data-minimap="Contact"
-    class="relative overflow-hidden section-x pt-24 pb-8 md:pt-36"
->
+<footer id="contact" data-footer data-minimap="Contact" class="section-x relative overflow-hidden pt-24 pb-8 md:pt-36">
     <div class="mb-16 md:mb-24">
         <p data-footer-reveal class="meta mb-6"><span class="text-acid">/05</span> Got an interesting problem?</p>
         <a href={`mailto:${site.email}`} class="group block">
@@ -18,7 +13,7 @@ import { site, socials } from '../lib/data';
                 >
                     Let’s Talk
                     <span
-                        class="ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
+                        class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
                     >
                         ↗
                     </span>
@@ -63,7 +58,7 @@ import { site, socials } from '../lib/data';
                         <p class="text-sm font-medium">{social.label}</p>
                         <p class="text-muted font-mono text-[0.6875rem]">{social.handle}</p>
                     </div>
-                    <span class="text-muted group-hover:text-acid group-focus-visible:text-acid transition-all duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5">
+                    <span class="text-muted group-hover:text-acid group-focus-visible:text-acid ease-out-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5">
                         ↗
                     </span>
                 </a>
@@ -92,8 +87,6 @@ import { site, socials } from '../lib/data';
 
     const root = document.querySelector<HTMLElement>('[data-footer]');
     if (root && !prefersReducedMotion()) {
-        // y: 0 clears the px baseline GSAP would inherit from the pre-hide matrix
-        // (translateY(110%)), which would otherwise survive the yPercent tween.
         gsap.set('[data-footer-headline]', { y: 0, yPercent: 110 });
         gsap.to('[data-footer-headline]', {
             yPercent: 0,

@@ -22,7 +22,7 @@ const splitFigures = (text: string) => text.split(FIGURE);
     <span class:list={['font-mono text-xs', inverted ? 'text-black/70' : 'text-muted']}>0{index + 1}</span>
     <div>
         <h3 class="display text-2xl md:text-3xl">{job.company}</h3>
-        <p class:list={['mt-2 font-mono text-xs tracking-[0.1em] uppercase', subtle]}>
+        <p class:list={['mt-2 font-mono text-xs tracking-widest uppercase', subtle]}>
             {job.role} · {job.type}
         </p>
     </div>

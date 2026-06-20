@@ -12,7 +12,6 @@ const { strength = 0.35, class: className } = Astro.props;
 <script>
     import { gsap, supportsHover, prefersReducedMotion } from '../lib/gsap';
 
-    // Pulls each magnetic element toward the cursor while hovered, springs back on leave.
     if (supportsHover() && !prefersReducedMotion()) {
         for (const el of document.querySelectorAll<HTMLElement>('[data-magnetic]')) {
             const strength = Number(el.dataset.strength) || 0.35;

@@ -1,32 +1,14 @@
----
-/*
- * Scroll minimap: a live, compressed render of the page drawn to canvas, with a
- * draggable viewport indicator and section labels. Ported from React to a plain
- * island so the site ships no client framework — the only React usage was here.
- * Desktop-only (xl); the markup stays hidden below 1280px and the script no-ops there.
- */
----
-
-<div
-    data-minimap-root
-    class="group fixed top-1/2 right-4 z-40 hidden w-14 -translate-y-1/2 xl:block"
->
-    {/* section labels — created at runtime, revealed on hover, active one always on */}
+<div data-minimap-root class="group fixed top-1/2 right-4 z-40 hidden w-14 -translate-y-1/2 xl:block">
+    {/* section labels, created at runtime */}
     <div data-minimap-labels></div>
 
     <div
         data-minimap-track
         class="border-line/70 bg-bg-raise/50 relative h-[min(55vh,30rem)] w-full cursor-pointer touch-none overflow-hidden rounded-[3px] border backdrop-blur-sm"
     >
-        {/* compressed render of the real page content */}
         <canvas data-minimap-canvas class="pointer-events-none absolute inset-0 h-full w-full"></canvas>
 
-        {/* viewport window — positioned imperatively on scroll */}
-        <div
-            data-minimap-indicator
-            class="border-fg/25 bg-fg/10 absolute inset-x-0 top-0 rounded-[2px] border"
-        >
-        </div>
+        <div data-minimap-indicator class="border-fg/25 bg-fg/10 absolute inset-x-0 top-0 rounded-xs border"></div>
     </div>
 </div>
 
@@ -70,7 +52,7 @@
             ctx.scale(dpr, dpr);
             ctx.clearRect(0, 0, cw, ch);
 
-            const sx = (cw - 6) / pageWidth; // 3px inset each side
+            const sx = (cw - 6) / pageWidth;
             const sy = ch / pageHeight;
 
             for (const box of boxes) {
@@ -89,7 +71,6 @@
                     bar.kind === 'bright'
                         ? `rgba(233, 233, 228, ${isActive ? 0.55 : 0.32})`
                         : `rgba(233, 233, 228, ${isActive ? 0.2 : 0.12})`;
-                // shave a sliver off each line box so paragraphs read as lines, not slabs
                 const h = Math.max(0.75, bar.h * sy - 1);
                 ctx.fillRect(3 + bar.x * sx, bar.y * sy, bar.w * sx, h);
             }
@@ -164,14 +145,12 @@
                     el: sectionEl,
                 });
 
-                // card containers get an outlined box, like the real thing
                 for (const card of sectionEl.querySelectorAll<HTMLElement>('[data-card]')) {
                     const r = card.getBoundingClientRect();
                     nextBoxes.push({ x: Math.max(0, r.left), y: r.top + scrollY, w: r.width, h: r.height });
                 }
 
                 for (const el of sectionEl.querySelectorAll<HTMLElement>(CONTENT_SELECTOR)) {
-                    // outermost matching element only — its line boxes cover descendants
                     const ancestor = el.parentElement?.closest(CONTENT_SELECTOR);
                     if (ancestor && sectionEl.contains(ancestor)) continue;
                     if (!(el.checkVisibility?.() ?? true)) continue;
@@ -179,7 +158,6 @@
                     const range = document.createRange();
                     range.selectNodeContents(el);
                     for (const r of range.getClientRects()) {
-                        // skip sr-only slivers and collapsed boxes
                         if (r.width < 12 || r.height < 8) continue;
                         const x = Math.max(0, r.left);
                         nextBars.push({
@@ -202,7 +180,6 @@
             sync();
         };
 
-        // Drag-to-scrub the track; a plain click jumps, deferring to CSS scroll-behavior
         const drag = { active: false, moved: false, startY: 0 };
 
         const scrollToPointer = (clientY: number, behavior: ScrollBehavior) => {
@@ -236,10 +213,6 @@
         track.addEventListener('pointercancel', endDrag);
 
         measure();
-        // Coalesce re-measures into the next frame: the stats count-up writes into
-        // the layout and can fire the observer repeatedly mid-animation, and each
-        // measure walks every text node. ResizeObserver on body already covers
-        // viewport resizes, so no separate resize listener is needed.
         let measureRaf = 0;
         const scheduleMeasure = () => {
             cancelAnimationFrame(measureRaf);
@@ -250,8 +223,6 @@
         window.addEventListener('scroll', onScroll, { passive: true });
     };
 
-    // Match the original client:media gate — only do work on xl viewports, but
-    // lazily initialise if the viewport later grows past the breakpoint.
     const mq = window.matchMedia('(min-width: 1280px)');
     if (mq.matches) {
         init();

@@ -11,7 +11,6 @@ import SectionHeading from './SectionHeading.astro';
             experience.map((job, i) => (
                 <div data-row class="invert-row border-line relative border-b first:border-t">
                     <ExperienceRow job={job} index={i} />
-                    {/* inverted duplicate revealed via clip-path on hover */}
                     <div class="invert-layer bg-acid absolute inset-0 overflow-hidden text-black" aria-hidden="true">
                         <ExperienceRow job={job} index={i} inverted />
                     </div>

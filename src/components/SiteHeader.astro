@@ -54,8 +54,7 @@ const NAV = [
             inner.classList.toggle('py-4', !scrolled);
             inner.classList.toggle('md:py-5', !scrolled);
         };
-        // Sentinel at the top of the document; once it scrolls out of view the
-        // header switches to its condensed, opaque state. Avoids a scroll handler.
+
         const sentinel = document.createElement('div');
         sentinel.setAttribute('aria-hidden', 'true');
         sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:32px;pointer-events:none;';
@@ -64,8 +63,6 @@ const NAV = [
         new IntersectionObserver(([entry]) => apply(!entry.isIntersecting)).observe(sentinel);
     }
 
-    // Scrollspy: light the nav link whose section is crossing the viewport midline.
-    // Mirrors the minimap's center-based active logic so the two never disagree.
     const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
     const byId = new Map(links.map((link) => [new URL(link.href).hash.slice(1), link]));
 
@@ -95,14 +92,11 @@ const NAV = [
                     setActive(current);
                 }
             },
-            // A 1px band at the vertical center: the section spanning the midline wins.
-            // Gaps (sections without a nav link) keep the last active link lit.
+
             { rootMargin: '-50% 0px -50% 0px' },
         );
         for (const section of sections) spy.observe(section);
     } else {
-        // Detail pages have no scrollable sections; keep the nav item for the
-        // section they belong to lit so the header reflects where you are.
         const path = location.pathname;
         if (path.startsWith('/work') || path.startsWith('/showcase')) setActive('work');
     }

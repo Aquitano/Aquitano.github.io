@@ -552,12 +552,10 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
         <script defer is:inline>
             const setMainSlider = () => {
                 const mainSliderImg = document.getElementById('main-slider__img');
-                // If mobile device
                 if (window.innerWidth < 992) {
                     mainSliderImg.style.setProperty('left', '0', 'important');
                     mainSliderImg.style.setProperty('width', '95%', 'important');
                     mainSliderImg.style.setProperty('z-index', '0', 'important');
-                    // Blur
                     mainSliderImg.style.setProperty('filter', 'blur(2px)', 'important');
                 } else {
                     mainSliderImg.style.setProperty('z-index', '15', 'important');
