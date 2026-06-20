@@ -24,6 +24,7 @@ const NAV = [
                     NAV.map((item) => (
                         <a
                             href={item.href}
+                            data-nav-link
                             class="link-line touch-target font-mono text-xs tracking-[0.14em] text-white uppercase"
                         >
                             {item.label}
@@ -61,5 +62,35 @@ const NAV = [
         document.body.prepend(sentinel);
 
         new IntersectionObserver(([entry]) => apply(!entry.isIntersecting)).observe(sentinel);
+    }
+
+    // Scrollspy: light the nav link whose section is crossing the viewport midline.
+    // Mirrors the minimap's center-based active logic so the two never disagree.
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+    const byId = new Map(links.map((link) => [new URL(link.href).hash.slice(1), link]));
+    const sections = [...byId.keys()].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+    if (sections.length) {
+        let current = '';
+        const setActive = (id: string) => {
+            if (id === current) return;
+            current = id;
+            for (const [linkId, link] of byId) {
+                const on = linkId === id;
+                link.classList.toggle('nav-active', on);
+                if (on) link.setAttribute('aria-current', 'true');
+                else link.removeAttribute('aria-current');
+            }
+        };
+
+        const spy = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) if (entry.isIntersecting) setActive(entry.target.id);
+            },
+            // A 1px band at the vertical center: the section spanning the midline wins.
+            // Gaps (sections without a nav link) keep the last active link lit.
+            { rootMargin: '-50% 0px -50% 0px' },
+        );
+        for (const section of sections) spy.observe(section);
     }
 </script>
