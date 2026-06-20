@@ -10,7 +10,7 @@
     --fg: #e9e9e4;
     --muted: #88888f;
     --line: #232328;
-    --acid: #d7ff3f;
+    --acid: oklch(0.7165 0.1409 50.91);
 
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
