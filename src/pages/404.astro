@@ -9,8 +9,9 @@ import { site } from '../lib/data';
         class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 text-center"
     >
         <p class="meta text-accent mb-6">Error 404</p>
-        <h1 class="display text-[clamp(5rem,28vw,20rem)] leading-none">
+        <h1 data-glitch class="display relative text-[clamp(5rem,28vw,20rem)] leading-none">
             <span class="display-outline">404</span>
+            <span data-glitch-fill aria-hidden="true" class="glitch-fill text-accent absolute inset-0">404</span>
         </h1>
         <p class="text-muted mt-8 max-w-md text-base leading-relaxed md:text-lg">
             This page drifted off into the stratosphere. Let's get you back to solid ground.
@@ -23,3 +24,57 @@ import { site } from '../lib/data';
         </a>
     </main>
 </Layout>
+
+<style>
+    /* Acid fill sits over the outlined 404 and is punched through by a cursor-following
+       spotlight mask, so the accent only appears where the pointer is. */
+    .glitch-fill {
+        opacity: 0;
+        -webkit-mask-image: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), #000 0%, transparent 72%);
+        mask-image: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), #000 0%, transparent 72%);
+        transition: opacity 320ms var(--ease-out-strong);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .glitch-fill {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    const heading = document.querySelector<HTMLElement>('[data-glitch]');
+    const fill = document.querySelector<HTMLElement>('[data-glitch-fill]');
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (heading && fill && fine) {
+        let queued = false;
+        let mx = 50;
+        let my = 50;
+
+        const apply = () => {
+            queued = false;
+            fill.style.setProperty('--mx', `${mx}%`);
+            fill.style.setProperty('--my', `${my}%`);
+        };
+
+        heading.addEventListener(
+            'pointermove',
+            (e) => {
+                const r = heading.getBoundingClientRect();
+                mx = ((e.clientX - r.left) / r.width) * 100;
+                my = ((e.clientY - r.top) / r.height) * 100;
+                fill.style.opacity = '1';
+                if (!queued) {
+                    queued = true;
+                    requestAnimationFrame(apply);
+                }
+            },
+            { passive: true },
+        );
+
+        heading.addEventListener('pointerleave', () => {
+            fill.style.opacity = '0';
+        });
+    }
+</script>

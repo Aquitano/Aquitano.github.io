@@ -145,6 +145,30 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <SiteFooter />
 
         <div class="grain" aria-hidden="true"></div>
+
+        <script>
+            // Restore the title the current page shipped with, not a hardcoded home title.
+            const onPageTitle = document.title;
+            document.addEventListener('visibilitychange', () => {
+                document.title = document.hidden ? '[ still shipping ] — TB' : onPageTitle;
+            });
+
+            const signature = [
+                '%cThomas Breindl%c  Software Developer & Designer\n',
+                '%cYou opened the console — good instinct.\n',
+                'Hand-built, no template: Astro · GSAP · Tailwind · no framework runtime.\n',
+                'Like the build? %ccontact@thomasbreindl.me',
+            ].join('');
+
+            const mono = '"Geist Mono Variable", ui-monospace, monospace';
+            console.log(
+                signature,
+                `color:#e8874a;font:700 15px/1.5 ${mono};letter-spacing:.04em`,
+                `color:#88888f;font:400 12px/1.7 ${mono}`,
+                `color:#88888f;font:400 12px/1.7 ${mono}`,
+                `color:#e8874a;font:400 12px/1.7 ${mono}`,
+            );
+        </script>
     </body>
 </html>
 
