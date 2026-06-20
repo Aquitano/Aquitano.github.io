@@ -104,9 +104,10 @@ body {
     }
 }
 
+/* Without text-stroke support the transparent fill would erase the title
+   entirely; fall back to solid ink so the content never disappears. */
 @supports not ((-webkit-text-stroke: 1px var(--fg))) {
-    .display-outline,
-    .kw-outline {
+    .display-outline {
         color: var(--fg);
     }
 }
@@ -118,75 +119,6 @@ body {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--muted);
-}
-
-.split-line {
-    will-change: transform;
-}
-
-@keyframes cue-drop {
-    0% {
-        transform: translateY(-260%);
-    }
-    42%,
-    58% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(260%);
-    }
-}
-
-.scroll-cue-arrow {
-    animation: cue-drop 2.2s var(--ease-in-out-strong) infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .scroll-cue-arrow {
-        animation: none;
-    }
-}
-
-.kw {
-    transition:
-        color 300ms var(--ease-out-strong),
-        -webkit-text-stroke-color 300ms var(--ease-out-strong);
-}
-
-.kw-outline {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--fg);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .kw:hover {
-        color: var(--acid);
-        -webkit-text-stroke-color: transparent;
-    }
-}
-
-@keyframes pop-in {
-    0% {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    70% {
-        transform: scale(1.12);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-.pop-in {
-    animation: pop-in 320ms var(--ease-out-strong) both;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .pop-in {
-        animation: none;
-    }
 }
 
 .link-line {
@@ -234,70 +166,6 @@ body {
     }
 }
 
-.cta-glide-label {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    height: 1rem;
-    line-height: 1rem;
-}
-
-.cta-glide-label-in,
-.cta-glide-label-out {
-    display: block;
-    transition: transform 420ms var(--ease-out-strong);
-}
-
-.cta-glide-label-out {
-    position: absolute;
-    inset: 0;
-    transform: translateY(110%);
-}
-
-.cta-glide-arrow {
-    display: inline-block;
-    transition: transform 420ms var(--ease-out-strong);
-}
-
-.cta-glide:focus-visible .cta-glide-label-in {
-    transform: translateY(-110%);
-}
-
-.cta-glide:focus-visible .cta-glide-label-out {
-    transform: translateY(0);
-}
-
-.cta-glide:focus-visible .cta-glide-arrow {
-    transform: translateX(5px);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .cta-glide:hover .cta-glide-label-in {
-        transform: translateY(-110%);
-    }
-    .cta-glide:hover .cta-glide-label-out {
-        transform: translateY(0);
-    }
-    .cta-glide:hover .cta-glide-arrow {
-        transform: translateX(5px);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .cta-glide-label-in,
-    .cta-glide-label-out,
-    .cta-glide-arrow {
-        transition: none;
-    }
-    .cta-glide-label-out {
-        display: none;
-    }
-    .cta-glide:hover .cta-glide-label-in,
-    .cta-glide:focus-visible .cta-glide-label-in {
-        transform: none;
-    }
-}
-
 /* Pressable feedback */
 .pressable {
     transition: transform 140ms var(--ease-out-strong);
@@ -305,65 +173,6 @@ body {
 
 .pressable:active {
     transform: scale(0.97);
-}
-
-.invert-row .invert-layer {
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 420ms var(--ease-out-strong);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .invert-row:hover .invert-layer {
-        clip-path: inset(0 0 0 0);
-    }
-}
-
-/* Film grain overlay — oversized noise layer jittered in discrete steps, like analog film */
-.grain {
-    position: fixed;
-    inset: -50%;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.1;
-    will-change: transform;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation: grain-jitter 0.7s steps(1, end) infinite;
-}
-
-@keyframes grain-jitter {
-    0% {
-        transform: translate(0, 0);
-    }
-    12.5% {
-        transform: translate(-6%, -9%);
-    }
-    25% {
-        transform: translate(9%, -3%);
-    }
-    37.5% {
-        transform: translate(-4%, 7%);
-    }
-    50% {
-        transform: translate(7%, 10%);
-    }
-    62.5% {
-        transform: translate(-10%, 4%);
-    }
-    75% {
-        transform: translate(3%, -7%);
-    }
-    87.5% {
-        transform: translate(-7%, 11%);
-    }
-    100% {
-        transform: translate(0, 0);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .grain {
-        animation: none;
-    }
 }
 
 section[id] {
@@ -379,7 +188,7 @@ section[id] {
     }
     ::-webkit-scrollbar-thumb {
         background: var(--line);
-        border-radius: 5px;
+        border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
         background: var(--muted);

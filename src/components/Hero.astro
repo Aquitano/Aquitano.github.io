@@ -74,6 +74,94 @@ import Magnetic from './Magnetic.astro';
             opacity: 0;
         }
     }
+
+    .split-line {
+        will-change: transform;
+    }
+
+    .scroll-cue-arrow {
+        animation: cue-drop 2.2s var(--ease-in-out-strong) infinite;
+    }
+
+    @keyframes cue-drop {
+        0% {
+            transform: translateY(-260%);
+        }
+        42%,
+        58% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(260%);
+        }
+    }
+
+    .cta-glide-label {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        height: 1rem;
+        line-height: 1rem;
+    }
+
+    .cta-glide-label-in,
+    .cta-glide-label-out {
+        display: block;
+        transition: transform 420ms var(--ease-out-strong);
+    }
+
+    .cta-glide-label-out {
+        position: absolute;
+        inset: 0;
+        transform: translateY(110%);
+    }
+
+    .cta-glide-arrow {
+        display: inline-block;
+        transition: transform 420ms var(--ease-out-strong);
+    }
+
+    .cta-glide:focus-visible .cta-glide-label-in {
+        transform: translateY(-110%);
+    }
+
+    .cta-glide:focus-visible .cta-glide-label-out {
+        transform: translateY(0);
+    }
+
+    .cta-glide:focus-visible .cta-glide-arrow {
+        transform: translateX(5px);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .cta-glide:hover .cta-glide-label-in {
+            transform: translateY(-110%);
+        }
+        .cta-glide:hover .cta-glide-label-out {
+            transform: translateY(0);
+        }
+        .cta-glide:hover .cta-glide-arrow {
+            transform: translateX(5px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-cue-arrow {
+            animation: none;
+        }
+        .cta-glide-label-in,
+        .cta-glide-label-out,
+        .cta-glide-arrow {
+            transition: none;
+        }
+        .cta-glide-label-out {
+            display: none;
+        }
+        .cta-glide:hover .cta-glide-label-in,
+        .cta-glide:focus-visible .cta-glide-label-in {
+            transform: none;
+        }
+    }
 </style>
 
 <script>

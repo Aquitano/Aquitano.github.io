@@ -7,6 +7,12 @@ import { site, socials } from '../lib/data';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
+export interface Props {
+    title?: string;
+    description?: string;
+    ogTitle?: string;
+}
+
 const defaultKeywords = [
     'Thomas Breindl',
     'Thomas',
@@ -20,19 +26,53 @@ const defaultKeywords = [
     'Germany',
 ];
 
-export interface Props {
-    title?: string;
-    description?: string;
-    ogTitle?: string;
-}
-
 const {
     title = `${site.name} | ${site.role}`,
     description = 'Software developer, designer and CS student in Passau, Germany. Building robust backend systems, event pipelines and interfaces people enjoy using.',
     ogTitle,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const baseURL = Astro.site ?? Astro.url;
+
+const canonicalURL = new URL(Astro.url.pathname, baseURL);
+const homeURL = new URL('/', baseURL);
+const ogImageURL = new URL('/og-default.png', baseURL);
+const sitemapURL = new URL('/sitemap-index.xml', baseURL);
+
+const personID = new URL('/#person', baseURL).toString();
+const websiteID = new URL('/#website', baseURL).toString();
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+        {
+            '@type': 'Person',
+            '@id': personID,
+            name: site.name,
+            url: homeURL.toString(),
+            jobTitle: 'Software Developer',
+            description: 'Software developer, designer and computer science student in Passau, Germany.',
+            address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Passau',
+                addressCountry: 'DE',
+            },
+            sameAs: socials.map((social) => social.href),
+        },
+        {
+            '@type': 'WebSite',
+            '@id': websiteID,
+            name: `${site.name} | Portfolio`,
+            url: homeURL.toString(),
+            inLanguage: 'en',
+            publisher: {
+                '@id': personID,
+            },
+        },
+    ],
+};
+
+const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 ---
 
 <!doctype html>
@@ -40,7 +80,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
         <meta name="generator" content={Astro.generator} />
         <meta name="theme-color" content="#0a0a0b" />
         <meta name="color-scheme" content="dark" />
@@ -55,9 +97,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             canonical={canonicalURL.toString()}
             openGraph={{
                 basic: {
-                    title: ogTitle || title,
+                    title: ogTitle ?? title,
                     type: 'website',
-                    image: new URL('/og-default.png', Astro.site).toString(),
+                    image: ogImageURL.toString(),
                     url: canonicalURL.toString(),
                 },
                 optional: {
@@ -72,45 +114,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
             }}
             extend={{
                 meta: [
-                    { name: 'keywords', content: defaultKeywords.join(',') },
+                    { name: 'keywords', content: defaultKeywords.join(', ') },
                     { name: 'author', content: site.name },
                     { name: 'robots', content: 'index, follow' },
                     { name: 'format-detection', content: 'telephone=no' },
                 ],
-                link: [{ rel: 'sitemap', type: 'application/xml', href: '/sitemap-index.xml' }],
+                link: [
+                    {
+                        rel: 'sitemap',
+                        type: 'application/xml',
+                        href: sitemapURL.pathname,
+                    },
+                ],
             }}
         />
 
-        <script
-            is:inline
-            type="application/ld+json"
-            set:html={JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'Person',
-                '@id': new URL('/#person', Astro.site).toString(),
-                name: site.name,
-                url: new URL('/', Astro.site).toString(),
-                jobTitle: 'Software Developer',
-                description: 'Software Developer and Designer from Passau, Germany',
-                address: { '@type': 'PostalAddress', addressLocality: 'Passau', addressCountry: 'DE' },
-                sameAs: socials.map((s) => s.href),
-            })}
-        />
-
-        <script
-            is:inline
-            type="application/ld+json"
-            set:html={JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'WebSite',
-                '@id': new URL('/#website', Astro.site).toString(),
-                name: `${site.name} | Portfolio`,
-                url: new URL('/', Astro.site).toString(),
-                inLanguage: 'en',
-                publisher: { '@id': new URL('/#person', Astro.site).toString() },
-            })}
-        />
+        <script type="application/ld+json" set:html={safeJsonLd} />
     </head>
+
     <body class="bg-bg text-fg min-h-svh antialiased">
         <a
             href="#top"
@@ -126,3 +147,60 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <div class="grain" aria-hidden="true"></div>
     </body>
 </html>
+
+<style>
+    .grain {
+        position: fixed;
+        inset: -50%;
+        z-index: 60;
+        pointer-events: none;
+        opacity: 0.1;
+        will-change: transform;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        animation: grain-jitter 0.7s steps(1, end) infinite;
+    }
+
+    @keyframes grain-jitter {
+        0% {
+            transform: translate(0, 0);
+        }
+
+        12.5% {
+            transform: translate(-6%, -9%);
+        }
+
+        25% {
+            transform: translate(9%, -3%);
+        }
+
+        37.5% {
+            transform: translate(-4%, 7%);
+        }
+
+        50% {
+            transform: translate(7%, 10%);
+        }
+
+        62.5% {
+            transform: translate(-10%, 4%);
+        }
+
+        75% {
+            transform: translate(3%, -7%);
+        }
+
+        87.5% {
+            transform: translate(-7%, 11%);
+        }
+
+        100% {
+            transform: translate(0, 0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .grain {
+            animation: none;
+        }
+    }
+</style>

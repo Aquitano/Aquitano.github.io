@@ -36,3 +36,16 @@ import SectionHeading from './SectionHeading.astro';
         }
     }
 </script>
+
+<style>
+    .invert-row .invert-layer {
+        clip-path: inset(100% 0 0 0);
+        transition: clip-path 420ms var(--ease-out-strong);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .invert-row:hover .invert-layer {
+            clip-path: inset(0 0 0 0);
+        }
+    }
+</style>

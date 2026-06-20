@@ -53,3 +53,30 @@ const ROWS = [focusAreas.slice(0, 3), focusAreas.slice(3)];
         });
     }
 </script>
+
+<style>
+    /* Keyword outline fills acid on hover */
+    .kw {
+        transition:
+            color 300ms var(--ease-out-strong),
+            -webkit-text-stroke-color 300ms var(--ease-out-strong);
+    }
+
+    .kw-outline {
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--fg);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .kw:hover {
+            color: var(--acid);
+            -webkit-text-stroke-color: transparent;
+        }
+    }
+
+    @supports not ((-webkit-text-stroke: 1px var(--fg))) {
+        .kw-outline {
+            color: var(--fg);
+        }
+    }
+</style>

@@ -11,12 +11,12 @@ import { site, socials } from '../lib/data';
                     data-footer-headline
                     class="display group-hover:text-acid block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300"
                 >
-                    Let’s Talk
-                    <span
-                        class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
+                    Let’s <span class="whitespace-nowrap"
+                        >Talk<span
+                            class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
+                            >↗</span
+                        ></span
                     >
-                        ↗
-                    </span>
                 </span>
             </span>
         </a>
@@ -80,6 +80,31 @@ import { site, socials } from '../lib/data';
             transform: translateY(110%);
         }
     }
+
+    /* Pop for state-change feedback (the "Copied" pill) */
+    .pop-in {
+        animation: pop-in 320ms var(--ease-out-strong) both;
+    }
+
+    @keyframes pop-in {
+        0% {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+        70% {
+            transform: scale(1.12);
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .pop-in {
+            animation: none;
+        }
+    }
 </style>
 
 <script>
@@ -111,19 +136,9 @@ import { site, socials } from '../lib/data';
         let timer: ReturnType<typeof setTimeout>;
 
         const copy = async (text: string) => {
-            if (navigator.clipboard?.writeText) {
-                await navigator.clipboard.writeText(text);
-                return true;
-            }
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.setAttribute('readonly', '');
-            ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none;';
-            document.body.appendChild(ta);
-            ta.select();
-            const ok = document.execCommand('copy');
-            ta.remove();
-            return ok;
+            if (!navigator.clipboard?.writeText) return false;
+            await navigator.clipboard.writeText(text);
+            return true;
         };
 
         const flash = () => {
