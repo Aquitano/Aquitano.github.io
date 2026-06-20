@@ -1,17 +1,19 @@
 ---
 import { site } from '../lib/data';
-import HeroCanvas from './HeroCanvas.astro';
-import Magnetic from './Magnetic.astro';
 ---
 
 <section id="top" data-hero data-minimap="Intro" class="relative flex min-h-svh flex-col justify-end overflow-hidden">
-    <HeroCanvas />
+    <!-- <HeroCanvas client:idle /> -->
     {/* fade shader into page background at the bottom edge */}
     <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent"></div>
 
     <div class="relative z-10 px-5 pb-10 md:px-10 md:pb-14">
         <div data-hero-parallax>
-            <p data-hero-fade class="meta text-fg/70 mb-5">{site.role} — {site.status}</p>
+            <p data-hero-fade class="meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span>{site.role} · {site.status}</span>
+                <span aria-hidden="true" class="text-line">/</span>
+                <span class="text-acid">{site.availability}</span>
+            </p>
             <h1 class="display text-[clamp(3.6rem,15.5vw,15rem)]">
                 <span class="block overflow-hidden pb-[0.06em]">
                     <span data-hero-line class="split-line block">Thomas</span>
@@ -26,30 +28,47 @@ import Magnetic from './Magnetic.astro';
             class="border-line mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
         >
             <p data-hero-fade class="text-muted max-w-md text-base leading-relaxed md:text-lg">
-                Building robust backend systems, event pipelines and interfaces people enjoy using — currently studying
+                Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
                 CS in <span class="text-fg">Passau, Germany</span>.
             </p>
-            <div data-hero-fade class="flex items-center gap-6 md:gap-8">
-                <span class="meta">{site.coordinates}</span>
-                <Magnetic>
-                    <a href="#about" aria-label="Scroll to about section" class="group flex items-center gap-3">
-                        <span class="meta group-hover:text-acid transition-colors duration-300">Scroll</span>
-                        <span
-                            class="border-fg/20 text-acid group-hover:border-acid grid size-11 place-items-center overflow-hidden rounded-full border transition-colors duration-300 md:size-12"
+            <div data-hero-fade class="flex flex-wrap items-center gap-3">
+                <a
+                    href="#work"
+                    class="cta-glide pressable bg-acid flex items-center gap-2 rounded-full px-6 py-3 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
+                >
+                    <span class="cta-glide-label">
+                        <span class="cta-glide-label-in">View Work</span>
+                        <span class="cta-glide-label-out" aria-hidden="true">View Work</span>
+                    </span>
+                    <span class="cta-glide-arrow" aria-hidden="true">→</span>
+                </a>
+                <a
+                    href="#contact"
+                    class="pressable group border-line text-fg hover:border-acid hover:text-acid flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors duration-300"
+                >
+                    Let’s Talk
+                    <span
+                        class="transition-transform duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        aria-hidden="true">↗</span
+                    >
+                </a>
+                <a href="#about" aria-label="Scroll to about section" class="group ml-1 flex items-center gap-2.5">
+                    <span class="meta group-hover:text-acid transition-colors duration-300">Scroll</span>
+                    <span
+                        class="border-fg/20 text-acid group-hover:border-acid grid size-11 place-items-center overflow-hidden rounded-full border transition-colors duration-300"
+                    >
+                        <svg
+                            class="scroll-cue-arrow"
+                            width="11"
+                            height="13"
+                            viewBox="0 0 10 12"
+                            fill="none"
+                            aria-hidden="true"
                         >
-                            <svg
-                                class="scroll-cue-arrow"
-                                width="11"
-                                height="13"
-                                viewBox="0 0 10 12"
-                                fill="none"
-                                aria-hidden="true"
-                            >
-                                <path d="M5 1v10m0 0L1 7m4 4 4-4" stroke="currentColor" stroke-width="1.2"></path>
-                            </svg>
-                        </span>
-                    </a>
-                </Magnetic>
+                            <path d="M5 1v10m0 0L1 7m4 4 4-4" stroke="currentColor" stroke-width="1.2"></path>
+                        </svg>
+                    </span>
+                </a>
             </div>
         </div>
     </div>

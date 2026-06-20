@@ -3,13 +3,13 @@ import { manifesto, stats } from '../lib/data';
 import SectionHeading from './SectionHeading.astro';
 ---
 
-<section id="about" data-manifesto-section data-minimap="About" class="px-5 py-24 md:px-10 md:py-36">
+<section id="about" data-manifesto-section data-minimap="About" class="section-x py-24 md:py-36">
     <SectionHeading index="01" title="About" />
     <p class="sr-only">{manifesto}</p>
     <p
         data-manifesto
         aria-hidden="true"
-        class="max-w-5xl text-2xl leading-snug font-medium tracking-tight md:text-5xl md:leading-[1.15]"
+        class="max-w-5xl text-2xl leading-snug font-medium tracking-[-0.015em] [font-stretch:112%] md:text-5xl md:leading-[1.12]"
     >
         {manifesto}
     </p>
@@ -21,9 +21,8 @@ import SectionHeading from './SectionHeading.astro';
         {
             stats.map((stat) => (
                 <div data-stat class="bg-bg p-6 md:p-8">
-                    <p class="display text-acid text-5xl md:text-7xl">
-                        <span data-count={stat.value}>00</span>
-                        {stat.suffix}
+                    <p class="display text-fg text-5xl md:text-7xl">
+                        <span data-count={stat.value}>00</span><span class="text-acid">{stat.suffix}</span>
                     </p>
                     <p class="meta mt-3">{stat.label}</p>
                 </div>
@@ -35,7 +34,30 @@ import SectionHeading from './SectionHeading.astro';
 <script>
     import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from '../lib/gsap';
 
-    if (!prefersReducedMotion()) {
+    const reduce = prefersReducedMotion();
+
+    // Stats always show their real value; only the count-up tween is motion-gated,
+    // so reduced-motion visitors read the final figure instead of a frozen "00".
+    const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
+    for (const el of counters) {
+        const target = Number(el.dataset.count);
+        if (reduce) {
+            el.textContent = String(target).padStart(2, '0');
+            continue;
+        }
+        const obj = { value: 0 };
+        gsap.to(obj, {
+            value: target,
+            duration: 1.4,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+            onUpdate: () => {
+                el.textContent = String(Math.round(obj.value)).padStart(2, '0');
+            },
+        });
+    }
+
+    if (!reduce) {
         // Split lazily as the section approaches, so the page's load state keeps
         // full-contrast text (a11y) while scrollers still get the effect.
         document.fonts.ready.then(() => {
@@ -46,7 +68,7 @@ import SectionHeading from './SectionHeading.astro';
                 onEnter: () => {
                     const split = SplitText.create('[data-manifesto]', { type: 'words', aria: 'none' });
                     gsap.from(split.words, {
-                        opacity: 0.12,
+                        opacity: 0.4,
                         stagger: 0.04,
                         ease: 'none',
                         scrollTrigger: {
@@ -60,27 +82,11 @@ import SectionHeading from './SectionHeading.astro';
             });
         });
 
-        // Count-up stats
-        const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
-        for (const el of counters) {
-            const target = Number(el.dataset.count);
-            const obj = { value: 0 };
-            gsap.to(obj, {
-                value: target,
-                duration: 1.4,
-                ease: 'power2.out',
-                scrollTrigger: { trigger: el, start: 'top 88%' },
-                onUpdate: () => {
-                    el.textContent = String(Math.round(obj.value)).padStart(2, '0');
-                },
-            });
-        }
-
         gsap.from('[data-stat]', {
             autoAlpha: 0,
             y: 28,
             stagger: 0.08,
-            scrollTrigger: { trigger: '[data-stats]', start: 'top 88%' },
+            scrollTrigger: { trigger: '[data-stats]', start: 'top 88%', once: true },
         });
     }
 </script>

@@ -12,7 +12,7 @@ const STICKY_TOP = 88;
 const CASCADE = 14;
 ---
 
-<section id="work" data-projects data-minimap="Work" class="px-5 py-24 md:px-10 md:py-36">
+<section id="work" data-projects data-minimap="Work" class="section-x py-24 md:py-36">
     <SectionHeading index="03" title="Selected Work" />
     <div class="flex flex-col gap-6 md:gap-10">
         {
@@ -46,13 +46,17 @@ const CASCADE = 14;
 
                             <header class="relative flex items-start justify-between gap-4">
                                 <span class="meta">
-                                    ©{p.year} — 0{i + 1}/0{work.length}
+                                    ©{p.year} · 0{i + 1}/0{work.length}
                                 </span>
                                 <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
                             </header>
 
                             <div class="relative my-8 md:my-10">
-                                <p class="meta mb-4" style={`color: ${p.accent}`}>
+                                <p class="mb-4 flex items-center gap-2 font-mono text-xs tracking-[0.08em] uppercase md:text-sm">
+                                    <span
+                                        class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
+                                        style={`background: ${p.accent}`}
+                                        aria-hidden="true"></span>
                                     {p.subtitle}
                                 </p>
                                 <h3 class="display text-[clamp(1.9rem,5.8vw,5.8rem)]">

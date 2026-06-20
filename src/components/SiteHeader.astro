@@ -19,7 +19,6 @@ const NAV = [
             TB<span class="text-white/50">©2026</span>
         </a>
         <div class="flex items-center gap-6 md:gap-10">
-            <span data-clock class="meta hidden tabular-nums sm:inline">Passau, DE</span>
             <nav class="flex items-center gap-4 md:gap-6">
                 {
                     NAV.map((item) => (
@@ -54,22 +53,13 @@ const NAV = [
             inner.classList.toggle('py-4', !scrolled);
             inner.classList.toggle('md:py-5', !scrolled);
         };
-        const onScroll = () => apply(window.scrollY > 32);
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-    }
+        // Sentinel at the top of the document; once it scrolls out of view the
+        // header switches to its condensed, opaque state. Avoids a scroll handler.
+        const sentinel = document.createElement('div');
+        sentinel.setAttribute('aria-hidden', 'true');
+        sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:32px;pointer-events:none;';
+        document.body.prepend(sentinel);
 
-    const clock = document.querySelector<HTMLElement>('[data-clock]');
-    if (clock) {
-        const fmt = new Intl.DateTimeFormat('en-GB', {
-            hour: '2-digit',
-            minute: '2-digit',
-            timeZone: 'Europe/Berlin',
-        });
-        const tick = () => {
-            clock.textContent = `Passau, DE — ${fmt.format(new Date())}`;
-        };
-        tick();
-        setInterval(tick, 30_000);
+        new IntersectionObserver(([entry]) => apply(!entry.isIntersecting)).observe(sentinel);
     }
 </script>

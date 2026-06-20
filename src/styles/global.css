@@ -54,6 +54,39 @@ body {
     color: #0a0a0b;
 }
 
+/* One consistent keyboard focus ring across the dark UI. The outline follows
+   each element's own border-radius, so pills and cards stay correctly shaped. */
+:where(a, button, [tabindex]):focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 3px;
+}
+
+@supports not selector(:focus-visible) {
+    :where(a, button, [tabindex]):focus {
+        outline: 2px solid var(--acid);
+        outline-offset: 3px;
+    }
+}
+
+.section-x {
+    --gutter: 1.25rem;
+    --rail: 0rem;
+    padding-left: max(var(--gutter), calc((100% - 96rem) / 2));
+    padding-right: max(calc(var(--gutter) + var(--rail)), calc((100% - 96rem) / 2));
+}
+
+@media (min-width: 768px) {
+    .section-x {
+        --gutter: 2.5rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .section-x {
+        --rail: 3rem;
+    }
+}
+
 /* Expanded display type — Archivo variable width axis */
 .display {
     font-stretch: 125%;
@@ -181,11 +214,82 @@ body {
     }
 }
 
+/* Keyboard parity: the same underline reveal on focus, not just hover */
+.link-line:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
 /* Expand small link hit areas to ≥24px on touch devices without moving layout */
 @media (pointer: coarse) {
     .touch-target {
         padding-block: 0.5rem;
         margin-block: -0.5rem;
+    }
+}
+
+/* Primary CTA — label swaps up to a fresh copy, arrow glides right */
+.cta-glide-label {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    height: 1rem;
+    line-height: 1rem;
+}
+
+.cta-glide-label-in,
+.cta-glide-label-out {
+    display: block;
+    transition: transform 420ms var(--ease-out-strong);
+}
+
+.cta-glide-label-out {
+    position: absolute;
+    inset: 0;
+    transform: translateY(110%);
+}
+
+.cta-glide-arrow {
+    display: inline-block;
+    transition: transform 420ms var(--ease-out-strong);
+}
+
+.cta-glide:focus-visible .cta-glide-label-in {
+    transform: translateY(-110%);
+}
+
+.cta-glide:focus-visible .cta-glide-label-out {
+    transform: translateY(0);
+}
+
+.cta-glide:focus-visible .cta-glide-arrow {
+    transform: translateX(5px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cta-glide:hover .cta-glide-label-in {
+        transform: translateY(-110%);
+    }
+    .cta-glide:hover .cta-glide-label-out {
+        transform: translateY(0);
+    }
+    .cta-glide:hover .cta-glide-arrow {
+        transform: translateX(5px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cta-glide-label-in,
+    .cta-glide-label-out,
+    .cta-glide-arrow {
+        transition: none;
+    }
+    .cta-glide-label-out {
+        display: none;
+    }
+    .cta-glide:hover .cta-glide-label-in,
+    .cta-glide:focus-visible .cta-glide-label-in {
+        transform: none;
     }
 }
 

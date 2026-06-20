@@ -18,7 +18,9 @@ const { strength = 0.35, class: className } = Astro.props;
             const strength = Number(el.dataset.strength) || 0.35;
             const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' });
             const yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3.out' });
+            const sTo = gsap.quickTo(el, 'scale', { duration: 0.5, ease: 'power3.out' });
 
+            el.addEventListener('mouseenter', () => sTo(1.04));
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
                 xTo((e.clientX - (rect.left + rect.width / 2)) * strength);
@@ -27,6 +29,7 @@ const { strength = 0.35, class: className } = Astro.props;
             el.addEventListener('mouseleave', () => {
                 xTo(0);
                 yTo(0);
+                sTo(1);
             });
         }
     }

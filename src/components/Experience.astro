@@ -4,7 +4,7 @@ import ExperienceRow from './ExperienceRow.astro';
 import SectionHeading from './SectionHeading.astro';
 ---
 
-<section data-experience data-minimap="Experience" class="px-5 py-24 md:px-10 md:py-36">
+<section data-experience data-minimap="Experience" class="section-x py-24 md:py-36">
     <SectionHeading index="02" title="Experience" />
     <div>
         {
@@ -32,7 +32,7 @@ import SectionHeading from './SectionHeading.astro';
                 autoAlpha: 0,
                 y: 36,
                 duration: 0.9,
-                scrollTrigger: { trigger: row, start: 'top 88%' },
+                scrollTrigger: { trigger: row, start: 'top 88%', once: true },
             });
         }
     }

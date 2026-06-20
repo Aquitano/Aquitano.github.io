@@ -23,7 +23,7 @@ const project = entry.data;
 const nextData = { title: next.data.title, wrap: next.data.wrap, slug: next.id, accent: next.data.accent };
 ---
 
-<Layout title={`${project.title} — ${site.name}`} description={project.description}>
+<Layout title={`${project.title} | ${site.name}`} description={project.description}>
     <main>
         <ProjectDetail project={project} index={index} total={total} next={nextData}>
             <Content />
