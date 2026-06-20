@@ -1,0 +1,265 @@
+---
+const SHORTCUTS = [
+    { keys: ['j'], label: 'Next section' },
+    { keys: ['k'], label: 'Previous section' },
+    { keys: ['g', 'g'], label: 'Jump to top' },
+    { keys: ['Shift', 'G'], label: 'Jump to contact' },
+    { keys: ['?'], label: 'Toggle this panel' },
+    { keys: ['Esc'], label: 'Close' },
+];
+---
+
+<dialog
+    data-kbd-dialog
+    aria-label="Keyboard shortcuts"
+    class="kbd-dialog border-line bg-bg-raise/95 text-fg m-auto w-[min(22rem,calc(100vw-2rem))] rounded-2xl border p-0 backdrop-blur-md"
+>
+    <div class="p-6 md:p-7">
+        <div class="border-line mb-5 flex items-center justify-between border-b pb-4">
+            <p class="meta text-accent">Keyboard</p>
+            <button
+                data-kbd-close
+                type="button"
+                aria-label="Close"
+                class="meta text-muted hover:text-fg transition-colors duration-200"
+            >
+                esc
+            </button>
+        </div>
+        <ul class="flex flex-col gap-3.5">
+            {
+                SHORTCUTS.map((s) => (
+                    <li class="flex items-center justify-between gap-6">
+                        <span class="text-fg/85 text-sm">{s.label}</span>
+                        <span class="flex items-center gap-1">
+                            {s.keys.map((k) => (
+                                <kbd class="kbd-cap">{k}</kbd>
+                            ))}
+                        </span>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</dialog>
+
+<button
+    data-kbd-hint
+    type="button"
+    aria-label="Show keyboard shortcuts"
+    class="kbd-hint border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm"
+>
+    <kbd class="kbd-cap">?</kbd>
+    <span class="meta">Shortcuts</span>
+</button>
+
+<style>
+    .kbd-cap {
+        display: inline-block;
+        min-width: 1.6rem;
+        border: 1px solid var(--line);
+        border-radius: 9999px;
+        background: var(--bg);
+        padding: 3px 9px;
+        color: var(--fg);
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        line-height: 1.4;
+        letter-spacing: 0.06em;
+        text-align: center;
+    }
+
+    .kbd-hint {
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition:
+            opacity 450ms var(--ease-out-strong),
+            transform 450ms var(--ease-out-strong),
+            color 200ms,
+            border-color 200ms;
+    }
+
+    .kbd-hint.is-shown {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+    }
+
+    .kbd-hint::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 9999px;
+        border: 1px solid var(--accent);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .kbd-hint.is-pulse::after {
+        animation: kbd-ping 2.6s var(--ease-out-strong) 1;
+    }
+
+    @keyframes kbd-ping {
+        0% {
+            opacity: 0.7;
+            transform: scale(1);
+        }
+        70%,
+        100% {
+            opacity: 0;
+            transform: scale(1.7);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .kbd-hint {
+            transition: opacity 200ms linear;
+            transform: none;
+        }
+        .kbd-hint.is-pulse::after {
+            animation: none;
+        }
+    }
+
+    .kbd-dialog::backdrop {
+        background: color-mix(in oklch, #0a0a0b 68%, transparent);
+        backdrop-filter: blur(2px);
+    }
+
+    .kbd-dialog {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+        transition:
+            opacity 240ms var(--ease-out-strong),
+            transform 240ms var(--ease-out-strong);
+    }
+
+    .kbd-dialog[open] {
+        opacity: 1;
+        transform: none;
+    }
+
+    @starting-style {
+        .kbd-dialog[open] {
+            opacity: 0;
+            transform: translateY(8px) scale(0.98);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .kbd-dialog {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    const dialog = document.querySelector<HTMLDialogElement>('[data-kbd-dialog]');
+    const hint = document.querySelector<HTMLElement>('[data-kbd-hint]');
+
+    const stops: HTMLElement[] = [];
+    for (const section of document.querySelectorAll<HTMLElement>('[data-minimap]')) {
+        stops.push(section);
+        for (const card of section.querySelectorAll<HTMLElement>('[data-card-wrapper]')) stops.push(card);
+    }
+
+    if (dialog && stops.length) {
+        const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const HEADER_OFFSET = 88;
+
+        const wrappers = stops.filter((s) => s.hasAttribute('data-card-wrapper'));
+        let tops: number[] = [];
+
+        const measure = () => {
+            const saved = wrappers.map((w) => w.style.position);
+            for (const w of wrappers) w.style.position = 'static';
+            tops = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY));
+            wrappers.forEach((w, i) => (w.style.position = saved[i]));
+        };
+
+        const currentIndex = () => {
+            const line = window.scrollY + HEADER_OFFSET + 8;
+            let idx = 0;
+            tops.forEach((t, i) => {
+                if (t <= line) idx = i;
+            });
+            return idx;
+        };
+
+        const goTo = (i: number) => {
+            const j = Math.max(0, Math.min(tops.length - 1, i));
+            window.scrollTo({ top: Math.max(0, tops[j] - HEADER_OFFSET), behavior: reduce() ? 'auto' : 'smooth' });
+        };
+
+        measure();
+        let measureRaf = 0;
+        const remeasure = () => {
+            cancelAnimationFrame(measureRaf);
+            measureRaf = requestAnimationFrame(measure);
+        };
+        window.addEventListener('resize', remeasure);
+        window.addEventListener('load', measure);
+        document.fonts?.ready.then(measure);
+
+        const isTyping = (el: Element | null) =>
+            el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+
+        const open = () => !dialog.open && dialog.showModal();
+        const close = () => dialog.open && dialog.close();
+
+        let lastG = 0;
+        window.addEventListener('keydown', (e) => {
+            if (e.metaKey || e.ctrlKey || e.altKey || isTyping(document.activeElement)) return;
+
+            if (e.key === '?') {
+                e.preventDefault();
+                dialog.open ? close() : open();
+                return;
+            }
+            if (dialog.open) return;
+
+            switch (e.key) {
+                case 'j':
+                    e.preventDefault();
+                    goTo(currentIndex() + 1);
+                    break;
+                case 'k':
+                    e.preventDefault();
+                    goTo(currentIndex() - 1);
+                    break;
+                case 'G':
+                    e.preventDefault();
+                    goTo(stops.length - 1);
+                    break;
+                case 'g':
+                    if (e.timeStamp - lastG < 500) {
+                        goTo(0);
+                        lastG = 0;
+                    } else {
+                        lastG = e.timeStamp;
+                    }
+                    break;
+            }
+        });
+
+        dialog.querySelector('[data-kbd-close]')?.addEventListener('click', close);
+        dialog.addEventListener('click', (e) => {
+            const r = dialog.getBoundingClientRect();
+            const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+            if (!inside) close();
+        });
+
+        if (hint) {
+            hint.addEventListener('click', () => {
+                open();
+                hint.classList.remove('is-pulse');
+            });
+
+            setTimeout(() => {
+                hint.classList.add('is-shown');
+                setTimeout(() => hint.classList.add('is-pulse'), reduce() ? 0 : 520);
+            }, 5000);
+        }
+    }
+</script>
