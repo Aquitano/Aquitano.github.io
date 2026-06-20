@@ -220,6 +220,15 @@ body {
     transform-origin: left;
 }
 
+.nav-active {
+    color: var(--acid);
+}
+
+.nav-active.link-line::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
 /* Expand small link hit areas to ≥24px on touch devices without moving layout */
 @media (pointer: coarse) {
     .touch-target {

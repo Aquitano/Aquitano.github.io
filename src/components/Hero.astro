@@ -1,5 +1,6 @@
 ---
 import { site } from '../lib/data';
+import Magnetic from './Magnetic.astro';
 ---
 
 <section id="top" data-hero data-minimap="Intro" class="relative flex min-h-svh flex-col justify-end overflow-hidden">
@@ -32,16 +33,18 @@ import { site } from '../lib/data';
                 CS in <span class="text-fg">Passau, Germany</span>.
             </p>
             <div data-hero-fade class="flex flex-wrap items-center gap-3">
-                <a
-                    href="#work"
-                    class="cta-glide pressable bg-acid flex items-center gap-2 rounded-full px-6 py-3 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
-                >
-                    <span class="cta-glide-label">
-                        <span class="cta-glide-label-in">View Work</span>
-                        <span class="cta-glide-label-out" aria-hidden="true">View Work</span>
-                    </span>
-                    <span class="cta-glide-arrow" aria-hidden="true">→</span>
-                </a>
+                <Magnetic class="inline-flex">
+                    <a
+                        href="#work"
+                        class="cta-glide pressable bg-acid flex items-center gap-2 rounded-full px-6 py-3 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
+                    >
+                        <span class="cta-glide-label">
+                            <span class="cta-glide-label-in">View Work</span>
+                            <span class="cta-glide-label-out" aria-hidden="true">View Work</span>
+                        </span>
+                        <span class="cta-glide-arrow" aria-hidden="true">→</span>
+                    </a>
+                </Magnetic>
                 <a
                     href="#contact"
                     class="pressable group border-line text-fg hover:border-acid hover:text-acid flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors duration-300"
