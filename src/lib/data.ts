@@ -21,10 +21,12 @@ export const socials = [
     },
 ];
 
+const yearsSince = (year: number) => new Date().getFullYear() - year;
+
 export const stats = [
-    { value: 12, suffix: 'K', label: 'Lines of COBOL migrated to Java' },
-    { value: 40, suffix: '%', label: 'Codebase reduction on that migration' },
-    { value: 3, suffix: '', label: 'Engineering teams shipped with' },
+    { value: yearsSince(2020), suffix: '+', label: 'Years writing JavaScript' },
+    { value: yearsSince(2021), suffix: '+', label: 'Years shipping Java' },
+    { value: 3, suffix: '', label: 'Professional roles' },
 ];
 
 export const manifesto =
@@ -32,13 +34,13 @@ export const manifesto =
 
 export const experience = [
     {
-        company: 'itestra GmbH',
+        company: 'itestra',
         role: 'Software Developer',
         type: 'Intern → Working Student',
-        period: 'Mar 2025 - Present',
+        period: 'Mar - Jul 2025 · Oct 2025 - Present',
         highlights: [
-            'Migrated ~12K LOC of COBOL contract logic to Java/Quarkus, reducing the codebase by 40%',
-            'Validated multi-stage batch workflows (JBeret, Panache, Hibernate) for consistent outputs',
+            'Reengineered ~21K LOC of legacy COBOL health-insurance logic in Java/Quarkus, migrating batch flows to chunk-oriented Jakarta Batch/JBeret and reducing code size by 40%',
+            'Built an annotation-driven Java library that turns binary COBOL copybook data into typed objects, eliminating repetitive parsing across the codebase',
         ],
     },
     {
@@ -47,18 +49,18 @@ export const experience = [
         type: 'Intern',
         period: 'Aug - Sep 2025',
         highlights: [
-            'Designed an async ActiveMQ pipeline decoupling critical provider responses',
-            'Cut P95 latency to ~150ms at 1.5M events/day with new Grafana metrics',
+            'Designed an ActiveMQ/JMS pipeline deferring non-critical provider calls off the initial request path, improving response time and downstream load',
+            'Cut production P95 latency by 50% to ~150ms across 1.5M daily events, instrumented with Micrometer/Prometheus and Grafana SLO dashboards',
         ],
     },
     {
-        company: '4process AG',
+        company: '4process',
         role: 'Software Developer',
         type: 'Intern',
         period: 'Jul - Aug 2024',
         highlights: [
-            'Built an internal idea portal with SAP Fiori Elements for structured proposals',
-            'Implemented a Java tool for SAP Sales Cloud with >5K validated Excel updates/sec',
+            'Built an internal idea database with SAP Fiori Elements to streamline proposal and workflow management',
+            'Developed a Java tool for SAP Sales Cloud exporting HTML records to Excel, validating >5K bulk edits per second before applying',
         ],
     },
 ];
