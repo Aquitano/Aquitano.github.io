@@ -1,4 +1,3 @@
-import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import compress from 'astro-compress';
@@ -9,11 +8,6 @@ export default defineConfig({
     site: 'https://thomasbreindl.me',
 
     integrations: [
-        react({
-            babel: {
-                plugins: [['babel-plugin-react-compiler', {}]],
-            },
-        }),
         sitemap(),
         critters({
             exclude: ['./dist/showcase'],

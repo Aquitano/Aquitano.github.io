@@ -16,7 +16,6 @@
         "format": "prettier --write ./**/*.{astro,js,jsx,ts,tsx,md,mdx,css,scss,sass,less,html,json,graphql,yaml,yml,mdx}"
     },
     "dependencies": {
-        "@astrojs/react": "^5.0.7",
         "@astrojs/sitemap": "^3.7.2",
         "@fontsource-variable/archivo": "^5.2.8",
         "@fontsource-variable/geist-mono": "^5.2.8",
@@ -29,8 +28,6 @@
         "prettier": "^3.8.1",
         "prettier-plugin-astro": "^0.14.1",
         "prettier-plugin-tailwindcss": "^0.7.2",
-        "react": "^19.2.7",
-        "react-dom": "^19.2.7",
         "sharp": "^0.34.5",
         "tailwindcss": "^4.2.2"
     },
@@ -38,9 +35,6 @@
         "@astrojs/check": "^0.9.9",
         "@eslint/css": "^1.0.0",
         "@eslint/js": "^10.0.1",
-        "@types/react": "^19.2.17",
-        "@types/react-dom": "^19.2.3",
-        "babel-plugin-react-compiler": "^1.0.0",
         "eslint": "^10.1.0",
         "globals": "^17.4.0",
         "typescript": "^6.0.3",

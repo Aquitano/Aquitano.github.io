@@ -4,7 +4,6 @@ import Magnetic from './Magnetic.astro';
 ---
 
 <section id="top" data-hero data-minimap="Intro" class="relative flex min-h-svh flex-col justify-end overflow-hidden">
-    <!-- <HeroCanvas client:idle /> -->
     {/* fade shader into page background at the bottom edge */}
     <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent"></div>
 
@@ -45,16 +44,6 @@ import Magnetic from './Magnetic.astro';
                         <span class="cta-glide-arrow" aria-hidden="true">→</span>
                     </a>
                 </Magnetic>
-                <a
-                    href="#contact"
-                    class="pressable group border-line text-fg hover:border-acid hover:text-acid flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-xs tracking-[0.14em] uppercase transition-colors duration-300"
-                >
-                    Let’s Talk
-                    <span
-                        class="transition-transform duration-300 ease-[var(--ease-out-strong)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        aria-hidden="true">↗</span
-                    >
-                </a>
                 <a href="#about" aria-label="Scroll to about section" class="group ml-1 flex items-center gap-2.5">
                     <span class="meta group-hover:text-acid transition-colors duration-300">Scroll</span>
                     <span
@@ -99,7 +88,10 @@ import Magnetic from './Magnetic.astro';
         gsap.set('[data-hero-line]', { y: 0, yPercent: 110 });
         gsap.set('[data-hero-fade]', { autoAlpha: 0, y: 24 });
 
-        const tl = gsap.timeline({ delay: 0.15 });
+        const tl = gsap.timeline({
+            delay: 0.15,
+            onComplete: () => gsap.set('[data-hero-line]', { willChange: 'auto' }),
+        });
         tl.to('[data-hero-line]', {
             yPercent: 0,
             duration: 1.2,

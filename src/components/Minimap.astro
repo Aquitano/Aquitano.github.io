@@ -1,0 +1,263 @@
+---
+/*
+ * Scroll minimap: a live, compressed render of the page drawn to canvas, with a
+ * draggable viewport indicator and section labels. Ported from React to a plain
+ * island so the site ships no client framework — the only React usage was here.
+ * Desktop-only (xl); the markup stays hidden below 1280px and the script no-ops there.
+ */
+---
+
+<div
+    data-minimap-root
+    class="group fixed top-1/2 right-4 z-40 hidden w-14 -translate-y-1/2 xl:block"
+>
+    {/* section labels — created at runtime, revealed on hover, active one always on */}
+    <div data-minimap-labels></div>
+
+    <div
+        data-minimap-track
+        class="border-line/70 bg-bg-raise/50 relative h-[min(55vh,30rem)] w-full cursor-pointer touch-none overflow-hidden rounded-[3px] border backdrop-blur-sm"
+    >
+        {/* compressed render of the real page content */}
+        <canvas data-minimap-canvas class="pointer-events-none absolute inset-0 h-full w-full"></canvas>
+
+        {/* viewport window — positioned imperatively on scroll */}
+        <div
+            data-minimap-indicator
+            class="border-fg/25 bg-fg/10 absolute inset-x-0 top-0 rounded-[2px] border"
+        >
+        </div>
+    </div>
+</div>
+
+<script>
+    type Block = { label: string; top: number; height: number; el: HTMLElement };
+    type Bar = { x: number; y: number; w: number; h: number; section: number; kind: 'bright' | 'dim' | 'acid' };
+    type Box = { x: number; y: number; w: number; h: number };
+
+    /** Text-bearing elements mirrored into the minimap; outermost match wins */
+    const CONTENT_SELECTOR = 'h1,h2,h3,h4,p,li,a,button,.kw,.meta';
+    /** Computed color of var(--acid), for tinting acid text in the miniature */
+    const ACID_COLOR = 'rgb(215, 255, 63)';
+
+    const LABEL_CLASS =
+        'absolute right-[calc(100%+0.625rem)] font-mono text-[10px] tracking-[0.14em] whitespace-nowrap uppercase transition-[opacity,color] duration-200 group-hover:opacity-100 focus-visible:opacity-100';
+
+    const init = () => {
+        const root = document.querySelector<HTMLElement>('[data-minimap-root]');
+        const track = root?.querySelector<HTMLElement>('[data-minimap-track]');
+        const labelsHost = root?.querySelector<HTMLElement>('[data-minimap-labels]');
+        const canvas = root?.querySelector<HTMLCanvasElement>('[data-minimap-canvas]');
+        const indicator = root?.querySelector<HTMLElement>('[data-minimap-indicator]');
+        if (!root || !track || !labelsHost || !canvas || !indicator) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        let raf = 0;
+        let blocks: Block[] = [];
+        let bars: Bar[] = [];
+        let boxes: Box[] = [];
+        let labels: HTMLButtonElement[] = [];
+        let pageWidth = 1;
+        let pageHeight = 1;
+        let activeIdx = -1;
+
+        const draw = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const cw = track.clientWidth;
+            const ch = track.clientHeight;
+            canvas.width = cw * dpr;
+            canvas.height = ch * dpr;
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+            ctx.clearRect(0, 0, cw, ch);
+
+            const sx = (cw - 6) / pageWidth; // 3px inset each side
+            const sy = ch / pageHeight;
+
+            for (const box of boxes) {
+                const x = 3 + box.x * sx;
+                const y = box.y * sy;
+                ctx.fillStyle = 'rgba(233, 233, 228, 0.04)';
+                ctx.fillRect(x, y, box.w * sx, box.h * sy);
+                ctx.strokeStyle = 'rgba(233, 233, 228, 0.14)';
+                ctx.lineWidth = 0.75;
+                ctx.strokeRect(x, y, box.w * sx, box.h * sy);
+            }
+
+            for (const bar of bars) {
+                const isActive = bar.section === activeIdx;
+                ctx.fillStyle =
+                    bar.kind === 'acid'
+                        ? `rgba(215, 255, 63, ${isActive ? 0.9 : 0.55})`
+                        : bar.kind === 'bright'
+                          ? `rgba(233, 233, 228, ${isActive ? 0.55 : 0.32})`
+                          : `rgba(233, 233, 228, ${isActive ? 0.2 : 0.12})`;
+                // shave a sliver off each line box so paragraphs read as lines, not slabs
+                const h = Math.max(0.75, bar.h * sy - 1);
+                ctx.fillRect(3 + bar.x * sx, bar.y * sy, bar.w * sx, h);
+            }
+        };
+
+        const setActiveLabels = () => {
+            labels.forEach((btn, i) => {
+                const on = i === activeIdx;
+                btn.classList.toggle('text-acid', on);
+                btn.classList.toggle('opacity-100', on);
+                btn.classList.toggle('text-muted', !on);
+                btn.classList.toggle('hover:text-fg', !on);
+                btn.classList.toggle('opacity-0', !on);
+            });
+        };
+
+        const sync = () => {
+            const scale = track.clientHeight / document.documentElement.scrollHeight;
+            indicator.style.height = `${window.innerHeight * scale}px`;
+            indicator.style.transform = `translateY(${window.scrollY * scale}px)`;
+
+            const center = window.scrollY + window.innerHeight / 2;
+            let idx = 0;
+            for (const [i, b] of blocks.entries()) {
+                if (b.top <= center) idx = i;
+            }
+            if (idx !== activeIdx) {
+                activeIdx = idx;
+                setActiveLabels();
+                draw();
+            }
+        };
+
+        const onScroll = () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(sync);
+        };
+
+        const buildLabels = () => {
+            const scale = track.clientHeight > 0 ? track.clientHeight / pageHeight : 0;
+            labelsHost.replaceChildren();
+            labels = blocks.map((block) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = LABEL_CLASS;
+                btn.textContent = block.label;
+                btn.setAttribute('aria-label', `Scroll to ${block.label}`);
+                btn.style.top = `${block.top * scale}px`;
+                btn.addEventListener('click', () => block.el.scrollIntoView({ behavior: 'auto' }));
+                labelsHost.appendChild(btn);
+                return btn;
+            });
+            setActiveLabels();
+        };
+
+        const measure = () => {
+            const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-minimap]'));
+            const scrollY = window.scrollY;
+            pageWidth = document.documentElement.clientWidth;
+            pageHeight = document.documentElement.scrollHeight;
+
+            const nextBlocks: Block[] = [];
+            const nextBars: Bar[] = [];
+            const nextBoxes: Box[] = [];
+
+            sections.forEach((sectionEl, i) => {
+                const rect = sectionEl.getBoundingClientRect();
+                nextBlocks.push({
+                    label: sectionEl.dataset.minimap ?? '',
+                    top: rect.top + scrollY,
+                    height: rect.height,
+                    el: sectionEl,
+                });
+
+                // card containers get an outlined box, like the real thing
+                for (const card of sectionEl.querySelectorAll<HTMLElement>('[data-card]')) {
+                    const r = card.getBoundingClientRect();
+                    nextBoxes.push({ x: Math.max(0, r.left), y: r.top + scrollY, w: r.width, h: r.height });
+                }
+
+                for (const el of sectionEl.querySelectorAll<HTMLElement>(CONTENT_SELECTOR)) {
+                    // outermost matching element only — its line boxes cover descendants
+                    const ancestor = el.parentElement?.closest(CONTENT_SELECTOR);
+                    if (ancestor && sectionEl.contains(ancestor)) continue;
+                    if (!(el.checkVisibility?.() ?? true)) continue;
+
+                    const isAcid = getComputedStyle(el).color === ACID_COLOR;
+                    const range = document.createRange();
+                    range.selectNodeContents(el);
+                    for (const r of range.getClientRects()) {
+                        // skip sr-only slivers and collapsed boxes
+                        if (r.width < 12 || r.height < 8) continue;
+                        const x = Math.max(0, r.left);
+                        nextBars.push({
+                            x,
+                            y: r.top + scrollY,
+                            w: Math.min(r.width, pageWidth - x),
+                            h: r.height,
+                            section: i,
+                            kind: isAcid ? 'acid' : r.height >= 40 ? 'bright' : 'dim',
+                        });
+                    }
+                }
+            });
+
+            blocks = nextBlocks;
+            bars = nextBars;
+            boxes = nextBoxes;
+            buildLabels();
+            draw();
+            sync();
+        };
+
+        // Drag-to-scrub the track; a plain click jumps, deferring to CSS scroll-behavior
+        const drag = { active: false, moved: false, startY: 0 };
+
+        const scrollToPointer = (clientY: number, behavior: ScrollBehavior) => {
+            const rect = track.getBoundingClientRect();
+            const scale = rect.height / document.documentElement.scrollHeight;
+            const target = (clientY - rect.top) / scale - window.innerHeight / 2;
+            window.scrollTo({ top: Math.max(0, target), behavior });
+        };
+
+        track.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            track.setPointerCapture(e.pointerId);
+            drag.active = true;
+            drag.moved = false;
+            drag.startY = e.clientY;
+        });
+        track.addEventListener('pointermove', (e) => {
+            if (!drag.active) return;
+            if (!drag.moved && Math.abs(e.clientY - drag.startY) < 3) return;
+            drag.moved = true;
+            scrollToPointer(e.clientY, 'instant');
+        });
+        const endDrag = (e: PointerEvent) => {
+            if (!drag.active) return;
+            if (!drag.moved) scrollToPointer(e.clientY, 'auto');
+            drag.active = false;
+            drag.moved = false;
+            drag.startY = 0;
+        };
+        track.addEventListener('pointerup', endDrag);
+        track.addEventListener('pointercancel', endDrag);
+
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(document.body);
+        window.addEventListener('resize', measure);
+        window.addEventListener('scroll', onScroll, { passive: true });
+    };
+
+    // Match the original client:media gate — only do work on xl viewports, but
+    // lazily initialise if the viewport later grows past the breakpoint.
+    const mq = window.matchMedia('(min-width: 1280px)');
+    if (mq.matches) {
+        init();
+    } else {
+        const once = () => {
+            if (!mq.matches) return;
+            mq.removeEventListener('change', once);
+            init();
+        };
+        mq.addEventListener('change', once);
+    }
+</script>

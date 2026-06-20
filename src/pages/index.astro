@@ -7,7 +7,7 @@ import Manifesto from '../components/Manifesto.astro';
 import Experience from '../components/Experience.astro';
 import Projects from '../components/Projects.astro';
 import Stack from '../components/Stack.astro';
-import { Minimap } from '../components/minimap';
+import Minimap from '../components/Minimap.astro';
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -21,5 +21,5 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
         <Projects work={work} />
         <Stack />
     </main>
-    <Minimap client:media="(min-width: 1280px)" />
+    <Minimap />
 </Layout>
