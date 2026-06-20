@@ -14,9 +14,6 @@ export default defineConfig({
             Logger: 1,
         }),
         compress({
-            // Astro's built-in compressHTML handles HTML minification safely;
-            // astro-compress strips HTML comments, which deletes React's
-            // hydration text-boundary markers and breaks island hydration.
             HTML: false,
             Image: false,
             Logger: 1,

@@ -12,14 +12,14 @@ interface Props {
 }
 
 const { job, index, inverted = false } = Astro.props;
-const subtle = inverted ? 'text-black/60' : 'text-muted';
+const subtle = inverted ? 'text-black/70' : 'text-muted';
 
 const FIGURE = /(P\d+|[~>]?\d[\d.,]*\s?(?:K|M|B|%|ms|s)(?![A-Za-z]))/g;
 const splitFigures = (text: string) => text.split(FIGURE);
 ---
 
 <div class="grid gap-3 py-7 md:grid-cols-[3.5rem_1.2fr_1.5fr_auto] md:items-start md:gap-8 md:py-9">
-    <span class:list={['font-mono text-xs', inverted ? 'text-black/60' : 'text-muted']}>0{index + 1}</span>
+    <span class:list={['font-mono text-xs', inverted ? 'text-black/70' : 'text-muted']}>0{index + 1}</span>
     <div>
         <h3 class="display text-2xl md:text-3xl">{job.company}</h3>
         <p class:list={['mt-2 font-mono text-xs tracking-[0.1em] uppercase', subtle]}>

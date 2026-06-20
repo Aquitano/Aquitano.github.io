@@ -45,6 +45,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         <meta name="theme-color" content="#0a0a0b" />
         <meta name="color-scheme" content="dark" />
 
+        <script is:inline>
+            document.documentElement.classList.add('js');
+        </script>
+
         <SEO
             title={title}
             description={description}

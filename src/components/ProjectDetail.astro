@@ -164,10 +164,10 @@ const nextLines = next.wrap ?? [next.title];
 {/* Pre-hide intro elements so they don't flash before the timeline runs (motion users only) */}
 <style>
     @media (prefers-reduced-motion: no-preference) {
-        [data-detail-line] {
+        :global(html.js) [data-detail-line] {
             transform: translateY(110%);
         }
-        [data-detail-fade] {
+        :global(html.js) [data-detail-fade] {
             opacity: 0;
         }
     }

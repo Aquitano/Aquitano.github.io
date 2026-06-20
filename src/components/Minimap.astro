@@ -32,13 +32,11 @@
 
 <script>
     type Block = { label: string; top: number; height: number; el: HTMLElement };
-    type Bar = { x: number; y: number; w: number; h: number; section: number; kind: 'bright' | 'dim' | 'acid' };
+    type Bar = { x: number; y: number; w: number; h: number; section: number; kind: 'bright' | 'dim' };
     type Box = { x: number; y: number; w: number; h: number };
 
     /** Text-bearing elements mirrored into the minimap; outermost match wins */
     const CONTENT_SELECTOR = 'h1,h2,h3,h4,p,li,a,button,.kw,.meta';
-    /** Computed color of var(--acid), for tinting acid text in the miniature */
-    const ACID_COLOR = 'rgb(215, 255, 63)';
 
     const LABEL_CLASS =
         'absolute right-[calc(100%+0.625rem)] font-mono text-[10px] tracking-[0.14em] whitespace-nowrap uppercase transition-[opacity,color] duration-200 group-hover:opacity-100 focus-visible:opacity-100';
@@ -88,11 +86,9 @@
             for (const bar of bars) {
                 const isActive = bar.section === activeIdx;
                 ctx.fillStyle =
-                    bar.kind === 'acid'
-                        ? `rgba(215, 255, 63, ${isActive ? 0.9 : 0.55})`
-                        : bar.kind === 'bright'
-                          ? `rgba(233, 233, 228, ${isActive ? 0.55 : 0.32})`
-                          : `rgba(233, 233, 228, ${isActive ? 0.2 : 0.12})`;
+                    bar.kind === 'bright'
+                        ? `rgba(233, 233, 228, ${isActive ? 0.55 : 0.32})`
+                        : `rgba(233, 233, 228, ${isActive ? 0.2 : 0.12})`;
                 // shave a sliver off each line box so paragraphs read as lines, not slabs
                 const h = Math.max(0.75, bar.h * sy - 1);
                 ctx.fillRect(3 + bar.x * sx, bar.y * sy, bar.w * sx, h);
@@ -102,7 +98,7 @@
         const setActiveLabels = () => {
             labels.forEach((btn, i) => {
                 const on = i === activeIdx;
-                btn.classList.toggle('text-acid', on);
+                btn.classList.toggle('text-fg', on);
                 btn.classList.toggle('opacity-100', on);
                 btn.classList.toggle('text-muted', !on);
                 btn.classList.toggle('hover:text-fg', !on);
@@ -180,7 +176,6 @@
                     if (ancestor && sectionEl.contains(ancestor)) continue;
                     if (!(el.checkVisibility?.() ?? true)) continue;
 
-                    const isAcid = getComputedStyle(el).color === ACID_COLOR;
                     const range = document.createRange();
                     range.selectNodeContents(el);
                     for (const r of range.getClientRects()) {
@@ -193,7 +188,7 @@
                             w: Math.min(r.width, pageWidth - x),
                             h: r.height,
                             section: i,
-                            kind: isAcid ? 'acid' : r.height >= 40 ? 'bright' : 'dim',
+                            kind: r.height >= 40 ? 'bright' : 'dim',
                         });
                     }
                 }
@@ -241,9 +236,17 @@
         track.addEventListener('pointercancel', endDrag);
 
         measure();
-        const ro = new ResizeObserver(measure);
+        // Coalesce re-measures into the next frame: the stats count-up writes into
+        // the layout and can fire the observer repeatedly mid-animation, and each
+        // measure walks every text node. ResizeObserver on body already covers
+        // viewport resizes, so no separate resize listener is needed.
+        let measureRaf = 0;
+        const scheduleMeasure = () => {
+            cancelAnimationFrame(measureRaf);
+            measureRaf = requestAnimationFrame(measure);
+        };
+        const ro = new ResizeObserver(scheduleMeasure);
         ro.observe(document.body);
-        window.addEventListener('resize', measure);
         window.addEventListener('scroll', onScroll, { passive: true });
     };
 

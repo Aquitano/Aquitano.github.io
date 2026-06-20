@@ -107,6 +107,15 @@ body {
     }
 }
 
+/* Without text-stroke support the transparent fill would erase the surname and
+   keywords entirely; fall back to solid ink so the content never disappears. */
+@supports not ((-webkit-text-stroke: 1px var(--fg))) {
+    .display-outline,
+    .kw-outline {
+        color: var(--fg);
+    }
+}
+
 /* Mono metadata labels */
 .meta {
     font-family: var(--font-mono);

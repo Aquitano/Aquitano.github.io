@@ -68,10 +68,10 @@ import Magnetic from './Magnetic.astro';
 {/* Pre-hide animated elements so they don't flash before the intro runs (motion users only) */}
 <style>
     @media (prefers-reduced-motion: no-preference) {
-        [data-hero-line] {
+        :global(html.js) [data-hero-line] {
             transform: translateY(110%);
         }
-        [data-hero-fade] {
+        :global(html.js) [data-hero-fade] {
             opacity: 0;
         }
     }
