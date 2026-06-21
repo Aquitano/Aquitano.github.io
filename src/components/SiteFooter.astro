@@ -53,21 +53,30 @@ const buildDate = buildIso
                 data-copy-email
                 data-email={site.email}
                 type="button"
-                aria-live="polite"
+                aria-label={`Copy email address: ${site.email}`}
                 class="pressable group/copy text-muted hover:text-fg mt-6 flex cursor-pointer items-center gap-3 font-mono text-xs transition-colors duration-200"
             >
-                {site.email}
-                <span
-                    data-copy-default
-                    class="border-line group-hover/copy:border-accent/60 group-hover/copy:text-accent rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.12em] uppercase transition-colors duration-200"
-                >
-                    Copy
-                </span>
-                <span
-                    data-copy-done
-                    class="pop-in bg-accent hidden rounded-full border border-transparent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.12em] text-black uppercase"
-                >
-                    Copied <span aria-hidden="true">✓</span>
+                <span data-copy-text>{site.email}</span>
+                <span data-copy-status role="status" aria-live="polite" class="inline-flex items-center">
+                    <span
+                        data-copy-default
+                        aria-hidden="true"
+                        class="border-line group-hover/copy:border-accent/60 group-hover/copy:text-accent rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.12em] uppercase transition-colors duration-200"
+                    >
+                        Copy
+                    </span>
+                    <span
+                        data-copy-done
+                        class="pop-in bg-accent hidden rounded-full border border-transparent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.12em] text-black uppercase"
+                    >
+                        Copied <span aria-hidden="true">✓</span>
+                    </span>
+                    <span
+                        data-copy-fail
+                        class="border-line text-muted hidden rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.12em] uppercase"
+                    >
+                        Copy failed
+                    </span>
                 </span>
             </button>
         </div>
@@ -187,7 +196,9 @@ const buildDate = buildIso
     const btn = document.querySelector<HTMLButtonElement>('[data-copy-email]');
     const def = btn?.querySelector<HTMLElement>('[data-copy-default]');
     const done = btn?.querySelector<HTMLElement>('[data-copy-done]');
-    if (btn && def && done) {
+    const fail = btn?.querySelector<HTMLElement>('[data-copy-fail]');
+    const emailText = btn?.querySelector<HTMLElement>('[data-copy-text]');
+    if (btn && def && done && fail) {
         let timer: ReturnType<typeof setTimeout>;
 
         const copy = async (text: string) => {
@@ -196,22 +207,36 @@ const buildDate = buildIso
             return true;
         };
 
-        const flash = () => {
+        const selectEmail = () => {
+            if (!emailText) return;
+            const range = document.createRange();
+            range.selectNodeContents(emailText);
+            const sel = window.getSelection();
+            sel?.removeAllRanges();
+            sel?.addRange(range);
+        };
+
+        const flash = (ok: boolean) => {
             def.classList.add('hidden');
-            done.classList.remove('hidden');
+            done.classList.toggle('hidden', !ok);
+            fail.classList.toggle('hidden', ok);
             clearTimeout(timer);
             timer = setTimeout(() => {
                 done.classList.add('hidden');
+                fail.classList.add('hidden');
                 def.classList.remove('hidden');
             }, 2000);
         };
 
         btn.addEventListener('click', async () => {
+            let ok = false;
             try {
-                if (await copy(btn.dataset.email ?? '')) flash();
+                ok = await copy(btn.dataset.email ?? '');
             } catch {
-                // copy unavailable
+                ok = false;
             }
+            if (!ok) selectEmail();
+            flash(ok);
         });
     }
 </script>

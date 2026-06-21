@@ -1,6 +1,7 @@
 ---
 import { SEO } from 'astro-seo';
 import '@fontsource-variable/archivo/standard.css';
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2?url';
 import '@fontsource-variable/geist-mono';
 import '../styles/global.css';
 import { site, socials } from '../lib/data';
@@ -83,6 +84,9 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
+
+        <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+
         <meta name="generator" content={Astro.generator} />
         <meta name="theme-color" content="#0a0a0b" />
         <meta name="color-scheme" content="dark" />
@@ -111,6 +115,8 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             twitter={{
                 creator: '@breindlthomas',
                 card: 'summary_large_image',
+                image: ogImageURL.toString(),
+                imageAlt: `${site.name} — ${site.role}`,
             }}
             extend={{
                 meta: [
@@ -175,7 +181,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 <style>
     .grain {
         position: fixed;
-        inset: -50%;
+        inset: -30%;
         z-index: 60;
         pointer-events: none;
         opacity: 0.1;
