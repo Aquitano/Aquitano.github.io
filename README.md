@@ -4,14 +4,13 @@
 
 <p align="center">
   <h3 align="center">Readme of Portfolio</h3>
-  <p align="center">✨My <a href="https://thomasbreindl.me"/> portfolio website</a>. Built with Astro & React islands, TailwindCSS & TypeScript, with GSAP and a WebGL hero. Containerized with Docker and hosted on Netlify. ✨</p>
+  <p align="center">✨My <a href="https://thomasbreindl.me"/> portfolio website</a>. Built with Astro, TailwindCSS & TypeScript, with GSAP-powered animations and a dot-matrix hero. Containerized with Docker and hosted on Netlify. ✨</p>
 </p>
 
 <p>
   <h3 align="center">Technologies</h3>
     <li>TypeScript</li>
     <li>Astro</li>
-    <li>React</li>
     <li>TailwindCSS</li>
     <li>GSAP</li>
     <li>Docker</li>

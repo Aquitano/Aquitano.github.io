@@ -34,4 +34,4 @@ I was responsible for the entire frontend and website architecture. The stack pa
 
 Beyond web development, I helped build and program the probe itself, integrating sensors and setting up data transmission via APRS technology on a TTGO T-Beam board.
 
-The project was a collaboration with the German Amateur Radio Club (DARC) and the Passau Observatory. It culminated on July 8, 2023 with a “Science Day” event hosted jointly at the school.
+The project was a collaboration with the German Amateur Radio Club (DARC) and the Passau Observatory. It culminated on July 8, 2023, with a “Science Day” event hosted jointly at the school.

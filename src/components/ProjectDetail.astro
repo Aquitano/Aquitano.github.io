@@ -1,4 +1,6 @@
 ---
+import { isExternalHref } from '../lib/links';
+
 interface DetailProject {
     title: string;
     wrap?: string[];
@@ -101,8 +103,8 @@ const nextLines = next.wrap ?? [next.title];
                                 {project.links.map((link) => (
                                     <a
                                         href={link.href}
-                                        target={link.href.startsWith('/') ? undefined : '_blank'}
-                                        rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}
+                                        target={isExternalHref(link.href) ? '_blank' : undefined}
+                                        rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
                                         class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
                                     >
                                         {link.label} ↗

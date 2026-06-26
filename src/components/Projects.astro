@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import SectionHeading from './SectionHeading.astro';
+import { isExternalHref } from '../lib/links';
 
 interface Props {
     work: CollectionEntry<'work'>[];
@@ -88,8 +89,8 @@ const CASCADE = 14;
                                     {p.links.map((link) => (
                                         <a
                                             href={link.href}
-                                            target={link.href.startsWith('/') ? undefined : '_blank'}
-                                            rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}
+                                            target={isExternalHref(link.href) ? '_blank' : undefined}
+                                            rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
                                             class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
                                         >
                                             {link.label} ↗
