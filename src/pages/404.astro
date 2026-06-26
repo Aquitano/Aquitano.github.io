@@ -1,129 +1,80 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { defaultLang, languages, type Lang, ui } from '../i18n/ui';
-import { getLocalePath } from '../i18n/utils';
-
-// 404 is always served from root; detect language from URL path
-const pathLang = Astro.url.pathname.split('/').filter(Boolean)[0];
-const lang: Lang =
-    pathLang && Object.hasOwn(languages, pathLang) ? (pathLang as Lang) : defaultLang;
-const t = (key: keyof (typeof ui)[typeof defaultLang]) => ui[lang][key];
+import { site } from '../lib/data';
 ---
 
-<Layout
-    title={t('seo.404Title')}
-    active="home"
-    lang={lang}
-    SEO={{
-        description: t('seo.404Desc'),
-        openGraph: {
-            title: t('seo.404Title'),
-            type: 'website',
-        },
-    }}
->
-    <div class="error-page">
-        <div class="error-content">
-            <span class="error-tag">// Error</span>
-            <h1 class="error-code">404</h1>
-            <h2 class="error-title">{t('error.title')}</h2>
-            <p class="error-message">{t('error.message')}</p>
-            <a href={getLocalePath(lang, '/')} class="btn btn-primary">
-                <span class="btn-arrow" aria-hidden="true">&larr;</span>
-                {t('error.back')}
-            </a>
-        </div>
-        <div class="ascii-deco ascii-deco-left" aria-hidden="true">&gt;&gt;&gt;</div>
-        <div class="ascii-deco ascii-deco-right" aria-hidden="true">###</div>
-    </div>
+<Layout title={`404 - Page Not Found | ${site.name}`} description="The page you were looking for does not exist.">
+    <main
+        id="top"
+        class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 text-center"
+    >
+        <p class="meta text-accent mb-6">Error 404</p>
+        <h1 data-glitch class="display relative text-[clamp(5rem,28vw,20rem)] leading-none">
+            <span class="display-outline">404</span>
+            <span data-glitch-fill aria-hidden="true" class="glitch-fill text-accent absolute inset-0">404</span>
+        </h1>
+        <p class="text-muted mt-8 max-w-md text-base leading-relaxed md:text-lg">
+            This page drifted off into the stratosphere. Let's get you back to solid ground.
+        </p>
+        <a
+            href="/"
+            class="link-line pressable touch-target text-accent mt-10 inline-block font-mono text-xs tracking-[0.14em] uppercase"
+        >
+            ← Back to Home
+        </a>
+    </main>
 </Layout>
 
 <style>
-    @reference "../styles/global.css";
-
-    .error-page {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        min-height: 100dvh;
-        padding: var(--gutter);
-        position: relative;
+    /* Acid fill sits over the outlined 404 and is punched through by a cursor-following
+       spotlight mask, so the accent only appears where the pointer is. */
+    .glitch-fill {
+        opacity: 0;
+        -webkit-mask-image: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), #000 0%, transparent 72%);
+        mask-image: radial-gradient(circle 150px at var(--mx, 50%) var(--my, 50%), #000 0%, transparent 72%);
+        transition: opacity 320ms var(--ease-out-strong);
     }
 
-    .error-content {
-        text-align: center;
-        max-width: 480px;
-    }
-
-    .error-tag {
-        display: block;
-        @apply font-mono text-sm tracking-wide;
-        color: var(--color-accent);
-        margin-bottom: 1rem;
-    }
-
-    .error-code {
-        @apply font-display tracking-tight;
-        font-size: clamp(6rem, 20vw, 12rem);
-        font-weight: 900;
-        line-height: 1;
-        @apply text-primary;
-        margin-bottom: 1rem;
-    }
-
-    .error-title {
-        @apply font-heading;
-        @apply text-2xl;
-        font-weight: 700;
-        @apply text-primary;
-        margin-bottom: 1rem;
-    }
-
-    .error-message {
-        @apply text-lg leading-relaxed;
-        @apply text-secondary;
-        margin-bottom: 2rem;
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .btn-arrow {
-        @apply font-mono;
-        transition: transform var(--duration-fast) var(--ease-out);
-    }
-
-    .btn:hover .btn-arrow {
-        transform: translateX(-4px);
-    }
-
-    .ascii-deco {
-        position: absolute;
-        @apply font-mono;
-        @apply text-sm tracking-widest;
-        @apply text-muted;
-        opacity: 0.4;
-        pointer-events: none;
-        user-select: none;
-    }
-
-    .ascii-deco-left {
-        bottom: 2rem;
-        left: var(--gutter);
-    }
-
-    .ascii-deco-right {
-        bottom: 2rem;
-        right: var(--gutter);
-    }
-
-    @media (max-width: 640px) {
-        .ascii-deco {
-            display: none;
+    @media (prefers-reduced-motion: reduce) {
+        .glitch-fill {
+            transition: none;
         }
     }
 </style>
+
+<script>
+    const heading = document.querySelector<HTMLElement>('[data-glitch]');
+    const fill = document.querySelector<HTMLElement>('[data-glitch-fill]');
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (heading && fill && fine) {
+        let queued = false;
+        let mx = 50;
+        let my = 50;
+
+        const apply = () => {
+            queued = false;
+            fill.style.setProperty('--mx', `${mx}%`);
+            fill.style.setProperty('--my', `${my}%`);
+        };
+
+        heading.addEventListener(
+            'pointermove',
+            (e) => {
+                const r = heading.getBoundingClientRect();
+                mx = ((e.clientX - r.left) / r.width) * 100;
+                my = ((e.clientY - r.top) / r.height) * 100;
+                fill.style.opacity = '1';
+                if (!queued) {
+                    queued = true;
+                    requestAnimationFrame(apply);
+                }
+            },
+            { passive: true },
+        );
+
+        heading.addEventListener('pointerleave', () => {
+            fill.style.opacity = '0';
+        });
+    }
+</script>

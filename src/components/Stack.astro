@@ -1,0 +1,57 @@
+---
+import { languages, stack } from '../lib/data';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="stack" data-stack-section data-minimap="Stack" class="section-x section-y">
+    <SectionHeading index="04" title="Stack" />
+    <div class="border-line bg-line grid grid-cols-2 gap-px overflow-hidden border lg:grid-cols-4">
+        {
+            stack.map((group) => (
+                <div data-stack-col class="bg-bg p-6 md:p-8">
+                    <h3 class="meta text-accent mb-5">{group.label}</h3>
+                    <ul class="space-y-2">
+                        {group.items.map((item) => (
+                            <li class="group/item text-fg/85 hover:text-fg flex items-center text-sm transition-colors duration-200 md:text-base">
+                                <span
+                                    aria-hidden="true"
+                                    class="text-accent ease-out-strong inline-block w-0 overflow-hidden opacity-0 transition-all duration-300 group-hover/item:w-5 group-hover/item:opacity-100"
+                                >
+                                    ✦
+                                </span>
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))
+        }
+    </div>
+    <div
+        data-stack-col
+        class="border-line mt-px flex flex-wrap items-center gap-x-8 gap-y-2 border border-t-0 px-6 py-5 md:px-8"
+    >
+        <span class="meta">Spoken</span>
+        {
+            languages.map((lang) => (
+                <span class="text-fg/85 font-mono text-xs">
+                    {lang.label} <span class="text-muted">· {lang.level}</span>
+                </span>
+            ))
+        }
+    </div>
+</section>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const root = document.querySelector<HTMLElement>('[data-stack-section]');
+    if (root && !prefersReducedMotion()) {
+        gsap.from('[data-stack-col]', {
+            autoAlpha: 0,
+            y: 32,
+            stagger: 0.07,
+            scrollTrigger: { trigger: root, start: 'top 80%', once: true },
+        });
+    }
+</script>

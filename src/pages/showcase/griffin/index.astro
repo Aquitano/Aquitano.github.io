@@ -420,7 +420,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                     <div class="product-block">
                                         <div class="product-image">
                                             <div class="product-thumbnail">
-                                                <a href="Product2.html" title=""
+                                                <a href="Product2/" title=""
                                                     ><img
                                                         src={getGriffinAsset('images/untitled5b-min.png')}
                                                         alt=""
@@ -432,7 +432,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                         </div>
                                         <div class="product-meta">
                                             <h4 class="product-name">
-                                                <a href="Product2.html" title="">Griffin No Caffeine</a>
+                                                <a href="Product2/" title="">Griffin No Caffeine</a>
                                             </h4>
                                             <div class="product-price">
                                                 <span class="amout"
@@ -440,7 +440,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                                 >
                                             </div>
                                             <div class="product-footer">
-                                                <a href="Product2.html" class="btn btn-primary"
+                                                <a href="Product2/" class="btn btn-primary"
                                                     >Kaufen<i class="fa fa-shopping-bag" aria-hidden="true"></i></a
                                                 >
                                             </div>
@@ -552,12 +552,10 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
         <script defer is:inline>
             const setMainSlider = () => {
                 const mainSliderImg = document.getElementById('main-slider__img');
-                // If mobile device
                 if (window.innerWidth < 992) {
                     mainSliderImg.style.setProperty('left', '0', 'important');
                     mainSliderImg.style.setProperty('width', '95%', 'important');
                     mainSliderImg.style.setProperty('z-index', '0', 'important');
-                    // Blur
                     mainSliderImg.style.setProperty('filter', 'blur(2px)', 'important');
                 } else {
                     mainSliderImg.style.setProperty('z-index', '15', 'important');

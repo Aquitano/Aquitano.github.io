@@ -1,0 +1,247 @@
+---
+import { site } from '../lib/data';
+import Magnetic from './Magnetic.astro';
+---
+
+<section id="top" data-hero data-minimap="Intro" class="relative flex min-h-svh flex-col justify-end overflow-hidden">
+    <div class="hero-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        <span class="hero-glow"></span>
+    </div>
+
+    <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent"></div>
+
+    <div class="relative z-10 px-5 pb-10 md:px-10 md:pb-14">
+        <div data-hero-parallax>
+            <p data-hero-fade class="meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span>{site.role} · {site.status}</span>
+            </p>
+            <h1 class="display text-[clamp(3.6rem,15.5vw,15rem)]">
+                <span class="block overflow-hidden pb-[0.06em]">
+                    <span data-hero-line class="split-line block">Thomas</span>
+                </span>
+                <span class="block overflow-hidden pb-[0.06em]">
+                    <span data-hero-line class="split-line display-outline block">Breindl</span>
+                </span>
+            </h1>
+        </div>
+
+        <div
+            class="border-line mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
+        >
+            <p data-hero-fade class="text-muted max-w-md text-base leading-relaxed md:text-lg">
+                Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
+                CS in <span class="text-fg">Passau, Germany</span>.
+            </p>
+            <div data-hero-fade class="flex flex-wrap items-center gap-3">
+                <Magnetic class="inline-flex">
+                    <a
+                        href="#work"
+                        class="cta-glide pressable bg-accent flex items-center gap-2 rounded-full px-6 py-3 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
+                    >
+                        <span class="cta-glide-label">
+                            <span class="cta-glide-label-in">View Work</span>
+                            <span class="cta-glide-label-out" aria-hidden="true">View Work</span>
+                        </span>
+                        <span class="cta-glide-arrow" aria-hidden="true">→</span>
+                    </a>
+                </Magnetic>
+                <a href="#about" aria-label="Scroll to about section" class="group ml-1 flex items-center gap-2.5">
+                    <span class="meta group-hover:text-accent transition-colors duration-300">Scroll</span>
+                    <span
+                        class="border-fg/20 text-accent group-hover:border-accent grid size-11 place-items-center overflow-hidden rounded-full border transition-colors duration-300"
+                    >
+                        <svg
+                            class="scroll-cue-arrow"
+                            width="11"
+                            height="13"
+                            viewBox="0 0 10 12"
+                            fill="none"
+                            aria-hidden="true"
+                        >
+                            <path d="M5 1v10m0 0L1 7m4 4 4-4" stroke="currentColor" stroke-width="1.2"></path>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{/* Pre-hide animated elements so they don't flash before the intro runs (motion users only) */}
+<style>
+    @media (prefers-reduced-motion: no-preference) {
+        :global(html.js) [data-hero-line] {
+            transform: translateY(110%);
+        }
+        :global(html.js) [data-hero-fade] {
+            opacity: 0;
+        }
+    }
+
+    .split-line {
+        will-change: transform;
+    }
+
+    .hero-bg {
+        --mx: 70%;
+        --my: 30%;
+        background-image: radial-gradient(
+            circle,
+            color-mix(in oklch, var(--muted) 38%, transparent) 1px,
+            transparent 1.5px
+        );
+        background-size: 26px 26px;
+        background-position: center;
+        -webkit-mask-image: radial-gradient(120% 100% at 70% 24%, #000 28%, transparent 78%);
+        mask-image: radial-gradient(120% 100% at 70% 24%, #000 28%, transparent 78%);
+        opacity: 0.55;
+    }
+
+    .hero-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+            420px 420px at var(--mx) var(--my),
+            oklch(0.7165 0.1409 50.91 / 0.1),
+            transparent 68%
+        );
+    }
+
+    .scroll-cue-arrow {
+        animation: cue-drop 2.2s var(--ease-in-out-strong) infinite;
+    }
+
+    @keyframes cue-drop {
+        0% {
+            transform: translateY(-260%);
+        }
+        42%,
+        58% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(260%);
+        }
+    }
+
+    .cta-glide-label {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+        height: 1rem;
+        line-height: 1rem;
+    }
+
+    .cta-glide-label-in,
+    .cta-glide-label-out {
+        display: block;
+        transition: transform 420ms var(--ease-out-strong);
+    }
+
+    .cta-glide-label-out {
+        position: absolute;
+        inset: 0;
+        transform: translateY(110%);
+    }
+
+    .cta-glide-arrow {
+        display: inline-block;
+        transition: transform 420ms var(--ease-out-strong);
+    }
+
+    .cta-glide:focus-visible .cta-glide-label-in {
+        transform: translateY(-110%);
+    }
+
+    .cta-glide:focus-visible .cta-glide-label-out {
+        transform: translateY(0);
+    }
+
+    .cta-glide:focus-visible .cta-glide-arrow {
+        transform: translateX(5px);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .cta-glide:hover .cta-glide-label-in {
+            transform: translateY(-110%);
+        }
+        .cta-glide:hover .cta-glide-label-out {
+            transform: translateY(0);
+        }
+        .cta-glide:hover .cta-glide-arrow {
+            transform: translateX(5px);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-cue-arrow {
+            animation: none;
+        }
+        .cta-glide-label-in,
+        .cta-glide-label-out,
+        .cta-glide-arrow {
+            transition: none;
+        }
+        .cta-glide-label-out {
+            display: none;
+        }
+        .cta-glide:hover .cta-glide-label-in,
+        .cta-glide:focus-visible .cta-glide-label-in {
+            transform: none;
+        }
+    }
+</style>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const bg = document.querySelector<HTMLElement>('[data-hero] .hero-bg');
+    const heroEl = document.querySelector<HTMLElement>('[data-hero]');
+    if (bg && heroEl && !prefersReducedMotion() && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        let mx = 50;
+        let my = 32;
+        let queued = false;
+        const apply = () => {
+            queued = false;
+            bg.style.setProperty('--mx', `${mx}%`);
+            bg.style.setProperty('--my', `${my}%`);
+        };
+        heroEl.addEventListener(
+            'pointermove',
+            (e) => {
+                const r = heroEl.getBoundingClientRect();
+                mx = ((e.clientX - r.left) / r.width) * 100;
+                my = ((e.clientY - r.top) / r.height) * 100;
+                if (!queued) {
+                    queued = true;
+                    requestAnimationFrame(apply);
+                }
+            },
+            { passive: true },
+        );
+    }
+
+    const root = document.querySelector<HTMLElement>('[data-hero]');
+    if (root && !prefersReducedMotion()) {
+        gsap.set('[data-hero-line]', { y: 0, yPercent: 110 });
+        gsap.set('[data-hero-fade]', { autoAlpha: 0, y: 24 });
+
+        const tl = gsap.timeline({
+            delay: 0.15,
+            onComplete: () => gsap.set('[data-hero-line]', { willChange: 'auto' }),
+        });
+        tl.to('[data-hero-line]', {
+            yPercent: 0,
+            duration: 1.2,
+            ease: 'power4.out',
+            stagger: 0.09,
+        }).to('[data-hero-fade]', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.07 }, '-=0.7');
+
+        gsap.to('[data-hero-parallax]', {
+            yPercent: 14,
+            autoAlpha: 0.4,
+            ease: 'none',
+            scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
+        });
+    }
+</script>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import FocusAreas from '../components/FocusAreas.astro';
+import Manifesto from '../components/Manifesto.astro';
+import Experience from '../components/Experience.astro';
+import Projects from '../components/Projects.astro';
+import Stack from '../components/Stack.astro';
+import Minimap from '../components/Minimap.astro';
+import KeyboardNav from '../components/KeyboardNav.astro';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout>
+    <main>
+        <Hero />
+        <FocusAreas />
+        <Manifesto />
+        <Experience />
+        <Projects work={work} />
+        <Stack />
+    </main>
+    <Minimap />
+    <KeyboardNav />
+</Layout>

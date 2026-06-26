@@ -1,42 +1,14 @@
 import sitemap from '@astrojs/sitemap';
-import solidJs from '@astrojs/solid-js';
 import tailwindcss from '@tailwindcss/vite';
-import compress from 'astro-compress';
-import critters from 'astro-critters';
-import icon from 'astro-icon';
-import { astroImageTools } from 'astro-imagetools';
 import { defineConfig } from 'astro/config';
-
-// const dev = process.env.NODE_ENV !== 'production';
 
 export default defineConfig({
     site: 'https://thomasbreindl.me',
 
-    integrations: [
-        icon(),
-        solidJs(),
-        sitemap(),
-        astroImageTools,
-        critters({
-            exclude: ['./dist/showcase'],
-            Logger: 1,
-        }),
-        compress({
-            Image: false,
-            Logger: 1,
-        }),
-    ],
+    integrations: [sitemap()],
 
     prefetch: {
         prefetchAll: true,
-    },
-
-    i18n: {
-        defaultLocale: 'de',
-        locales: ['de', 'en'],
-        routing: {
-            prefixDefaultLocale: false,
-        },
     },
 
     vite: {

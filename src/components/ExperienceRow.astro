@@ -1,0 +1,52 @@
+---
+interface Props {
+    job: {
+        company: string;
+        role: string;
+        type: string;
+        period: string;
+        highlights: string[];
+    };
+    index: number;
+    inverted?: boolean;
+}
+
+const { job, index, inverted = false } = Astro.props;
+const subtle = inverted ? 'text-black/70' : 'text-muted';
+
+const FIGURE = /(P\d+|[~>]?\d[\d.,]*\s?(?:K|M|B|%|ms|s)(?![A-Za-z]))/g;
+const splitFigures = (text: string) => text.split(FIGURE);
+---
+
+<div class="grid gap-3 py-7 md:grid-cols-[3.5rem_1.2fr_1.5fr_11rem] md:items-start md:gap-8 md:py-9">
+    <span class:list={['font-mono text-xs', inverted ? 'text-black/70' : 'text-muted']}>0{index + 1}</span>
+    <div>
+        <h3 class="display text-2xl md:text-3xl">{job.company}</h3>
+        <p class:list={['mt-2 font-mono text-xs tracking-widest uppercase', subtle]}>
+            {job.role} · {job.type}
+        </p>
+    </div>
+    <ul class:list={['space-y-2 text-sm leading-relaxed md:text-[0.95rem]', inverted ? 'text-black/70' : 'text-fg/80']}>
+        {
+            job.highlights.map((h) => (
+                <li>
+                    {splitFigures(h).map((part, k) =>
+                        k % 2 ? (
+                            <strong class:list={['font-semibold', inverted ? 'text-black' : 'text-fg']}>{part}</strong>
+                        ) : (
+                            part
+                        ),
+                    )}
+                </li>
+            ))
+        }
+    </ul>
+    <span
+        class:list={[
+            'font-mono text-xs leading-relaxed tracking-[0.14em] uppercase md:block md:text-right',
+            inverted ? 'text-black' : 'text-muted',
+        ]}
+    >
+        {job.period}
+    </span>
+</div>

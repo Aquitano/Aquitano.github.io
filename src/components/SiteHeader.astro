@@ -1,0 +1,103 @@
+---
+const NAV = [
+    { label: 'Work', href: '/#work' },
+    { label: 'About', href: '/#about' },
+    { label: 'Stack', href: '/#stack' },
+    { label: 'Contact', href: '/#contact' },
+];
+---
+
+<header
+    data-header
+    class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent mix-blend-difference backdrop-blur-none transition-[background-color,border-color,backdrop-filter] duration-300"
+>
+    <div
+        data-header-inner
+        class="flex items-center justify-between px-5 py-4 transition-[padding] duration-300 md:px-10 md:py-5"
+    >
+        <a href="/#top" class="font-mono text-xs font-medium tracking-[0.14em] text-white uppercase">
+            TB<span class="text-white/50">©2026</span>
+        </a>
+        <div class="flex items-center gap-6 md:gap-10">
+            <nav class="flex items-center gap-4 md:gap-6">
+                {
+                    NAV.map((item) => (
+                        <a
+                            href={item.href}
+                            data-nav-link
+                            class="link-line touch-target font-mono text-xs tracking-[0.14em] text-white uppercase"
+                        >
+                            {item.label}
+                        </a>
+                    ))
+                }
+            </nav>
+        </div>
+    </div>
+</header>
+
+<script>
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const inner = document.querySelector<HTMLElement>('[data-header-inner]');
+
+    if (header && inner) {
+        const apply = (scrolled: boolean) => {
+            header.classList.toggle('border-line/70', scrolled);
+            header.classList.toggle('bg-bg/65', scrolled);
+            header.classList.toggle('backdrop-blur-md', scrolled);
+            header.classList.toggle('border-transparent', !scrolled);
+            header.classList.toggle('bg-transparent', !scrolled);
+            header.classList.toggle('backdrop-blur-none', !scrolled);
+            header.classList.toggle('mix-blend-difference', !scrolled);
+            inner.classList.toggle('py-3', scrolled);
+            inner.classList.toggle('md:py-3.5', scrolled);
+            inner.classList.toggle('py-4', !scrolled);
+            inner.classList.toggle('md:py-5', !scrolled);
+        };
+
+        const sentinel = document.createElement('div');
+        sentinel.setAttribute('aria-hidden', 'true');
+        sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:32px;pointer-events:none;';
+        document.body.prepend(sentinel);
+
+        new IntersectionObserver(([entry]) => apply(!entry.isIntersecting)).observe(sentinel);
+    }
+
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+    const byId = new Map(links.map((link) => [new URL(link.href).hash.slice(1), link]));
+
+    // An unmatched id clears every link.
+    const setActive = (id: string) => {
+        for (const [linkId, link] of byId) {
+            const on = linkId === id;
+            link.classList.toggle('nav-active', on);
+            if (on) link.setAttribute('aria-current', 'true');
+            else link.removeAttribute('aria-current');
+        }
+    };
+
+    const navSectionIds = [...byId.keys()];
+
+    if (navSectionIds.some((id) => document.getElementById(id))) {
+        const sections = ['top', ...navSectionIds]
+            .map((id) => document.getElementById(id))
+            .filter(Boolean) as HTMLElement[];
+
+        let current = '';
+        const spy = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (!entry.isIntersecting || entry.target.id === current) continue;
+                    current = entry.target.id;
+                    setActive(current);
+                }
+            },
+
+            { rootMargin: '-50% 0px -50% 0px' },
+        );
+        for (const section of sections) spy.observe(section);
+    } else {
+        const path = location.pathname;
+        if (path.startsWith('/work') || path.startsWith('/showcase')) setActive('work');
+    }
+</script>

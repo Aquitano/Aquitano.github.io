@@ -1,0 +1,89 @@
+---
+import { manifesto, stats } from '../lib/data';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="about" data-manifesto-section data-minimap="About" class="section-x section-y section-y--lead">
+    <SectionHeading index="01" title="About" />
+    <p class="sr-only">{manifesto}</p>
+    <p
+        data-manifesto
+        aria-hidden="true"
+        class="max-w-5xl text-2xl leading-snug font-medium tracking-[-0.015em] font-stretch-112% md:text-5xl md:leading-[1.12]"
+    >
+        {manifesto}
+    </p>
+
+    <div
+        data-stats
+        class="border-line bg-line mt-16 grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3 md:mt-24"
+    >
+        {
+            stats.map((stat) => (
+                <div data-stat class="bg-bg p-6 md:p-8">
+                    <p class="display text-fg text-5xl md:text-7xl">
+                        <>
+                            <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
+                            <span class="text-accent">{stat.suffix}</span>
+                        </>
+                    </p>
+                    <p class="meta mt-3">{stat.label}</p>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<script>
+    import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from '../lib/gsap';
+
+    const reduce = prefersReducedMotion();
+
+    const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
+    for (const el of counters) {
+        const target = Number(el.dataset.count);
+        if (reduce) continue;
+        el.textContent = '00';
+        const obj = { value: 0 };
+        gsap.to(obj, {
+            value: target,
+            duration: 1.4,
+            ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+            onUpdate: () => {
+                el.textContent = String(Math.round(obj.value)).padStart(2, '0');
+            },
+        });
+    }
+
+    if (!reduce) {
+        document.fonts.ready.then(() => {
+            ScrollTrigger.create({
+                trigger: '[data-manifesto]',
+                start: 'top 95%',
+                once: true,
+                onEnter: () => {
+                    const split = SplitText.create('[data-manifesto]', { type: 'words', aria: 'none' });
+                    gsap.from(split.words, {
+                        opacity: 0.4,
+                        stagger: 0.04,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: '[data-manifesto]',
+                            start: 'top 78%',
+                            end: 'bottom 45%',
+                            scrub: true,
+                        },
+                    });
+                },
+            });
+        });
+
+        gsap.from('[data-stat]', {
+            autoAlpha: 0,
+            y: 28,
+            stagger: 0.08,
+            scrollTrigger: { trigger: '[data-stats]', start: 'top 88%', once: true },
+        });
+    }
+</script>

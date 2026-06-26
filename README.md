@@ -4,15 +4,15 @@
 
 <p align="center">
   <h3 align="center">Readme of Portfolio</h3>
-  <p align="center">✨My <a href="https://thomasbreindl.me"/> portfolio website</a>. Built with Astro.js, TailwindCSS & TypeScript. Containerized with Docker and hosted on Netlify. ✨</p>
+  <p align="center">✨My <a href="https://thomasbreindl.me"/> portfolio website</a>. Built with Astro, TailwindCSS & TypeScript, with GSAP-powered animations and a dot-matrix hero. Containerized with Docker and hosted on Netlify. ✨</p>
 </p>
 
 <p>
   <h3 align="center">Technologies</h3>
     <li>TypeScript</li>
-    <li>Astro.js</li>
-    <li>SolidJS</li>
+    <li>Astro</li>
     <li>TailwindCSS</li>
+    <li>GSAP</li>
     <li>Docker</li>
   </p>
 </p>
@@ -21,8 +21,8 @@
 
 All commands are run from the root of the project, from a terminal:
 
-| Command          | Action                                      |
-| :--------------- | :------------------------------------------ |
-| `pnpm install`   | Installs dependencies                       |
-| `pnpm dev`       | Starts local dev server at `localhost:3000` |
-| `pnpm run build` | Build your production site to `./dist/`     |
+| Command         | Action                                      |
+| :-------------- | :------------------------------------------ |
+| `bun install`   | Installs dependencies                       |
+| `bun dev`       | Starts local dev server at `localhost:4321` |
+| `bun run build` | Build your production site to `./dist/`     |
