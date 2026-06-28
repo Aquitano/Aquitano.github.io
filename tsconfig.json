@@ -7,8 +7,6 @@
             "@/*": ["src/*"],
             "@assets/*": ["src/assets/*"]
         },
-        "jsx": "react-jsx",
-        "jsxImportSource": "react"
     },
     "include": ["src/**/*", ".astro/types.d.ts"],
     "exclude": ["public/**/*", "dist/**/*"]
