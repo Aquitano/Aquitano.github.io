@@ -9,7 +9,7 @@ interface DetailProject {
     description: string;
     tags: string[];
     tasks: string[];
-    links: { label: string; href: string }[];
+    links: { label: string; href: string; external?: boolean }[];
     accent: string;
 }
 
@@ -103,8 +103,8 @@ const nextLines = next.wrap ?? [next.title];
                                 {project.links.map((link) => (
                                     <a
                                         href={link.href}
-                                        target={isExternalHref(link.href) ? '_blank' : undefined}
-                                        rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
+                                    target={(link.external || isExternalHref(link.href)) ? '_blank' : undefined}
+                                    rel={(link.external || isExternalHref(link.href)) ? 'noopener noreferrer' : undefined}
                                         class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
                                     >
                                         {link.label} ↗

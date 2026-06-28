@@ -15,6 +15,7 @@ tasks:
 links:
     - label: Demo
       href: /showcase/griffin/
+      external: true
 accent: '#ff7a5c'
 order: 4
 ---
