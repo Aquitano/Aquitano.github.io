@@ -1,42 +1,19 @@
 name: Build
 
-on: [push, pull_request]
+on:
+    push:
+        branches: [main]
+    pull_request:
 
 jobs:
-    production-build:
+    build:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: 24
             - uses: oven-sh/setup-bun@v2
               with:
                   bun-version: latest
-            - name: Install deps (bun)
-              run: |
-                  rm -rf node_modules bun.lockb
-                  bun install --no-frozen-lockfile
-            - name: Rebuild sharp for linux-x64
-              run: |
-                  npm rebuild sharp --include=optional --platform=linux --arch=x64
-            - run: bun run build
-
-    production-check:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v6
-              with:
-                  node-version: 24
-            - uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
-            - name: Install deps (bun)
-              run: |
-                  rm -rf node_modules bun.lockb
-                  bun install --no-frozen-lockfile
-            - name: Rebuild sharp for linux-x64
-              run: |
-                  npm rebuild sharp --include=optional --platform=linux --arch=x64
+            - name: Install deps
+              run: bun install --frozen-lockfile
             - run: bun run astro check
+            - run: bun run build
