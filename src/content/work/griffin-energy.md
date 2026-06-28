@@ -17,6 +17,7 @@ links:
       href: /showcase/griffin/
       external: true
 accent: '#ff7a5c'
+image: /images/work/griffin-energy.webp
 order: 4
 ---
 

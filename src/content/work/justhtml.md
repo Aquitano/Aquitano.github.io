@@ -14,6 +14,7 @@ links:
     - label: GitHub
       href: https://github.com/Aquitano/JustHTML
 accent: '#ffb15c'
+image: /images/work/justhtml.webp
 order: 3
 ---
 

@@ -11,6 +11,7 @@ interface DetailProject {
     tasks: string[];
     links: { label: string; href: string; external?: boolean }[];
     accent: string;
+    image?: string;
 }
 
 interface Props {
@@ -66,6 +67,25 @@ const nextLines = next.wrap ?? [next.title];
             {project.description}
         </p>
     </header>
+    {project.image && (
+        <div data-detail-banner class="section-x relative pt-2 pb-10 md:pb-16">
+            <div class="border-line relative overflow-hidden rounded-2xl border">
+                <div
+                    class="pointer-events-none absolute -top-1/3 -right-1/4 h-[70%] w-[70%] rounded-full opacity-[0.08] blur-3xl"
+                    style={`background: ${project.accent}`}
+                    aria-hidden="true"
+                />
+                <div class="relative aspect-[16/9] w-full">
+                    <img
+                        src={project.image}
+                        alt={`${project.title} — ${project.subtitle}`}
+                        loading="eager"
+                        class="h-full w-full object-cover"
+                    />
+                </div>
+            </div>
+        </div>
+    )}
 
     <div
         data-detail-body
@@ -190,6 +210,22 @@ const nextLines = next.wrap ?? [next.title];
             ease: 'power4.out',
             stagger: 0.08,
         }).to('[data-detail-fade]', { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06 }, '-=0.6');
+
+        const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
+        if (banner) {
+            gsap.from(banner, {
+                autoAlpha: 0,
+                y: 48,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
+            });
+            gsap.to(banner.querySelector('img'), {
+                yPercent: 6,
+                ease: 'none',
+                scrollTrigger: { trigger: banner, start: 'top bottom', end: 'bottom top', scrub: true },
+            });
+        }
 
         const bodyItems = [
             ...root.querySelectorAll('[data-detail-para]'),

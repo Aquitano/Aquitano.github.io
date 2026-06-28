@@ -14,6 +14,7 @@ const work = defineCollection({
         tasks: z.array(z.string()),
         links: z.array(z.object({ label: z.string(), href: z.string(), external: z.boolean().optional() })).default([]),
         accent: z.string(),
+        image: z.string().optional(),
         order: z.number(),
     }),
 });
