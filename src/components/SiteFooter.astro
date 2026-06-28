@@ -13,9 +13,7 @@ const git = (cmd: string) => {
     }
 };
 
-const buildSha = git('git rev-parse --short HEAD');
-const buildShaFull = git('git rev-parse HEAD');
-const buildIso = git('git log -1 --format=%cI');
+const [buildSha, buildShaFull, buildIso] = git('git log -1 --format=%h|%H|%cI').split('|');
 
 const remoteMatch = git('git remote get-url origin').match(/github\.com[:/](.+?)(?:\.git)?$/);
 const commitUrl = remoteMatch && buildShaFull ? `https://github.com/${remoteMatch[1]}/commit/${buildShaFull}` : '';
