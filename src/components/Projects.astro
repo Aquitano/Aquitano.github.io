@@ -89,8 +89,12 @@ const CASCADE = 14;
                                     {p.links.map((link) => (
                                         <a
                                             href={link.href}
-                                        target={(link.external || isExternalHref(link.href)) ? '_blank' : undefined}
-                                        rel={(link.external || isExternalHref(link.href)) ? 'noopener noreferrer' : undefined}
+                                            target={link.external || isExternalHref(link.href) ? '_blank' : undefined}
+                                            rel={
+                                                link.external || isExternalHref(link.href)
+                                                    ? 'noopener noreferrer'
+                                                    : undefined
+                                            }
                                             class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
                                         >
                                             {link.label} ↗
