@@ -12,8 +12,9 @@ const work = defineCollection({
         description: z.string(),
         tags: z.array(z.string()),
         tasks: z.array(z.string()),
-        links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+        links: z.array(z.object({ label: z.string(), href: z.string(), external: z.boolean().optional() })).default([]),
         accent: z.string(),
+        image: z.string().optional(),
         order: z.number(),
     }),
 });

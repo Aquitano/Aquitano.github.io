@@ -25,6 +25,7 @@ links:
     - label: Press
       href: https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html
 accent: '#9b8cff'
+image: /images/work/frontiers-to-space.webp
 order: 1
 ---
 

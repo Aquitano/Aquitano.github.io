@@ -1,0 +1,11 @@
+# Vendored school-project demo: preserved third-party jQuery/Bootstrap/slick
+# HTML, CSS and JS. Reformatting would destroy the original artifact.
+public/showcase/**
+src/pages/showcase/griffin/**
+
+# Generated / build output
+.astro/
+dist/
+
+# Dependencies
+node_modules/

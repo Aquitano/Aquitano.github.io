@@ -20,6 +20,7 @@ links:
     - label: GitHub
       href: https://github.com/Aquitano/BetterGaming
 accent: '#5ee9b5'
+image: /images/work/bettergaming.webp
 order: 2
 ---
 
