@@ -45,6 +45,19 @@ import Magnetic from './Magnetic.astro';
                         <span class="cta-glide-arrow" aria-hidden="true">→</span>
                     </a>
                 </Magnetic>
+                <Magnetic class="inline-flex">
+                    <a
+                        href={site.cv}
+                        download={site.cvFilename}
+                        class="cta-glide cta-glide--down pressable border-fg/20 text-fg hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-xs font-medium tracking-[0.14em] uppercase transition-colors duration-300"
+                    >
+                        <span class="cta-glide-label">
+                            <span class="cta-glide-label-in">Download CV</span>
+                            <span class="cta-glide-label-out" aria-hidden="true">Download CV</span>
+                        </span>
+                        <span class="cta-glide-arrow" aria-hidden="true">↓</span>
+                    </a>
+                </Magnetic>
                 <a href="#about" aria-label="Scroll to about section" class="group ml-1 flex items-center gap-2.5">
                     <span class="meta group-hover:text-accent transition-colors duration-300">Scroll</span>
                     <span
@@ -161,6 +174,10 @@ import Magnetic from './Magnetic.astro';
         transform: translateX(5px);
     }
 
+    .cta-glide--down:focus-visible .cta-glide-arrow {
+        transform: translateY(4px);
+    }
+
     @media (hover: hover) and (pointer: fine) {
         .cta-glide:hover .cta-glide-label-in {
             transform: translateY(-110%);
@@ -170,6 +187,9 @@ import Magnetic from './Magnetic.astro';
         }
         .cta-glide:hover .cta-glide-arrow {
             transform: translateX(5px);
+        }
+        .cta-glide--down:hover .cta-glide-arrow {
+            transform: translateY(4px);
         }
     }
 
