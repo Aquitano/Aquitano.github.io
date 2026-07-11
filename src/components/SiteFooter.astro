@@ -1,28 +1,6 @@
 ---
-import { execSync } from 'node:child_process';
 import { site, socials } from '../lib/data';
-
-// Build-time deploy stamp: proves the site is alive and hand-maintained.
-const git = (cmd: string) => {
-    try {
-        return execSync(cmd, { stdio: ['ignore', 'pipe', 'ignore'] })
-            .toString()
-            .trim();
-    } catch {
-        return '';
-    }
-};
-
-const buildSha = git('git rev-parse --short HEAD');
-const buildShaFull = git('git rev-parse HEAD');
-const buildIso = git('git log -1 --format=%cI');
-
-const remoteMatch = git('git remote get-url origin').match(/github\.com[:/](.+?)(?:\.git)?$/);
-const commitUrl = remoteMatch && buildShaFull ? `https://github.com/${remoteMatch[1]}/commit/${buildShaFull}` : '';
-
-const buildDate = buildIso
-    ? new Date(buildIso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()
-    : '';
+import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
 ---
 
 <footer
