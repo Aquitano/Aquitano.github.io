@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../lib/data';
+import { uses, usesUpdated } from '../lib/uses';
+---
+
+<Layout
+    title={`Uses | ${site.name}`}
+    description="The tools, infrastructure and software behind my work — from the NixOS homelab to the stack powering this site."
+>
+    <main id="top" class="section-x pt-32 pb-4 md:pt-40 md:pb-8">
+        <header class="mb-12 md:mb-20">
+            <p class="meta mb-6"><span class="text-accent">/Uses</span> · Updated {usesUpdated}</p>
+            <h1 class="display text-[clamp(2.8rem,10vw,8.5rem)]">
+                Tools <span class="display-outline">&</span> Setup
+            </h1>
+            <p class="text-muted mt-8 max-w-xl text-base leading-relaxed md:text-lg">
+                A living list of what I build with and run at home. Everything here earns its place — if it stops
+                pulling its weight, it gets replaced.
+            </p>
+        </header>
+
+        <div class="border-line bg-line grid gap-px overflow-hidden border lg:grid-cols-3">
+            {
+                uses.map((group) => {
+                    const groupId = `uses-${group.label.toLowerCase().replace(/\s+/g, '-')}`;
+                    return (
+                        <section class="bg-bg p-6 md:p-8" aria-labelledby={groupId}>
+                            <h2 id={groupId} class="meta text-accent mb-6">
+                                {group.label}
+                            </h2>
+                            <ul class="space-y-5">
+                                {group.items.map((item) => (
+                                    <li>
+                                        <p class="text-fg text-sm font-medium md:text-base">{item.name}</p>
+                                        <p class="text-muted mt-1 text-sm leading-relaxed">{item.detail}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+                    );
+                })
+            }
+        </div>
+    </main>
+</Layout>

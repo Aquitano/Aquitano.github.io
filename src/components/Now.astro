@@ -1,0 +1,64 @@
+---
+import { now } from '../lib/data';
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section id="now" data-now-section data-minimap="Now" class="section-x section-y">
+    <SectionHeading index="05" title="Now" />
+    <div class="border-line bg-line grid gap-px overflow-hidden border md:grid-cols-3">
+        {
+            now.items.map((item) => (
+                <div data-now-item class="bg-bg p-6 md:p-8">
+                    <h3 class="meta text-accent mb-4">{item.label}</h3>
+                    <p class="text-fg/85 text-sm leading-relaxed md:text-base">{item.text}</p>
+                </div>
+            ))
+        }
+    </div>
+    <div
+        data-now-item
+        class="border-line mt-px flex flex-wrap items-center justify-between gap-x-8 gap-y-2 border border-t-0 px-6 py-5 md:px-8"
+    >
+        <p class="meta flex items-center gap-2.5">
+            <span class="now-pulse bg-accent inline-block size-1.5 shrink-0 rounded-full" aria-hidden="true"></span>
+            Updated {now.updated}
+        </p>
+        <a href="/uses" class="link-line touch-target meta text-fg inline-block">What I use →</a>
+    </div>
+</section>
+
+<style>
+    .now-pulse {
+        animation: now-pulse 2.4s var(--ease-in-out-strong) infinite;
+    }
+
+    @keyframes now-pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .now-pulse {
+            animation: none;
+        }
+    }
+</style>
+
+<script>
+    import { gsap, prefersReducedMotion } from '../lib/gsap';
+
+    const root = document.querySelector<HTMLElement>('[data-now-section]');
+    if (root && !prefersReducedMotion()) {
+        gsap.from('[data-now-item]', {
+            autoAlpha: 0,
+            y: 32,
+            stagger: 0.07,
+            scrollTrigger: { trigger: root, start: 'top 80%', once: true },
+        });
+    }
+</script>

@@ -5,6 +5,8 @@ export const site = {
     location: 'Passau, Germany',
     email: 'contact@thomasbreindl.me',
     url: 'https://thomasbreindl.me',
+    cv: '/cv.pdf',
+    cvFilename: 'Thomas-Breindl-CV.pdf',
 };
 
 export const socials = [
@@ -89,6 +91,24 @@ export const languages = [
     { label: 'English', level: 'C1' },
     { label: 'Latin', level: 'Latinum' },
 ];
+
+export const now = {
+    updated: 'July 2026',
+    items: [
+        {
+            label: 'Building',
+            text: 'Java and Quarkus services at itestra, continuing the modernization of legacy COBOL health-insurance systems.',
+        },
+        {
+            label: 'Studying',
+            text: 'Computer science at the University of Passau, with a focus on distributed systems.',
+        },
+        {
+            label: 'Running',
+            text: 'A self-hosted homelab on Proxmox and NixOS — declarative configs, Traefik ingress, WireGuard everywhere.',
+        },
+    ],
+};
 
 export const focusAreas = [
     'Software Engineering',

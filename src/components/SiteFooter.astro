@@ -10,7 +10,7 @@ import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
     class="section-x section-y--major relative overflow-hidden pb-8"
 >
     <div class="mb-16 md:mb-24">
-        <p data-footer-reveal class="meta mb-6"><span class="text-accent">/05</span> Got an interesting problem?</p>
+        <p data-footer-reveal class="meta mb-6"><span class="text-accent">/06</span> Got an interesting problem?</p>
         <a href={`mailto:${site.email}`} class="group block">
             <span class="block overflow-hidden pb-[0.06em]">
                 <span
@@ -111,6 +111,10 @@ import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
             )
         }
         <div class="flex items-center gap-8">
+            <a href="/uses" class="link-line touch-target meta text-fg inline-block">Uses</a>
+            <a href={site.cv} download={site.cvFilename} class="link-line touch-target meta text-fg inline-block">
+                CV ↓
+            </a>
             <a href="#top" class="link-line touch-target meta text-fg inline-block">Back to top ↑</a>
         </div>
     </div>

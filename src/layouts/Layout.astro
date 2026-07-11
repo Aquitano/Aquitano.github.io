@@ -74,6 +74,10 @@ const jsonLd = {
 };
 
 const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+
+// Self-hosted Umami; tracking stays off unless both vars are set at build time.
+const umamiSrc = import.meta.env.PUBLIC_UMAMI_SRC;
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
 ---
 
 <!doctype html>
@@ -83,7 +87,6 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
 
         <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
 
@@ -136,6 +139,8 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         />
 
         <script type="application/ld+json" set:html={safeJsonLd} />
+
+        {umamiSrc && umamiWebsiteId && <script is:inline defer src={umamiSrc} data-website-id={umamiWebsiteId} />}
     </head>
 
     <body class="bg-bg text-fg min-h-svh antialiased">
