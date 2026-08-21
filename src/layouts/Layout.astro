@@ -39,6 +39,7 @@ const canonicalURL = new URL(Astro.url.pathname, baseURL);
 const homeURL = new URL('/', baseURL);
 const ogImageURL = new URL('/og-default.png', baseURL);
 const sitemapURL = new URL('/sitemap-index.xml', baseURL);
+const markdownPath = Astro.url.pathname === '/' ? '/index.md' : `${Astro.url.pathname.replace(/\/$/, '')}.md`;
 
 const personID = new URL('/#person', baseURL).toString();
 const websiteID = new URL('/#website', baseURL).toString();
@@ -84,7 +85,6 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-
         <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
 
         <meta name="generator" content={Astro.generator} />
@@ -127,6 +127,11 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
                 ],
                 link: [
                     {
+                        rel: 'alternate',
+                        type: 'text/markdown',
+                        href: markdownPath,
+                    },
+                    {
                         rel: 'sitemap',
                         type: 'application/xml',
                         href: sitemapURL.pathname,
@@ -135,7 +140,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             }}
         />
 
-        <script type="application/ld+json" set:html={safeJsonLd} />
+        <script is:inline type="application/ld+json" set:html={safeJsonLd} />
     </head>
 
     <body class="bg-bg text-fg min-h-svh antialiased">
