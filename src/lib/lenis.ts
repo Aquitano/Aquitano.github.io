@@ -51,3 +51,6 @@ export function scrollToTarget(target: number | HTMLElement, { immediate = false
     if (typeof target === 'number') window.scrollTo({ top: Math.max(0, target), behavior });
     else target.scrollIntoView({ behavior });
 }
+
+export const pauseScroll = () => lenis?.stop();
+export const resumeScroll = () => lenis?.start();

@@ -40,6 +40,11 @@ html {
     background: var(--bg);
 }
 
+/* A stopped Lenis already swallows wheel and touch; clipping overflow as well would hide the scrollbar and shift the page. */
+html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+    overflow: visible;
+}
+
 @media (prefers-reduced-motion: reduce) {
     html:not(.lenis) {
         scroll-behavior: auto;

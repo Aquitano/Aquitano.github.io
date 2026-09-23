@@ -155,7 +155,7 @@ const SHORTCUTS = [
 </style>
 
 <script>
-    import { scrollToTarget, targetScrollY } from '../lib/lenis';
+    import { pauseScroll, resumeScroll, scrollToTarget, targetScrollY } from '../lib/lenis';
 
     const dialog = document.querySelector<HTMLDialogElement>('[data-kbd-dialog]');
     const hint = document.querySelector<HTMLElement>('[data-kbd-hint]');
@@ -207,7 +207,11 @@ const SHORTCUTS = [
         const isTyping = (el: Element | null) =>
             el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
 
-        const open = () => !dialog.open && dialog.showModal();
+        const open = () => {
+            if (dialog.open) return;
+            dialog.showModal();
+            pauseScroll();
+        };
         const close = () => dialog.open && dialog.close();
 
         let lastG = 0;
@@ -246,6 +250,7 @@ const SHORTCUTS = [
         });
 
         dialog.querySelector('[data-kbd-close]')?.addEventListener('click', close);
+        dialog.addEventListener('close', resumeScroll);
         dialog.addEventListener('click', (e) => {
             const r = dialog.getBoundingClientRect();
             const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
