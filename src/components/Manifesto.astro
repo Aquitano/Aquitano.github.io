@@ -21,7 +21,7 @@ import SectionHeading from './SectionHeading.astro';
         {
             stats.map((stat) => (
                 <div data-stat class="bg-bg p-6 md:p-8">
-                    <p class="display text-fg text-5xl md:text-7xl">
+                    <p class="display text-fg leading-display text-5xl md:text-7xl">
                         <>
                             <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
                             <span class="text-accent">{stat.suffix}</span>

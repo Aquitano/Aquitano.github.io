@@ -32,7 +32,7 @@ import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
                 data-email={site.email}
                 type="button"
                 aria-label={`Copy email address: ${site.email}`}
-                class="pressable group/copy text-muted hover:text-fg mt-6 flex cursor-pointer items-center gap-3 font-mono text-xs transition-colors duration-200"
+                class="pressable group/copy text-muted hover:text-fg mt-6 flex cursor-pointer items-center gap-3 font-mono text-xs transition-[color,transform] duration-200"
             >
                 <span data-copy-text>{site.email}</span>
                 <span data-copy-status role="status" aria-live="polite" class="inline-flex items-center">

@@ -12,6 +12,8 @@
     --line: #232328;
     --accent: oklch(0.7165 0.1409 50.91);
 
+    --display-leading: 0.92;
+
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 }
@@ -26,6 +28,8 @@
 
     --font-sans: 'Archivo Variable', system-ui, sans-serif;
     --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
+
+    --leading-display: var(--display-leading);
 
     --ease-out-strong: var(--ease-out-strong);
     --ease-in-out-strong: var(--ease-in-out-strong);
@@ -75,25 +79,6 @@ body {
     }
 }
 
-.section-x {
-    --gutter: 1.25rem;
-    --rail: 0rem;
-    padding-left: max(var(--gutter), calc((100% - 96rem) / 2));
-    padding-right: max(calc(var(--gutter) + var(--rail)), calc((100% - 96rem) / 2));
-}
-
-@media (min-width: 768px) {
-    .section-x {
-        --gutter: 2.5rem;
-    }
-}
-
-@media (min-width: 1280px) {
-    .section-x {
-        --rail: 3rem;
-    }
-}
-
 :root {
     --section-top: clamp(4.5rem, 8vw, 8rem);
     --section-top-major: clamp(6rem, 12vw, 11rem);
@@ -101,84 +86,122 @@ body {
     --section-lead: clamp(2.75rem, 5vw, 4.5rem);
 }
 
-.section-y {
-    padding-top: var(--section-top);
-    padding-bottom: var(--section-bottom);
-}
-
-.section-y--lead {
-    padding-top: var(--section-lead);
-}
-
-.section-y--major {
-    padding-top: var(--section-top-major);
-}
-
-.display {
-    font-stretch: 125%;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 0.92;
-    text-transform: uppercase;
-}
-
-.display-outline {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--fg);
-}
-
-@media (min-width: 768px) {
-    .display-outline {
-        -webkit-text-stroke-width: 2px;
+@layer components {
+    .section-x {
+        --gutter: 1.25rem;
+        --rail: 0rem;
+        padding-left: max(var(--gutter), calc((100% - 96rem) / 2));
+        padding-right: max(calc(var(--gutter) + var(--rail)), calc((100% - 96rem) / 2));
     }
-}
 
-/* Without text-stroke support the transparent fill would erase the title
-   entirely; fall back to solid ink so the content never disappears. */
-@supports not ((-webkit-text-stroke: 1px var(--fg))) {
-    .display-outline {
-        color: var(--fg);
+    @media (min-width: 768px) {
+        .section-x {
+            --gutter: 2.5rem;
+        }
     }
-}
 
-/* Mono metadata labels */
-.meta {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-}
+    @media (min-width: 1280px) {
+        .section-x {
+            --rail: 3rem;
+        }
+    }
 
-.link-line {
-    position: relative;
-}
+    .section-y {
+        padding-top: var(--section-top);
+        padding-bottom: var(--section-bottom);
+    }
 
-.link-line::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 280ms var(--ease-out-strong);
-}
+    .section-y--lead {
+        padding-top: var(--section-lead);
+    }
 
-@media (hover: hover) and (pointer: fine) {
-    .link-line:hover::after {
+    .section-y--major {
+        padding-top: var(--section-top-major);
+    }
+
+    .display {
+        font-stretch: 125%;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: var(--display-leading);
+        text-transform: uppercase;
+    }
+
+    .display-outline {
+        color: transparent;
+        -webkit-text-stroke: 1.5px var(--fg);
+    }
+
+    @media (min-width: 768px) {
+        .display-outline {
+            -webkit-text-stroke-width: 2px;
+        }
+    }
+
+    /* Without text-stroke support the transparent fill would erase the title
+       entirely; fall back to solid ink so the content never disappears. */
+    @supports not ((-webkit-text-stroke: 1px var(--fg))) {
+        .display-outline {
+            color: var(--fg);
+        }
+    }
+
+    /* Mono metadata labels */
+    .meta {
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+    }
+
+    .link-line {
+        position: relative;
+    }
+
+    .link-line::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 280ms var(--ease-out-strong);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .link-line:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+    }
+
+    .link-line:focus-visible::after {
         transform: scaleX(1);
         transform-origin: left;
     }
+
+    @media (pointer: coarse) {
+        .touch-target {
+            padding-block: 0.5rem;
+            margin-block: -0.5rem;
+        }
+    }
+
+    /* Pressable feedback */
+    .pressable {
+        transition: transform 140ms var(--ease-out-strong);
+    }
+
+    .pressable:active {
+        transform: scale(0.97);
+    }
 }
 
-.link-line:focus-visible::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
+/* Toggled from script over the links' own text colour, so it stays outside the layer to win. */
 .nav-active {
     color: var(--accent);
 }
@@ -186,22 +209,6 @@ body {
 .nav-active.link-line::after {
     transform: scaleX(1);
     transform-origin: left;
-}
-
-@media (pointer: coarse) {
-    .touch-target {
-        padding-block: 0.5rem;
-        margin-block: -0.5rem;
-    }
-}
-
-/* Pressable feedback */
-.pressable {
-    transition: transform 140ms var(--ease-out-strong);
-}
-
-.pressable:active {
-    transform: scale(0.97);
 }
 
 section[id] {
