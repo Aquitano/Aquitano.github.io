@@ -15,8 +15,13 @@ const NAV = [
         data-header-inner
         class="section-x flex items-center justify-between py-4 transition-[padding] duration-300 md:py-5"
     >
-        <a href="/#top" class="touch-target font-mono text-xs font-medium tracking-[0.14em] text-white uppercase">
-            TB<span class="text-white/50 max-[359px]:hidden">©2026</span>
+        <a
+            href="/#top"
+            class="touch-target min-w-11 font-mono text-xs font-medium tracking-[0.14em] text-white uppercase"
+        >
+            TB<span aria-hidden="true" class="text-white/50 max-[359px]:hidden">©2026</span><span class="sr-only">
+                home</span
+            >
         </a>
         <div class="flex items-center gap-6 md:gap-10">
             <nav class="flex items-center gap-4 md:gap-6">

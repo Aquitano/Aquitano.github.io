@@ -25,10 +25,13 @@ import { site } from '../lib/data';
                 href="/"
                 class="link-line pressable touch-target text-accent inline-block font-mono text-xs tracking-[0.14em] uppercase"
             >
-                ← Back to Home
+                <span aria-hidden="true">←</span> Back to Home
             </a>
         </div>
-        <nav aria-label="Recovery links" class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
+        <nav
+            aria-label="Recovery links"
+            class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 pointer-coarse:mt-7 pointer-coarse:gap-y-7"
+        >
             <a href="/sitemap-index.xml" class="link-line touch-target meta text-fg">Sitemap</a>
             <a href="/llms.txt" class="link-line touch-target meta text-fg">Agent guide</a>
             <a href="/#contact" class="link-line touch-target meta text-fg">Contact</a>

@@ -93,7 +93,7 @@ const CASCADE = 14;
                                         href={`/work/${entry.id}`}
                                         class="link-line pressable touch-target text-accent font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
                                     >
-                                        Case Study →
+                                        Case Study <span aria-hidden="true">→</span>
                                     </a>
                                     {p.links.map((link) => (
                                         <a
@@ -106,7 +106,10 @@ const CASCADE = 14;
                                             }
                                             class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
                                         >
-                                            {link.label} ↗
+                                            {link.label} <span aria-hidden="true">↗</span>
+                                            {(link.external || isExternalHref(link.href)) && (
+                                                <span class="sr-only">(opens in new tab)</span>
+                                            )}
                                         </a>
                                     ))}
                                 </div>

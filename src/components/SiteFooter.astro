@@ -28,6 +28,7 @@ const isHome = Astro.url.pathname === '/';
                     <span style={opticalIndent('Let’s')}>Let’s</span>{' '}
                     <span class="whitespace-nowrap"
                         >Talk<span
+                            aria-hidden="true"
                             class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
                             >↗</span
                         ></span
@@ -41,7 +42,7 @@ const isHome = Astro.url.pathname === '/';
                 data-email={site.email}
                 type="button"
                 aria-label={`Copy email address: ${site.email}`}
-                class="pressable group/copy text-muted hover:text-fg mt-3 flex cursor-pointer items-center gap-3 py-3 font-mono text-xs transition-[color,transform] duration-200"
+                class="pressable group/copy text-muted hover:text-fg mt-3 flex min-h-11 cursor-pointer items-center gap-3 py-3 font-mono text-xs transition-[color,transform] duration-200"
             >
                 <span data-copy-text>{site.email}</span>
                 <span data-copy-status role="status" aria-live="polite" class="inline-flex items-center">
@@ -85,7 +86,11 @@ const isHome = Astro.url.pathname === '/';
                         <p class="text-sm font-medium">{social.label}</p>
                         <p class="text-muted font-mono text-[0.6875rem]">{social.handle}</p>
                     </div>
-                    <span class="text-muted group-hover:text-accent group-focus-visible:text-accent ease-out-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5">
+                    <span class="sr-only">(opens in new tab)</span>
+                    <span
+                        aria-hidden="true"
+                        class="text-muted group-hover:text-accent group-focus-visible:text-accent ease-out-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+                    >
                         ↗
                     </span>
                 </a>
@@ -109,6 +114,7 @@ const isHome = Astro.url.pathname === '/';
                             class="link-line touch-target text-fg hover:text-accent transition-colors duration-200"
                         >
                             {buildSha}
+                            <span class="sr-only">(opens in new tab)</span>
                         </a>
                     ) : (
                         <span class="text-fg">{buildSha}</span>
@@ -122,8 +128,10 @@ const isHome = Astro.url.pathname === '/';
                 </p>
             )
         }
-        <div class="flex items-center xl:col-start-3 xl:justify-end">
-            <a href="#top" class="link-line touch-target meta text-fg inline-block">Back to top ↑</a>
+        <div class="flex items-center lg:col-start-3 lg:justify-end">
+            <a href="#top" class="link-line touch-target meta text-fg inline-block">
+                Back to top <span aria-hidden="true">↑</span>
+            </a>
         </div>
     </div>
 </footer>

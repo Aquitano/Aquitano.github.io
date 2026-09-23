@@ -33,7 +33,9 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
     <header class="section-x relative pt-28 pb-12 md:pt-40 md:pb-16">
         <div class="intro-fade" style={fadeDelay(0)}>
-            <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">← All Work</a>
+            <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">
+                <span aria-hidden="true">←</span> All Work
+            </a>
         </div>
 
         <div class="mt-10 flex items-baseline justify-between gap-4 md:mt-14">
@@ -120,19 +122,16 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     project.links.length > 0 && (
                         <div data-detail-para>
                             <dt class="meta mb-3">Links</dt>
-                            <dd class="flex flex-col items-start gap-3">
+                            <dd class="flex flex-col items-start gap-3 pointer-coarse:gap-7">
                                 {project.links.map((link) => (
                                     <a
                                         href={link.href}
-                                        target={link.external || isExternalHref(link.href) ? '_blank' : undefined}
-                                        rel={
-                                            link.external || isExternalHref(link.href)
-                                                ? 'noopener noreferrer'
-                                                : undefined
-                                        }
+                                        target={opensNewTab(link) ? '_blank' : undefined}
+                                        rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
                                         class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
                                     >
-                                        {link.label} ↗
+                                        {link.label} <span aria-hidden="true">↗</span>
+                                        {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
                                     </a>
                                 ))}
                             </dd>

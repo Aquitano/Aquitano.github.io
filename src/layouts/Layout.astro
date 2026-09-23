@@ -43,6 +43,7 @@ const baseURL = Astro.site ?? Astro.url;
 const canonicalURL = new URL(Astro.url.pathname, baseURL);
 const homeURL = new URL('/', baseURL);
 const ogImageURL = new URL(image?.src ?? '/og-default.png', baseURL);
+const ogImageAlt = image?.alt ?? `${site.name} — ${site.role}`;
 const sitemapURL = new URL('/sitemap-index.xml', baseURL);
 const markdownPath = Astro.url.pathname === '/' ? '/index.md' : `${Astro.url.pathname.replace(/\/$/, '')}.md`;
 
@@ -114,12 +115,15 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
                     siteName: site.name,
                     description,
                 },
+                image: {
+                    alt: ogImageAlt,
+                },
             }}
             twitter={{
                 creator: '@breindlthomas',
                 card: 'summary_large_image',
                 image: ogImageURL.toString(),
-                imageAlt: image?.alt ?? `${site.name} — ${site.role}`,
+                imageAlt: ogImageAlt,
             }}
             extend={{
                 meta: [
@@ -148,7 +152,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
     <body class="bg-bg text-fg min-h-svh antialiased">
         <a
             href="#top"
-            class="bg-accent sr-only rounded-full px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100"
+            class="bg-accent sr-only rounded-full px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100"
         >
             Skip to content
         </a>
