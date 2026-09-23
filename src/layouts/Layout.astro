@@ -100,7 +100,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <SEO
             title={title}
             description={description}
-            canonical={canonicalURL.toString()}
+            canonical={noindex ? null : canonicalURL.toString()}
             noindex={noindex}
             openGraph={{
                 basic: {
