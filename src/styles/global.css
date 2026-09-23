@@ -124,9 +124,10 @@ body {
         text-transform: uppercase;
     }
 
+    /* Clearing the fill rather than the color lets the stroke follow the text color, such as a hovered link's accent. */
     .display-outline {
-        color: transparent;
-        -webkit-text-stroke: 1.5px var(--fg);
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 1.5px currentColor;
     }
 
     @media (min-width: 768px) {
@@ -137,9 +138,9 @@ body {
 
     /* Without text-stroke support the transparent fill would erase the title
        entirely; fall back to solid ink so the content never disappears. */
-    @supports not ((-webkit-text-stroke: 1px var(--fg))) {
+    @supports not ((-webkit-text-stroke: 1px currentColor)) {
         .display-outline {
-            color: var(--fg);
+            -webkit-text-fill-color: currentColor;
         }
     }
 
