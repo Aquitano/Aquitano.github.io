@@ -76,28 +76,46 @@ const NAV = [
         }
     };
 
-    const navSectionIds = [...byId.keys()];
+    if (location.pathname === '/') {
+        const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-minimap]')).map((el) => ({
+            el,
+            navId: el.dataset.nav ?? el.id,
+        }));
 
-    if (navSectionIds.some((id) => document.getElementById(id))) {
-        const sections = ['top', ...navSectionIds]
-            .map((id) => document.getElementById(id))
-            .filter(Boolean) as HTMLElement[];
+        let current: string | undefined;
+        let queued = false;
+        const update = () => {
+            queued = false;
+            const line = window.scrollY + window.innerHeight / 2;
+            const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+            let id = '';
+            for (const { el, navId } of sections) {
+                if (el.getBoundingClientRect().top + window.scrollY <= line) id = navId;
+            }
+            // The last sections can't reach the centre line. At the end, honour a jump to one still on screen, else the last.
+            if (atEnd) {
+                const jumpedTo = sections.find(
+                    ({ el }) => el.id && `#${el.id}` === location.hash && el.getBoundingClientRect().top >= 0,
+                );
+                id = (jumpedTo ?? sections.at(-1))?.navId ?? id;
+            }
+            if (id === current) return;
+            current = id;
+            setActive(id);
+        };
 
-        let current = '';
-        const spy = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (!entry.isIntersecting || entry.target.id === current) continue;
-                    current = entry.target.id;
-                    setActive(current);
-                }
+        window.addEventListener(
+            'scroll',
+            () => {
+                if (queued) return;
+                queued = true;
+                requestAnimationFrame(update);
             },
-
-            { rootMargin: '-50% 0px -50% 0px' },
+            { passive: true },
         );
-        for (const section of sections) spy.observe(section);
-    } else {
-        const path = location.pathname;
-        if (path.startsWith('/work') || path.startsWith('/showcase')) setActive('work');
+        window.addEventListener('hashchange', update);
+        update();
+    } else if (location.pathname.startsWith('/work')) {
+        setActive('work');
     }
 </script>
