@@ -24,6 +24,11 @@ interface Props {
 const { project, index, total, next } = Astro.props;
 const titleLines = project.wrap ?? [project.title];
 const nextLines = next.wrap ?? [next.title];
+
+const LINE_STAGGER = 80;
+const FADE_STAGGER = 60;
+const fadeStart = 700 + (titleLines.length - 1) * LINE_STAGGER;
+const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
 ---
 
 <div id="top" data-detail class="relative overflow-x-clip">
@@ -36,26 +41,26 @@ const nextLines = next.wrap ?? [next.title];
     </div>
 
     <header class="section-x relative pt-28 pb-12 md:pt-40 md:pb-16">
-        <div data-detail-fade>
+        <div class="intro-fade" style={fadeDelay(0)}>
             <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">← All Work</a>
         </div>
 
         <div class="mt-10 flex items-baseline justify-between gap-4 md:mt-14">
-            <p data-detail-fade class="meta flex items-center gap-2">
+            <p class="intro-fade meta flex items-center gap-2" style={fadeDelay(1)}>
                 <span
                     class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
                     style={`background: ${project.accent}`}
                     aria-hidden="true"></span>
                 {project.subtitle}
             </p>
-            <p data-detail-fade class="meta">©{project.year} · 0{index + 1}/0{total}</p>
+            <p class="intro-fade meta" style={fadeDelay(2)}>©{project.year} · 0{index + 1}/0{total}</p>
         </div>
 
         <h1 class="display mt-4 text-[clamp(2.8rem,11vw,10.5rem)]">
             {
-                titleLines.map((line) => (
+                titleLines.map((line, i) => (
                     <span class="block overflow-hidden pb-[0.06em]">
-                        <span data-detail-line class="block">
+                        <span class="intro-rise block" style={`--intro-delay: ${100 + i * LINE_STAGGER}ms`}>
                             {line}
                         </span>
                     </span>
@@ -63,7 +68,7 @@ const nextLines = next.wrap ?? [next.title];
             }
         </h1>
 
-        <p data-detail-fade class="text-muted mt-8 max-w-3xl text-base leading-relaxed md:text-xl">
+        <p class="intro-fade text-muted mt-8 max-w-3xl text-base leading-relaxed md:text-xl" style={fadeDelay(3)}>
             {project.description}
         </p>
     </header>
@@ -191,34 +196,11 @@ const nextLines = next.wrap ?? [next.title];
     </a>
 </div>
 
-{/* Pre-hide intro elements so they don't flash before the timeline runs (motion users only) */}
-<style>
-    @media (prefers-reduced-motion: no-preference) {
-        :global(html.js) [data-detail-line] {
-            transform: translateY(110%);
-        }
-        :global(html.js) [data-detail-fade] {
-            opacity: 0;
-        }
-    }
-</style>
-
 <script>
     import { gsap, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-detail]');
     if (root && !prefersReducedMotion()) {
-        gsap.set('[data-detail-line]', { y: 0, yPercent: 110 });
-        gsap.set('[data-detail-fade]', { autoAlpha: 0, y: 24 });
-
-        const tl = gsap.timeline({ delay: 0.1 });
-        tl.to('[data-detail-line]', {
-            yPercent: 0,
-            duration: 1.1,
-            ease: 'power4.out',
-            stagger: 0.08,
-        }).to('[data-detail-fade]', { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06 }, '-=0.6');
-
         const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
         if (banner) {
             gsap.from(banner, {

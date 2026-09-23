@@ -196,6 +196,29 @@ body {
         }
     }
 
+    @media (prefers-reduced-motion: no-preference) {
+        .intro-rise {
+            animation: intro-rise 1.2s var(--ease-out-strong) var(--intro-delay, 0ms) both;
+        }
+
+        .intro-fade {
+            animation: intro-fade 0.9s var(--ease-out-strong) var(--intro-delay, 0ms) both;
+        }
+    }
+
+    @keyframes intro-rise {
+        from {
+            transform: translateY(110%);
+        }
+    }
+
+    @keyframes intro-fade {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+    }
+
     /* Pressable feedback */
     .pressable {
         transition: transform 140ms var(--ease-out-strong);

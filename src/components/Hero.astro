@@ -16,26 +16,35 @@ import Magnetic from './Magnetic.astro';
     <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent"></div>
 
     <div data-hero-parallax class="section-x relative z-10 pb-10 md:pb-14">
-        <p data-hero-fade class="meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+        <p
+            class="intro-fade meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1"
+            style="--intro-delay: 740ms"
+        >
             <span class="text-balance">{site.role} · {site.status}</span>
         </p>
         <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),15rem)]">
             <span class="block overflow-hidden pb-[0.06em]">
-                <span data-hero-line class="split-line -ml-[0.024em] block">Thomas</span>
+                <span class="intro-rise -ml-[0.024em] block" style="--intro-delay: 150ms">Thomas</span>
             </span>
             <span class="block overflow-hidden pb-[0.06em]">
-                <span data-hero-line class="split-line display-outline -ml-[0.08em] block">Breindl</span>
+                <span class="intro-rise display-outline -ml-[0.08em] block" style="--intro-delay: 240ms">Breindl</span>
             </span>
         </h1>
 
         <div
             class="border-line mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
         >
-            <p data-hero-fade class="text-muted max-w-md text-base leading-relaxed md:max-w-sm md:text-lg lg:max-w-md">
+            <p
+                class="intro-fade text-muted max-w-md text-base leading-relaxed md:max-w-sm md:text-lg lg:max-w-md"
+                style="--intro-delay: 810ms"
+            >
                 Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
                 CS in <span class="text-fg">Passau, Germany</span>.
             </p>
-            <div data-hero-fade class="flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap">
+            <div
+                class="intro-fade flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap"
+                style="--intro-delay: 880ms"
+            >
                 <Magnetic class="inline-flex">
                     <a
                         href="#work"
@@ -70,21 +79,7 @@ import Magnetic from './Magnetic.astro';
     </div>
 </section>
 
-{/* Pre-hide animated elements so they don't flash before the intro runs (motion users only) */}
 <style>
-    @media (prefers-reduced-motion: no-preference) {
-        :global(html.js) [data-hero-line] {
-            transform: translateY(110%);
-        }
-        :global(html.js) [data-hero-fade] {
-            opacity: 0;
-        }
-    }
-
-    .split-line {
-        will-change: transform;
-    }
-
     .hero-bg {
         --mx: 70%;
         --my: 30%;
@@ -229,20 +224,6 @@ import Magnetic from './Magnetic.astro';
 
     const root = document.querySelector<HTMLElement>('[data-hero]');
     if (root && !prefersReducedMotion()) {
-        gsap.set('[data-hero-line]', { y: 0, yPercent: 110 });
-        gsap.set('[data-hero-fade]', { autoAlpha: 0, y: 24 });
-
-        const tl = gsap.timeline({
-            delay: 0.15,
-            onComplete: () => gsap.set('[data-hero-line]', { willChange: 'auto' }),
-        });
-        tl.to('[data-hero-line]', {
-            yPercent: 0,
-            duration: 1.2,
-            ease: 'power4.out',
-            stagger: 0.09,
-        }).to('[data-hero-fade]', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.07 }, '-=0.7');
-
         gsap.to('[data-hero-parallax]', {
             yPercent: 9,
             autoAlpha: 0.4,

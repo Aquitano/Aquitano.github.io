@@ -127,12 +127,6 @@ const isHome = Astro.url.pathname === '/';
 </footer>
 
 <style>
-    @media (prefers-reduced-motion: no-preference) {
-        :global(html.js) [data-footer-headline] {
-            transform: translateY(110%);
-        }
-    }
-
     /* Pop for state-change feedback (the "Copied" pill) */
     .pop-in {
         animation: pop-in 320ms var(--ease-out-strong) both;
