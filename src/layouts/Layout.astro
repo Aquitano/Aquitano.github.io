@@ -12,6 +12,8 @@ export interface Props {
     title?: string;
     description?: string;
     ogTitle?: string;
+    image?: { src: string; alt: string };
+    noindex?: boolean;
 }
 
 const defaultKeywords = [
@@ -31,13 +33,15 @@ const {
     title = `${site.name} | ${site.role}`,
     description = 'Software developer, designer and CS student in Passau, Germany. Building robust backend systems, event pipelines and interfaces people enjoy using.',
     ogTitle,
+    image,
+    noindex = false,
 } = Astro.props;
 
 const baseURL = Astro.site ?? Astro.url;
 
 const canonicalURL = new URL(Astro.url.pathname, baseURL);
 const homeURL = new URL('/', baseURL);
-const ogImageURL = new URL('/og-default.png', baseURL);
+const ogImageURL = new URL(image?.src ?? '/og-default.png', baseURL);
 const sitemapURL = new URL('/sitemap-index.xml', baseURL);
 const markdownPath = Astro.url.pathname === '/' ? '/index.md' : `${Astro.url.pathname.replace(/\/$/, '')}.md`;
 
@@ -95,6 +99,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             title={title}
             description={description}
             canonical={canonicalURL.toString()}
+            noindex={noindex}
             openGraph={{
                 basic: {
                     title: ogTitle ?? title,
@@ -112,13 +117,12 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
                 creator: '@breindlthomas',
                 card: 'summary_large_image',
                 image: ogImageURL.toString(),
-                imageAlt: `${site.name} — ${site.role}`,
+                imageAlt: image?.alt ?? `${site.name} — ${site.role}`,
             }}
             extend={{
                 meta: [
                     { name: 'keywords', content: defaultKeywords.join(', ') },
                     { name: 'author', content: site.name },
-                    { name: 'robots', content: 'index, follow' },
                     { name: 'format-detection', content: 'telephone=no' },
                 ],
                 link: [
