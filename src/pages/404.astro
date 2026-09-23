@@ -3,11 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { site } from '../lib/data';
 ---
 
-<Layout
-    title={`404 - Page Not Found | ${site.name}`}
-    description="The page you were looking for does not exist."
-    noindex
->
+<Layout title={`Page Not Found | ${site.name}`} description="The page you were looking for does not exist." noindex>
     <main
         id="top"
         class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 text-center"
@@ -17,8 +13,8 @@ import { site } from '../lib/data';
             <span class="display-outline">404</span>
             <span data-glitch-fill aria-hidden="true" class="glitch-fill text-accent absolute inset-0">404</span>
         </h1>
-        <p class="text-muted mt-8 max-w-md text-base leading-relaxed md:text-lg">
-            This page drifted off into the stratosphere. Let's get you back to solid ground.
+        <p class="text-muted mt-8 max-w-md text-base leading-relaxed text-balance md:text-lg">
+            This page drifted off into the stratosphere. Let’s get you back to solid ground.
         </p>
         <div class="mt-10 flex justify-center">
             <a

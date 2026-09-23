@@ -39,17 +39,19 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
         </div>
 
         <div class="mt-10 flex items-baseline justify-between gap-4 md:mt-14">
-            <p class="intro-fade meta flex items-center gap-2" style={fadeDelay(1)}>
+            <p class="intro-fade meta flex items-baseline gap-2" style={fadeDelay(1)}>
                 <span
-                    class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
+                    class="inline-block h-1.5 w-1.5 shrink-0 self-center rounded-full"
                     style={`background: ${project.accent}`}
                     aria-hidden="true"></span>
                 {project.subtitle}
             </p>
-            <p class="intro-fade meta" style={fadeDelay(2)}>©{project.year} · 0{index + 1}/0{total}</p>
+            <p class="intro-fade meta whitespace-nowrap" style={fadeDelay(2)}>
+                <span class="max-[359px]:hidden">©{project.year} · </span>0{index + 1}/0{total}
+            </p>
         </div>
 
-        <h1 class="display mt-4 text-[clamp(2.25rem,11vw,10.5rem)]">
+        <h1 class="display mt-4 text-[clamp(2.25rem,11.5vw,11rem)]">
             {
                 title.lines.map((words, i) => (
                     <span class="block overflow-y-clip pb-[0.06em]">
@@ -66,7 +68,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             }
         </h1>
 
-        <p class="intro-fade text-muted mt-8 max-w-3xl text-base leading-relaxed md:text-xl" style={fadeDelay(3)}>
+        <p class="intro-fade text-muted mt-8 max-w-2xl text-base leading-relaxed md:text-xl" style={fadeDelay(3)}>
             {project.description}
         </p>
     </header>
@@ -96,13 +98,29 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
     <div
         data-detail-body
-        class="border-line section-x relative grid gap-12 border-t py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-20"
+        class="border-line section-x relative grid gap-12 border-t py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-8"
     >
         <aside class="lg:sticky lg:top-28 lg:self-start">
             <dl class="space-y-8">
                 <div data-detail-para>
                     <dt class="meta mb-2">Scope</dt>
-                    <dd class="text-fg/85 font-mono text-sm leading-relaxed">{project.tasks.join(' · ')}</dd>
+                    <dd>
+                        {
+                            /* Each item carries its own separator; the one starting a line is clipped by the list edge. */
+                        }
+                        <ul class="text-fg/85 flex flex-wrap overflow-hidden font-mono text-sm leading-relaxed">
+                            {
+                                project.tasks.map((task) => (
+                                    <li class="relative -ml-6 pl-6 whitespace-nowrap">
+                                        <span aria-hidden="true" class="text-muted absolute left-0 w-6 text-center">
+                                            ·
+                                        </span>
+                                        {task}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </dd>
                 </div>
                 <div data-detail-para>
                     <dt class="meta mb-3">Stack</dt>
@@ -110,7 +128,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                         <ul class="flex flex-wrap gap-2">
                             {
                                 project.tags.map((tag) => (
-                                    <li class="border-line text-fg/70 hover:border-accent/60 hover:text-accent ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5">
+                                    <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
                                         {tag}
                                     </li>
                                 ))
@@ -152,17 +170,17 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
     <a
         href={`/work/${next.slug}`}
         data-detail-next
-        class="group border-line section-x relative block overflow-hidden border-t py-16 md:py-24"
+        class="group border-line section-x relative block overflow-hidden border-t py-16 focus-visible:-outline-offset-4 md:py-24"
     >
         <div
-            class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12]"
+            class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12] group-focus-visible:opacity-[0.12]"
             style={`background: ${next.accent}`}
             aria-hidden="true"
         >
         </div>
         <p class="meta relative mb-4">Next Project</p>
         <p
-            class="display group-hover:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300"
+            class="display group-hover:text-accent group-focus-visible:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300"
         >
             {
                 nextTitle.lines.map((words, j) => (
