@@ -31,13 +31,17 @@
     --ease-in-out-strong: var(--ease-in-out-strong);
 }
 
-html {
+/* Lenis takes over once it boots; this stays for the reduced-motion and no-JS paths. */
+html:not(.lenis) {
     scroll-behavior: smooth;
+}
+
+html {
     background: var(--bg);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
+    html:not(.lenis) {
         scroll-behavior: auto;
     }
 }
