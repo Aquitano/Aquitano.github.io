@@ -62,6 +62,13 @@ body {
     overflow-x: clip;
 }
 
+@layer base {
+    p,
+    li {
+        text-wrap: pretty;
+    }
+}
+
 ::selection {
     background: var(--accent);
     color: #0a0a0b;
