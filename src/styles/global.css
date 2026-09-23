@@ -35,9 +35,12 @@
     --ease-in-out-strong: var(--ease-in-out-strong);
 }
 
-/* Lenis takes over once it boots; this stays for the reduced-motion and no-JS paths. */
-html:not(.lenis) {
-    scroll-behavior: smooth;
+/* No-JS only. ScrollTrigger copies a computed smooth value inline onto <html> after every refresh,
+   which would make native focus and anchor scrolls animate alongside Lenis. */
+@media (scripting: none) and (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
 html {
@@ -47,12 +50,6 @@ html {
 /* A stopped Lenis already swallows wheel and touch; clipping overflow as well would hide the scrollbar and shift the page. */
 html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     overflow: visible;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html:not(.lenis) {
-        scroll-behavior: auto;
-    }
 }
 
 body {
