@@ -25,7 +25,7 @@ const CASCADE = 14;
                     <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                         <article
                             data-card
-                            class="border-line bg-bg-raise hover:border-fg/25 relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-colors duration-300 md:min-h-[72svh] md:p-12"
+                            class="border-line bg-bg-raise hover:border-fg/25 has-[>a:active]:border-fg/25 relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-colors duration-300 md:min-h-[min(72svh,44rem)] md:p-12"
                         >
                             <a
                                 href={`/work/${entry.id}`}
@@ -70,15 +70,15 @@ const CASCADE = 14;
                                         </Fragment>
                                     ))}
                                 </h3>
-                                <p class="text-muted mt-6 max-w-2xl text-sm leading-relaxed md:text-base">
+                                <p class="text-muted mt-6 max-w-lg text-sm leading-relaxed max-md:line-clamp-5 md:text-base">
                                     {p.description}
                                 </p>
                             </div>
 
-                            <footer class="border-line relative z-20 flex flex-col gap-6 border-t pt-6 md:flex-row md:items-center md:justify-between">
+                            <footer class="border-line relative z-20 flex flex-col gap-6 border-t pt-6 xl:flex-row xl:items-center xl:justify-between">
                                 <ul class="flex flex-wrap gap-2">
                                     {p.tags.map((tag) => (
-                                        <li class="border-line text-fg/70 hover:border-accent/60 hover:text-accent ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase transition-all duration-300 hover:-translate-y-0.5">
+                                        <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
                                             {tag}
                                         </li>
                                     ))}
@@ -109,7 +109,7 @@ const CASCADE = 14;
 
                             <div
                                 data-card-chip
-                                class="bg-accent pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.12em] whitespace-nowrap text-black uppercase opacity-0 md:block"
+                                class="bg-accent pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.14em] whitespace-nowrap text-black uppercase opacity-0 md:block"
                                 aria-hidden="true"
                             >
                                 View Case ↗
@@ -140,10 +140,19 @@ const CASCADE = 14;
     if (root) {
         const wrappers = gsap.utils.toArray<HTMLElement>('[data-card-wrapper]');
 
-        // A card taller than the space below its sticky offset would stick with its links below the fold.
-        const stickyTop = (wrapper: HTMLElement, i: number) =>
-            Math.min(STICKY_TOP + i * CASCADE, window.innerHeight - wrapper.offsetHeight - VIEWPORT_MARGIN);
-        const placeCards = () => wrappers.forEach((w, i) => (w.style.top = `${stickyTop(w, i)}px`));
+        // Measured in svh so mobile toolbars collapsing mid-scroll don't move cards that are already stuck.
+        const viewport = document.createElement('div');
+        viewport.style.cssText = 'position:fixed;top:0;height:100svh;width:0;visibility:hidden;pointer-events:none';
+        document.body.append(viewport);
+
+        // If any card is taller than the space below its offset, its links would stick below the fold,
+        // so the whole stack scrolls as a plain list instead.
+        const placeCards = () => {
+            const fits = wrappers.every(
+                (w, i) => STICKY_TOP + i * CASCADE + w.offsetHeight + VIEWPORT_MARGIN <= viewport.offsetHeight,
+            );
+            wrappers.forEach((w, i) => (w.style.top = fits ? `${STICKY_TOP + i * CASCADE}px` : 'auto'));
+        };
         placeCards();
         window.addEventListener('resize', placeCards);
         new ResizeObserver(() => {
@@ -163,10 +172,17 @@ const CASCADE = 14;
         window.addEventListener('blur', () => (focusedAtBlur = document.activeElement));
 
         // Chrome carries a keyboard scroll that is still animating (PageDown, then a quick Tab) on past any
-        // programmatic jump, so the focused card is held in place until the next input, not aligned once.
+        // programmatic jump, so the focused card is held in place for a moment or until the next input.
+        const HOLD_MS = 600;
         let heldCard: HTMLElement | null = null;
-        const holdCard = () =>
-            heldCard && scrollToTarget(naturalTop(heldCard) - parseFloat(heldCard.style.top), { immediate: true });
+        let holdUntil = 0;
+        const holdCard = () => {
+            if (!heldCard || performance.now() > holdUntil) {
+                heldCard = null;
+                return;
+            }
+            scrollToTarget(naturalTop(heldCard) - parseFloat(heldCard.style.top), { immediate: true });
+        };
         window.addEventListener('scroll', holdCard, { passive: true });
         for (const type of ['keydown', 'wheel', 'pointerdown']) {
             window.addEventListener(type, () => (heldCard = null), { capture: true, passive: true });
@@ -176,7 +192,10 @@ const CASCADE = 14;
             const restored = e.target === focusedAtBlur;
             focusedAtBlur = null;
             if (restored || !(e.target instanceof HTMLElement) || !e.target.matches(':focus-visible')) return;
-            heldCard = e.target.closest<HTMLElement>('[data-card-wrapper]');
+            const wrapper = e.target.closest<HTMLElement>('[data-card-wrapper]');
+            if (!wrapper || wrapper === e.target || wrapper.style.top === 'auto') return;
+            heldCard = wrapper;
+            holdUntil = performance.now() + HOLD_MS;
             holdCard();
         });
 
@@ -188,17 +207,25 @@ const CASCADE = 14;
                 const xTo = gsap.quickTo(chip, 'x', { duration: 0.35, ease: 'power3.out' });
                 const yTo = gsap.quickTo(chip, 'y', { duration: 0.35, ease: 'power3.out' });
 
-                const place = (e: MouseEvent) => {
+                // Keep the chip inside the card, which clips it.
+                const chipAt = (e: MouseEvent) => {
                     const rect = card.getBoundingClientRect();
-                    xTo(e.clientX - rect.left);
-                    yTo(e.clientY - rect.top);
+                    const half = chip.offsetWidth / 2 + 12;
+                    return {
+                        x: gsap.utils.clamp(half, rect.width - half, e.clientX - rect.left),
+                        y: Math.max(chip.offsetHeight * 1.4 + 12, e.clientY - rect.top),
+                    };
+                };
+                const place = (e: MouseEvent) => {
+                    const { x, y } = chipAt(e);
+                    xTo(x);
+                    yTo(y);
                 };
                 const show = () => gsap.to(chip, { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' });
                 const hide = () => gsap.to(chip, { autoAlpha: 0, scale: 0.6, duration: 0.25 });
 
                 card.addEventListener('mouseenter', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    gsap.set(chip, { x: e.clientX - rect.left, y: e.clientY - rect.top });
+                    gsap.set(chip, chipAt(e));
                     show();
                 });
                 card.addEventListener('mousemove', place);
@@ -218,7 +245,7 @@ const CASCADE = 14;
                 const trigger = {
                     trigger: next,
                     start: 'top bottom',
-                    end: () => `top ${wrapper.style.top}`,
+                    end: () => `top ${wrapper.style.top === 'auto' ? '0px' : wrapper.style.top}`,
                     scrub: true,
                 };
                 gsap.to(card, { scale: 0.94, ease: 'none', transformOrigin: 'center top', scrollTrigger: trigger });
