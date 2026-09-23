@@ -173,27 +173,35 @@ const SHORTCUTS = [
         const HEADER_OFFSET = 88;
 
         const wrappers = stops.filter((s) => s.hasAttribute('data-card-wrapper'));
-        let tops: number[] = [];
+        let targets: number[] = [];
+
+        // Land each stop where an anchor jump would: cards at their sticky offset, sections by their scroll margin.
+        const offsetOf = (el: HTMLElement) =>
+            parseFloat(el.hasAttribute('data-card-wrapper') ? el.style.top : getComputedStyle(el).scrollMarginTop) ||
+            HEADER_OFFSET;
 
         const measure = () => {
             const saved = wrappers.map((w) => w.style.position);
             for (const w of wrappers) w.style.position = 'static';
-            tops = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY));
+            targets = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el)));
             wrappers.forEach((w, i) => (w.style.position = saved[i]));
         };
 
         const currentIndex = () => {
-            const line = targetScrollY() + HEADER_OFFSET + 8;
+            const line = targetScrollY() + 8;
             let idx = 0;
-            tops.forEach((t, i) => {
+            targets.forEach((t, i) => {
                 if (t <= line) idx = i;
             });
             return idx;
         };
 
         const goTo = (i: number) => {
-            const j = Math.max(0, Math.min(tops.length - 1, i));
-            scrollToTarget(tops[j] - HEADER_OFFSET, { immediate: reduce() });
+            const j = Math.max(0, Math.min(targets.length - 1, i));
+            const stop = stops[j];
+            scrollToTarget(targets[j], { immediate: reduce() });
+            if (!stop.hasAttribute('tabindex')) stop.setAttribute('tabindex', '-1');
+            stop.focus({ preventScroll: true });
         };
 
         measure();

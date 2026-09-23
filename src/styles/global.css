@@ -64,15 +64,18 @@ body {
     color: #0a0a0b;
 }
 
-:where(a, button, [tabindex]):focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-}
-
-@supports not selector(:focus-visible) {
-    :where(a, button, [tabindex]):focus {
+@layer base {
+    /* Sections that only receive focus from jump shortcuts (tabindex="-1") don't get a ring. */
+    :where(a, button, [tabindex]:not([tabindex='-1'])):focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 3px;
+    }
+
+    @supports not selector(:focus-visible) {
+        :where(a, button, [tabindex]:not([tabindex='-1'])):focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
     }
 }
 
@@ -103,17 +106,25 @@ body {
         }
     }
 
+    /* Anchor and shortcut jumps land the section's heading, not its top padding, under the header. */
+    :where([data-minimap], section[id]) {
+        scroll-margin-top: 5.5rem;
+    }
+
     .section-y {
         padding-top: var(--section-top);
         padding-bottom: var(--section-bottom);
+        scroll-margin-top: calc(5.5rem - var(--section-top));
     }
 
     .section-y--lead {
         padding-top: var(--section-lead);
+        scroll-margin-top: calc(5.5rem - var(--section-lead));
     }
 
     .section-y--major {
         padding-top: var(--section-top-major);
+        scroll-margin-top: calc(5.5rem - var(--section-top-major));
     }
 
     .display {
@@ -235,10 +246,6 @@ body {
 .nav-active.link-line::after {
     transform: scaleX(1);
     transform-origin: left;
-}
-
-section[id] {
-    scroll-margin-top: 5.5rem;
 }
 
 @media (min-width: 768px) {
