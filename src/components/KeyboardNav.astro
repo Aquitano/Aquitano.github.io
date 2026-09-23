@@ -113,9 +113,8 @@ const SHORTCUTS = [
         pointer-events: auto;
     }
 
-    .kbd-hint.is-away {
+    .kbd-hint.is-away:not(:focus-visible) {
         opacity: 0;
-        visibility: hidden;
         transform: translateY(10px);
         pointer-events: none;
     }
@@ -221,9 +220,12 @@ const SHORTCUTS = [
         let targets: number[] = [];
 
         // Land each stop where an anchor jump would: cards at their sticky offset, sections by their scroll margin.
-        const offsetOf = (el: HTMLElement) =>
-            parseFloat(el.hasAttribute('data-card-wrapper') ? el.style.top : getComputedStyle(el).scrollMarginTop) ||
-            HEADER_OFFSET;
+        const offsetOf = (el: HTMLElement) => {
+            const offset = parseFloat(
+                el.hasAttribute('data-card-wrapper') ? el.style.top : getComputedStyle(el).scrollMarginTop,
+            );
+            return Number.isNaN(offset) ? HEADER_OFFSET : offset;
+        };
 
         const measure = () => {
             const saved = wrappers.map((w) => w.style.position);
@@ -331,11 +333,20 @@ const SHORTCUTS = [
 
         dialog.querySelector('[data-kbd-close]')?.addEventListener('click', close);
         dialog.addEventListener('close', resumeScroll);
+        // The panel fills the dialog box, so only a backdrop click targets the dialog itself.
         dialog.addEventListener('click', (e) => {
-            const r = dialog.getBoundingClientRect();
-            const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-            if (!inside) close();
+            if (e.target === dialog) close();
         });
+
+        // Lenis stops wheel and touch behind the dialog; keys and the no-Lenis path need their own guard.
+        const SCROLL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
+        dialog.addEventListener('keydown', (e) => {
+            const activatesButton = e.key === ' ' && e.target instanceof HTMLButtonElement;
+            if (SCROLL_KEYS.has(e.key) && !activatesButton) e.preventDefault();
+        });
+        for (const type of ['wheel', 'touchmove']) {
+            dialog.addEventListener(type, (e) => e.preventDefault(), { passive: false });
+        }
 
         if (hint) {
             hint.addEventListener('click', () => {

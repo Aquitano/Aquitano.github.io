@@ -185,7 +185,7 @@ const CASCADE = 14;
         let heldCard: HTMLElement | null = null;
         let holdUntil = 0;
         const holdCard = () => {
-            if (!heldCard || performance.now() > holdUntil) {
+            if (!heldCard || heldCard.style.top === 'auto' || performance.now() > holdUntil) {
                 heldCard = null;
                 return;
             }
