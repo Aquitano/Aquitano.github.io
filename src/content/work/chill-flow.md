@@ -29,6 +29,6 @@ I built ChillFlow, a focus workspace that pairs lo-fi music and ambient sound wi
 
 Lo-fi tracks come from a database-backed catalog with liked tracks per account, and switching tracks crossfades instead of cutting. An ambient mixer layers sound loops over the music and saves named mixes.
 
-The focus and Pomodoro timers count down against a wall-clock deadline, so they keep correct time in a background tab and survive a reload. A focus block can target a single task, and when the block ends the app offers to check that task off. Tasks have priorities and natural-language due dates, and each one shows the focus time logged against it. Stats track focused minutes, completed sessions, full Pomodoro cycles, and day streaks.
+The timers run against a wall-clock deadline, so they keep correct time in a background tab and survive a reload. A focus block can target a single task, and when the block ends the app offers to check that task off. Tasks have priorities and natural-language due dates, and each one shows the focus time logged against it. Stats track focused minutes, completed sessions, full Pomodoro cycles, and day streaks.
 
 The app runs on Next.js with Hono API routes, Drizzle on Postgres hosted on Neon in production, Clerk for authentication, and Cloudflare R2 for audio files. Accounts can export all their data as JSON, or their focus sessions as CSV.

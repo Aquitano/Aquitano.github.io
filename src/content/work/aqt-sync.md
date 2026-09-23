@@ -22,7 +22,7 @@ accent: '#5cc8ff'
 order: 1
 ---
 
-I built aqt to sync files and folders between my machines through a server I run myself. The client encrypts file contents and filenames with XChaCha20-Poly1305 before upload. Argon2id turns the passphrase into a key that wraps a random root key. The server stores ciphertext, public keys, and wrapped key records, never a passphrase or a plaintext key.
+I built aqt to sync files and folders between my machines through a server I run myself. The client encrypts file contents and filenames with XChaCha20-Poly1305 before upload. Argon2id turns the passphrase into a key that wraps a random root key. The server stores ciphertext, public keys, wrapped key records, and operational metadata such as sizes and timestamps. It never receives the passphrase or a plaintext decryption key.
 
 The client splits files into chunks with FastCDC, seals them with keyed convergent encryption, and addresses them in a Merkle DAG. Unchanged chunks are never re-sent, and a file that appears in several folders is stored once.
 

@@ -22,7 +22,7 @@ order: 2
 
 I built aqt-health to collect my health data from Google Health and Withings into one PostgreSQL database that my own tools can read. Both providers connect over OAuth, the service encrypts their tokens at rest, and every sync normalizes the provider's response pages into a shared ingestion batch format.
 
-Ingestion is idempotent. Each batch carries an external ID per source instance, provider record IDs skip duplicate rows, and the service stores the original provider payload next to the structured metrics for auditing and reprocessing.
+Ingestion is idempotent. Each batch carries an external ID per source instance, provider record IDs skip duplicate rows where the provider supplies them, and the service stores the original provider payload next to the structured metrics for auditing and reprocessing.
 
 Sync jobs run on the server, so closing the browser does not stop them. After a restart the service requeues unfinished jobs, which is safe because ingestion deduplicates by provider record ID. A job that has restarted three times fails instead of resuming, so a crash cannot loop.
 

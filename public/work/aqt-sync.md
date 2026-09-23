@@ -4,7 +4,7 @@
 **Scope:** Backend, CLI, security, infrastructure  
 **Stack:** Go, SQLite, XChaCha20-Poly1305, Argon2id
 
-Thomas Breindl built aqt-sync, a self-hosted, zero-knowledge file and folder sync system in Go. The client encrypts file contents and filenames with XChaCha20-Poly1305 before upload. The server stores ciphertext, public keys, and wrapped key records, never a passphrase or a plaintext key.
+Thomas Breindl built aqt-sync, a self-hosted, zero-knowledge file and folder sync system in Go. The client encrypts file contents and filenames with XChaCha20-Poly1305 before upload. The server stores ciphertext, public keys, wrapped key records, and operational metadata such as sizes and timestamps. It never receives the passphrase or a plaintext decryption key.
 
 The client splits files into chunks with FastCDC, seals them with keyed convergent encryption, and addresses them in a Merkle DAG, so unchanged chunks are not re-sent and a file that appears in several folders is stored once. Tracked folders sync two-way with snapshots, named checkpoints, and a per-folder conflict policy. A Git remote helper stores repository history as encrypted bundles behind an `aqt::` remote, which is how he backs up his personal notes.
 
