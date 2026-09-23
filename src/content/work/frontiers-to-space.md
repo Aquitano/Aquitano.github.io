@@ -5,7 +5,7 @@ wrap:
     - ToSpace
 subtitle: Stratosphere Mission
 year: '2023'
-description: 'Web platform visualizing sensor data from a stratospheric balloon mission, built with the German Amateur Radio Club (DARC) and the Passau Observatory. I owned the frontend and site architecture, and helped build and program the probe itself: sensor integration and APRS data transmission on a TTGO T-Beam.'
+description: 'Web platform visualizing sensor data from a stratospheric balloon mission, built with the German Amateur Radio Club (DARC) and the Passau Observatory. I owned the frontend and site architecture, and helped build and program the probe itself: sensor integration and APRS data transmission on a TTGO T‑Beam.'
 tags:
     - React
     - TypeScript

@@ -56,7 +56,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             <p class="intro-fade meta" style={fadeDelay(2)}>©{project.year} · 0{index + 1}/0{total}</p>
         </div>
 
-        <h1 class="display mt-4 text-[clamp(2.8rem,11vw,10.5rem)]">
+        <h1 class="display mt-4 text-[clamp(2.25rem,11vw,10.5rem)]">
             {
                 titleLines.map((line, i) => (
                     <span class="block overflow-hidden pb-[0.06em]">
@@ -96,14 +96,10 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
     <div
         data-detail-body
-        class="border-line section-x relative grid gap-12 border-t py-16 md:grid-cols-[minmax(16rem,1fr)_2fr] md:gap-20 md:py-24"
+        class="border-line section-x relative grid gap-12 border-t py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-20"
     >
-        <aside class="md:sticky md:top-28 md:self-start">
+        <aside class="lg:sticky lg:top-28 lg:self-start">
             <dl class="space-y-8">
-                <div data-detail-para>
-                    <dt class="meta mb-2">Year</dt>
-                    <dd class="text-fg/85 font-mono text-sm">{project.year}</dd>
-                </div>
                 <div data-detail-para>
                     <dt class="meta mb-2">Scope</dt>
                     <dd class="text-fg/85 font-mono text-sm leading-relaxed">{project.tasks.join(' · ')}</dd>
@@ -150,7 +146,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
         <div
             data-detail-prose
-            class="[&>p]:text-fg/85 max-w-3xl space-y-6 [&>p]:text-base [&>p]:leading-relaxed md:[&>p]:text-lg"
+            class="[&>p]:text-fg/85 [&_code]:bg-bg-raise [&_code]:border-line max-w-xl space-y-6 [&_code]:rounded [&_code]:border [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.85em] [&>p]:text-base [&>p]:leading-relaxed md:[&>p]:text-lg"
         >
             <slot />
         </div>
@@ -181,14 +177,19 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                             </Fragment>
                         );
                     }
-                    // Keep the arrow on the same line as the final title segment so it never wraps alone.
+                    // Bind only the last word to the arrow so a long final segment can still wrap.
+                    const words = part.split(' ');
+                    const lastWord = words.pop();
                     return (
-                        <span class="whitespace-nowrap">
-                            {part}
-                            <span class="display-outline ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]">
-                                →
+                        <Fragment>
+                            {words.length > 0 && `${words.join(' ')} `}
+                            <span class="whitespace-nowrap">
+                                {lastWord}
+                                <span class="display-outline ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]">
+                                    →
+                                </span>
                             </span>
-                        </span>
+                        </Fragment>
                     );
                 })
             }
