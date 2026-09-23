@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import SectionHeading from './SectionHeading.astro';
 import { isExternalHref } from '../lib/links';
-import { displayTitle } from '../lib/displayTitle';
+import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
     work: CollectionEntry<'work'>[];
@@ -20,7 +20,7 @@ const CASCADE = 14;
         {
             work.map((entry, i) => {
                 const p = entry.data;
-                const titleLines = displayTitle(p.wrap ?? [p.title]);
+                const title = displayTitle(p.title, p.wrap);
                 return (
                     <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                         <article
@@ -61,12 +61,17 @@ const CASCADE = 14;
                                     {p.subtitle}
                                 </p>
                                 <h3 class="display text-[clamp(1.9rem,5.8vw,5.8rem)]">
-                                    {titleLines.map((words, j) => (
+                                    {title.lines.map((words, j) => (
                                         <Fragment>
-                                            {words.map(({ text, outline }) => (
-                                                <span class:list={{ 'display-outline': outline }}>{text}</span>
+                                            {j > 0 && (title.joiner || <wbr />)}
+                                            {words.map(({ text, outline }, k) => (
+                                                <span
+                                                    class:list={{ 'display-outline': outline }}
+                                                    style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
+                                                >
+                                                    {text}
+                                                </span>
                                             ))}
-                                            {j < titleLines.length - 1 && <wbr />}
                                         </Fragment>
                                     ))}
                                 </h3>

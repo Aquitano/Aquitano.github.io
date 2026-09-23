@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { isExternalHref } from '../lib/links';
-import { displayTitle } from '../lib/displayTitle';
+import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
     project: CollectionEntry<'work'>['data'];
@@ -12,12 +12,13 @@ interface Props {
 }
 
 const { project, index, total, next } = Astro.props;
-const titleLines = displayTitle(project.wrap ?? [project.title]);
-const nextLines = displayTitle(next.wrap ?? [next.title]);
+const title = displayTitle(project.title, project.wrap);
+const nextTitle = displayTitle(next.title, next.wrap);
+const opensNewTab = (link: (typeof project.links)[number]) => link.external || isExternalHref(link.href);
 
 const LINE_STAGGER = 80;
 const FADE_STAGGER = 60;
-const fadeStart = 700 + (titleLines.length - 1) * LINE_STAGGER;
+const fadeStart = 700 + (title.lines.length - 1) * LINE_STAGGER;
 const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
 ---
 
@@ -48,9 +49,12 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
         <h1 class="display mt-4 text-[clamp(2.25rem,11vw,10.5rem)]">
             {
-                titleLines.map((words, i) => (
-                    <span class="block overflow-hidden pb-[0.06em]">
-                        <span class="intro-rise block" style={`--intro-delay: ${100 + i * LINE_STAGGER}ms`}>
+                title.lines.map((words, i) => (
+                    <span class="block overflow-y-clip pb-[0.06em]">
+                        <span
+                            class="intro-rise block"
+                            style={`--intro-delay: ${100 + i * LINE_STAGGER}ms; ${opticalIndent(words[0].text)}`}
+                        >
                             {words.map(({ text, outline }) => (
                                 <span class:list={{ 'display-outline': outline }}>{text}</span>
                             ))}
@@ -162,22 +166,32 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             class="display group-hover:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300"
         >
             {
-                nextLines.map((words, j) => (
+                nextTitle.lines.map((words, j) => (
                     <Fragment>
+                        {j > 0 && (nextTitle.joiner || <wbr />)}
                         {words.map(({ text, outline }, k) => {
-                            const word = <span class:list={{ 'display-outline': outline }}>{text}</span>;
-                            if (j < nextLines.length - 1 || k < words.length - 1) return word;
+                            const word = (
+                                <span
+                                    class:list={{ 'display-outline': outline }}
+                                    style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
+                                >
+                                    {text}
+                                </span>
+                            );
+                            if (j < nextTitle.lines.length - 1 || k < words.length - 1) return word;
                             // Bind only the last word to the arrow so a long title can still wrap.
                             return (
                                 <span class="whitespace-nowrap">
                                     {word}
-                                    <span class="display-outline ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]">
+                                    <span
+                                        aria-hidden="true"
+                                        class="ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
+                                    >
                                         →
                                     </span>
                                 </span>
                             );
                         })}
-                        {j < nextLines.length - 1 && <wbr />}
                     </Fragment>
                 ))
             }

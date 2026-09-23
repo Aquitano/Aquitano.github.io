@@ -1,6 +1,7 @@
 ---
 import { site, socials } from '../lib/data';
 import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
+import { opticalIndent } from '../lib/displayTitle';
 
 const isHome = Astro.url.pathname === '/';
 ---
@@ -24,7 +25,7 @@ const isHome = Astro.url.pathname === '/';
                     data-footer-headline
                     class="display group-hover:text-accent block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300"
                 >
-                    <span class="-ml-[0.085em]">Let’s</span>{' '}
+                    <span style={opticalIndent('Let’s')}>Let’s</span>{' '}
                     <span class="whitespace-nowrap"
                         >Talk<span
                             class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"

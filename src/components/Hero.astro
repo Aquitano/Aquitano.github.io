@@ -1,6 +1,7 @@
 ---
 import { site } from '../lib/data';
 import Magnetic from './Magnetic.astro';
+import { opticalIndent } from '../lib/displayTitle';
 ---
 
 <section
@@ -25,12 +26,17 @@ import Magnetic from './Magnetic.astro';
             </p>
             <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),15rem)]">
                 <span class="block overflow-y-clip pb-[0.06em]">
-                    <span class="intro-rise -ml-[0.024em] block" style="--intro-delay: 150ms">Thomas</span>
+                    <span class="intro-rise block" style={`--intro-delay: 150ms; ${opticalIndent('Thomas')}`}
+                        >Thomas</span
+                    >
                 </span>
                 <span class="block overflow-y-clip pb-[0.06em]">
-                    <span class="intro-rise display-outline -ml-[0.08em] block" style="--intro-delay: 240ms"
-                        >Breindl</span
+                    <span
+                        class="intro-rise display-outline block"
+                        style={`--intro-delay: 240ms; ${opticalIndent('Breindl')}`}
                     >
+                        Breindl
+                    </span>
                 </span>
             </h1>
         </div>

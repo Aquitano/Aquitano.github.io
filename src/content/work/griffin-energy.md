@@ -1,5 +1,8 @@
 ---
 title: Griffin Energy
+wrap:
+    - Griffin
+    - Energy
 subtitle: Product Concept
 year: '2020'
 description: 'A fictional product built from scratch: brand concept, packaging designed in Photoshop, a photorealistic 3D can modeled and rendered in Blender, and a responsive website integrating the renders through animation.'
