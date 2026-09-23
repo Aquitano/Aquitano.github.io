@@ -186,8 +186,13 @@ body {
 
     @media (pointer: coarse) {
         .touch-target {
-            padding-block: 0.5rem;
-            margin-block: -0.5rem;
+            --touch-pad: 0.875rem;
+            padding-block: var(--touch-pad);
+            margin-block: calc(-1 * var(--touch-pad));
+        }
+
+        .touch-target.link-line::after {
+            bottom: calc(var(--touch-pad) - 2px);
         }
     }
 
