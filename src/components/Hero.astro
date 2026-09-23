@@ -8,7 +8,7 @@ import { opticalIndent } from '../lib/displayTitle';
     id="top"
     data-hero
     data-minimap="Intro"
-    class="relative flex min-h-svh flex-col justify-end overflow-hidden pt-20"
+    class="short:pt-18 relative flex min-h-svh flex-col justify-end overflow-hidden pt-20"
 >
     <div class="hero-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <span class="hero-glow"></span>
@@ -16,15 +16,17 @@ import { opticalIndent } from '../lib/displayTitle';
 
     <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent"></div>
 
-    <div data-hero-parallax class="section-x relative z-10 pb-10 md:pb-14">
+    <div data-hero-parallax class="section-x short:pb-6 relative z-10 pb-10 md:pb-14">
         <div data-hero-dim>
             <p
-                class="intro-fade meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1"
+                class="intro-fade meta text-fg/70 short:mb-3 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1"
                 style="--intro-delay: 740ms"
             >
                 <span class="text-balance">{site.role} · {site.status}</span>
             </p>
-            <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),15rem)]">
+            <h1
+                class="display short:text-[clamp(2.75rem,min(15.2vw,21svh),16rem)] text-[clamp(2.75rem,min(15.2vw,26svh),16rem)]"
+            >
                 <span class="block overflow-y-clip pb-[0.06em]">
                     <span class="intro-rise block" style={`--intro-delay: 150ms; ${opticalIndent('Thomas')}`}
                         >Thomas</span
@@ -42,20 +44,20 @@ import { opticalIndent } from '../lib/displayTitle';
         </div>
 
         <div
-            class="border-line mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
+            class="border-line short:mt-5 short:flex-row short:items-end short:justify-between short:pt-4 mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
         >
             <p
-                class="intro-fade text-muted max-w-md text-base leading-relaxed md:max-w-sm md:text-lg lg:max-w-md"
+                class="intro-fade text-muted short:max-w-md short:text-base max-w-md text-base leading-relaxed md:max-w-sm md:text-lg lg:max-w-md"
                 style="--intro-delay: 810ms"
             >
                 Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
-                CS in <span class="text-fg">Passau, Germany</span>.
+                CS in <span class="text-fg whitespace-nowrap">Passau, Germany</span>.
             </p>
             <div
-                class="intro-fade flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap"
+                class="intro-fade short:flex-nowrap flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap"
                 style="--intro-delay: 880ms"
             >
-                <Magnetic class="inline-flex">
+                <Magnetic class="inline-flex" strength={0.2}>
                     <a
                         href="#work"
                         class="cta-glide pressable bg-accent flex items-center gap-2 rounded-full px-6 py-3.5 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
@@ -67,7 +69,11 @@ import { opticalIndent } from '../lib/displayTitle';
                         <span class="cta-glide-arrow" aria-hidden="true">→</span>
                     </a>
                 </Magnetic>
-                <a href="#about" aria-label="Scroll to about section" class="group ml-1 flex items-center gap-2.5">
+                <a
+                    href="#about"
+                    aria-label="Scroll to about section"
+                    class="group ml-1 flex items-center gap-2.5 rounded-full"
+                >
                     <span class="meta group-hover:text-accent transition-colors duration-300">Scroll</span>
                     <span
                         class="border-fg/20 text-accent group-hover:border-accent grid size-11 place-items-center overflow-hidden rounded-full border transition-colors duration-300"
@@ -116,18 +122,23 @@ import { opticalIndent } from '../lib/displayTitle';
     }
 
     .scroll-cue-arrow {
-        animation: cue-drop 2.2s var(--ease-in-out-strong) infinite;
+        animation: cue-drop 2.2s linear infinite;
     }
 
     @keyframes cue-drop {
         0% {
             transform: translateY(-190%);
             opacity: 0;
+            animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
         }
-        30%,
+        30% {
+            transform: none;
+            opacity: 1;
+        }
         70% {
             transform: none;
             opacity: 1;
+            animation-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
         }
         100% {
             transform: translateY(190%);
@@ -235,7 +246,7 @@ import { opticalIndent } from '../lib/displayTitle';
     const root = document.querySelector<HTMLElement>('[data-hero]');
     if (root && !prefersReducedMotion()) {
         const scrub = { trigger: root, start: 'top top', end: 'bottom top', scrub: true };
-        gsap.to('[data-hero-parallax]', { yPercent: 9, ease: 'none', scrollTrigger: scrub });
+        gsap.to('[data-hero-parallax]', { y: 28, ease: 'none', scrollTrigger: scrub });
         gsap.to('[data-hero-dim]', { autoAlpha: 0.4, ease: 'none', scrollTrigger: scrub });
     }
 </script>

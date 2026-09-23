@@ -4,6 +4,8 @@
    discoverable in markup — safelist them explicitly. */
 @source inline('border-line/70 bg-bg/65 backdrop-blur-md py-3 md:py-3.5');
 
+@custom-variant short (@media (orientation: landscape) and (max-height: 30rem));
+
 :root {
     --bg: #0a0a0b;
     --bg-raise: #111113;
