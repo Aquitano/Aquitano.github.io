@@ -27,18 +27,17 @@ import SectionHeading from './SectionHeading.astro';
             ))
         }
     </div>
-    <div
-        data-stack-col
-        class="border-line mt-px flex flex-wrap items-center gap-x-8 gap-y-2 border border-t-0 px-6 py-5 md:px-8"
-    >
+    <div data-stack-col class="border-line flex items-baseline gap-x-8 border border-t-0 px-6 py-5 md:px-8">
         <span class="meta">Spoken</span>
-        {
-            languages.map((lang) => (
-                <span class="text-fg/85 font-mono text-xs">
-                    {lang.label} <span class="text-muted">· {lang.level}</span>
-                </span>
-            ))
-        }
+        <div class="flex flex-wrap gap-x-8 gap-y-2">
+            {
+                languages.map((lang) => (
+                    <span class="text-fg/85 font-mono text-xs">
+                        {lang.label} <span class="text-muted">· {lang.level}</span>
+                    </span>
+                ))
+            }
+        </div>
     </div>
 </section>
 
