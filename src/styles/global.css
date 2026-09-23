@@ -45,11 +45,12 @@
 
 html {
     background: var(--bg);
+    scrollbar-gutter: stable;
 }
 
-/* A stopped Lenis already swallows wheel and touch; clipping overflow as well would hide the scrollbar and shift the page. */
-html.lenis.lenis-stopped:not(.lenis-autoToggle) {
-    overflow: visible;
+/* Lenis only stops wheel and touch; this also stops keyboard scrolling behind an open dialog. */
+html:has(dialog[open]) {
+    overflow: hidden;
 }
 
 body {

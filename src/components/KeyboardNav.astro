@@ -101,6 +101,7 @@ const SHORTCUTS = [
         transition:
             opacity 450ms var(--ease-out-strong),
             transform 450ms var(--ease-out-strong),
+            visibility 450ms,
             color 200ms,
             border-color 200ms;
     }
@@ -110,6 +111,13 @@ const SHORTCUTS = [
         visibility: visible;
         transform: none;
         pointer-events: auto;
+    }
+
+    .kbd-hint.is-away {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        pointer-events: none;
     }
 
     .kbd-hint::after {
@@ -148,20 +156,28 @@ const SHORTCUTS = [
         }
     }
 
+    .kbd-dialog,
     .kbd-dialog::backdrop {
-        background: color-mix(in oklch, #0a0a0b 68%, transparent);
-        backdrop-filter: blur(2px);
+        transition:
+            opacity 240ms var(--ease-out-strong),
+            transform 240ms var(--ease-out-strong),
+            overlay 240ms allow-discrete,
+            display 240ms allow-discrete;
     }
 
     .kbd-dialog {
         opacity: 0;
         transform: translateY(8px) scale(0.98);
-        transition:
-            opacity 240ms var(--ease-out-strong),
-            transform 240ms var(--ease-out-strong);
     }
 
-    .kbd-dialog[open] {
+    .kbd-dialog::backdrop {
+        opacity: 0;
+        background: color-mix(in oklch, #0a0a0b 68%, transparent);
+        backdrop-filter: blur(2px);
+    }
+
+    .kbd-dialog[open],
+    .kbd-dialog[open]::backdrop {
         opacity: 1;
         transform: none;
     }
@@ -171,10 +187,15 @@ const SHORTCUTS = [
             opacity: 0;
             transform: translateY(8px) scale(0.98);
         }
+
+        .kbd-dialog[open]::backdrop {
+            opacity: 0;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .kbd-dialog {
+        .kbd-dialog,
+        .kbd-dialog::backdrop {
             transition: none;
         }
     }
@@ -321,6 +342,14 @@ const SHORTCUTS = [
                 open();
                 hint.classList.remove('is-pulse');
             });
+
+            // Past the hero the pill would sit over body text in the left gutter.
+            const hero = document.querySelector('[data-hero]');
+            if (hero) {
+                new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting)).observe(
+                    hero,
+                );
+            }
 
             // Ping once per session.
             const PULSE_KEY = 'kbd-hint-pulsed';
