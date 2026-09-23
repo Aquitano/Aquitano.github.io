@@ -25,7 +25,12 @@ const splitFigures = (text: string) => text.split(FIGURE);
             <span class="block">{job.type}</span>
         </p>
     </div>
-    <ul class:list={['space-y-2 text-sm leading-relaxed md:text-[0.95rem]', inverted ? 'text-black/70' : 'text-fg/80']}>
+    <ul
+        class:list={[
+            'max-w-lg space-y-2 text-sm leading-relaxed max-lg:order-last md:text-[0.95rem] lg:max-w-none',
+            inverted ? 'text-black/70' : 'text-fg/80',
+        ]}
+    >
         {
             job.highlights.map((h) => (
                 <li>
