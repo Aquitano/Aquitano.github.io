@@ -1,17 +1,24 @@
 ---
 import { site, socials } from '../lib/data';
 import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
+
+const isHome = Astro.url.pathname === '/';
 ---
 
 <footer
     id="contact"
     data-footer
     data-minimap="Contact"
-    class="section-x section-y--major relative overflow-hidden pb-8"
+    class:list={[
+        'section-x relative overflow-hidden pb-8',
+        isHome ? 'section-y--major' : 'section-y--lead border-line border-t',
+    ]}
 >
     <div class="mb-16 md:mb-24">
-        <p data-footer-reveal class="meta mb-6"><span class="text-accent">/05</span> Got an interesting problem?</p>
-        <a href={`mailto:${site.email}`} class="group block">
+        <p data-footer-reveal class="meta mb-6">
+            {isHome && <span class="text-accent">/05 </span>}Got an interesting problem?
+        </p>
+        <a href={`mailto:${site.email}`} class="group block w-fit">
             <span class="block overflow-hidden pb-[0.06em]">
                 <span
                     data-footer-headline
@@ -60,14 +67,17 @@ import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
         </div>
     </div>
 
-    <div data-footer-reveal class="border-line grid gap-px border-y sm:grid-cols-3">
+    <div
+        data-footer-reveal
+        class="border-line divide-line grid divide-y border-y sm:grid-cols-3 sm:divide-y-0 sm:border-x"
+    >
         {
             socials.map((social) => (
                 <a
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="group border-line hover:bg-bg-raise flex items-center justify-between px-1 py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
+                    class="group border-line hover:bg-bg-raise flex items-center justify-between py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
                 >
                     <div>
                         <p class="text-sm font-medium">{social.label}</p>
@@ -81,7 +91,9 @@ import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
         }
     </div>
 
-    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div
+        class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between lg:border-x lg:border-transparent lg:px-5 xl:grid xl:grid-cols-3 xl:gap-0 xl:px-0 *:xl:px-5"
+    >
         <p class="meta">©2026 {site.name} · {site.location}</p>
         {
             buildSha && (
@@ -101,16 +113,14 @@ import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
                     )}
                     {buildDate && (
                         <>
-                            <span aria-hidden="true" class="text-line">
-                                ·
-                            </span>
+                            <span aria-hidden="true">·</span>
                             <span>{buildDate}</span>
                         </>
                     )}
                 </p>
             )
         }
-        <div class="flex items-center gap-8">
+        <div class="flex items-center xl:col-start-3 xl:justify-end">
             <a href="#top" class="link-line touch-target meta text-fg inline-block">Back to top ↑</a>
         </div>
     </div>
