@@ -22,6 +22,7 @@ links:
     - label: GitHub
       href: https://github.com/Aquitano/chill-flow
 accent: '#4fd1c5'
+image: ../../assets/work/chill-flow.webp
 order: 3
 ---
 

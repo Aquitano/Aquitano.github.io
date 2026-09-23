@@ -19,6 +19,7 @@ links:
     - label: GitHub
       href: https://github.com/Aquitano/aqt-sync
 accent: '#5cc8ff'
+image: ../../assets/work/aqt-sync.webp
 order: 1
 ---
 
