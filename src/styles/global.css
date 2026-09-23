@@ -101,7 +101,7 @@ body {
     }
 
     @media (min-width: 1280px) {
-        .section-x {
+        body:has([data-minimap-root]) .section-x {
             --rail: 3rem;
         }
     }

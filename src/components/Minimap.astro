@@ -24,7 +24,9 @@
     const CONTENT_SELECTOR = 'h1,h2,h3,h4,p,li,a,button,.kw,.meta';
 
     const LABEL_CLASS =
-        'absolute right-[calc(100%+0.625rem)] font-mono text-[10px] tracking-[0.14em] whitespace-nowrap uppercase transition-[opacity,color] duration-200 group-hover:opacity-100 focus-visible:opacity-100';
+        'absolute right-[calc(100%+0.625rem)] rounded-sm bg-bg/85 px-1.5 font-mono text-[10px] tracking-[0.14em] whitespace-nowrap uppercase opacity-0 transition-[opacity,color] duration-200 group-hover:opacity-100 focus-visible:opacity-100';
+
+    const LABEL_MIN_GAP = 16;
 
     const init = () => {
         const root = document.querySelector<HTMLElement>('[data-minimap-root]');
@@ -83,10 +85,8 @@
             labels.forEach((btn, i) => {
                 const on = i === activeIdx;
                 btn.classList.toggle('text-fg', on);
-                btn.classList.toggle('opacity-100', on);
                 btn.classList.toggle('text-muted', !on);
                 btn.classList.toggle('hover:text-fg', !on);
-                btn.classList.toggle('opacity-0', !on);
             });
         };
 
@@ -115,13 +115,16 @@
         const buildLabels = () => {
             const scale = track.clientHeight > 0 ? track.clientHeight / pageHeight : 0;
             labelsHost.replaceChildren();
+            let prevTop = -Infinity;
             labels = blocks.map((block) => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = LABEL_CLASS;
                 btn.textContent = block.label;
                 btn.setAttribute('aria-label', `Scroll to ${block.label}`);
-                btn.style.top = `${block.top * scale}px`;
+                const top = Math.max(block.top * scale, prevTop + LABEL_MIN_GAP);
+                prevTop = top;
+                btn.style.top = `${top}px`;
                 btn.addEventListener('click', () => scrollToTarget(block.el));
                 labelsHost.appendChild(btn);
                 return btn;
