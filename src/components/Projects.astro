@@ -28,7 +28,8 @@ const CASCADE = 14;
                         >
                             <a
                                 href={`/work/${entry.id}`}
-                                aria-label={`View case study: ${p.title}`}
+                                tabindex="-1"
+                                aria-hidden="true"
                                 class="absolute inset-0 z-10"
                             />
                             {/* per-project glow */}
@@ -125,13 +126,47 @@ const CASCADE = 14;
 </section>
 
 <script>
-    import { gsap, prefersReducedMotion, supportsHover } from '../lib/gsap';
+    import { gsap, ScrollTrigger, prefersReducedMotion, supportsHover } from '../lib/gsap';
+    import { scrollToTarget } from '../lib/lenis';
 
     const STICKY_TOP = 88;
     const CASCADE = 14;
+    const VIEWPORT_MARGIN = 16;
 
     const root = document.querySelector<HTMLElement>('[data-projects]');
     if (root) {
+        const wrappers = gsap.utils.toArray<HTMLElement>('[data-card-wrapper]');
+
+        // A card taller than the space below its sticky offset would stick with its links below the fold.
+        const stickyTop = (wrapper: HTMLElement, i: number) =>
+            Math.min(STICKY_TOP + i * CASCADE, window.innerHeight - wrapper.offsetHeight - VIEWPORT_MARGIN);
+        const placeCards = () => wrappers.forEach((w, i) => (w.style.top = `${stickyTop(w, i)}px`));
+        placeCards();
+        window.addEventListener('resize', placeCards);
+        new ResizeObserver(() => {
+            placeCards();
+            ScrollTrigger.refresh();
+        }).observe(root);
+
+        const naturalTop = (el: HTMLElement) => {
+            el.style.position = 'static';
+            const top = el.getBoundingClientRect().top + window.scrollY;
+            el.style.position = '';
+            return top;
+        };
+
+        // Returning to the tab re-focuses the last element; that is not a reason to scroll.
+        let focusedAtBlur: Element | null = null;
+        window.addEventListener('blur', () => (focusedAtBlur = document.activeElement));
+
+        root.addEventListener('focusin', (e) => {
+            const restored = e.target === focusedAtBlur;
+            focusedAtBlur = null;
+            if (restored || !(e.target instanceof HTMLElement) || !e.target.matches(':focus-visible')) return;
+            const wrapper = e.target.closest<HTMLElement>('[data-card-wrapper]');
+            if (wrapper) scrollToTarget(naturalTop(wrapper) - parseFloat(wrapper.style.top), { immediate: true });
+        });
+
         if (supportsHover() && !prefersReducedMotion()) {
             for (const card of root.querySelectorAll<HTMLElement>('[data-card]')) {
                 const chip = card.querySelector<HTMLElement>('[data-card-chip]');
@@ -163,7 +198,6 @@ const CASCADE = 14;
         }
 
         if (!prefersReducedMotion()) {
-            const wrappers = gsap.utils.toArray<HTMLElement>('[data-card-wrapper]');
             wrappers.forEach((wrapper, i) => {
                 if (i === wrappers.length - 1) return;
                 const card = wrapper.querySelector('[data-card]');
@@ -171,7 +205,7 @@ const CASCADE = 14;
                 const trigger = {
                     trigger: next,
                     start: 'top bottom',
-                    end: `top top+=${STICKY_TOP + i * CASCADE}`,
+                    end: () => `top ${wrapper.style.top}`,
                     scrub: true,
                 };
                 gsap.to(card, { scale: 0.94, ease: 'none', transformOrigin: 'center top', scrollTrigger: trigger });
