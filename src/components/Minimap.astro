@@ -150,7 +150,7 @@
                 const rect = sectionEl.getBoundingClientRect();
                 nextBlocks.push({
                     label: sectionEl.dataset.minimap ?? '',
-                    top: rect.top + scrollY,
+                    top: rect.top + scrollY + parseFloat(getComputedStyle(sectionEl).paddingTop),
                     height: rect.height,
                     el: sectionEl,
                 });

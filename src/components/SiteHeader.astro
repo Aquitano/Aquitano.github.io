@@ -86,6 +86,9 @@ const NAV = [
             el,
             navId: el.dataset.nav ?? el.id,
         }));
+        // Jumps land a section's content, not its top padding, under the header, so measure from there.
+        const contentTop = (el: HTMLElement) =>
+            el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).paddingTop);
 
         let current: string | undefined;
         let queued = false;
@@ -95,12 +98,12 @@ const NAV = [
             const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
             let id = '';
             for (const { el, navId } of sections) {
-                if (el.getBoundingClientRect().top + window.scrollY <= line) id = navId;
+                if (contentTop(el) + window.scrollY <= line) id = navId;
             }
             // The last sections can't reach the centre line. At the end, honour a jump to one still on screen, else the last.
             if (atEnd) {
                 const jumpedTo = sections.find(
-                    ({ el }) => el.id && `#${el.id}` === location.hash && el.getBoundingClientRect().top >= 0,
+                    ({ el }) => el.id && `#${el.id}` === location.hash && contentTop(el) >= 0,
                 );
                 id = (jumpedTo ?? sections.at(-1))?.navId ?? id;
             }
