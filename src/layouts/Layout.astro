@@ -168,7 +168,15 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <script>
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
+            // Navigating away also hides the page; swapping then would save the joke title into history.
+            let leaving = false;
+            window.addEventListener('pagehide', () => (leaving = true));
+            window.addEventListener('pageshow', () => {
+                leaving = false;
+                document.title = onPageTitle;
+            });
             document.addEventListener('visibilitychange', () => {
+                if (leaving) return;
                 document.title = document.hidden ? '[ still shipping ] — TB' : onPageTitle;
             });
 
