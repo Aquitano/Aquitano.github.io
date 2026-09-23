@@ -1,21 +1,10 @@
 ---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
 import { isExternalHref } from '../lib/links';
 
-interface DetailProject {
-    title: string;
-    wrap?: string[];
-    subtitle: string;
-    year: string;
-    description: string;
-    tags: string[];
-    tasks: string[];
-    links: { label: string; href: string; external?: boolean }[];
-    accent: string;
-    image?: string;
-}
-
 interface Props {
-    project: DetailProject;
+    project: CollectionEntry<'work'>['data'];
     index: number;
     total: number;
     next: { title: string; wrap?: string[]; slug: string; accent: string };
@@ -82,9 +71,11 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                         aria-hidden="true"
                     />
                     <div class="relative aspect-[16/9] w-full">
-                        <img
+                        <Image
                             src={project.image}
                             alt={`${project.title} — ${project.subtitle}`}
+                            widths={[640, 960, 1280, 1600, 2400]}
+                            sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
                             loading="eager"
                             class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover"
                         />
