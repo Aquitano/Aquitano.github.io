@@ -49,19 +49,19 @@ const isHome = Astro.url.pathname === '/';
                     <span
                         data-copy-default
                         aria-hidden="true"
-                        class="border-line group-hover/copy:border-accent/60 group-hover/copy:text-accent rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.12em] uppercase transition-colors duration-200"
+                        class="border-line group-hover/copy:border-accent/60 group-hover/copy:text-accent rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase transition-colors duration-200"
                     >
                         Copy
                     </span>
                     <span
                         data-copy-done
-                        class="pop-in bg-accent hidden rounded-full border border-transparent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.12em] text-black uppercase"
+                        class="pop-in bg-accent hidden rounded-full border border-transparent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.14em] text-black uppercase"
                     >
                         Copied <span aria-hidden="true">✓</span>
                     </span>
                     <span
                         data-copy-fail
-                        class="border-line text-muted hidden rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.12em] uppercase"
+                        class="border-line text-muted hidden rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase"
                     >
                         Copy failed
                     </span>
@@ -80,7 +80,7 @@ const isHome = Astro.url.pathname === '/';
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="group border-line hover:bg-bg-raise flex items-center justify-between py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
+                    class="group border-line hover:bg-bg-raise active:bg-bg-raise flex items-center justify-between py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
                 >
                     <div>
                         <p class="text-sm font-medium">{social.label}</p>
@@ -99,9 +99,11 @@ const isHome = Astro.url.pathname === '/';
     </div>
 
     <div
-        class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between lg:border-x lg:border-transparent lg:px-5 xl:grid xl:grid-cols-3 xl:gap-0 xl:px-0 *:xl:px-5"
+        class="mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5"
     >
-        <p class="meta">©2026 {site.name} · {site.location}</p>
+        <p class="meta">
+            ©2026 {site.name}<span class="max-[359px]:hidden md:max-xl:hidden"> · {site.location}</span>
+        </p>
         {
             buildSha && (
                 <p class="meta flex items-center gap-1.5">
