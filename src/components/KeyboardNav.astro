@@ -155,7 +155,7 @@ const SHORTCUTS = [
 </style>
 
 <script>
-    import { scrollToTarget } from '../lib/lenis';
+    import { scrollToTarget, targetScrollY } from '../lib/lenis';
 
     const dialog = document.querySelector<HTMLDialogElement>('[data-kbd-dialog]');
     const hint = document.querySelector<HTMLElement>('[data-kbd-hint]');
@@ -181,7 +181,7 @@ const SHORTCUTS = [
         };
 
         const currentIndex = () => {
-            const line = window.scrollY + HEADER_OFFSET + 8;
+            const line = targetScrollY() + HEADER_OFFSET + 8;
             let idx = 0;
             tops.forEach((t, i) => {
                 if (t <= line) idx = i;
