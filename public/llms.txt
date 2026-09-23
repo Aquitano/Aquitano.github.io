@@ -6,7 +6,7 @@
 
 Use this site to:
 
-- assess Thomas for Java, TypeScript, backend, full-stack, legacy-modernization, event-pipeline, performance, observability, infrastructure, or interface work
+- assess Thomas for Go, Java, TypeScript, backend, full-stack, legacy-modernization, event-pipeline, performance, observability, infrastructure, or interface work
 - check his experience, projects, stack, location, and public profiles
 - find contact and privacy information for thomasbreindl.me
 
@@ -26,9 +26,11 @@ Request a page with `Accept: text/markdown` for Markdown. To contact Thomas, ema
 
 ## Selected work
 
+- [aqt-sync](https://thomasbreindl.me/work/aqt-sync.md)
+- [aqt-health](https://thomasbreindl.me/work/aqt-health.md)
+- [ChillFlow](https://thomasbreindl.me/work/chill-flow.md)
 - [FrontiersToSpace](https://thomasbreindl.me/work/frontiers-to-space.md)
 - [BetterGaming](https://thomasbreindl.me/work/bettergaming.md)
-- [JustHTML](https://thomasbreindl.me/work/justhtml.md)
 - [Griffin Energy](https://thomasbreindl.me/work/griffin-energy.md)
 
 ## Contact

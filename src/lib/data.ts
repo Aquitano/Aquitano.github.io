@@ -21,26 +21,30 @@ export const socials = [
     },
 ];
 
-const yearsSince = (year: number) => new Date().getFullYear() - year;
-
-export const stats = [
-    { value: yearsSince(2020), suffix: '+', label: 'Years writing JavaScript' },
-    { value: yearsSince(2021), suffix: '+', label: 'Years shipping Java' },
-    { value: 3, suffix: '', label: 'Professional roles' },
-];
-
 export const manifesto =
-    'I build software end to end: migrating decades-old COBOL into modern Java services, designing event pipelines that move millions of messages a day, and crafting interfaces that people actually enjoy using.';
+    'I build software end to end, from an analytics pipeline that handles 100M events a second to Java services rewritten from legacy COBOL and web interfaces I design myself.';
 
 export const experience = [
     {
-        company: 'itestra',
-        role: 'Software Developer',
-        type: 'Intern → Working Student',
-        period: 'Mar - Jul 2025 · Oct 2025 - Present',
+        company: 'Cloudflare',
+        role: 'Software Engineer',
+        type: 'Intern · Analytics & Alerts',
+        period: 'Jul - Sep 2026',
         highlights: [
-            'Reengineered ~21K LOC of legacy COBOL health-insurance logic in Java/Quarkus, migrating batch flows to chunk-oriented Jakarta Batch/JBeret and reducing code size by 40%',
-            'Built an annotation-driven Java library that turns binary COBOL copybook data into typed objects, eliminating repetitive parsing across the codebase',
+            'Shipped a compaction path for an analytics pipeline at 100M events/s that merges aggregates during downstream outages, raising retention from 51% to 77% in controlled outage tests',
+            'Built a reproducible fault-injection harness for the full pipeline in Docker that compares retention, CPU, memory, and throughput with compaction on and off before rollout',
+            "Wrote a Cloudflare Workers reference integration and Grafana dashboard for the pipeline, now the team's canonical implementation and onboarding example",
+        ],
+    },
+    {
+        company: 'itestra',
+        role: 'Software Engineer',
+        type: 'Intern → Working Student',
+        period: 'Mar - Jul 2025 · Oct 2025 - Jun 2026',
+        highlights: [
+            'Rewrote ~31K LOC of legacy COBOL health-insurance logic in Java/Quarkus, moving batch flows to chunk-oriented Jakarta Batch and cutting code size by 40%',
+            'Built an annotation-driven Java library that maps binary COBOL copybook records to typed Java objects, replacing hand-written parsing code across the codebase',
+            'Designed an ID allocation scheme that reserves blocks from database sequences, so parallel batch workers never contend on per-record sequence access',
         ],
     },
     {
@@ -49,8 +53,8 @@ export const experience = [
         type: 'Intern',
         period: 'Aug - Sep 2025',
         highlights: [
-            'Designed an ActiveMQ/JMS pipeline deferring non-critical provider calls off the initial request path, improving response time and downstream load',
-            'Cut production P95 latency by 50% to ~150ms across 1.5M daily events, instrumented with Micrometer/Prometheus and Grafana SLO dashboards',
+            'Moved non-critical provider calls off the request path onto ActiveMQ/JMS, cutting production P95 initial response latency by 50% to ~150ms in a system handling 1.5M events/day',
+            'Added Prometheus metrics and Grafana dashboards for async latency, failures, and per-provider performance',
         ],
     },
     {
@@ -65,10 +69,18 @@ export const experience = [
     },
 ];
 
+const yearsSince = (year: number) => new Date().getFullYear() - year;
+
+export const stats = [
+    { value: yearsSince(2020), suffix: '+', label: 'Years writing JavaScript' },
+    { value: yearsSince(2021), suffix: '+', label: 'Years shipping Java' },
+    { value: experience.length, suffix: '', label: 'Professional roles' },
+];
+
 export const stack = [
     {
         label: 'Backend',
-        items: ['Java', 'Spring Boot', 'Quarkus', 'JPA / Hibernate', 'Node.js', 'Python', 'SQL'],
+        items: ['Go', 'Java', 'Kotlin', 'Quarkus', 'Spring Boot', 'Jakarta Batch', 'ActiveMQ / JMS', 'SQL'],
     },
     {
         label: 'Frontend',
@@ -76,7 +88,16 @@ export const stack = [
     },
     {
         label: 'Infrastructure',
-        items: ['Docker', 'Kubernetes', 'Terraform', 'GitHub Actions', 'Grafana', 'PostgreSQL'],
+        items: [
+            'Docker',
+            'Linux',
+            'GitHub Actions',
+            'Cloudflare Workers',
+            'PostgreSQL',
+            'ClickHouse',
+            'Prometheus',
+            'Grafana',
+        ],
     },
     {
         label: 'Self-Hosted',

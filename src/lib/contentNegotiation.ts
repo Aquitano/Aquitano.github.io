@@ -21,9 +21,11 @@ const VARY = 'Accept, Accept-Encoding';
 
 export const markdownRoutes = new Map<string, string>([
     ['/', '/index.md'],
+    ['/work/aqt-sync', '/work/aqt-sync.md'],
+    ['/work/aqt-health', '/work/aqt-health.md'],
+    ['/work/chill-flow', '/work/chill-flow.md'],
     ['/work/frontiers-to-space', '/work/frontiers-to-space.md'],
     ['/work/bettergaming', '/work/bettergaming.md'],
-    ['/work/justhtml', '/work/justhtml.md'],
     ['/work/griffin-energy', '/work/griffin-energy.md'],
 ]);
 
