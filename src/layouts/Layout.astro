@@ -3,6 +3,7 @@ import { SEO } from 'astro-seo';
 import '@fontsource-variable/archivo/standard.css';
 import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2?url';
 import '@fontsource-variable/geist-mono';
+import geistMonoLatin from '@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import { site, socials } from '../lib/data';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -90,6 +91,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
         <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href={geistMonoLatin} as="font" type="font/woff2" crossorigin />
 
         <meta name="generator" content={Astro.generator} />
         <meta name="theme-color" content="#0a0a0b" />
@@ -190,9 +192,10 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 </html>
 
 <style>
+    /* The noise tile repeats every 160px, so a one-tile overscan and sub-tile jumps give every distinct offset. */
     .grain {
         position: fixed;
-        inset: -30%;
+        inset: -160px;
         z-index: 60;
         pointer-events: none;
         opacity: 0.1;
@@ -207,31 +210,31 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         }
 
         12.5% {
-            transform: translate(-6%, -9%);
+            transform: translate(-60px, -90px);
         }
 
         25% {
-            transform: translate(9%, -3%);
+            transform: translate(90px, -30px);
         }
 
         37.5% {
-            transform: translate(-4%, 7%);
+            transform: translate(-40px, 70px);
         }
 
         50% {
-            transform: translate(7%, 10%);
+            transform: translate(70px, 100px);
         }
 
         62.5% {
-            transform: translate(-10%, 4%);
+            transform: translate(-100px, 40px);
         }
 
         75% {
-            transform: translate(3%, -7%);
+            transform: translate(30px, -70px);
         }
 
         87.5% {
-            transform: translate(-7%, 11%);
+            transform: translate(-70px, 110px);
         }
 
         100% {
