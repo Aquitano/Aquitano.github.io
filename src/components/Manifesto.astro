@@ -27,7 +27,8 @@ import SectionHeading from './SectionHeading.astro';
                             <span class="text-accent">{stat.suffix}</span>
                         </>
                     </p>
-                    <p class="meta mt-3">{stat.label}</p>
+                    {/* Below lg a cell is too narrow for the longest label, so every label breaks to two lines there. */}
+                    <p class="meta mt-3 sm:max-lg:max-w-[12em]">{stat.label}</p>
                 </div>
             ))
         }
