@@ -2,6 +2,8 @@ import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { gsap, ScrollTrigger, prefersReducedMotion } from './gsap';
 
+const JUMP_DURATION = 1.2;
+
 let lenis: Lenis | null = null;
 let destination: number | null = null;
 
@@ -13,7 +15,7 @@ let destination: number | null = null;
 export function initSmoothScroll() {
     if (lenis || prefersReducedMotion()) return;
 
-    const instance = new Lenis({ autoRaf: false, anchors: true });
+    const instance = new Lenis({ autoRaf: false, anchors: { duration: JUMP_DURATION } });
     instance.on('scroll', ScrollTrigger.update);
     instance.on('virtual-scroll', () => (destination = null));
 
@@ -41,7 +43,7 @@ export const targetScrollY = () => destination ?? lenis?.targetScroll ?? window.
 export function scrollToTarget(target: number | HTMLElement, { immediate = false } = {}) {
     if (lenis) {
         destination = typeof target === 'number' ? Math.max(0, Math.min(target, lenis.limit)) : null;
-        lenis.scrollTo(target, { immediate, onComplete: () => (destination = null) });
+        lenis.scrollTo(target, { immediate, duration: JUMP_DURATION, onComplete: () => (destination = null) });
         return;
     }
 
