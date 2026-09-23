@@ -44,12 +44,11 @@ import SectionHeading from './SectionHeading.astro';
                 delay: i * 0.08,
                 scrollTrigger: { trigger: cell, start: 'top 88%', once: true },
             });
-            tl.from(cell, { autoAlpha: 0, y: 28 });
+            tl.from(cell.children, { opacity: 0, y: 32 });
 
             const counter = cell.querySelector<HTMLElement>('[data-count]');
             if (!counter) return;
             const count = { value: 0 };
-            counter.textContent = '00';
             tl.to(
                 count,
                 {

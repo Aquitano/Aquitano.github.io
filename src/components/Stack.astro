@@ -46,8 +46,8 @@ import SectionHeading from './SectionHeading.astro';
 
     const root = document.querySelector<HTMLElement>('[data-stack-section]');
     if (root && !prefersReducedMotion()) {
-        gsap.from('[data-stack-col]', {
-            autoAlpha: 0,
+        gsap.from('[data-stack-col] > *', {
+            opacity: 0,
             y: 32,
             stagger: 0.07,
             scrollTrigger: { trigger: root, start: 'top 80%', once: true },
