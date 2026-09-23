@@ -158,6 +158,12 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <div class="grain" aria-hidden="true"></div>
 
         <script>
+            import { initSmoothScroll } from '../lib/lenis';
+
+            initSmoothScroll();
+        </script>
+
+        <script>
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
             document.addEventListener('visibilitychange', () => {

@@ -26,7 +26,7 @@ links:
       href: https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html
 accent: '#9b8cff'
 image: /images/work/frontiers-to-space.webp
-order: 1
+order: 4
 ---
 
 As part of a geography seminar at the Adalbert Stifter Gymnasium, I developed FrontiersToSpace, a web platform that visualizes measurement data from a stratospheric balloon mission and makes the results accessible to a wider audience.

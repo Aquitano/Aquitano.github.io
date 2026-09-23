@@ -31,13 +31,22 @@
     --ease-in-out-strong: var(--ease-in-out-strong);
 }
 
-html {
+/* Lenis takes over once it boots; this stays for the reduced-motion and no-JS paths. */
+html:not(.lenis) {
     scroll-behavior: smooth;
+}
+
+html {
     background: var(--bg);
 }
 
+/* A stopped Lenis already swallows wheel and touch; clipping overflow as well would hide the scrollbar and shift the page. */
+html.lenis.lenis-stopped:not(.lenis-autoToggle) {
+    overflow: visible;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    html {
+    html:not(.lenis) {
         scroll-behavior: auto;
     }
 }

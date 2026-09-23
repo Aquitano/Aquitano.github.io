@@ -155,6 +155,8 @@ const SHORTCUTS = [
 </style>
 
 <script>
+    import { pauseScroll, resumeScroll, scrollToTarget, targetScrollY } from '../lib/lenis';
+
     const dialog = document.querySelector<HTMLDialogElement>('[data-kbd-dialog]');
     const hint = document.querySelector<HTMLElement>('[data-kbd-hint]');
 
@@ -179,7 +181,7 @@ const SHORTCUTS = [
         };
 
         const currentIndex = () => {
-            const line = window.scrollY + HEADER_OFFSET + 8;
+            const line = targetScrollY() + HEADER_OFFSET + 8;
             let idx = 0;
             tops.forEach((t, i) => {
                 if (t <= line) idx = i;
@@ -189,7 +191,7 @@ const SHORTCUTS = [
 
         const goTo = (i: number) => {
             const j = Math.max(0, Math.min(tops.length - 1, i));
-            window.scrollTo({ top: Math.max(0, tops[j] - HEADER_OFFSET), behavior: reduce() ? 'auto' : 'smooth' });
+            scrollToTarget(tops[j] - HEADER_OFFSET, { immediate: reduce() });
         };
 
         measure();
@@ -205,7 +207,11 @@ const SHORTCUTS = [
         const isTyping = (el: Element | null) =>
             el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
 
-        const open = () => !dialog.open && dialog.showModal();
+        const open = () => {
+            if (dialog.open) return;
+            dialog.showModal();
+            pauseScroll();
+        };
         const close = () => dialog.open && dialog.close();
 
         let lastG = 0;
@@ -244,6 +250,7 @@ const SHORTCUTS = [
         });
 
         dialog.querySelector('[data-kbd-close]')?.addEventListener('click', close);
+        dialog.addEventListener('close', resumeScroll);
         dialog.addEventListener('click', (e) => {
             const r = dialog.getBoundingClientRect();
             const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;

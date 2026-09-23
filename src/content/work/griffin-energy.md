@@ -18,7 +18,7 @@ links:
       external: true
 accent: '#ff7a5c'
 image: /images/work/griffin-energy.webp
-order: 4
+order: 6
 ---
 
 As part of a school project, I created Griffin Energy as a fictional product from scratch, taking it from the brand concept and design to a finished website.

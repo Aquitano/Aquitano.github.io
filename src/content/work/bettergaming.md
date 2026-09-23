@@ -21,7 +21,7 @@ links:
       href: https://github.com/Aquitano/BetterGaming
 accent: '#5ee9b5'
 image: /images/work/bettergaming.webp
-order: 2
+order: 5
 ---
 
 BetterGaming is an e-commerce platform for video games. The application uses server-side PHP and a MySQL database to load and display product data dynamically.

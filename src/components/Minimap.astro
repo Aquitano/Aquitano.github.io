@@ -14,6 +14,8 @@
 </div>
 
 <script>
+    import { scrollToTarget } from '../lib/lenis';
+
     type Block = { label: string; top: number; height: number; el: HTMLElement };
     type Bar = { x: number; y: number; w: number; h: number; section: number; kind: 'bright' | 'dim' };
     type Box = { x: number; y: number; w: number; h: number };
@@ -120,7 +122,7 @@
                 btn.textContent = block.label;
                 btn.setAttribute('aria-label', `Scroll to ${block.label}`);
                 btn.style.top = `${block.top * scale}px`;
-                btn.addEventListener('click', () => block.el.scrollIntoView({ behavior: 'auto' }));
+                btn.addEventListener('click', () => scrollToTarget(block.el));
                 labelsHost.appendChild(btn);
                 return btn;
             });
@@ -183,11 +185,11 @@
 
         const drag = { active: false, moved: false, startY: 0 };
 
-        const scrollToPointer = (clientY: number, behavior: ScrollBehavior) => {
+        const scrollToPointer = (clientY: number, immediate: boolean) => {
             const rect = track.getBoundingClientRect();
             const scale = rect.height / document.documentElement.scrollHeight;
             const target = (clientY - rect.top) / scale - window.innerHeight / 2;
-            window.scrollTo({ top: Math.max(0, target), behavior });
+            scrollToTarget(target, { immediate });
         };
 
         track.addEventListener('pointerdown', (e) => {
@@ -201,11 +203,11 @@
             if (!drag.active) return;
             if (!drag.moved && Math.abs(e.clientY - drag.startY) < 3) return;
             drag.moved = true;
-            scrollToPointer(e.clientY, 'instant');
+            scrollToPointer(e.clientY, true);
         });
         const endDrag = (e: PointerEvent) => {
             if (!drag.active) return;
-            if (!drag.moved) scrollToPointer(e.clientY, 'auto');
+            if (!drag.moved) scrollToPointer(e.clientY, false);
             drag.active = false;
             drag.moved = false;
             drag.startY = 0;
