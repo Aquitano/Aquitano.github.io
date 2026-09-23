@@ -40,6 +40,19 @@ const SHORTCUTS = [
                 ))
             }
         </ul>
+        <div class="border-line mt-5 flex items-center justify-between gap-6 border-t pt-4">
+            <span id="kbd-toggle-label" class="text-fg/85 text-sm">Single-key shortcuts</span>
+            <button
+                data-kbd-toggle
+                type="button"
+                role="switch"
+                aria-checked="true"
+                aria-labelledby="kbd-toggle-label"
+                class="kbd-cap kbd-switch"
+            >
+                <span aria-hidden="true" data-kbd-toggle-text>On</span>
+            </button>
+        </div>
     </div>
 </dialog>
 
@@ -67,6 +80,17 @@ const SHORTCUTS = [
         line-height: 1.4;
         letter-spacing: 0.06em;
         text-align: center;
+    }
+
+    .kbd-switch {
+        transition:
+            color 200ms,
+            border-color 200ms;
+    }
+
+    .kbd-switch[aria-checked='true'] {
+        border-color: color-mix(in oklch, var(--accent) 60%, transparent);
+        color: var(--accent);
     }
 
     .kbd-hint {
@@ -224,9 +248,33 @@ const SHORTCUTS = [
         };
         const close = () => dialog.open && dialog.close();
 
+        const ENABLED_KEY = 'kbd-shortcuts';
+        let enabled = true;
+        try {
+            enabled = localStorage.getItem(ENABLED_KEY) !== 'off';
+        } catch {
+            /* storage blocked */
+        }
+        const toggle = dialog.querySelector<HTMLButtonElement>('[data-kbd-toggle]');
+        const toggleText = toggle?.querySelector<HTMLElement>('[data-kbd-toggle-text]');
+        const renderToggle = () => {
+            toggle?.setAttribute('aria-checked', String(enabled));
+            if (toggleText) toggleText.textContent = enabled ? 'On' : 'Off';
+        };
+        renderToggle();
+        toggle?.addEventListener('click', () => {
+            enabled = !enabled;
+            renderToggle();
+            try {
+                localStorage.setItem(ENABLED_KEY, enabled ? 'on' : 'off');
+            } catch {
+                /* storage blocked */
+            }
+        });
+
         let lastG = 0;
         window.addEventListener('keydown', (e) => {
-            if (e.metaKey || e.ctrlKey || e.altKey || isTyping(document.activeElement)) return;
+            if (!enabled || e.metaKey || e.ctrlKey || e.altKey || isTyping(document.activeElement)) return;
 
             if (e.key === '?') {
                 e.preventDefault();
