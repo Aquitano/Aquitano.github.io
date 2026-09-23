@@ -3,7 +3,12 @@ import { site } from '../lib/data';
 import Magnetic from './Magnetic.astro';
 ---
 
-<section id="top" data-hero data-minimap="Intro" class="relative flex min-h-svh flex-col justify-end overflow-hidden">
+<section
+    id="top"
+    data-hero
+    data-minimap="Intro"
+    class="relative flex min-h-svh flex-col justify-end overflow-hidden pt-20"
+>
     <div class="hero-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <span class="hero-glow"></span>
     </div>
@@ -13,9 +18,9 @@ import Magnetic from './Magnetic.astro';
     <div class="relative z-10 px-5 pb-10 md:px-10 md:pb-14">
         <div data-hero-parallax>
             <p data-hero-fade class="meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1">
-                <span>{site.role} · {site.status}</span>
+                <span class="text-balance">{site.role} · {site.status}</span>
             </p>
-            <h1 class="display text-[clamp(3.6rem,15.5vw,15rem)]">
+            <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),15rem)]">
                 <span class="block overflow-hidden pb-[0.06em]">
                     <span data-hero-line class="split-line block">Thomas</span>
                 </span>
@@ -28,11 +33,11 @@ import Magnetic from './Magnetic.astro';
         <div
             class="border-line mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
         >
-            <p data-hero-fade class="text-muted max-w-md text-base leading-relaxed md:text-lg">
+            <p data-hero-fade class="text-muted max-w-md text-base leading-relaxed md:max-w-sm md:text-lg lg:max-w-md">
                 Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
                 CS in <span class="text-fg">Passau, Germany</span>.
             </p>
-            <div data-hero-fade class="flex flex-wrap items-center gap-3">
+            <div data-hero-fade class="flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap">
                 <Magnetic class="inline-flex">
                     <a
                         href="#work"
