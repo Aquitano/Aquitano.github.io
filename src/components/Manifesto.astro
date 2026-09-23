@@ -40,7 +40,10 @@ import { opticalIndent } from '../lib/displayTitle';
 </section>
 
 <script>
-    import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from '../lib/gsap';
+    import { SplitText } from 'gsap/SplitText';
+    import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
+
+    gsap.registerPlugin(SplitText);
 
     if (!prefersReducedMotion()) {
         gsap.utils.toArray<HTMLElement>('[data-stat]').forEach((cell, i) => {
