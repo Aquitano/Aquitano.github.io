@@ -197,19 +197,25 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 </div>
 
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-detail]');
     if (root && !prefersReducedMotion()) {
+        // Anything already painted on screen stays put rather than blinking out and back in.
+        const offscreen = (els: Element[]) => els.filter((el) => !ScrollTrigger.isInViewport(el));
+
         const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
         if (banner) {
-            gsap.from(banner, {
-                autoAlpha: 0,
-                y: 48,
-                duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
-            });
+            const [frame] = offscreen([...banner.children]);
+            if (frame) {
+                gsap.from(frame, {
+                    opacity: 0,
+                    y: 48,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
+                });
+            }
             gsap.fromTo(
                 banner.querySelector('img'),
                 { yPercent: -6 },
@@ -221,23 +227,16 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             );
         }
 
-        const bodyItems = [
+        const revealItems = offscreen([
             ...root.querySelectorAll('[data-detail-para]'),
             ...root.querySelectorAll('[data-detail-prose] > *'),
-        ];
-        gsap.from(bodyItems, {
-            autoAlpha: 0,
-            y: 32,
-            duration: 0.9,
-            stagger: 0.1,
-            scrollTrigger: { trigger: '[data-detail-body]', start: 'top 82%' },
-        });
-
-        gsap.from('[data-detail-next]', {
-            autoAlpha: 0,
-            y: 40,
-            duration: 0.9,
-            scrollTrigger: { trigger: '[data-detail-next]', start: 'top 88%' },
+            ...root.querySelectorAll('[data-detail-next]'),
+        ]);
+        gsap.set(revealItems, { opacity: 0, y: 32 });
+        ScrollTrigger.batch(revealItems, {
+            start: 'top 88%',
+            once: true,
+            onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }),
         });
     }
 </script>

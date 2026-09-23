@@ -37,26 +37,32 @@ import SectionHeading from './SectionHeading.astro';
 <script>
     import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from '../lib/gsap';
 
-    const reduce = prefersReducedMotion();
+    if (!prefersReducedMotion()) {
+        gsap.utils.toArray<HTMLElement>('[data-stat]').forEach((cell, i) => {
+            const tl = gsap.timeline({
+                delay: i * 0.08,
+                scrollTrigger: { trigger: cell, start: 'top 88%', once: true },
+            });
+            tl.from(cell, { autoAlpha: 0, y: 28 });
 
-    const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
-    for (const el of counters) {
-        const target = Number(el.dataset.count);
-        if (reduce) continue;
-        el.textContent = '00';
-        const obj = { value: 0 };
-        gsap.to(obj, {
-            value: target,
-            duration: 1.4,
-            ease: 'power2.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-            onUpdate: () => {
-                el.textContent = String(Math.round(obj.value)).padStart(2, '0');
-            },
+            const counter = cell.querySelector<HTMLElement>('[data-count]');
+            if (!counter) return;
+            const count = { value: 0 };
+            counter.textContent = '00';
+            tl.to(
+                count,
+                {
+                    value: Number(counter.dataset.count),
+                    duration: 1.4,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        counter.textContent = String(Math.round(count.value)).padStart(2, '0');
+                    },
+                },
+                0,
+            );
         });
-    }
 
-    if (!reduce) {
         document.fonts.ready.then(() => {
             ScrollTrigger.create({
                 trigger: '[data-manifesto]',
@@ -77,13 +83,6 @@ import SectionHeading from './SectionHeading.astro';
                     });
                 },
             });
-        });
-
-        gsap.from('[data-stat]', {
-            autoAlpha: 0,
-            y: 28,
-            stagger: 0.08,
-            scrollTrigger: { trigger: '[data-stats]', start: 'top 88%', once: true },
         });
     }
 </script>
