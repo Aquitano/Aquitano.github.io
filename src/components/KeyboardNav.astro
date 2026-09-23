@@ -20,8 +20,8 @@ const SHORTCUTS = [
             <button
                 data-kbd-close
                 type="button"
-                aria-label="Close"
-                class="meta text-muted hover:text-fg transition-colors duration-200"
+                aria-label="Close (Esc)"
+                class="meta text-muted hover:text-fg -mr-2 rounded-full px-2 transition-colors duration-200"
             >
                 esc
             </button>
@@ -47,7 +47,7 @@ const SHORTCUTS = [
     data-kbd-hint
     type="button"
     aria-label="Show keyboard shortcuts"
-    class="kbd-hint group border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm"
+    class="kbd-hint group border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm pointer-fine:flex"
 >
     <kbd class="kbd-cap">?</kbd>
     <span class="meta group-hover:text-fg transition-colors duration-200">Shortcuts</span>
@@ -71,6 +71,7 @@ const SHORTCUTS = [
 
     .kbd-hint {
         opacity: 0;
+        visibility: hidden;
         transform: translateY(10px);
         pointer-events: none;
         transition:
@@ -82,6 +83,7 @@ const SHORTCUTS = [
 
     .kbd-hint.is-shown {
         opacity: 1;
+        visibility: visible;
         transform: none;
         pointer-events: auto;
     }
@@ -235,6 +237,7 @@ const SHORTCUTS = [
                     goTo(currentIndex() - 1);
                     break;
                 case 'G':
+                    if (!e.shiftKey) break;
                     e.preventDefault();
                     goTo(stops.length - 1);
                     break;
