@@ -159,12 +159,22 @@ const CASCADE = 14;
         let focusedAtBlur: Element | null = null;
         window.addEventListener('blur', () => (focusedAtBlur = document.activeElement));
 
+        // Chrome carries a keyboard scroll that is still animating (PageDown, then a quick Tab) on past any
+        // programmatic jump, so the focused card is held in place until the next input, not aligned once.
+        let heldCard: HTMLElement | null = null;
+        const holdCard = () =>
+            heldCard && scrollToTarget(naturalTop(heldCard) - parseFloat(heldCard.style.top), { immediate: true });
+        window.addEventListener('scroll', holdCard, { passive: true });
+        for (const type of ['keydown', 'wheel', 'pointerdown']) {
+            window.addEventListener(type, () => (heldCard = null), { capture: true, passive: true });
+        }
+
         root.addEventListener('focusin', (e) => {
             const restored = e.target === focusedAtBlur;
             focusedAtBlur = null;
             if (restored || !(e.target instanceof HTMLElement) || !e.target.matches(':focus-visible')) return;
-            const wrapper = e.target.closest<HTMLElement>('[data-card-wrapper]');
-            if (wrapper) scrollToTarget(naturalTop(wrapper) - parseFloat(wrapper.style.top), { immediate: true });
+            heldCard = e.target.closest<HTMLElement>('[data-card-wrapper]');
+            holdCard();
         });
 
         if (supportsHover() && !prefersReducedMotion()) {
