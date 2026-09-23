@@ -16,20 +16,24 @@ import Magnetic from './Magnetic.astro';
     <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent"></div>
 
     <div data-hero-parallax class="section-x relative z-10 pb-10 md:pb-14">
-        <p
-            class="intro-fade meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1"
-            style="--intro-delay: 740ms"
-        >
-            <span class="text-balance">{site.role} · {site.status}</span>
-        </p>
-        <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),15rem)]">
-            <span class="block overflow-hidden pb-[0.06em]">
-                <span class="intro-rise -ml-[0.024em] block" style="--intro-delay: 150ms">Thomas</span>
-            </span>
-            <span class="block overflow-hidden pb-[0.06em]">
-                <span class="intro-rise display-outline -ml-[0.08em] block" style="--intro-delay: 240ms">Breindl</span>
-            </span>
-        </h1>
+        <div data-hero-dim>
+            <p
+                class="intro-fade meta text-fg/70 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1"
+                style="--intro-delay: 740ms"
+            >
+                <span class="text-balance">{site.role} · {site.status}</span>
+            </p>
+            <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),15rem)]">
+                <span class="block overflow-y-clip pb-[0.06em]">
+                    <span class="intro-rise -ml-[0.024em] block" style="--intro-delay: 150ms">Thomas</span>
+                </span>
+                <span class="block overflow-y-clip pb-[0.06em]">
+                    <span class="intro-rise display-outline -ml-[0.08em] block" style="--intro-delay: 240ms"
+                        >Breindl</span
+                    >
+                </span>
+            </h1>
+        </div>
 
         <div
             class="border-line mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between"
@@ -224,11 +228,8 @@ import Magnetic from './Magnetic.astro';
 
     const root = document.querySelector<HTMLElement>('[data-hero]');
     if (root && !prefersReducedMotion()) {
-        gsap.to('[data-hero-parallax]', {
-            yPercent: 9,
-            autoAlpha: 0.4,
-            ease: 'none',
-            scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: true },
-        });
+        const scrub = { trigger: root, start: 'top top', end: 'bottom top', scrub: true };
+        gsap.to('[data-hero-parallax]', { yPercent: 9, ease: 'none', scrollTrigger: scrub });
+        gsap.to('[data-hero-dim]', { autoAlpha: 0.4, ease: 'none', scrollTrigger: scrub });
     }
 </script>
