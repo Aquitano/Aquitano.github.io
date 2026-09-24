@@ -37,7 +37,7 @@
     --ease-in-out-strong: var(--ease-in-out-strong);
 }
 
-/* Fontsource's latin files trimmed to the axis ranges the site uses (90 + 30KB down to 59 + 22KB) with
+/* Fontsource's latin files trimmed to the axis ranges the site uses (90 + 23KB down to 59 + 17KB) with
    `fonttools varLib.instancer`: Archivo to wght=400:800 wdth=100:125, Geist Mono to wght=400:700.
    Same descriptors and unicode-range as fontsource's latin faces, declared after them, so browsers
    check these first and keep fontsource's other subsets as fallbacks. */
