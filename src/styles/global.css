@@ -37,6 +37,33 @@
     --ease-in-out-strong: var(--ease-in-out-strong);
 }
 
+/* Fontsource's latin files trimmed to the axis ranges the site uses (90 + 30KB down to 59 + 22KB) with
+   `fonttools varLib.instancer`: Archivo to wght=400:800 wdth=100:125, Geist Mono to wght=400:700.
+   Same descriptors and unicode-range as fontsource's latin faces, declared after them, so browsers
+   check these first and keep fontsource's other subsets as fallbacks. */
+@font-face {
+    font-family: 'Archivo Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    src: url('../assets/fonts/archivo-latin.woff2') format('woff2-variations');
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+        U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Geist Mono Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url('../assets/fonts/geist-mono-latin.woff2') format('woff2-variations');
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+        U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* No-JS only. ScrollTrigger copies a computed smooth value inline onto <html> after every refresh,
    which would make native focus and anchor scrolls animate alongside Lenis. */
 @media (scripting: none) and (prefers-reduced-motion: no-preference) {
