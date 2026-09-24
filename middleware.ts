@@ -6,5 +6,6 @@ export default function middleware(request: Request): Response {
 }
 
 export const config = {
-    matcher: '/:path*',
+    // Skips any path whose last segment has a dot, so static files never invoke the middleware.
+    matcher: '/((?!.*\\.[^/]*$).*)',
 };

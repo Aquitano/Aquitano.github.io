@@ -1,5 +1,8 @@
 ---
 title: aqt-health
+wrap:
+    - aqt-
+    - health
 subtitle: Health Data Hub
 year: '2026'
 description: 'A single-user health data service in Kotlin and Ktor. It syncs Google Health and Withings over OAuth, normalizes the data into PostgreSQL with idempotent ingestion, and reconciles overlapping readings from different providers into canonical results.'

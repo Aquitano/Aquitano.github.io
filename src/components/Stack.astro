@@ -8,7 +8,7 @@ import SectionHeading from './SectionHeading.astro';
     <div class="border-line bg-line grid grid-cols-2 gap-px overflow-hidden border lg:grid-cols-4">
         {
             stack.map((group) => (
-                <div data-stack-col class="bg-bg p-6 md:p-8">
+                <div data-stack-col class="bg-bg px-5 py-6 md:p-8">
                     <h3 class="meta text-accent mb-5">{group.label}</h3>
                     <ul class="space-y-2">
                         {group.items.map((item) => (
@@ -27,28 +27,28 @@ import SectionHeading from './SectionHeading.astro';
             ))
         }
     </div>
-    <div
-        data-stack-col
-        class="border-line mt-px flex flex-wrap items-center gap-x-8 gap-y-2 border border-t-0 px-6 py-5 md:px-8"
-    >
+    <div data-stack-col class="border-line flex items-baseline gap-x-8 border border-t-0 px-5 py-5 md:px-8">
         <span class="meta">Spoken</span>
-        {
-            languages.map((lang) => (
-                <span class="text-fg/85 font-mono text-xs">
-                    {lang.label} <span class="text-muted">· {lang.level}</span>
-                </span>
-            ))
-        }
+        <div class="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:flex-wrap">
+            {
+                languages.map((lang) => (
+                    <span class="text-fg/85 font-mono text-xs">
+                        {lang.label} <span class="text-muted">· {lang.level}</span>
+                    </span>
+                ))
+            }
+        </div>
     </div>
 </section>
 
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-stack-section]');
-    if (root && !prefersReducedMotion()) {
-        gsap.from('[data-stack-col]', {
-            autoAlpha: 0,
+    const items = offscreen(gsap.utils.toArray<HTMLElement>('[data-stack-col] > *'));
+    if (root && items.length && !prefersReducedMotion()) {
+        gsap.from(items, {
+            opacity: 0,
             y: 32,
             stagger: 0.07,
             scrollTrigger: { trigger: root, start: 'top 80%', once: true },
