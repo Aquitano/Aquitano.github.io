@@ -42,11 +42,12 @@ import SectionHeading from './SectionHeading.astro';
 </section>
 
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-stack-section]');
-    if (root && !prefersReducedMotion()) {
-        gsap.from('[data-stack-col] > *', {
+    const items = offscreen(gsap.utils.toArray<HTMLElement>('[data-stack-col] > *'));
+    if (root && items.length && !prefersReducedMotion()) {
+        gsap.from(items, {
             opacity: 0,
             y: 32,
             stagger: 0.07,

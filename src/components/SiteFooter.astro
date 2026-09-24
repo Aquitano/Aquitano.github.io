@@ -166,25 +166,31 @@ const isHome = Astro.url.pathname === '/';
 </style>
 
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-footer]');
     if (root && !prefersReducedMotion()) {
-        gsap.set('[data-footer-headline]', { y: 0, yPercent: 110 });
-        gsap.to('[data-footer-headline]', {
-            yPercent: 0,
-            duration: 1.1,
-            ease: 'power4.out',
-            scrollTrigger: { trigger: root, start: 'top 75%', once: true },
-        });
+        const [headline] = offscreen(gsap.utils.toArray<HTMLElement>('[data-footer-headline]'));
+        if (headline) {
+            gsap.set(headline, { y: 0, yPercent: 110 });
+            gsap.to(headline, {
+                yPercent: 0,
+                duration: 1.1,
+                ease: 'power4.out',
+                scrollTrigger: { trigger: root, start: 'top 75%', once: true },
+            });
+        }
 
-        gsap.from('[data-footer-reveal]', {
-            opacity: 0,
-            y: 48,
-            duration: 1,
-            stagger: 0.08,
-            scrollTrigger: { trigger: root, start: 'top 75%', once: true },
-        });
+        const reveals = offscreen(gsap.utils.toArray<HTMLElement>('[data-footer-reveal]'));
+        if (reveals.length) {
+            gsap.from(reveals, {
+                opacity: 0,
+                y: 48,
+                duration: 1,
+                stagger: 0.08,
+                scrollTrigger: { trigger: root, start: 'top 75%', once: true },
+            });
+        }
     }
 
     const btn = document.querySelector<HTMLButtonElement>('[data-copy-email]');

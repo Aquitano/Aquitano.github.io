@@ -41,12 +41,12 @@ import { opticalIndent } from '../lib/displayTitle';
 
 <script>
     import { SplitText } from 'gsap/SplitText';
-    import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     gsap.registerPlugin(SplitText);
 
     if (!prefersReducedMotion()) {
-        gsap.utils.toArray<HTMLElement>('[data-stat]').forEach((cell, i) => {
+        offscreen(gsap.utils.toArray<HTMLElement>('[data-stat]')).forEach((cell, i) => {
             const tl = gsap.timeline({
                 delay: i * 0.08,
                 scrollTrigger: { trigger: cell, start: 'top 88%', once: true },

@@ -217,13 +217,10 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 </div>
 
 <script>
-    import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-detail]');
     if (root && !prefersReducedMotion()) {
-        // Anything already painted on screen stays put rather than blinking out and back in.
-        const offscreen = (els: Element[]) => els.filter((el) => !ScrollTrigger.isInViewport(el));
-
         const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
         if (banner) {
             const [frame] = offscreen([...banner.children]);

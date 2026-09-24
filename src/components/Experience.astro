@@ -24,12 +24,11 @@ import SectionHeading from './SectionHeading.astro';
 </section>
 
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-experience]');
     if (root && !prefersReducedMotion()) {
-        const rows = gsap.utils.toArray<HTMLElement>('[data-row]');
-        for (const row of rows) {
+        for (const row of offscreen(gsap.utils.toArray<HTMLElement>('[data-row]'))) {
             gsap.from(row, {
                 opacity: 0,
                 y: 32,
