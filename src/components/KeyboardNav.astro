@@ -60,7 +60,7 @@ const SHORTCUTS = [
     data-kbd-hint
     type="button"
     aria-label="Show keyboard shortcuts"
-    class="kbd-hint group border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm pointer-fine:flex"
+    class="kbd-hint group border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm data-off:flex pointer-fine:flex"
 >
     <kbd class="kbd-cap">?</kbd>
     <span class="meta group-hover:text-fg transition-colors duration-200">Shortcuts</span>
@@ -283,6 +283,8 @@ const SHORTCUTS = [
         const renderToggle = () => {
             toggle?.setAttribute('aria-checked', String(enabled));
             if (toggleText) toggleText.textContent = enabled ? 'On' : 'Off';
+            // With shortcuts off, the pill is the only way back to this switch, so it renders on touch screens too.
+            hint?.toggleAttribute('data-off', !enabled);
         };
         renderToggle();
         toggle?.addEventListener('click', () => {
