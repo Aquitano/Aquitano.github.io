@@ -47,7 +47,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                 {project.subtitle}
             </p>
             <p class="intro-fade meta whitespace-nowrap" style={fadeDelay(2)}>
-                <span class="max-[359px]:hidden">©{project.year} · </span>0{index + 1}/0{total}
+                ©{project.year}<span class="max-[359px]:hidden"> · 0{index + 1}/0{total}</span>
             </p>
         </div>
 
