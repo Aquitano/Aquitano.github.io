@@ -27,21 +27,21 @@ const SHORTCUTS = [
             </button>
         </div>
         <ul class="flex flex-col gap-3.5">
-            {
-                SHORTCUTS.map((s) => (
-                    <li class="flex items-center justify-between gap-6">
-                        <span class="text-fg/85 text-sm">{s.label}</span>
-                        <span class="flex items-center gap-1">
-                            {s.keys.map((k) => (
-                                <kbd class="kbd-cap">{k}</kbd>
-                            ))}
-                        </span>
-                    </li>
-                ))
-            }
+            {SHORTCUTS.map((s) => (
+                <li class="flex items-center justify-between gap-6">
+                    <span class="text-fg/85 text-sm">{s.label}</span>
+                    <span class="flex items-center gap-1">
+                        {s.keys.map((k) => (
+                            <kbd class="kbd-cap">{k}</kbd>
+                        ))}
+                    </span>
+                </li>
+            ))}
         </ul>
         <div class="border-line mt-5 flex items-center justify-between gap-6 border-t pt-4">
-            <span id="kbd-toggle-label" class="text-fg/85 text-sm">Single-key shortcuts</span>
+            <span id="kbd-toggle-label" class="text-fg/85 text-sm">
+                Single-key shortcuts
+            </span>
             <button
                 data-kbd-toggle
                 type="button"
@@ -50,7 +50,9 @@ const SHORTCUTS = [
                 aria-labelledby="kbd-toggle-label"
                 class="kbd-cap kbd-switch"
             >
-                <span aria-hidden="true" data-kbd-toggle-text>On</span>
+                <span aria-hidden="true" data-kbd-toggle-text>
+                    On
+                </span>
             </button>
         </div>
     </div>
