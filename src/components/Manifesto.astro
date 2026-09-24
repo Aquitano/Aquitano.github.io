@@ -19,23 +19,18 @@ import { opticalIndent } from '../lib/displayTitle';
         data-stats
         class="border-line bg-line mt-16 grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3 md:mt-24"
     >
-        {
-            stats.map((stat) => (
-                <div data-stat class="bg-bg p-6 md:p-8">
-                    <p
-                        class="display text-fg leading-display text-5xl tabular-nums md:text-7xl"
-                        style={opticalIndent('0')}
-                    >
-                        <>
-                            <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
-                            <span class="text-accent">{stat.suffix}</span>
-                        </>
-                    </p>
-                    {/* Below lg a cell is too narrow for the longest label, so every label breaks to two lines there. */}
-                    <p class="meta mt-3 sm:max-lg:max-w-[12em]">{stat.label}</p>
-                </div>
-            ))
-        }
+        {stats.map((stat) => (
+            <div data-stat class="bg-bg p-6 md:p-8">
+                <p class="display text-fg leading-display text-5xl tabular-nums md:text-7xl" style={opticalIndent('0')}>
+                    <>
+                        <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
+                        <span class="text-accent">{stat.suffix}</span>
+                    </>
+                </p>
+                {/* Below lg a cell is too narrow for the longest label, so every label breaks to two lines there. */}
+                <p class="meta mt-3 sm:max-lg:max-w-[12em]">{stat.label}</p>
+            </div>
+        ))}
     </div>
 </section>
 
