@@ -161,6 +161,13 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <slot />
         <SiteFooter />
 
+        {/* Browsers follow a URL fragment only after the module scripts run; reloads keep their restored scroll. */}
+        <script is:inline>
+            if (performance.getEntriesByType('navigation')[0]?.type === 'navigate') {
+                document.getElementById(location.hash.slice(1))?.scrollIntoView();
+            }
+        </script>
+
         <div class="grain" aria-hidden="true"></div>
 
         <script>
