@@ -104,14 +104,14 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             <dl class="space-y-8">
                 <div data-detail-para>
                     <dt class="meta mb-2">Scope</dt>
-                    <dd>
+                    <dd class="overflow-hidden">
                         {
-                            /* Each item carries its own separator; the one starting a line is clipped by the list edge. */
+                            /* Each item carries its own separator; pulling the list left clips the one starting each line. */
                         }
-                        <ul class="text-fg/85 flex flex-wrap overflow-hidden font-mono text-sm leading-relaxed">
+                        <ul class="text-fg/85 -ml-6 flex flex-wrap font-mono text-sm leading-relaxed">
                             {
                                 project.tasks.map((task) => (
-                                    <li class="relative -ml-6 pl-6 whitespace-nowrap">
+                                    <li class="relative pl-6 whitespace-nowrap">
                                         <span aria-hidden="true" class="text-muted absolute left-0 w-6 text-center">
                                             ·
                                         </span>
