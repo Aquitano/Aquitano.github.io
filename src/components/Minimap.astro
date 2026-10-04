@@ -1,4 +1,4 @@
-<div data-minimap-root class="group fixed top-1/2 right-4 z-40 hidden w-14 -translate-y-1/2 xl:block">
+<div data-minimap-root class="group invisible fixed top-1/2 right-4 z-40 hidden w-14 -translate-y-1/2 xl:block">
     {/* section labels, created at runtime */}
     <div data-minimap-labels></div>
 
@@ -24,7 +24,9 @@
     const CONTENT_SELECTOR = 'h1,h2,h3,h4,p,li,a,button,.kw,.meta';
 
     const LABEL_CLASS =
-        'absolute right-[calc(100%+0.625rem)] font-mono text-[10px] tracking-[0.14em] whitespace-nowrap uppercase transition-[opacity,color] duration-200 group-hover:opacity-100 focus-visible:opacity-100';
+        'absolute right-[calc(100%+0.625rem)] rounded-sm bg-bg/85 px-1.5 font-mono text-[10px] tracking-[0.14em] whitespace-nowrap uppercase opacity-0 transition-[opacity,color] duration-200 group-hover:opacity-100 focus-visible:opacity-100';
+
+    const LABEL_MIN_GAP = 16;
 
     const init = () => {
         const root = document.querySelector<HTMLElement>('[data-minimap-root]');
@@ -83,10 +85,8 @@
             labels.forEach((btn, i) => {
                 const on = i === activeIdx;
                 btn.classList.toggle('text-fg', on);
-                btn.classList.toggle('opacity-100', on);
                 btn.classList.toggle('text-muted', !on);
                 btn.classList.toggle('hover:text-fg', !on);
-                btn.classList.toggle('opacity-0', !on);
             });
         };
 
@@ -115,14 +115,21 @@
         const buildLabels = () => {
             const scale = track.clientHeight > 0 ? track.clientHeight / pageHeight : 0;
             labelsHost.replaceChildren();
+            let prevTop = -Infinity;
             labels = blocks.map((block) => {
                 const btn = document.createElement('button');
                 btn.type = 'button';
                 btn.className = LABEL_CLASS;
                 btn.textContent = block.label;
                 btn.setAttribute('aria-label', `Scroll to ${block.label}`);
-                btn.style.top = `${block.top * scale}px`;
-                btn.addEventListener('click', () => scrollToTarget(block.el));
+                const top = Math.max(block.top * scale, prevTop + LABEL_MIN_GAP);
+                prevTop = top;
+                btn.style.top = `${top}px`;
+                btn.addEventListener('click', () => {
+                    scrollToTarget(block.el);
+                    if (!block.el.hasAttribute('tabindex')) block.el.setAttribute('tabindex', '-1');
+                    block.el.focus({ preventScroll: true });
+                });
                 labelsHost.appendChild(btn);
                 return btn;
             });
@@ -143,7 +150,7 @@
                 const rect = sectionEl.getBoundingClientRect();
                 nextBlocks.push({
                     label: sectionEl.dataset.minimap ?? '',
-                    top: rect.top + scrollY,
+                    top: rect.top + scrollY + parseFloat(getComputedStyle(sectionEl).paddingTop),
                     height: rect.height,
                     el: sectionEl,
                 });
@@ -216,6 +223,7 @@
         track.addEventListener('pointercancel', endDrag);
 
         measure();
+        root.classList.remove('invisible');
         let measureRaf = 0;
         const scheduleMeasure = () => {
             cancelAnimationFrame(measureRaf);

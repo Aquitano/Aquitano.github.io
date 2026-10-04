@@ -20,8 +20,8 @@ const SHORTCUTS = [
             <button
                 data-kbd-close
                 type="button"
-                aria-label="Close"
-                class="meta text-muted hover:text-fg transition-colors duration-200"
+                aria-label="Close (Esc)"
+                class="meta text-muted hover:text-fg -mr-2 rounded-full px-2 transition-colors duration-200"
             >
                 esc
             </button>
@@ -40,6 +40,19 @@ const SHORTCUTS = [
                 ))
             }
         </ul>
+        <div class="border-line mt-5 flex items-center justify-between gap-6 border-t pt-4">
+            <span id="kbd-toggle-label" class="text-fg/85 text-sm">Single-key shortcuts</span>
+            <button
+                data-kbd-toggle
+                type="button"
+                role="switch"
+                aria-checked="true"
+                aria-labelledby="kbd-toggle-label"
+                class="kbd-cap kbd-switch"
+            >
+                <span aria-hidden="true" data-kbd-toggle-text>On</span>
+            </button>
+        </div>
     </div>
 </dialog>
 
@@ -47,10 +60,10 @@ const SHORTCUTS = [
     data-kbd-hint
     type="button"
     aria-label="Show keyboard shortcuts"
-    class="kbd-hint border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm"
+    class="kbd-hint group border-line bg-bg-raise/80 text-muted hover:text-fg hover:border-fg/25 fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-sm data-off:flex pointer-fine:flex"
 >
     <kbd class="kbd-cap">?</kbd>
-    <span class="meta">Shortcuts</span>
+    <span class="meta group-hover:text-fg transition-colors duration-200">Shortcuts</span>
 </button>
 
 <style>
@@ -69,21 +82,41 @@ const SHORTCUTS = [
         text-align: center;
     }
 
+    .kbd-switch {
+        transition:
+            color 200ms,
+            border-color 200ms;
+    }
+
+    .kbd-switch[aria-checked='true'] {
+        border-color: color-mix(in oklch, var(--accent) 60%, transparent);
+        color: var(--accent);
+    }
+
     .kbd-hint {
         opacity: 0;
+        visibility: hidden;
         transform: translateY(10px);
         pointer-events: none;
         transition:
             opacity 450ms var(--ease-out-strong),
             transform 450ms var(--ease-out-strong),
+            visibility 450ms,
             color 200ms,
             border-color 200ms;
     }
 
     .kbd-hint.is-shown {
         opacity: 1;
+        visibility: visible;
         transform: none;
         pointer-events: auto;
+    }
+
+    .kbd-hint.is-away:not(:focus-visible) {
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
     }
 
     .kbd-hint::after {
@@ -122,20 +155,28 @@ const SHORTCUTS = [
         }
     }
 
+    .kbd-dialog,
     .kbd-dialog::backdrop {
-        background: color-mix(in oklch, #0a0a0b 68%, transparent);
-        backdrop-filter: blur(2px);
+        transition:
+            opacity 240ms var(--ease-out-strong),
+            transform 240ms var(--ease-out-strong),
+            overlay 240ms allow-discrete,
+            display 240ms allow-discrete;
     }
 
     .kbd-dialog {
         opacity: 0;
         transform: translateY(8px) scale(0.98);
-        transition:
-            opacity 240ms var(--ease-out-strong),
-            transform 240ms var(--ease-out-strong);
     }
 
-    .kbd-dialog[open] {
+    .kbd-dialog::backdrop {
+        opacity: 0;
+        background: color-mix(in oklch, #0a0a0b 68%, transparent);
+        backdrop-filter: blur(2px);
+    }
+
+    .kbd-dialog[open],
+    .kbd-dialog[open]::backdrop {
         opacity: 1;
         transform: none;
     }
@@ -145,10 +186,15 @@ const SHORTCUTS = [
             opacity: 0;
             transform: translateY(8px) scale(0.98);
         }
+
+        .kbd-dialog[open]::backdrop {
+            opacity: 0;
+        }
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .kbd-dialog {
+        .kbd-dialog,
+        .kbd-dialog::backdrop {
             transition: none;
         }
     }
@@ -171,27 +217,38 @@ const SHORTCUTS = [
         const HEADER_OFFSET = 88;
 
         const wrappers = stops.filter((s) => s.hasAttribute('data-card-wrapper'));
-        let tops: number[] = [];
+        let targets: number[] = [];
+
+        // Land each stop where an anchor jump would: cards at their sticky offset, sections by their scroll margin.
+        const offsetOf = (el: HTMLElement) => {
+            const offset = parseFloat(
+                el.hasAttribute('data-card-wrapper') ? el.style.top : getComputedStyle(el).scrollMarginTop,
+            );
+            return Number.isNaN(offset) ? HEADER_OFFSET : offset;
+        };
 
         const measure = () => {
             const saved = wrappers.map((w) => w.style.position);
             for (const w of wrappers) w.style.position = 'static';
-            tops = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY));
+            targets = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el)));
             wrappers.forEach((w, i) => (w.style.position = saved[i]));
         };
 
         const currentIndex = () => {
-            const line = targetScrollY() + HEADER_OFFSET + 8;
+            const line = targetScrollY() + 8;
             let idx = 0;
-            tops.forEach((t, i) => {
+            targets.forEach((t, i) => {
                 if (t <= line) idx = i;
             });
             return idx;
         };
 
         const goTo = (i: number) => {
-            const j = Math.max(0, Math.min(tops.length - 1, i));
-            scrollToTarget(tops[j] - HEADER_OFFSET, { immediate: reduce() });
+            const j = Math.max(0, Math.min(targets.length - 1, i));
+            const stop = stops[j];
+            scrollToTarget(targets[j], { immediate: reduce() });
+            if (!stop.hasAttribute('tabindex')) stop.setAttribute('tabindex', '-1');
+            stop.focus({ preventScroll: true });
         };
 
         measure();
@@ -214,9 +271,35 @@ const SHORTCUTS = [
         };
         const close = () => dialog.open && dialog.close();
 
+        const ENABLED_KEY = 'kbd-shortcuts';
+        let enabled = true;
+        try {
+            enabled = localStorage.getItem(ENABLED_KEY) !== 'off';
+        } catch {
+            /* storage blocked */
+        }
+        const toggle = dialog.querySelector<HTMLButtonElement>('[data-kbd-toggle]');
+        const toggleText = toggle?.querySelector<HTMLElement>('[data-kbd-toggle-text]');
+        const renderToggle = () => {
+            toggle?.setAttribute('aria-checked', String(enabled));
+            if (toggleText) toggleText.textContent = enabled ? 'On' : 'Off';
+            // With shortcuts off, the pill is the only way back to this switch, so it renders on touch screens too.
+            hint?.toggleAttribute('data-off', !enabled);
+        };
+        renderToggle();
+        toggle?.addEventListener('click', () => {
+            enabled = !enabled;
+            renderToggle();
+            try {
+                localStorage.setItem(ENABLED_KEY, enabled ? 'on' : 'off');
+            } catch {
+                /* storage blocked */
+            }
+        });
+
         let lastG = 0;
         window.addEventListener('keydown', (e) => {
-            if (e.metaKey || e.ctrlKey || e.altKey || isTyping(document.activeElement)) return;
+            if (!enabled || e.metaKey || e.ctrlKey || e.altKey || isTyping(document.activeElement)) return;
 
             if (e.key === '?') {
                 e.preventDefault();
@@ -235,6 +318,7 @@ const SHORTCUTS = [
                     goTo(currentIndex() - 1);
                     break;
                 case 'G':
+                    if (!e.shiftKey) break;
                     e.preventDefault();
                     goTo(stops.length - 1);
                     break;
@@ -251,17 +335,34 @@ const SHORTCUTS = [
 
         dialog.querySelector('[data-kbd-close]')?.addEventListener('click', close);
         dialog.addEventListener('close', resumeScroll);
+        // The panel fills the dialog box, so only a backdrop click targets the dialog itself.
         dialog.addEventListener('click', (e) => {
-            const r = dialog.getBoundingClientRect();
-            const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-            if (!inside) close();
+            if (e.target === dialog) close();
         });
+
+        // Lenis stops wheel and touch behind the dialog; keys and the no-Lenis path need their own guard.
+        const SCROLL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
+        dialog.addEventListener('keydown', (e) => {
+            const activatesButton = e.key === ' ' && e.target instanceof HTMLButtonElement;
+            if (SCROLL_KEYS.has(e.key) && !activatesButton) e.preventDefault();
+        });
+        for (const type of ['wheel', 'touchmove']) {
+            dialog.addEventListener(type, (e) => e.preventDefault(), { passive: false });
+        }
 
         if (hint) {
             hint.addEventListener('click', () => {
                 open();
                 hint.classList.remove('is-pulse');
             });
+
+            // Past the hero the pill would sit over body text in the left gutter.
+            const hero = document.querySelector('[data-hero]');
+            if (hero) {
+                new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting)).observe(
+                    hero,
+                );
+            }
 
             // Ping once per session.
             const PULSE_KEY = 'kbd-hint-pulsed';

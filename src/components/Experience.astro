@@ -4,14 +4,17 @@ import ExperienceRow from './ExperienceRow.astro';
 import SectionHeading from './SectionHeading.astro';
 ---
 
-<section data-experience data-minimap="Experience" class="section-x section-y">
+<section data-experience data-minimap="Experience" data-nav="about" class="section-x section-y">
     <SectionHeading index="02" title="Experience" />
     <div>
         {
             experience.map((job, i) => (
                 <div data-row class="invert-row border-line relative border-b first:border-t">
                     <ExperienceRow job={job} index={i} />
-                    <div class="invert-layer bg-accent absolute inset-0 overflow-hidden text-black" aria-hidden="true">
+                    <div
+                        class="invert-layer bg-accent absolute -inset-x-4 -inset-y-px overflow-hidden px-4 py-px text-black"
+                        aria-hidden="true"
+                    >
                         <ExperienceRow job={job} index={i} inverted />
                     </div>
                 </div>
@@ -21,15 +24,14 @@ import SectionHeading from './SectionHeading.astro';
 </section>
 
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-experience]');
     if (root && !prefersReducedMotion()) {
-        const rows = gsap.utils.toArray<HTMLElement>('[data-row]');
-        for (const row of rows) {
+        for (const row of offscreen(gsap.utils.toArray<HTMLElement>('[data-row]'))) {
             gsap.from(row, {
-                autoAlpha: 0,
-                y: 36,
+                opacity: 0,
+                y: 32,
                 duration: 0.9,
                 scrollTrigger: { trigger: row, start: 'top 88%', once: true },
             });

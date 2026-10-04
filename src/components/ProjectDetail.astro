@@ -1,29 +1,25 @@
 ---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
 import { isExternalHref } from '../lib/links';
-
-interface DetailProject {
-    title: string;
-    wrap?: string[];
-    subtitle: string;
-    year: string;
-    description: string;
-    tags: string[];
-    tasks: string[];
-    links: { label: string; href: string; external?: boolean }[];
-    accent: string;
-    image?: string;
-}
+import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
-    project: DetailProject;
+    project: CollectionEntry<'work'>['data'];
     index: number;
     total: number;
     next: { title: string; wrap?: string[]; slug: string; accent: string };
 }
 
 const { project, index, total, next } = Astro.props;
-const titleLines = project.wrap ?? [project.title];
-const nextLines = next.wrap ?? [next.title];
+const title = displayTitle(project.title, project.wrap);
+const nextTitle = displayTitle(next.title, next.wrap);
+const opensNewTab = (link: (typeof project.links)[number]) => link.external || isExternalHref(link.href);
+
+const LINE_STAGGER = 80;
+const FADE_STAGGER = 60;
+const fadeStart = 700 + (title.lines.length - 1) * LINE_STAGGER;
+const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
 ---
 
 <div id="top" data-detail class="relative overflow-x-clip">
@@ -36,34 +32,43 @@ const nextLines = next.wrap ?? [next.title];
     </div>
 
     <header class="section-x relative pt-28 pb-12 md:pt-40 md:pb-16">
-        <div data-detail-fade>
-            <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">← All Work</a>
+        <div class="intro-fade" style={fadeDelay(0)}>
+            <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">
+                <span aria-hidden="true">←</span> All Work
+            </a>
         </div>
 
         <div class="mt-10 flex items-baseline justify-between gap-4 md:mt-14">
-            <p data-detail-fade class="meta flex items-center gap-2">
+            <p class="intro-fade meta flex items-baseline gap-2" style={fadeDelay(1)}>
                 <span
-                    class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
+                    class="inline-block h-1.5 w-1.5 shrink-0 self-center rounded-full"
                     style={`background: ${project.accent}`}
                     aria-hidden="true"></span>
                 {project.subtitle}
             </p>
-            <p data-detail-fade class="meta">©{project.year} · 0{index + 1}/0{total}</p>
+            <p class="intro-fade meta whitespace-nowrap" style={fadeDelay(2)}>
+                ©{project.year}<span class="max-[359px]:hidden"> · 0{index + 1}/0{total}</span>
+            </p>
         </div>
 
-        <h1 class="display mt-4 text-[clamp(2.8rem,11vw,10.5rem)]">
+        <h1 class="display mt-4 text-[clamp(2.25rem,11.5vw,11rem)]">
             {
-                titleLines.map((line) => (
-                    <span class="block overflow-hidden pb-[0.06em]">
-                        <span data-detail-line class="block">
-                            {line}
+                title.lines.map((words, i) => (
+                    <span class="block overflow-y-clip pb-[0.06em]">
+                        <span
+                            class="intro-rise block"
+                            style={`--intro-delay: ${100 + i * LINE_STAGGER}ms; ${opticalIndent(words[0].text)}`}
+                        >
+                            {words.map(({ text, outline }) => (
+                                <span class:list={{ 'display-outline': outline }}>{text}</span>
+                            ))}
                         </span>
                     </span>
                 ))
             }
         </h1>
 
-        <p data-detail-fade class="text-muted mt-8 max-w-3xl text-base leading-relaxed md:text-xl">
+        <p class="intro-fade text-muted mt-8 max-w-2xl text-base leading-relaxed md:text-xl" style={fadeDelay(3)}>
             {project.description}
         </p>
     </header>
@@ -77,9 +82,11 @@ const nextLines = next.wrap ?? [next.title];
                         aria-hidden="true"
                     />
                     <div class="relative aspect-[16/9] w-full">
-                        <img
+                        <Image
                             src={project.image}
                             alt={`${project.title} — ${project.subtitle}`}
+                            widths={[640, 960, 1280, 1600, 2400]}
+                            sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
                             loading="eager"
                             class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover"
                         />
@@ -91,17 +98,29 @@ const nextLines = next.wrap ?? [next.title];
 
     <div
         data-detail-body
-        class="border-line section-x relative grid gap-12 border-t py-16 md:grid-cols-[minmax(16rem,1fr)_2fr] md:gap-20 md:py-24"
+        class="border-line section-x relative grid gap-12 border-t py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-8"
     >
-        <aside class="md:sticky md:top-28 md:self-start">
+        <aside class="lg:sticky lg:top-28 lg:self-start">
             <dl class="space-y-8">
                 <div data-detail-para>
-                    <dt class="meta mb-2">Year</dt>
-                    <dd class="text-fg/85 font-mono text-sm">{project.year}</dd>
-                </div>
-                <div data-detail-para>
                     <dt class="meta mb-2">Scope</dt>
-                    <dd class="text-fg/85 font-mono text-sm leading-relaxed">{project.tasks.join(' · ')}</dd>
+                    <dd class="overflow-hidden">
+                        {
+                            /* Each item carries its own separator; pulling the list left clips the one starting each line. */
+                        }
+                        <ul class="text-fg/85 -ml-6 flex flex-wrap font-mono text-sm leading-relaxed">
+                            {
+                                project.tasks.map((task) => (
+                                    <li class="relative pl-6 whitespace-nowrap">
+                                        <span aria-hidden="true" class="text-muted absolute left-0 w-6 text-center">
+                                            ·
+                                        </span>
+                                        {task}
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </dd>
                 </div>
                 <div data-detail-para>
                     <dt class="meta mb-3">Stack</dt>
@@ -109,7 +128,7 @@ const nextLines = next.wrap ?? [next.title];
                         <ul class="flex flex-wrap gap-2">
                             {
                                 project.tags.map((tag) => (
-                                    <li class="border-line text-fg/70 hover:border-accent/60 hover:text-accent ease-out-strong rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.12em] uppercase transition-all duration-300 hover:-translate-y-0.5">
+                                    <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
                                         {tag}
                                     </li>
                                 ))
@@ -121,19 +140,16 @@ const nextLines = next.wrap ?? [next.title];
                     project.links.length > 0 && (
                         <div data-detail-para>
                             <dt class="meta mb-3">Links</dt>
-                            <dd class="flex flex-col items-start gap-3">
+                            <dd class="flex flex-col items-start gap-3 pointer-coarse:gap-7">
                                 {project.links.map((link) => (
                                     <a
                                         href={link.href}
-                                        target={link.external || isExternalHref(link.href) ? '_blank' : undefined}
-                                        rel={
-                                            link.external || isExternalHref(link.href)
-                                                ? 'noopener noreferrer'
-                                                : undefined
-                                        }
+                                        target={opensNewTab(link) ? '_blank' : undefined}
+                                        rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
                                         class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
                                     >
-                                        {link.label} ↗
+                                        {link.label} <span aria-hidden="true">↗</span>
+                                        {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
                                     </a>
                                 ))}
                             </dd>
@@ -145,7 +161,7 @@ const nextLines = next.wrap ?? [next.title];
 
         <div
             data-detail-prose
-            class="[&>p]:text-fg/85 max-w-3xl space-y-6 [&>p]:text-base [&>p]:leading-relaxed md:[&>p]:text-lg"
+            class="[&>p]:text-fg/85 [&_code]:bg-bg-raise [&_code]:border-line max-w-xl space-y-6 [&_code]:rounded [&_code]:border [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.85em] [&>p]:text-base [&>p]:leading-relaxed md:[&>p]:text-lg"
         >
             <slot />
         </div>
@@ -154,80 +170,69 @@ const nextLines = next.wrap ?? [next.title];
     <a
         href={`/work/${next.slug}`}
         data-detail-next
-        class="group border-line section-x relative block overflow-hidden border-t py-16 md:py-24"
+        class="group border-line section-x relative block overflow-hidden border-t py-16 focus-visible:-outline-offset-4 md:py-24"
     >
         <div
-            class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12]"
+            class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12] group-focus-visible:opacity-[0.12]"
             style={`background: ${next.accent}`}
             aria-hidden="true"
         >
         </div>
         <p class="meta relative mb-4">Next Project</p>
         <p
-            class="display group-hover:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300"
+            class="display group-hover:text-accent group-focus-visible:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300"
         >
             {
-                nextLines.map((part, j) => {
-                    if (j < nextLines.length - 1) {
-                        return (
-                            <Fragment>
-                                {part}
-                                <wbr />
-                            </Fragment>
-                        );
-                    }
-                    // Keep the arrow on the same line as the final title segment so it never wraps alone.
-                    return (
-                        <span class="whitespace-nowrap">
-                            {part}
-                            <span class="display-outline ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]">
-                                →
-                            </span>
-                        </span>
-                    );
-                })
+                nextTitle.lines.map((words, j) => (
+                    <Fragment>
+                        {j > 0 && (nextTitle.joiner || <wbr />)}
+                        {words.map(({ text, outline }, k) => {
+                            const word = (
+                                <span
+                                    class:list={{ 'display-outline': outline }}
+                                    style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
+                                >
+                                    {text}
+                                </span>
+                            );
+                            if (j < nextTitle.lines.length - 1 || k < words.length - 1) return word;
+                            // Bind only the last word to the arrow so a long title can still wrap.
+                            return (
+                                <span class="whitespace-nowrap">
+                                    {word}
+                                    <span
+                                        aria-hidden="true"
+                                        class="ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
+                                    >
+                                        →
+                                    </span>
+                                </span>
+                            );
+                        })}
+                    </Fragment>
+                ))
             }
         </p>
     </a>
 </div>
 
-{/* Pre-hide intro elements so they don't flash before the timeline runs (motion users only) */}
-<style>
-    @media (prefers-reduced-motion: no-preference) {
-        :global(html.js) [data-detail-line] {
-            transform: translateY(110%);
-        }
-        :global(html.js) [data-detail-fade] {
-            opacity: 0;
-        }
-    }
-</style>
-
 <script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
+    import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-detail]');
     if (root && !prefersReducedMotion()) {
-        gsap.set('[data-detail-line]', { y: 0, yPercent: 110 });
-        gsap.set('[data-detail-fade]', { autoAlpha: 0, y: 24 });
-
-        const tl = gsap.timeline({ delay: 0.1 });
-        tl.to('[data-detail-line]', {
-            yPercent: 0,
-            duration: 1.1,
-            ease: 'power4.out',
-            stagger: 0.08,
-        }).to('[data-detail-fade]', { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.06 }, '-=0.6');
-
         const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
         if (banner) {
-            gsap.from(banner, {
-                autoAlpha: 0,
-                y: 48,
-                duration: 1,
-                ease: 'power3.out',
-                scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
-            });
+            const [frame] = offscreen([...banner.children]);
+            if (frame) {
+                gsap.from(frame, {
+                    opacity: 0,
+                    y: 48,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
+                });
+            }
             gsap.fromTo(
                 banner.querySelector('img'),
                 { yPercent: -6 },
@@ -239,23 +244,16 @@ const nextLines = next.wrap ?? [next.title];
             );
         }
 
-        const bodyItems = [
+        const revealItems = offscreen([
             ...root.querySelectorAll('[data-detail-para]'),
             ...root.querySelectorAll('[data-detail-prose] > *'),
-        ];
-        gsap.from(bodyItems, {
-            autoAlpha: 0,
-            y: 32,
-            duration: 0.9,
-            stagger: 0.1,
-            scrollTrigger: { trigger: '[data-detail-body]', start: 'top 82%' },
-        });
-
-        gsap.from('[data-detail-next]', {
-            autoAlpha: 0,
-            y: 40,
-            duration: 0.9,
-            scrollTrigger: { trigger: '[data-detail-next]', start: 'top 88%' },
+            ...root.querySelectorAll('[data-detail-next]'),
+        ]);
+        gsap.set(revealItems, { opacity: 0, y: 32 });
+        ScrollTrigger.batch(revealItems, {
+            start: 'top 88%',
+            once: true,
+            onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }),
         });
     }
 </script>

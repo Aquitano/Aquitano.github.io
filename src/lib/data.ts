@@ -29,7 +29,7 @@ export const experience = [
         company: 'Cloudflare',
         role: 'Software Engineer',
         type: 'Intern · Analytics & Alerts',
-        period: 'Jul - Sep 2026',
+        period: ['Jul - Sep 2026'],
         highlights: [
             'Shipped a compaction path for an analytics pipeline at 100M events/s that merges aggregates during downstream outages, raising retention from 51% to 77% in controlled outage tests',
             'Built a reproducible fault-injection harness for the full pipeline in Docker that compares retention, CPU, memory, and throughput with compaction on and off before rollout',
@@ -40,7 +40,7 @@ export const experience = [
         company: 'itestra',
         role: 'Software Engineer',
         type: 'Intern → Working Student',
-        period: 'Mar - Jul 2025 · Oct 2025 - Jun 2026',
+        period: ['Mar - Jul 2025', 'Oct 2025 - Jun 2026'],
         highlights: [
             'Rewrote ~31K LOC of legacy COBOL health-insurance logic in Java/Quarkus, moving batch flows to chunk-oriented Jakarta Batch and cutting code size by 40%',
             'Built an annotation-driven Java library that maps binary COBOL copybook records to typed Java objects, replacing hand-written parsing code across the codebase',
@@ -51,7 +51,7 @@ export const experience = [
         company: 'CHECK24',
         role: 'Software Engineer',
         type: 'Intern',
-        period: 'Aug - Sep 2025',
+        period: ['Aug - Sep 2025'],
         highlights: [
             'Moved non-critical provider calls off the request path onto ActiveMQ/JMS, cutting production P95 initial response latency by 50% to ~150ms in a system handling 1.5M events/day',
             'Added Prometheus metrics and Grafana dashboards for async latency, failures, and per-provider performance',
@@ -61,7 +61,7 @@ export const experience = [
         company: '4process',
         role: 'Software Developer',
         type: 'Intern',
-        period: 'Jul - Aug 2024',
+        period: ['Jul - Aug 2024'],
         highlights: [
             'Built an internal idea database with SAP Fiori Elements to streamline proposal and workflow management',
             'Developed a Java tool for SAP Sales Cloud exporting HTML records to Excel, validating >5K bulk edits per second before applying',

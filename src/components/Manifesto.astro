@@ -1,6 +1,7 @@
 ---
 import { manifesto, stats } from '../lib/data';
 import SectionHeading from './SectionHeading.astro';
+import { opticalIndent } from '../lib/displayTitle';
 ---
 
 <section id="about" data-manifesto-section data-minimap="About" class="section-x section-y section-y--lead">
@@ -21,13 +22,17 @@ import SectionHeading from './SectionHeading.astro';
         {
             stats.map((stat) => (
                 <div data-stat class="bg-bg p-6 md:p-8">
-                    <p class="display text-fg text-5xl md:text-7xl">
+                    <p
+                        class="display text-fg leading-display text-5xl tabular-nums md:text-7xl"
+                        style={opticalIndent('0')}
+                    >
                         <>
                             <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
                             <span class="text-accent">{stat.suffix}</span>
                         </>
                     </p>
-                    <p class="meta mt-3">{stat.label}</p>
+                    {/* Below lg a cell is too narrow for the longest label, so every label breaks to two lines there. */}
+                    <p class="meta mt-3 sm:max-lg:max-w-[12em]">{stat.label}</p>
                 </div>
             ))
         }
@@ -35,28 +40,36 @@ import SectionHeading from './SectionHeading.astro';
 </section>
 
 <script>
-    import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from '../lib/gsap';
+    import { SplitText } from 'gsap/SplitText';
+    import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
 
-    const reduce = prefersReducedMotion();
+    gsap.registerPlugin(SplitText);
 
-    const counters = gsap.utils.toArray<HTMLElement>('[data-count]');
-    for (const el of counters) {
-        const target = Number(el.dataset.count);
-        if (reduce) continue;
-        el.textContent = '00';
-        const obj = { value: 0 };
-        gsap.to(obj, {
-            value: target,
-            duration: 1.4,
-            ease: 'power2.out',
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-            onUpdate: () => {
-                el.textContent = String(Math.round(obj.value)).padStart(2, '0');
-            },
+    if (!prefersReducedMotion()) {
+        offscreen(gsap.utils.toArray<HTMLElement>('[data-stat]')).forEach((cell, i) => {
+            const tl = gsap.timeline({
+                delay: i * 0.08,
+                scrollTrigger: { trigger: cell, start: 'top 88%', once: true },
+            });
+            tl.from(cell.children, { opacity: 0, y: 32 });
+
+            const counter = cell.querySelector<HTMLElement>('[data-count]');
+            if (!counter) return;
+            const count = { value: 0 };
+            tl.to(
+                count,
+                {
+                    value: Number(counter.dataset.count),
+                    duration: 1.4,
+                    ease: 'power2.out',
+                    onUpdate: () => {
+                        counter.textContent = String(Math.round(count.value)).padStart(2, '0');
+                    },
+                },
+                0,
+            );
         });
-    }
 
-    if (!reduce) {
         document.fonts.ready.then(() => {
             ScrollTrigger.create({
                 trigger: '[data-manifesto]',
@@ -77,13 +90,6 @@ import SectionHeading from './SectionHeading.astro';
                     });
                 },
             });
-        });
-
-        gsap.from('[data-stat]', {
-            autoAlpha: 0,
-            y: 28,
-            stagger: 0.08,
-            scrollTrigger: { trigger: '[data-stats]', start: 'top 88%', once: true },
         });
     }
 </script>

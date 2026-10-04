@@ -13,5 +13,10 @@ export default defineConfig({
 
     vite: {
         plugins: [tailwindcss()],
+        build: {
+            // Astro minifies page CSS in its SSR environment, which targets esnext and
+            // would strip the -webkit-backdrop-filter that Safari 17 and older need.
+            cssTarget: 'safari16.4',
+        },
     },
 });

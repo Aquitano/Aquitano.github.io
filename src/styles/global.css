@@ -4,6 +4,8 @@
    discoverable in markup — safelist them explicitly. */
 @source inline('border-line/70 bg-bg/65 backdrop-blur-md py-3 md:py-3.5');
 
+@custom-variant short (@media (orientation: landscape) and (max-height: 30rem));
+
 :root {
     --bg: #0a0a0b;
     --bg-raise: #111113;
@@ -11,6 +13,8 @@
     --muted: #88888f;
     --line: #232328;
     --accent: oklch(0.7165 0.1409 50.91);
+
+    --display-leading: 0.92;
 
     --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
@@ -27,13 +31,45 @@
     --font-sans: 'Archivo Variable', system-ui, sans-serif;
     --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
+    --leading-display: var(--display-leading);
+
     --ease-out-strong: var(--ease-out-strong);
     --ease-in-out-strong: var(--ease-in-out-strong);
 }
 
-/* Lenis takes over once it boots; this stays for the reduced-motion and no-JS paths. */
-html:not(.lenis) {
-    scroll-behavior: smooth;
+/* Fontsource's latin files trimmed to the axis ranges the site uses (90 + 30KB down to 59 + 22KB) with
+   `fonttools varLib.instancer`: Archivo to wght=400:800 wdth=100:125, Geist Mono to wght=400:700.
+   Same descriptors and unicode-range as fontsource's latin faces, declared after them, so browsers
+   check these first and keep fontsource's other subsets as fallbacks. */
+@font-face {
+    font-family: 'Archivo Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    src: url('../assets/fonts/archivo-latin.woff2') format('woff2-variations');
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+        U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'Geist Mono Variable';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url('../assets/fonts/geist-mono-latin.woff2') format('woff2-variations');
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+        U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* No-JS only. ScrollTrigger copies a computed smooth value inline onto <html> after every refresh,
+   which would make native focus and anchor scrolls animate alongside Lenis. */
+@media (scripting: none) and (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
 }
 
 html {
@@ -45,12 +81,6 @@ html.lenis.lenis-stopped:not(.lenis-autoToggle) {
     overflow: visible;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    html:not(.lenis) {
-        scroll-behavior: auto;
-    }
-}
-
 body {
     background: var(--bg);
     color: var(--fg);
@@ -58,39 +88,34 @@ body {
     overflow-x: clip;
 }
 
+@layer base {
+    p,
+    li {
+        text-wrap: pretty;
+    }
+}
+
 ::selection {
     background: var(--accent);
     color: #0a0a0b;
 }
 
-:where(a, button, [tabindex]):focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 3px;
-}
-
-@supports not selector(:focus-visible) {
-    :where(a, button, [tabindex]):focus {
+@layer base {
+    /* Sections that only receive focus from jump shortcuts (tabindex="-1") don't get a ring. */
+    :where(a, button, [tabindex]:not([tabindex='-1'])):focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 3px;
     }
-}
 
-.section-x {
-    --gutter: 1.25rem;
-    --rail: 0rem;
-    padding-left: max(var(--gutter), calc((100% - 96rem) / 2));
-    padding-right: max(calc(var(--gutter) + var(--rail)), calc((100% - 96rem) / 2));
-}
-
-@media (min-width: 768px) {
-    .section-x {
-        --gutter: 2.5rem;
+    @supports not selector(:focus-visible) {
+        :where(a, button, [tabindex]:not([tabindex='-1'])):focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
     }
-}
 
-@media (min-width: 1280px) {
-    .section-x {
-        --rail: 3rem;
+    :where([tabindex='-1']):focus-visible {
+        outline: none;
     }
 }
 
@@ -101,84 +126,159 @@ body {
     --section-lead: clamp(2.75rem, 5vw, 4.5rem);
 }
 
-.section-y {
-    padding-top: var(--section-top);
-    padding-bottom: var(--section-bottom);
-}
-
-.section-y--lead {
-    padding-top: var(--section-lead);
-}
-
-.section-y--major {
-    padding-top: var(--section-top-major);
-}
-
-.display {
-    font-stretch: 125%;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 0.92;
-    text-transform: uppercase;
-}
-
-.display-outline {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--fg);
-}
-
-@media (min-width: 768px) {
-    .display-outline {
-        -webkit-text-stroke-width: 2px;
+@layer components {
+    .section-x {
+        --gutter: 1.25rem;
+        --rail: 0rem;
+        padding-left: max(var(--gutter), calc((100% - 96rem) / 2));
+        padding-right: max(calc(var(--gutter) + var(--rail)), calc((100% - 96rem) / 2));
     }
-}
 
-/* Without text-stroke support the transparent fill would erase the title
-   entirely; fall back to solid ink so the content never disappears. */
-@supports not ((-webkit-text-stroke: 1px var(--fg))) {
-    .display-outline {
-        color: var(--fg);
+    @media (min-width: 768px) {
+        .section-x {
+            --gutter: 2.5rem;
+        }
     }
-}
 
-/* Mono metadata labels */
-.meta {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-}
+    @media (min-width: 1280px) {
+        body:has([data-minimap-root]) .section-x {
+            --rail: 4rem;
+        }
+    }
 
-.link-line {
-    position: relative;
-}
+    /* Anchor and shortcut jumps land the section's heading, not its top padding, under the header. */
+    :where([data-minimap], section[id]) {
+        scroll-margin-top: 5.5rem;
+    }
 
-.link-line::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 280ms var(--ease-out-strong);
-}
+    .section-y {
+        padding-top: var(--section-top);
+        padding-bottom: var(--section-bottom);
+        scroll-margin-top: calc(5.5rem - var(--section-top));
+    }
 
-@media (hover: hover) and (pointer: fine) {
-    .link-line:hover::after {
+    .section-y--lead {
+        padding-top: var(--section-lead);
+        scroll-margin-top: calc(5.5rem - var(--section-lead));
+    }
+
+    .section-y--major {
+        padding-top: var(--section-top-major);
+        scroll-margin-top: calc(5.5rem - var(--section-top-major));
+    }
+
+    .display {
+        font-stretch: 125%;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: var(--display-leading);
+        text-transform: uppercase;
+    }
+
+    /* Clearing the fill rather than the color lets the stroke follow the text color, such as a hovered link's accent. */
+    .display-outline {
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 1.5px currentColor;
+    }
+
+    @media (min-width: 768px) {
+        .display-outline {
+            -webkit-text-stroke-width: 2px;
+        }
+    }
+
+    /* Without text-stroke support the transparent fill would erase the title
+       entirely; fall back to solid ink so the content never disappears. */
+    @supports not ((-webkit-text-stroke: 1px currentColor)) {
+        .display-outline {
+            -webkit-text-fill-color: currentColor;
+        }
+    }
+
+    /* Mono metadata labels */
+    .meta {
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+    }
+
+    .link-line {
+        position: relative;
+    }
+
+    .link-line::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 280ms var(--ease-out-strong);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .link-line:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+    }
+
+    .link-line:focus-visible::after {
         transform: scaleX(1);
         transform-origin: left;
     }
+
+    @media (pointer: coarse) {
+        .touch-target {
+            --touch-pad: 0.875rem;
+            padding-block: var(--touch-pad);
+            margin-block: calc(-1 * var(--touch-pad));
+        }
+
+        .touch-target.link-line::after {
+            bottom: calc(var(--touch-pad) - 2px);
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .intro-rise {
+            animation: intro-rise 1.2s var(--ease-out-strong) var(--intro-delay, 0ms) both;
+        }
+
+        .intro-fade {
+            animation: intro-fade 0.9s var(--ease-out-strong) var(--intro-delay, 0ms) both;
+        }
+    }
+
+    @keyframes intro-rise {
+        from {
+            transform: translateY(110%);
+        }
+    }
+
+    @keyframes intro-fade {
+        from {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+    }
+
+    /* Pressable feedback */
+    .pressable {
+        transition: transform 140ms var(--ease-out-strong);
+    }
+
+    .pressable:active {
+        transform: scale(0.97);
+    }
 }
 
-.link-line:focus-visible::after {
-    transform: scaleX(1);
-    transform-origin: left;
-}
-
+/* Toggled from script over the links' own text colour, so it stays outside the layer to win. */
 .nav-active {
     color: var(--accent);
 }
@@ -186,26 +286,6 @@ body {
 .nav-active.link-line::after {
     transform: scaleX(1);
     transform-origin: left;
-}
-
-@media (pointer: coarse) {
-    .touch-target {
-        padding-block: 0.5rem;
-        margin-block: -0.5rem;
-    }
-}
-
-/* Pressable feedback */
-.pressable {
-    transition: transform 140ms var(--ease-out-strong);
-}
-
-.pressable:active {
-    transform: scale(0.97);
-}
-
-section[id] {
-    scroll-margin-top: 5rem;
 }
 
 @media (min-width: 768px) {
