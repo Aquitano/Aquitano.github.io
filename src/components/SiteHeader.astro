@@ -19,23 +19,23 @@ const NAV = [
             href="/#top"
             class="touch-target min-w-11 font-mono text-xs font-medium tracking-[0.14em] text-white uppercase"
         >
-            TB<span aria-hidden="true" class="text-white/50 max-[359px]:hidden">©2026</span><span class="sr-only">
-                home</span
-            >
+            TB
+            <span aria-hidden="true" class="text-white/50 max-[359px]:hidden">
+                ©2026
+            </span>
+            <span class="sr-only">home</span>
         </a>
         <div class="flex items-center gap-6 md:gap-10">
             <nav class="flex items-center gap-4 md:gap-6">
-                {
-                    NAV.map((item) => (
-                        <a
-                            href={item.href}
-                            data-nav-link
-                            class="link-line touch-target font-mono text-xs tracking-[0.14em] text-white uppercase"
-                        >
-                            {item.label}
-                        </a>
-                    ))
-                }
+                {NAV.map((item) => (
+                    <a
+                        href={item.href}
+                        data-nav-link
+                        class="link-line touch-target font-mono text-xs tracking-[0.14em] text-white uppercase"
+                    >
+                        {item.label}
+                    </a>
+                ))}
             </nav>
         </div>
     </div>

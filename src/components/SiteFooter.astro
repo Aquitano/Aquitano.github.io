@@ -26,13 +26,15 @@ const isHome = Astro.url.pathname === '/';
                     class="display group-hover:text-accent block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300"
                 >
                     <span style={opticalIndent('Let’s')}>Let’s</span>{' '}
-                    <span class="whitespace-nowrap"
-                        >Talk<span
+                    <span class="whitespace-nowrap">
+                        Talk
+                        <span
                             aria-hidden="true"
                             class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
-                            >↗</span
-                        ></span
-                    >
+                        >
+                            ↗
+                        </span>
+                    </span>
                 </span>
             </span>
         </a>
@@ -74,62 +76,57 @@ const isHome = Astro.url.pathname === '/';
         data-footer-reveal
         class="border-line divide-line grid divide-y border-y sm:grid-cols-3 sm:divide-y-0 sm:border-x"
     >
-        {
-            socials.map((social) => (
-                <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group border-line hover:bg-bg-raise active:bg-bg-raise flex items-center justify-between py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
+        {socials.map((social) => (
+            <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group border-line hover:bg-bg-raise active:bg-bg-raise flex items-center justify-between py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
+            >
+                <div>
+                    <p class="text-sm font-medium">{social.label}</p>
+                    <p class="text-muted font-mono text-[0.6875rem]">{social.handle}</p>
+                </div>
+                <span class="sr-only">(opens in new tab)</span>
+                <span
+                    aria-hidden="true"
+                    class="text-muted group-hover:text-accent group-focus-visible:text-accent ease-out-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
                 >
-                    <div>
-                        <p class="text-sm font-medium">{social.label}</p>
-                        <p class="text-muted font-mono text-[0.6875rem]">{social.handle}</p>
-                    </div>
-                    <span class="sr-only">(opens in new tab)</span>
-                    <span
-                        aria-hidden="true"
-                        class="text-muted group-hover:text-accent group-focus-visible:text-accent ease-out-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
-                    >
-                        ↗
-                    </span>
-                </a>
-            ))
-        }
+                    ↗
+                </span>
+            </a>
+        ))}
     </div>
 
-    <div
-        class="mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5"
-    >
+    <div class="mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5">
         <p class="meta">
-            ©2026 {site.name}<span class="max-[359px]:hidden md:max-xl:hidden"> · {site.location}</span>
+            ©2026 {site.name}
+            <span class="max-[359px]:hidden md:max-xl:hidden"> · {site.location}</span>
         </p>
-        {
-            buildSha && (
-                <p class="meta flex items-center gap-1.5">
-                    <span>Build</span>
-                    {commitUrl ? (
-                        <a
-                            href={commitUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="link-line touch-target text-fg hover:text-accent transition-colors duration-200"
-                        >
-                            {buildSha}
-                            <span class="sr-only">(opens in new tab)</span>
-                        </a>
-                    ) : (
-                        <span class="text-fg">{buildSha}</span>
-                    )}
-                    {buildDate && (
-                        <>
-                            <span aria-hidden="true">·</span>
-                            <span>{buildDate}</span>
-                        </>
-                    )}
-                </p>
-            )
-        }
+        {buildSha && (
+            <p class="meta flex items-center gap-1.5">
+                <span>Build</span>
+                {commitUrl ? (
+                    <a
+                        href={commitUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link-line touch-target text-fg hover:text-accent transition-colors duration-200"
+                    >
+                        {buildSha}
+                        <span class="sr-only">(opens in new tab)</span>
+                    </a>
+                ) : (
+                    <span class="text-fg">{buildSha}</span>
+                )}
+                {buildDate && (
+                    <>
+                        <span aria-hidden="true">·</span>
+                        <span>{buildDate}</span>
+                    </>
+                )}
+            </p>
+        )}
         <div class="flex items-center lg:col-start-3 lg:justify-end">
             <a href="#top" class="link-line touch-target meta text-fg inline-block">
                 Back to top <span aria-hidden="true">↑</span>

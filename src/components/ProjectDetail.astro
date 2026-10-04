@@ -28,8 +28,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
         class="pointer-events-none absolute top-0 -right-1/4 h-[60svh] w-[70%] rounded-full opacity-[0.1] blur-3xl"
         style={`background: ${project.accent}`}
         aria-hidden="true"
-    >
-    </div>
+    ></div>
 
     <header class="section-x relative pt-28 pb-12 md:pt-40 md:pb-16">
         <div class="intro-fade" style={fadeDelay(0)}>
@@ -43,58 +42,59 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                 <span
                     class="inline-block h-1.5 w-1.5 shrink-0 self-center rounded-full"
                     style={`background: ${project.accent}`}
-                    aria-hidden="true"></span>
+                    aria-hidden="true"
+                ></span>
                 {project.subtitle}
             </p>
             <p class="intro-fade meta whitespace-nowrap" style={fadeDelay(2)}>
-                ©{project.year}<span class="max-[359px]:hidden"> · 0{index + 1}/0{total}</span>
+                ©{project.year}
+                <span class="max-[359px]:hidden">
+                    {' '}
+                    · 0{index + 1}/0{total}
+                </span>
             </p>
         </div>
 
         <h1 class="display mt-4 text-[clamp(2.25rem,11.5vw,11rem)]">
-            {
-                title.lines.map((words, i) => (
-                    <span class="block overflow-y-clip pb-[0.06em]">
-                        <span
-                            class="intro-rise block"
-                            style={`--intro-delay: ${100 + i * LINE_STAGGER}ms; ${opticalIndent(words[0].text)}`}
-                        >
-                            {words.map(({ text, outline }) => (
-                                <span class:list={{ 'display-outline': outline }}>{text}</span>
-                            ))}
-                        </span>
+            {title.lines.map((words, i) => (
+                <span class="block overflow-y-clip pb-[0.06em]">
+                    <span
+                        class="intro-rise block"
+                        style={`--intro-delay: ${100 + i * LINE_STAGGER}ms; ${opticalIndent(words[0].text)}`}
+                    >
+                        {words.map(({ text, outline }) => (
+                            <span class:list={{ 'display-outline': outline }}>{text}</span>
+                        ))}
                     </span>
-                ))
-            }
+                </span>
+            ))}
         </h1>
 
         <p class="intro-fade text-muted mt-8 max-w-2xl text-base leading-relaxed md:text-xl" style={fadeDelay(3)}>
             {project.description}
         </p>
     </header>
-    {
-        project.image && (
-            <div data-detail-banner class="section-x relative pt-2 pb-10 md:pb-16">
-                <div class="border-line relative overflow-hidden rounded-2xl border">
-                    <div
-                        class="pointer-events-none absolute -top-1/3 -right-1/4 h-[70%] w-[70%] rounded-full opacity-[0.08] blur-3xl"
-                        style={`background: ${project.accent}`}
-                        aria-hidden="true"
+    {project.image && (
+        <div data-detail-banner class="section-x relative pt-2 pb-10 md:pb-16">
+            <div class="border-line relative overflow-hidden rounded-2xl border">
+                <div
+                    class="pointer-events-none absolute -top-1/3 -right-1/4 h-[70%] w-[70%] rounded-full opacity-[0.08] blur-3xl"
+                    style={`background: ${project.accent}`}
+                    aria-hidden="true"
+                />
+                <div class="relative aspect-[16/9] w-full">
+                    <Image
+                        src={project.image}
+                        alt={`${project.title} — ${project.subtitle}`}
+                        widths={[640, 960, 1280, 1600, 2400]}
+                        sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
+                        loading="eager"
+                        class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover"
                     />
-                    <div class="relative aspect-[16/9] w-full">
-                        <Image
-                            src={project.image}
-                            alt={`${project.title} — ${project.subtitle}`}
-                            widths={[640, 960, 1280, 1600, 2400]}
-                            sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
-                            loading="eager"
-                            class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover"
-                        />
-                    </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )}
 
     <div
         data-detail-body
@@ -105,20 +105,16 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                 <div data-detail-para>
                     <dt class="meta mb-2">Scope</dt>
                     <dd class="overflow-hidden">
-                        {
-                            /* Each item carries its own separator; pulling the list left clips the one starting each line. */
-                        }
+                        {/* Each item carries its own separator; pulling the list left clips the one starting each line. */}
                         <ul class="text-fg/85 -ml-6 flex flex-wrap font-mono text-sm leading-relaxed">
-                            {
-                                project.tasks.map((task) => (
-                                    <li class="relative pl-6 whitespace-nowrap">
-                                        <span aria-hidden="true" class="text-muted absolute left-0 w-6 text-center">
-                                            ·
-                                        </span>
-                                        {task}
-                                    </li>
-                                ))
-                            }
+                            {project.tasks.map((task) => (
+                                <li class="relative pl-6 whitespace-nowrap">
+                                    <span aria-hidden="true" class="text-muted absolute left-0 w-6 text-center">
+                                        ·
+                                    </span>
+                                    {task}
+                                </li>
+                            ))}
                         </ul>
                     </dd>
                 </div>
@@ -126,36 +122,32 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     <dt class="meta mb-3">Stack</dt>
                     <dd>
                         <ul class="flex flex-wrap gap-2">
-                            {
-                                project.tags.map((tag) => (
-                                    <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
-                                        {tag}
-                                    </li>
-                                ))
-                            }
+                            {project.tags.map((tag) => (
+                                <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
+                                    {tag}
+                                </li>
+                            ))}
                         </ul>
                     </dd>
                 </div>
-                {
-                    project.links.length > 0 && (
-                        <div data-detail-para>
-                            <dt class="meta mb-3">Links</dt>
-                            <dd class="flex flex-col items-start gap-3 pointer-coarse:gap-7">
-                                {project.links.map((link) => (
-                                    <a
-                                        href={link.href}
-                                        target={opensNewTab(link) ? '_blank' : undefined}
-                                        rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
-                                        class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
-                                    >
-                                        {link.label} <span aria-hidden="true">↗</span>
-                                        {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
-                                    </a>
-                                ))}
-                            </dd>
-                        </div>
-                    )
-                }
+                {project.links.length > 0 && (
+                    <div data-detail-para>
+                        <dt class="meta mb-3">Links</dt>
+                        <dd class="flex flex-col items-start gap-3 pointer-coarse:gap-7">
+                            {project.links.map((link) => (
+                                <a
+                                    href={link.href}
+                                    target={opensNewTab(link) ? '_blank' : undefined}
+                                    rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
+                                    class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
+                                >
+                                    {link.label} <span aria-hidden="true">↗</span>
+                                    {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
+                                </a>
+                            ))}
+                        </dd>
+                    </div>
+                )}
             </dl>
         </aside>
 
@@ -176,42 +168,37 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12] group-focus-visible:opacity-[0.12]"
             style={`background: ${next.accent}`}
             aria-hidden="true"
-        >
-        </div>
+        ></div>
         <p class="meta relative mb-4">Next Project</p>
-        <p
-            class="display group-hover:text-accent group-focus-visible:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300"
-        >
-            {
-                nextTitle.lines.map((words, j) => (
-                    <Fragment>
-                        {j > 0 && (nextTitle.joiner || <wbr />)}
-                        {words.map(({ text, outline }, k) => {
-                            const word = (
+        <p class="display group-hover:text-accent group-focus-visible:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300">
+            {nextTitle.lines.map((words, j) => (
+                <Fragment>
+                    {j > 0 && (nextTitle.joiner || <wbr />)}
+                    {words.map(({ text, outline }, k) => {
+                        const word = (
+                            <span
+                                class:list={{ 'display-outline': outline }}
+                                style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
+                            >
+                                {text}
+                            </span>
+                        );
+                        if (j < nextTitle.lines.length - 1 || k < words.length - 1) return word;
+                        // Bind only the last word to the arrow so a long title can still wrap.
+                        return (
+                            <span class="whitespace-nowrap">
+                                {word}
                                 <span
-                                    class:list={{ 'display-outline': outline }}
-                                    style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
+                                    aria-hidden="true"
+                                    class="ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
                                 >
-                                    {text}
+                                    →
                                 </span>
-                            );
-                            if (j < nextTitle.lines.length - 1 || k < words.length - 1) return word;
-                            // Bind only the last word to the arrow so a long title can still wrap.
-                            return (
-                                <span class="whitespace-nowrap">
-                                    {word}
-                                    <span
-                                        aria-hidden="true"
-                                        class="ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
-                                    >
-                                        →
-                                    </span>
-                                </span>
-                            );
-                        })}
-                    </Fragment>
-                ))
-            }
+                            </span>
+                        );
+                    })}
+                </Fragment>
+            ))}
         </p>
     </a>
 </div>

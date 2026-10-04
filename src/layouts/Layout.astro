@@ -146,7 +146,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             }}
         />
 
-        <script is:inline type="application/ld+json" set:html={safeJsonLd} />
+        <script is:inline type="application/ld+json" set:html={safeJsonLd}></script>
     </head>
 
     <body class="bg-bg text-fg min-h-svh antialiased">
@@ -167,7 +167,6 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
                 document.getElementById(location.hash.slice(1))?.scrollIntoView();
             }
         </script>
-
         <div class="grain" aria-hidden="true"></div>
 
         <script>
@@ -175,7 +174,6 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
             initSmoothScroll();
         </script>
-
         <script>
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
