@@ -17,8 +17,6 @@
     },
     "dependencies": {
         "@astrojs/sitemap": "^3.7.4",
-        "@fontsource-variable/archivo": "^5.3.0",
-        "@fontsource-variable/geist-mono": "^5.3.0",
         "@fontsource/yantramanav": "^5.3.0",
         "@tailwindcss/vite": "^4.3.3",
         "@vercel/functions": "^3.10.4",
