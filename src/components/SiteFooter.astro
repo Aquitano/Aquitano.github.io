@@ -167,6 +167,7 @@ const isHome = Astro.url.pathname === '/';
 </style>
 
 <script>
+    import { track } from '../lib/analytics';
     import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-footer]');
@@ -247,7 +248,8 @@ const isHome = Astro.url.pathname === '/';
                 ok = false;
             }
 
-            if (!ok) selectEmail();
+            if (ok) track('email_copied');
+            else selectEmail();
             flash(ok);
         });
     }

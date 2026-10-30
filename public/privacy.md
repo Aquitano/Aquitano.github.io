@@ -10,6 +10,10 @@ Vercel Inc. (USA) hosts the site and processes your IP address, request time, UR
 
 The archived school project under [/showcase/griffin](/showcase/griffin/) also loads fonts from Google, icons from cdnjs (Cloudflare), and a 3D model from Sketchfab, which receive your IP address.
 
+## Analytics
+
+PostHog counts visits in cookieless mode, so nothing is stored in your browser. It records the pages you view, where you came from, the links you click, how far you scroll, JavaScript errors, and page speed, to improve the site (Art. 6(1)(f) GDPR). PostHog Inc. (USA) processes this data under a data processing agreement on servers in Frankfurt, does not store your IP address, and keeps events for the retention period of its plan.
+
 ## Email
 
 If you email Thomas, he uses your message to reply (Art. 6(1)(b) or (f) GDPR) and deletes it once it is no longer needed. Mail is hosted by Proton AG in Switzerland.

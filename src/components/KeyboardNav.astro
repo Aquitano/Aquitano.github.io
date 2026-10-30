@@ -203,6 +203,7 @@ const SHORTCUTS = [
 </style>
 
 <script>
+    import { track } from '../lib/analytics';
     import { pauseScroll, resumeScroll, scrollToTarget, targetScrollY } from '../lib/lenis';
 
     const dialog = document.querySelector<HTMLDialogElement>('[data-kbd-dialog]');
@@ -308,6 +309,7 @@ const SHORTCUTS = [
         toggle?.addEventListener('click', () => {
             enabled = !enabled;
             renderToggle();
+            track('keyboard_shortcuts_toggled', { enabled });
 
             try {
                 localStorage.setItem(ENABLED_KEY, enabled ? 'on' : 'off');
