@@ -22,4 +22,9 @@ const work = defineCollection({
         }),
 });
 
-export const collections = { work };
+// Reads the agent-facing Markdown in public/ so the HTML page and /privacy.md share one source.
+const legal = defineCollection({
+    loader: glob({ pattern: 'privacy.md', base: './public' }),
+});
+
+export const collections = { work, legal };
