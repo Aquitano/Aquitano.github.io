@@ -7,6 +7,12 @@ type AnalyticsEvents = {
     keyboard_shortcuts_toggled: { enabled: boolean };
 };
 
+const afterPageLoad = () =>
+    new Promise<void>((resolve) => {
+        if (document.readyState === 'complete') resolve();
+        else window.addEventListener('load', () => resolve(), { once: true });
+    });
+
 const whenIdle = () =>
     new Promise<void>((resolve) => {
         if ('requestIdleCallback' in window) requestIdleCallback(() => resolve(), { timeout: 2000 });
@@ -14,6 +20,7 @@ const whenIdle = () =>
     });
 
 const load = async (key: string): Promise<PostHog> => {
+    await afterPageLoad();
     await whenIdle();
     const { posthog } = await import('posthog-js');
 
