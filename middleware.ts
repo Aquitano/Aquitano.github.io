@@ -6,6 +6,7 @@ export default function middleware(request: Request): Response {
 }
 
 export const config = {
-    // Skips any path whose last segment has a dot, so static files never invoke the middleware.
-    matcher: '/((?!.*\\.[^/]*$).*)',
+    // Skips any path whose last segment has a dot, so static files never invoke the middleware,
+    // and the /ingest analytics proxy, whose JSON requests would otherwise get a 406.
+    matcher: '/((?!ingest/|.*\\.[^/]*$).*)',
 };

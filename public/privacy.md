@@ -1,13 +1,23 @@
-# Privacy notice for thomasbreindl.me
+# Privacy notice
 
-Last updated: 21 August 2026.
+## Controller
 
-Thomas Breindl operates this portfolio from Germany. It has no accounts, comments, advertising, newsletter, or intentionally configured analytics or marketing cookies.
+Thomas Breindl, Passau, Germany, [contact@thomasbreindl.me](mailto:contact@thomasbreindl.me).
 
-Vercel hosts the site. Its servers process an IP address, request time, URL, referrer, user agent, and diagnostic or security data when they deliver a page. Thomas does not use these logs for advertising.
+## Hosting
 
-If you email `contact@thomasbreindl.me`, Thomas uses your address and message to reply. Correspondence may be kept while it is relevant or needed for legal records. Do not send sensitive data before agreeing on a suitable channel.
+Vercel Inc. (USA) hosts the site and processes your IP address, request time, URL, referrer, and user agent to deliver pages and protect them against abuse (Art. 6(1)(f) GDPR). Vercel acts under a data processing agreement and is certified under the EU-U.S. Data Privacy Framework. Request logs are deleted after one day at most.
 
-External links, including GitHub, LinkedIn, X, and project sites, have their own privacy policies. Fonts and core assets are served from this site.
+## Analytics
 
-You may have rights to access, correct, delete, restrict, or object to the use of your personal data. Email `contact@thomasbreindl.me` with enough detail to identify the relevant information.
+PostHog counts visits in cookieless mode, so nothing is stored in your browser. It records the pages you view, where you came from, the links you click, how far you scroll, JavaScript errors, and page speed, to improve the site (Art. 6(1)(f) GDPR). PostHog Inc. (USA) processes this data under a data processing agreement on servers in Frankfurt, does not store your IP address, and keeps events for the retention period of its plan.
+
+## Email
+
+If you email Thomas, he uses your message to reply (Art. 6(1)(b) or (f) GDPR) and deletes it once it is no longer needed. Mail is hosted by Proton AG in Switzerland.
+
+## Your rights
+
+You can request access to, correction, deletion, or restriction of your data, and a portable copy of it, by email. You can also complain to a data protection authority, such as the Bayerisches Landesamt für Datenschutzaufsicht.
+
+**Right to object:** you may object at any time to processing based on Art. 6(1)(f) GDPR, on grounds relating to your particular situation.
