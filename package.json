@@ -39,6 +39,7 @@
     "engines": {
         "node": "26.x"
     },
+    "packageManager": "bun@1.4.4",
     "trustedDependencies": [
         "@parcel/watcher",
         "@tailwindcss/oxide",
