@@ -41,13 +41,19 @@ const {
 const baseURL = Astro.site ?? Astro.url;
 
 const canonicalURL = new URL(Astro.url.pathname, baseURL);
+
 const homeURL = new URL('/', baseURL);
+
 const ogImageURL = new URL(image?.src ?? '/og-default.png', baseURL);
+
 const ogImageAlt = image?.alt ?? `${site.name} — ${site.role}`;
+
 const sitemapURL = new URL('/sitemap-index.xml', baseURL);
+
 const markdownPath = Astro.url.pathname === '/' ? '/index.md' : `${Astro.url.pathname.replace(/\/$/, '')}.md`;
 
 const personID = new URL('/#person', baseURL).toString();
+
 const websiteID = new URL('/#website', baseURL).toString();
 
 const jsonLd = {
@@ -149,10 +155,10 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <script is:inline type="application/ld+json" set:html={safeJsonLd}></script>
     </head>
 
-    <body class="bg-bg text-fg min-h-svh antialiased">
+    <body class="min-h-svh bg-bg text-fg antialiased">
         <a
             href="#top"
-            class="bg-accent sr-only rounded-full px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100"
+            class="sr-only rounded-full bg-accent px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100"
         >
             Skip to content
         </a>
@@ -177,13 +183,17 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <script>
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
+
             // Navigating away also hides the page; swapping then would save the joke title into history.
             let leaving = false;
+
             window.addEventListener('pagehide', () => (leaving = true));
+
             window.addEventListener('pageshow', () => {
                 leaving = false;
                 document.title = onPageTitle;
             });
+
             document.addEventListener('visibilitychange', () => {
                 if (leaving) return;
                 document.title = document.hidden ? '[ still shipping ] — TB' : onPageTitle;
@@ -197,6 +207,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             ].join('');
 
             const mono = '"Geist Mono Variable", ui-monospace, monospace';
+
             console.log(
                 signature,
                 `color:#e8874a;font:700 15px/1.5 ${mono};letter-spacing:.04em`,

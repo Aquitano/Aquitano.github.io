@@ -1,21 +1,19 @@
 {
     "name": "homepage",
-    "type": "module",
     "version": "0.0.1",
-    "engines": {
-        "node": "26.x"
-    },
+    "type": "module",
     "scripts": {
         "dev": "astro dev",
         "start": "astro dev",
         "build": "astro build",
         "test": "bun test",
-        "check": "astro check && eslint . && bun test",
+        "check": "astro check && oxlint && oxfmt --check && bun test",
         "preview": "astro preview",
         "astro": "astro",
-        "lint": "eslint .",
-        "lint:fix": "eslint . --fix",
-        "format": "prettier --write ./**/*.{astro,js,jsx,ts,tsx,md,mdx,css,scss,sass,less,html,json,graphql,yaml,yml,mdx}"
+        "lint": "oxlint",
+        "lint:fix": "oxlint --fix",
+        "format": "oxfmt",
+        "format:check": "oxfmt --check"
     },
     "dependencies": {
         "@astrojs/sitemap": "^3.7.4",
@@ -32,16 +30,16 @@
     },
     "devDependencies": {
         "@astrojs/check": "^0.9.12",
-        "@eslint/css": "^2.0.1",
-        "@eslint/js": "^10.0.1",
-        "eslint": "^10.13.0",
-        "globals": "^17.13.0",
-        "prettier": "^3.9.10",
-        "prettier-plugin-astro": "^1.1.2",
-        "prettier-plugin-tailwindcss": "^0.8.1",
-        "typescript": "^6.0.3",
-        "typescript-eslint": "^8.72.1"
+        "@oxlint/plugins": "1.90.0",
+        "oxfmt": "0.75.0",
+        "oxlint": "1.90.0",
+        "oxlint-tsgolint": "7.0.2005",
+        "typescript": "^6.0.3"
     },
+    "engines": {
+        "node": "26.x"
+    },
+    "packageManager": "bun@1.4.4",
     "trustedDependencies": [
         "@parcel/watcher",
         "@tailwindcss/oxide",

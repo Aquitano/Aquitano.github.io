@@ -14,6 +14,6 @@ updates:
           prefix-development: chore
           include: scope
       ignore:
-          # typescript-eslint and @astrojs/check do not support TypeScript 7 yet.
+          # @astrojs/check does not support TypeScript 7 yet.
           - dependency-name: typescript
             update-types: ['version-update:semver-major']

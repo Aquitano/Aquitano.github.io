@@ -18,9 +18,7 @@ jobs:
               with:
                   node-version-file: package.json
             - uses: oven-sh/setup-bun@v2
-              with:
-                  bun-version: latest
             - name: Install deps
               run: bun install --frozen-lockfile
-            - run: bun run astro check
+            - run: bun run check
             - run: bun run build

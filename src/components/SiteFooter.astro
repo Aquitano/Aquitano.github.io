@@ -12,7 +12,7 @@ const isHome = Astro.url.pathname === '/';
     data-minimap="Contact"
     class:list={[
         'section-x relative overflow-hidden pb-8',
-        isHome ? 'section-y--major pointer-fine:pb-20' : 'section-y--lead border-line border-t',
+        isHome ? 'section-y--major pointer-fine:pb-20' : 'section-y--lead border-t border-line',
     ]}
 >
     <div class="mb-16 md:mb-24">
@@ -23,14 +23,14 @@ const isHome = Astro.url.pathname === '/';
             <span class="block overflow-y-clip pb-[0.06em]">
                 <span
                     data-footer-headline
-                    class="display group-hover:text-accent block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300"
+                    class="display block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300 group-hover:text-accent"
                 >
                     <span style={opticalIndent('Let’s')}>Let’s</span>{' '}
                     <span class="whitespace-nowrap">
                         Talk
                         <span
                             aria-hidden="true"
-                            class="ease-out-strong ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
+                            class="ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-out-strong group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
                         >
                             ↗
                         </span>
@@ -44,26 +44,26 @@ const isHome = Astro.url.pathname === '/';
                 data-email={site.email}
                 type="button"
                 aria-label={`Copy email address: ${site.email}`}
-                class="pressable group/copy text-muted hover:text-fg mt-3 flex min-h-11 cursor-pointer items-center gap-3 py-3 font-mono text-xs transition-[color,transform] duration-200"
+                class="pressable group/copy mt-3 flex min-h-11 cursor-pointer items-center gap-3 py-3 font-mono text-xs text-muted transition-[color,transform] duration-200 hover:text-fg"
             >
                 <span data-copy-text>{site.email}</span>
                 <span data-copy-status role="status" aria-live="polite" class="inline-flex items-center">
                     <span
                         data-copy-default
                         aria-hidden="true"
-                        class="border-line group-hover/copy:border-accent/60 group-hover/copy:text-accent rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase transition-colors duration-200"
+                        class="rounded-full border border-line px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase transition-colors duration-200 group-hover/copy:border-accent/60 group-hover/copy:text-accent"
                     >
                         Copy
                     </span>
                     <span
                         data-copy-done
-                        class="pop-in bg-accent hidden rounded-full border border-transparent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.14em] text-black uppercase"
+                        class="pop-in hidden rounded-full border border-transparent bg-accent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.14em] text-black uppercase"
                     >
                         Copied <span aria-hidden="true">✓</span>
                     </span>
                     <span
                         data-copy-fail
-                        class="border-line text-muted hidden rounded-full border px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase"
+                        class="hidden rounded-full border border-line px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] text-muted uppercase"
                     >
                         Copy failed
                     </span>
@@ -74,23 +74,23 @@ const isHome = Astro.url.pathname === '/';
 
     <div
         data-footer-reveal
-        class="border-line divide-line grid divide-y border-y sm:grid-cols-3 sm:divide-y-0 sm:border-x"
+        class="grid divide-y divide-line border-y border-line sm:grid-cols-3 sm:divide-y-0 sm:border-x"
     >
         {socials.map((social) => (
             <a
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group border-line hover:bg-bg-raise active:bg-bg-raise flex items-center justify-between py-5 transition-colors duration-300 sm:border-r sm:px-5 sm:last:border-r-0"
+                class="group flex items-center justify-between border-line py-5 transition-colors duration-300 hover:bg-bg-raise active:bg-bg-raise sm:border-r sm:px-5 sm:last:border-r-0"
             >
                 <div>
                     <p class="text-sm font-medium">{social.label}</p>
-                    <p class="text-muted font-mono text-[0.6875rem]">{social.handle}</p>
+                    <p class="font-mono text-[0.6875rem] text-muted">{social.handle}</p>
                 </div>
                 <span class="sr-only">(opens in new tab)</span>
                 <span
                     aria-hidden="true"
-                    class="text-muted group-hover:text-accent group-focus-visible:text-accent ease-out-strong transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+                    class="text-muted transition-all duration-300 ease-out-strong group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:text-accent"
                 >
                     ↗
                 </span>
@@ -111,7 +111,7 @@ const isHome = Astro.url.pathname === '/';
                         href={commitUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="link-line touch-target text-fg hover:text-accent transition-colors duration-200"
+                        class="link-line touch-target text-fg transition-colors duration-200 hover:text-accent"
                     >
                         {buildSha}
                         <span class="sr-only">(opens in new tab)</span>
@@ -128,7 +128,7 @@ const isHome = Astro.url.pathname === '/';
             </p>
         )}
         <div class="flex items-center lg:col-start-3 lg:justify-end">
-            <a href="#top" class="link-line touch-target meta text-fg inline-block">
+            <a href="#top" class="link-line touch-target meta inline-block text-fg">
                 Back to top <span aria-hidden="true">↑</span>
             </a>
         </div>
@@ -166,8 +166,10 @@ const isHome = Astro.url.pathname === '/';
     import { gsap, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-footer]');
+
     if (root && !prefersReducedMotion()) {
         const [headline] = offscreen(gsap.utils.toArray<HTMLElement>('[data-footer-headline]'));
+
         if (headline) {
             gsap.set(headline, { y: 0, yPercent: 110 });
             gsap.to(headline, {
@@ -179,6 +181,7 @@ const isHome = Astro.url.pathname === '/';
         }
 
         const reveals = offscreen(gsap.utils.toArray<HTMLElement>('[data-footer-reveal]'));
+
         if (reveals.length) {
             gsap.from(reveals, {
                 opacity: 0,
@@ -190,19 +193,25 @@ const isHome = Astro.url.pathname === '/';
         }
     }
 
+    const copy = async (text: string) => {
+        if (!navigator.clipboard?.writeText) return false;
+        await navigator.clipboard.writeText(text);
+
+        return true;
+    };
+
     const btn = document.querySelector<HTMLButtonElement>('[data-copy-email]');
+
     const def = btn?.querySelector<HTMLElement>('[data-copy-default]');
+
     const done = btn?.querySelector<HTMLElement>('[data-copy-done]');
+
     const fail = btn?.querySelector<HTMLElement>('[data-copy-fail]');
+
     const emailText = btn?.querySelector<HTMLElement>('[data-copy-text]');
+
     if (btn && def && done && fail) {
         let timer: ReturnType<typeof setTimeout>;
-
-        const copy = async (text: string) => {
-            if (!navigator.clipboard?.writeText) return false;
-            await navigator.clipboard.writeText(text);
-            return true;
-        };
 
         const selectEmail = () => {
             if (!emailText) return;
@@ -227,11 +236,13 @@ const isHome = Astro.url.pathname === '/';
 
         btn.addEventListener('click', async () => {
             let ok = false;
+
             try {
                 ok = await copy(btn.dataset.email ?? '');
             } catch {
                 ok = false;
             }
+
             if (!ok) selectEmail();
             flash(ok);
         });
