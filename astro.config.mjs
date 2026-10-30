@@ -1,9 +1,15 @@
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 export default defineConfig({
     site: 'https://thomasbreindl.me',
+
+    env: {
+        schema: {
+            PUBLIC_POSTHOG_KEY: envField.string({ context: 'client', access: 'public', optional: true }),
+        },
+    },
 
     integrations: [sitemap()],
 
