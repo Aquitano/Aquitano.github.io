@@ -43,6 +43,7 @@ const NAV = [
 
 <script>
     const header = document.querySelector<HTMLElement>('[data-header]');
+
     const inner = document.querySelector<HTMLElement>('[data-header-inner]');
 
     if (header && inner) {
@@ -69,6 +70,7 @@ const NAV = [
     }
 
     const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+
     const byId = new Map(links.map((link) => [new URL(link.href).hash.slice(1), link]));
 
     // An unmatched id clears every link.
@@ -76,6 +78,7 @@ const NAV = [
         for (const [linkId, link] of byId) {
             const on = linkId === id;
             link.classList.toggle('nav-active', on);
+
             if (on) link.setAttribute('aria-current', 'true');
             else link.removeAttribute('aria-current');
         }
@@ -86,27 +89,33 @@ const NAV = [
             el,
             navId: el.dataset.nav ?? el.id,
         }));
+
         // Jumps land a section's content, not its top padding, under the header, so measure from there.
         const contentTop = (el: HTMLElement) =>
             el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).paddingTop);
 
         let current: string | undefined;
         let queued = false;
+
         const update = () => {
             queued = false;
             const line = window.scrollY + window.innerHeight / 2;
             const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
             let id = '';
+
             for (const { el, navId } of sections) {
                 if (contentTop(el) + window.scrollY <= line) id = navId;
             }
+
             // The last sections can't reach the centre line. At the end, honour a jump to one still on screen, else the last.
             if (atEnd) {
                 const jumpedTo = sections.find(
                     ({ el }) => el.id && `#${el.id}` === location.hash && contentTop(el) >= 0,
                 );
+
                 id = (jumpedTo ?? sections.at(-1))?.navId ?? id;
             }
+
             if (id === current) return;
             current = id;
             setActive(id);

@@ -11,6 +11,7 @@ interface Props {
 const { work } = Astro.props;
 
 const STICKY_TOP = 88;
+
 const CASCADE = 14;
 ---
 
@@ -24,7 +25,7 @@ const CASCADE = 14;
                 <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                     <article
                         data-card
-                        class="border-line bg-bg-raise hover:border-fg/25 has-[>a:active]:border-fg/25 relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border p-6 transition-colors duration-300 md:min-h-[min(72svh,44rem)] md:p-12"
+                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12"
                     >
                         <a href={`/work/${entry.id}`} tabindex="-1" aria-hidden="true" class="absolute inset-0 z-10" />
                         {/* per-project glow */}
@@ -69,15 +70,15 @@ const CASCADE = 14;
                                     </Fragment>
                                 ))}
                             </h3>
-                            <p class="text-muted mt-6 max-w-lg text-sm leading-relaxed max-md:line-clamp-5 md:text-base">
+                            <p class="mt-6 max-w-lg text-sm leading-relaxed text-muted max-md:line-clamp-5 md:text-base">
                                 {p.description}
                             </p>
                         </div>
 
-                        <footer class="border-line relative z-20 flex flex-col gap-6 border-t pt-6 xl:flex-row xl:items-center xl:justify-between">
+                        <footer class="relative z-20 flex flex-col gap-6 border-t border-line pt-6 xl:flex-row xl:items-center xl:justify-between">
                             <ul class="flex flex-wrap gap-2">
                                 {p.tags.map((tag) => (
-                                    <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
+                                    <li class="rounded-full border border-line px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] text-fg/70 uppercase">
                                         {tag}
                                     </li>
                                 ))}
@@ -85,7 +86,7 @@ const CASCADE = 14;
                             <div class="flex flex-wrap gap-x-6 gap-y-2">
                                 <a
                                     href={`/work/${entry.id}`}
-                                    class="link-line pressable touch-target text-accent font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
+                                    class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-accent uppercase"
                                 >
                                     Case Study <span aria-hidden="true">→</span>
                                 </a>
@@ -98,7 +99,7 @@ const CASCADE = 14;
                                                 ? 'noopener noreferrer'
                                                 : undefined
                                         }
-                                        class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] whitespace-nowrap uppercase"
+                                        class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
                                     >
                                         {link.label} <span aria-hidden="true">↗</span>
                                         {(link.external || isExternalHref(link.href)) && (
@@ -111,7 +112,7 @@ const CASCADE = 14;
 
                         <div
                             data-card-chip
-                            class="bg-accent pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.14em] whitespace-nowrap text-black uppercase opacity-0 md:block"
+                            class="pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full bg-accent px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.14em] whitespace-nowrap text-black uppercase opacity-0 md:block"
                             aria-hidden="true"
                         >
                             View Case ↗
@@ -119,7 +120,7 @@ const CASCADE = 14;
 
                         <div
                             data-card-veil
-                            class="bg-bg pointer-events-none absolute inset-0 rounded-2xl opacity-0"
+                            class="pointer-events-none absolute inset-0 rounded-2xl bg-bg opacity-0"
                             aria-hidden="true"
                         />
                     </article>
@@ -134,10 +135,13 @@ const CASCADE = 14;
     import { scrollToTarget } from '../lib/lenis';
 
     const STICKY_TOP = 88;
+
     const CASCADE = 14;
+
     const VIEWPORT_MARGIN = 16;
 
     const root = document.querySelector<HTMLElement>('[data-projects]');
+
     if (root) {
         const wrappers = gsap.utils.toArray<HTMLElement>('[data-card-wrapper]');
 
@@ -152,8 +156,10 @@ const CASCADE = 14;
             const fits = wrappers.every(
                 (w, i) => STICKY_TOP + i * CASCADE + w.offsetHeight + VIEWPORT_MARGIN <= viewport.offsetHeight,
             );
+
             wrappers.forEach((w, i) => (w.style.top = fits ? `${STICKY_TOP + i * CASCADE}px` : 'auto'));
         };
+
         placeCards();
         window.addEventListener('resize', placeCards);
         new ResizeObserver(() => {
@@ -165,6 +171,7 @@ const CASCADE = 14;
             el.style.position = 'static';
             const top = el.getBoundingClientRect().top + window.scrollY;
             el.style.position = '';
+
             return top;
         };
 
@@ -177,14 +184,19 @@ const CASCADE = 14;
         const HOLD_MS = 600;
         let heldCard: HTMLElement | null = null;
         let holdUntil = 0;
+
         const holdCard = () => {
             if (!heldCard || heldCard.style.top === 'auto' || performance.now() > holdUntil) {
                 heldCard = null;
+
                 return;
             }
+
             scrollToTarget(naturalTop(heldCard) - parseFloat(heldCard.style.top), { immediate: true });
         };
+
         window.addEventListener('scroll', holdCard, { passive: true });
+
         for (const type of ['keydown', 'wheel', 'pointerdown']) {
             window.addEventListener(type, () => (heldCard = null), { capture: true, passive: true });
         }
@@ -192,8 +204,10 @@ const CASCADE = 14;
         root.addEventListener('focusin', (e) => {
             const restored = e.target === focusedAtBlur;
             focusedAtBlur = null;
+
             if (restored || !(e.target instanceof HTMLElement) || !e.target.matches(':focus-visible')) return;
             const wrapper = e.target.closest<HTMLElement>('[data-card-wrapper]');
+
             if (!wrapper || wrapper === e.target || wrapper.style.top === 'auto') return;
             heldCard = wrapper;
             holdUntil = performance.now() + HOLD_MS;
@@ -203,6 +217,7 @@ const CASCADE = 14;
         if (supportsHover() && !prefersReducedMotion()) {
             for (const card of root.querySelectorAll<HTMLElement>('[data-card]')) {
                 const chip = card.querySelector<HTMLElement>('[data-card-chip]');
+
                 if (!chip) continue;
                 gsap.set(chip, { xPercent: -50, yPercent: -140, autoAlpha: 0, scale: 0.6 });
                 const xTo = gsap.quickTo(chip, 'x', { duration: 0.35, ease: 'power3.out' });
@@ -212,16 +227,19 @@ const CASCADE = 14;
                 const chipAt = (e: MouseEvent) => {
                     const rect = card.getBoundingClientRect();
                     const half = chip.offsetWidth / 2 + 12;
+
                     return {
                         x: gsap.utils.clamp(half, rect.width - half, e.clientX - rect.left),
                         y: Math.max(chip.offsetHeight * 1.4 + 12, e.clientY - rect.top),
                     };
                 };
+
                 const place = (e: MouseEvent) => {
                     const { x, y } = chipAt(e);
                     xTo(x);
                     yTo(y);
                 };
+
                 const show = () => gsap.to(chip, { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' });
                 const hide = () => gsap.to(chip, { autoAlpha: 0, scale: 0.6, duration: 0.25 });
 
@@ -243,12 +261,14 @@ const CASCADE = 14;
                 if (i === wrappers.length - 1) return;
                 const card = wrapper.querySelector('[data-card]');
                 const next = wrappers[i + 1];
+
                 const trigger = {
                     trigger: next,
                     start: 'top bottom',
                     end: () => `top ${wrapper.style.top === 'auto' ? '0px' : wrapper.style.top}`,
                     scrub: true,
                 };
+
                 gsap.to(card, { scale: 0.94, ease: 'none', transformOrigin: 'center top', scrollTrigger: trigger });
                 gsap.to(wrapper.querySelector('[data-card-veil]'), {
                     opacity: 0.55,

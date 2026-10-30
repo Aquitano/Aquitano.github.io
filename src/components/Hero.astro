@@ -8,25 +8,25 @@ import { opticalIndent } from '../lib/displayTitle';
     id="top"
     data-hero
     data-minimap="Intro"
-    class="short:pt-18 relative flex min-h-svh flex-col justify-end overflow-hidden pt-20"
+    class="relative flex min-h-svh flex-col justify-end overflow-hidden pt-20 short:pt-18"
 >
     <div class="hero-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <span class="hero-glow"></span>
     </div>
 
-    <div class="to-bg pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent to-bg"></div>
 
-    <div data-hero-parallax class="section-x short:pb-6 relative z-10 pb-10 md:pb-14">
+    <div data-hero-parallax class="section-x relative z-10 pb-10 md:pb-14 short:pb-6">
         <div data-hero-dim>
             <p
-                class="intro-fade meta text-fg/70 short:mb-3 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1"
+                class="intro-fade meta mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-fg/70 short:mb-3"
                 style="--intro-delay: 740ms"
             >
                 <span class="text-balance">
                     {site.role} · {site.status}
                 </span>
             </p>
-            <h1 class="display short:text-[clamp(2.75rem,min(15.2vw,21svh),16rem)] text-[clamp(2.75rem,min(15.2vw,26svh),16rem)]">
+            <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),16rem)] short:text-[clamp(2.75rem,min(15.2vw,21svh),16rem)]">
                 <span class="block overflow-y-clip pb-[0.06em]">
                     <span class="intro-rise block" style={`--intro-delay: 150ms; ${opticalIndent('Thomas')}`}>
                         Thomas
@@ -43,22 +43,22 @@ import { opticalIndent } from '../lib/displayTitle';
             </h1>
         </div>
 
-        <div class="border-line short:mt-5 short:flex-row short:items-end short:justify-between short:pt-4 mt-8 flex flex-col gap-8 border-t pt-6 md:mt-12 md:flex-row md:items-end md:justify-between">
+        <div class="mt-8 flex flex-col gap-8 border-t border-line pt-6 md:mt-12 md:flex-row md:items-end md:justify-between short:mt-5 short:flex-row short:items-end short:justify-between short:pt-4">
             <p
-                class="intro-fade text-muted short:max-w-md short:text-base max-w-md text-base leading-relaxed md:max-w-sm md:text-lg lg:max-w-md"
+                class="intro-fade max-w-md text-base leading-relaxed text-muted md:max-w-sm md:text-lg lg:max-w-md short:max-w-md short:text-base"
                 style="--intro-delay: 810ms"
             >
                 Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
-                CS in <span class="text-fg whitespace-nowrap">Passau, Germany</span>.
+                CS in <span class="whitespace-nowrap text-fg">Passau, Germany</span>.
             </p>
             <div
-                class="intro-fade short:flex-nowrap flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap"
+                class="intro-fade flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap short:flex-nowrap"
                 style="--intro-delay: 880ms"
             >
                 <Magnetic class="inline-flex" strength={0.2}>
                     <a
                         href="#work"
-                        class="cta-glide pressable bg-accent flex items-center gap-2 rounded-full px-6 py-3.5 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
+                        class="cta-glide pressable flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
                     >
                         <span class="cta-glide-label">
                             <span class="cta-glide-label-in">View Work</span>
@@ -76,8 +76,8 @@ import { opticalIndent } from '../lib/displayTitle';
                     aria-label="Scroll to about section"
                     class="group ml-1 flex items-center gap-2.5 rounded-full"
                 >
-                    <span class="meta group-hover:text-accent transition-colors duration-300">Scroll</span>
-                    <span class="border-fg/20 text-accent group-hover:border-accent grid size-11 place-items-center overflow-hidden rounded-full border transition-colors duration-300">
+                    <span class="meta transition-colors duration-300 group-hover:text-accent">Scroll</span>
+                    <span class="grid size-11 place-items-center overflow-hidden rounded-full border border-fg/20 text-accent transition-colors duration-300 group-hover:border-accent">
                         <svg
                             class="scroll-cue-arrow"
                             width="11"
@@ -218,22 +218,27 @@ import { opticalIndent } from '../lib/displayTitle';
     import { gsap, prefersReducedMotion } from '../lib/gsap';
 
     const bg = document.querySelector<HTMLElement>('[data-hero] .hero-bg');
+
     const heroEl = document.querySelector<HTMLElement>('[data-hero]');
+
     if (bg && heroEl && !prefersReducedMotion() && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         let mx = 50;
         let my = 32;
         let queued = false;
+
         const apply = () => {
             queued = false;
             bg.style.setProperty('--mx', `${mx}%`);
             bg.style.setProperty('--my', `${my}%`);
         };
+
         heroEl.addEventListener(
             'pointermove',
             (e) => {
                 const r = heroEl.getBoundingClientRect();
                 mx = ((e.clientX - r.left) / r.width) * 100;
                 my = ((e.clientY - r.top) / r.height) * 100;
+
                 if (!queued) {
                     queued = true;
                     requestAnimationFrame(apply);
@@ -244,6 +249,7 @@ import { opticalIndent } from '../lib/displayTitle';
     }
 
     const root = document.querySelector<HTMLElement>('[data-hero]');
+
     if (root && !prefersReducedMotion()) {
         const scrub = { trigger: root, start: 'top top', end: 'bottom top', scrub: true };
         gsap.to('[data-hero-parallax]', { y: 28, ease: 'none', scrollTrigger: scrub });

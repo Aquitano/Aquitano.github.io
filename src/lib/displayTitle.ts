@@ -7,6 +7,7 @@ const SIDE_BEARING_EM: [RegExp, number][] = [
     [/^\d/, 0.046],
     [/^[CGOQS]/i, 0.056],
 ];
+
 const STEM_BEARING_EM = 0.086;
 
 /** Pulls display type left by its first glyph's side bearing, so the ink starts on the same edge as the labels around it. */
@@ -22,12 +23,15 @@ export const displayTitle = (title: string, wrap = [title]) => {
     const compound = !/\s/.test(title);
     let word = 0;
     let previous = '';
+
     const lines = wrap.map((line) =>
         (compound ? line.split(camelBreak) : [line]).map((text) => {
             if (compound && /[a-z]$/.test(previous) && /^[A-Z]/.test(text)) word++;
             previous = text;
+
             return { text, outline: word % 2 === 1 };
         }),
     );
+
     return { lines, joiner: compound ? '' : ' ' };
 };

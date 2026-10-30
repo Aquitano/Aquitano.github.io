@@ -36,6 +36,7 @@ export function initSmoothScroll() {
 export function targetScrollY() {
     if (!lenis) return window.scrollY;
     const { destination } = lenis.userData;
+
     return lenis.isScrolling && typeof destination === 'number' ? destination : lenis.targetScroll;
 }
 
@@ -47,13 +48,16 @@ export function scrollToTarget(target: number | HTMLElement, { immediate = false
     if (lenis) {
         const destination = typeof target === 'number' ? Math.max(0, Math.min(target, lenis.limit)) : undefined;
         lenis.scrollTo(target, { immediate, duration: JUMP_DURATION, userData: { destination } });
+
         return;
     }
 
     const behavior: ScrollBehavior = immediate ? 'instant' : 'auto';
+
     if (typeof target === 'number') window.scrollTo({ top: Math.max(0, target), behavior });
     else target.scrollIntoView({ behavior });
 }
 
 export const pauseScroll = () => lenis?.stop();
+
 export const resumeScroll = () => lenis?.start();

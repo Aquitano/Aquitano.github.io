@@ -14,9 +14,11 @@ const git = (cmd: string) => {
 
 // %n (newline) separator avoids shell metacharacters; a literal | would be parsed as a pipe by execSync's shell.
 const [sha, shaFull, iso] = git('git log -1 --format=%h%n%H%n%cI').split('\n');
+
 const remoteMatch = git('git remote get-url origin').match(/github\.com[:/](.+?)(?:\.git)?$/);
 
 export const buildSha = sha;
+
 export const commitUrl = remoteMatch && shaFull ? `https://github.com/${remoteMatch[1]}/commit/${shaFull}` : '';
 
 const formatStampDate = (date: Date) =>

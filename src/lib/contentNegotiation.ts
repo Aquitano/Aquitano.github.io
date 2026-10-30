@@ -16,7 +16,9 @@ export type RoutingOperations = {
 };
 
 const HTML = 'text/html';
+
 const MARKDOWN = 'text/markdown';
+
 const VARY = 'Accept, Accept-Encoding';
 
 export const markdownRoutes = new Map<string, string>([
@@ -61,20 +63,24 @@ export function parseAccept(header: string): AcceptEntry[] {
                 .trim()
                 .split(';')
                 .map((part) => part.trim());
+
             const type = parts[0]?.toLowerCase() ?? '';
             let q = 1;
 
             for (const parameter of parts.slice(1)) {
                 const separator = parameter.indexOf('=');
+
                 if (separator === -1) continue;
                 const name = parameter.slice(0, separator).trim().toLowerCase();
                 const value = parameter.slice(separator + 1).trim();
+
                 if (name !== 'q') continue;
                 const parsed = Number(value);
                 q = Number.isFinite(parsed) ? Math.max(0, Math.min(1, parsed)) : 0;
             }
 
             const specificity = type === '*/*' ? 0 : type.endsWith('/*') ? 1 : 2;
+
             return { type, q, specificity, position };
         })
         .filter((entry) => /^(?:\*|[a-z0-9!#$&^_.+-]+)\/(?:\*|[a-z0-9!#$&^_.+-]+)$/.test(entry.type));
@@ -82,21 +88,26 @@ export function parseAccept(header: string): AcceptEntry[] {
 
 const matches = (entry: AcceptEntry, candidate: string): boolean => {
     if (entry.type === '*/*') return true;
+
     if (entry.type.endsWith('/*')) return candidate.startsWith(entry.type.slice(0, -1));
+
     return entry.type === candidate;
 };
 
 export function preferredType(header: string | null, produces: string[]): string | null {
     if (!header?.trim()) return produces[0] ?? null;
     const entries = parseAccept(header);
+
     if (entries.length === 0) return null;
 
     let best: { type: string; q: number; position: number } | null = null;
 
     for (const candidate of produces) {
         let match: AcceptEntry | null = null;
+
         for (const entry of entries) {
             if (!matches(entry, candidate)) continue;
+
             if (
                 !match ||
                 entry.specificity > match.specificity ||
@@ -107,6 +118,7 @@ export function preferredType(header: string | null, produces: string[]): string
         }
 
         if (!match || match.q <= 0) continue;
+
         if (!best || match.q > best.q || (match.q === best.q && match.position < best.position)) {
             best = { type: candidate, q: match.q, position: match.position };
         }
@@ -165,8 +177,10 @@ export function negotiateRequest(request: Request, operations: RoutingOperations
     }
 
     const headers: Record<string, string> = { vary: VARY };
+
     if (markdownAsset) {
         headers.link = `<${markdownAsset}>; rel="alternate"; type="text/markdown"`;
     }
+
     return operations.next({ headers });
 }

@@ -12,13 +12,19 @@ interface Props {
 }
 
 const { project, index, total, next } = Astro.props;
+
 const title = displayTitle(project.title, project.wrap);
+
 const nextTitle = displayTitle(next.title, next.wrap);
+
 const opensNewTab = (link: (typeof project.links)[number]) => link.external || isExternalHref(link.href);
 
 const LINE_STAGGER = 80;
+
 const FADE_STAGGER = 60;
+
 const fadeStart = 700 + (title.lines.length - 1) * LINE_STAGGER;
+
 const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
 ---
 
@@ -32,7 +38,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
     <header class="section-x relative pt-28 pb-12 md:pt-40 md:pb-16">
         <div class="intro-fade" style={fadeDelay(0)}>
-            <a href="/#work" class="link-line pressable touch-target meta text-fg inline-block">
+            <a href="/#work" class="link-line pressable touch-target meta inline-block text-fg">
                 <span aria-hidden="true">←</span> All Work
             </a>
         </div>
@@ -70,13 +76,13 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             ))}
         </h1>
 
-        <p class="intro-fade text-muted mt-8 max-w-2xl text-base leading-relaxed md:text-xl" style={fadeDelay(3)}>
+        <p class="intro-fade mt-8 max-w-2xl text-base leading-relaxed text-muted md:text-xl" style={fadeDelay(3)}>
             {project.description}
         </p>
     </header>
     {project.image && (
         <div data-detail-banner class="section-x relative pt-2 pb-10 md:pb-16">
-            <div class="border-line relative overflow-hidden rounded-2xl border">
+            <div class="relative overflow-hidden rounded-2xl border border-line">
                 <div
                     class="pointer-events-none absolute -top-1/3 -right-1/4 h-[70%] w-[70%] rounded-full opacity-[0.08] blur-3xl"
                     style={`background: ${project.accent}`}
@@ -98,7 +104,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
     <div
         data-detail-body
-        class="border-line section-x relative grid gap-12 border-t py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-8"
+        class="section-x relative grid gap-12 border-t border-line py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-8"
     >
         <aside class="lg:sticky lg:top-28 lg:self-start">
             <dl class="space-y-8">
@@ -106,10 +112,10 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     <dt class="meta mb-2">Scope</dt>
                     <dd class="overflow-hidden">
                         {/* Each item carries its own separator; pulling the list left clips the one starting each line. */}
-                        <ul class="text-fg/85 -ml-6 flex flex-wrap font-mono text-sm leading-relaxed">
+                        <ul class="-ml-6 flex flex-wrap font-mono text-sm leading-relaxed text-fg/85">
                             {project.tasks.map((task) => (
                                 <li class="relative pl-6 whitespace-nowrap">
-                                    <span aria-hidden="true" class="text-muted absolute left-0 w-6 text-center">
+                                    <span aria-hidden="true" class="absolute left-0 w-6 text-center text-muted">
                                         ·
                                     </span>
                                     {task}
@@ -123,7 +129,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     <dd>
                         <ul class="flex flex-wrap gap-2">
                             {project.tags.map((tag) => (
-                                <li class="border-line text-fg/70 rounded-full border px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] uppercase">
+                                <li class="rounded-full border border-line px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] text-fg/70 uppercase">
                                     {tag}
                                 </li>
                             ))}
@@ -139,7 +145,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                                     href={link.href}
                                     target={opensNewTab(link) ? '_blank' : undefined}
                                     rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
-                                    class="link-line pressable touch-target text-fg font-mono text-xs tracking-[0.14em] uppercase"
+                                    class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] text-fg uppercase"
                                 >
                                     {link.label} <span aria-hidden="true">↗</span>
                                     {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
@@ -153,7 +159,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
 
         <div
             data-detail-prose
-            class="[&>p]:text-fg/85 [&_code]:bg-bg-raise [&_code]:border-line max-w-xl space-y-6 [&_code]:rounded [&_code]:border [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.85em] [&>p]:text-base [&>p]:leading-relaxed md:[&>p]:text-lg"
+            class="max-w-xl space-y-6 [&_code]:rounded [&_code]:border [&_code]:border-line [&_code]:bg-bg-raise [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.85em] [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-fg/85 md:[&>p]:text-lg"
         >
             <slot />
         </div>
@@ -162,7 +168,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
     <a
         href={`/work/${next.slug}`}
         data-detail-next
-        class="group border-line section-x relative block overflow-hidden border-t py-16 focus-visible:-outline-offset-4 md:py-24"
+        class="group section-x relative block overflow-hidden border-t border-line py-16 focus-visible:-outline-offset-4 md:py-24"
     >
         <div
             class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12] group-focus-visible:opacity-[0.12]"
@@ -170,7 +176,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             aria-hidden="true"
         ></div>
         <p class="meta relative mb-4">Next Project</p>
-        <p class="display group-hover:text-accent group-focus-visible:text-accent relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300">
+        <p class="display relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent">
             {nextTitle.lines.map((words, j) => (
                 <Fragment>
                     {j > 0 && (nextTitle.joiner || <wbr />)}
@@ -190,7 +196,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                                 {word}
                                 <span
                                     aria-hidden="true"
-                                    class="ease-out-strong ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
+                                    class="ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-out-strong group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
                                 >
                                     →
                                 </span>
@@ -207,10 +213,13 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
     import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
 
     const root = document.querySelector<HTMLElement>('[data-detail]');
+
     if (root && !prefersReducedMotion()) {
         const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
+
         if (banner) {
             const [frame] = offscreen([...banner.children]);
+
             if (frame) {
                 gsap.from(frame, {
                     opacity: 0,
@@ -220,6 +229,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
                 });
             }
+
             gsap.fromTo(
                 banner.querySelector('img'),
                 { yPercent: -6 },
@@ -236,6 +246,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             ...root.querySelectorAll('[data-detail-prose] > *'),
             ...root.querySelectorAll('[data-detail-next]'),
         ]);
+
         gsap.set(revealItems, { opacity: 0, y: 32 });
         ScrollTrigger.batch(revealItems, {
             start: 'top 88%',

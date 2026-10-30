@@ -17,11 +17,11 @@ import { opticalIndent } from '../lib/displayTitle';
 
     <div
         data-stats
-        class="border-line bg-line mt-16 grid grid-cols-1 gap-px overflow-hidden border sm:grid-cols-3 md:mt-24"
+        class="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-line bg-line sm:grid-cols-3 md:mt-24"
     >
         {stats.map((stat) => (
             <div data-stat class="bg-bg p-6 md:p-8">
-                <p class="display text-fg leading-display text-5xl tabular-nums md:text-7xl" style={opticalIndent('0')}>
+                <p class="display text-5xl leading-display text-fg tabular-nums md:text-7xl" style={opticalIndent('0')}>
                     <>
                         <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
                         <span class="text-accent">{stat.suffix}</span>
@@ -46,9 +46,11 @@ import { opticalIndent } from '../lib/displayTitle';
                 delay: i * 0.08,
                 scrollTrigger: { trigger: cell, start: 'top 88%', once: true },
             });
+
             tl.from(cell.children, { opacity: 0, y: 32 });
 
             const counter = cell.querySelector<HTMLElement>('[data-count]');
+
             if (!counter) return;
             const count = { value: 0 };
             tl.to(
