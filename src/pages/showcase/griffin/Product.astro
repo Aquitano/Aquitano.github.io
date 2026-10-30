@@ -1,4 +1,10 @@
 ---
+import "font-awesome/css/font-awesome.min.css";
+import "@fontsource/yantramanav/300.css";
+import "@fontsource/yantramanav/400.css";
+import "@fontsource/yantramanav/500.css";
+import "@fontsource/yantramanav/700.css";
+import "@fontsource/yantramanav/900.css";
 import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo/assets';
 ---
 
@@ -16,20 +22,6 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
         />
         <title>Unser Produkt - Griffin Energy</title>
         {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
-        <!-- font-awesome CSS -->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <!-- Fonts -->
-        <link
-            href="https://fonts.googleapis.com/css?family=Yantramanav:300,400,500,700,900"
-            rel="stylesheet"
-            type="text/css"
-        />
     </head>
     <body>
         <!-- ==== Start header --><!-- header-desktop -->
@@ -296,15 +288,14 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                         aus Deutschland.
                                     </p>
                                 </span>
-                                <div class="sketchfab-embed-wrapper">
-                                    <iframe
-                                        title="A 3D model"
-                                        width="640"
-                                        height="480"
-                                        src="https://sketchfab.com/models/480d3e4b3e3f4c5a8c29f4e1d4155282/embed?autostart=0&ui_controls=1&ui_infos=1&ui_inspector=1&ui_stop=1&ui_watermark=1&ui_watermark_link=1"
-                                        allow="autoplay; fullscreen; vr"></iframe>
-                                    <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4a4a4a"></p>
-                                </div>
+                                <p class="sketchfab-embed-wrapper">
+                                    <a
+                                        href="https://sketchfab.com/3d-models/brummselbeeren-dose-480d3e4b3e3f4c5a8c29f4e1d4155282"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style="text-decoration: underline">3D-Modell der Dose auf Sketchfab ansehen</a
+                                    >
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -321,7 +312,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                             <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke.<br />
-                                <a href="/privacy">Datenschutz / Privacy</a>
+                                <a href="/privacy" style="text-decoration: underline">Datenschutz / Privacy</a>
                             </p>
                         </div>
                     </div>

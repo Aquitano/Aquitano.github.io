@@ -8,8 +8,6 @@ Thomas Breindl, Passau, Germany, [contact@thomasbreindl.me](mailto:contact@thoma
 
 Vercel Inc. (USA) hosts the site and processes your IP address, request time, URL, referrer, and user agent to deliver pages and protect them against abuse (Art. 6(1)(f) GDPR). Vercel acts under a data processing agreement and is certified under the EU-U.S. Data Privacy Framework. Request logs are deleted after one day at most.
 
-The archived school project under [/showcase/griffin](/showcase/griffin/) also loads fonts from Google, icons from cdnjs (Cloudflare), and a 3D model from Sketchfab, which receive your IP address.
-
 ## Email
 
 If you email Thomas, he uses your message to reply (Art. 6(1)(b) or (f) GDPR) and deletes it once it is no longer needed. Mail is hosted by Proton AG in Switzerland.

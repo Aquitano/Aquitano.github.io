@@ -1,4 +1,10 @@
 ---
+import "font-awesome/css/font-awesome.min.css";
+import "@fontsource/yantramanav/300.css";
+import "@fontsource/yantramanav/400.css";
+import "@fontsource/yantramanav/500.css";
+import "@fontsource/yantramanav/700.css";
+import "@fontsource/yantramanav/900.css";
 import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo/assets';
 ---
 
@@ -17,22 +23,6 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
         />
         <title>Griffin Energy - Donation-Code</title>
         {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
-        <!-- font-awesome CSS -->
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-            integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <!-- Fonts -->
-        <link
-            href="https://fonts.googleapis.com/css?family=Yantramanav:300,400,500,700,900"
-            rel="stylesheet"
-            type="text/css"
-        />
     </head>
 
     <body>
@@ -230,7 +220,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                                         <div class="modal-content">
                                                             <div class="modal-header flex-column">
                                                                 <div class="icon-box">
-                                                                    <i class="material-icons">help</i>
+                                                                    <i class="fa fa-question" aria-hidden="true"></i>
                                                                 </div>
                                                                 <h4 class="modal-title w-100">Bist du dir sicher?</h4>
                                                                 <button
@@ -323,7 +313,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                                         <div class="modal-content">
                                                             <div class="modal-header flex-column">
                                                                 <div class="icon-box">
-                                                                    <i class="material-icons">help</i>
+                                                                    <i class="fa fa-question" aria-hidden="true"></i>
                                                                 </div>
                                                                 <h4 class="modal-title w-100">Bist du dir sicher?</h4>
                                                                 <button
@@ -376,7 +366,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                             <img src={getGriffinAsset('images/logo.png')} alt="Logo" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke. <br />
-                                <a href="/privacy">Datenschutz / Privacy</a>
+                                <a href="/privacy" style="text-decoration: underline">Datenschutz / Privacy</a>
                             </p>
                         </div>
                     </div>
