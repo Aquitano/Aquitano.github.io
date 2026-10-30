@@ -7,21 +7,26 @@ type AnalyticsEvents = {
     keyboard_shortcuts_toggled: { enabled: boolean };
 };
 
-const afterPageLoad = () =>
+// The SDK's ~100 KB parse is the site's only long task, so it waits until the visitor
+// interacts, or until a visitor who only reads has been on the page for a few seconds.
+const firstInteractionOrTimeout = (ms: number) =>
     new Promise<void>((resolve) => {
-        if (document.readyState === 'complete') resolve();
-        else window.addEventListener('load', () => resolve(), { once: true });
-    });
+        const controller = new AbortController();
 
-const whenIdle = () =>
-    new Promise<void>((resolve) => {
-        if ('requestIdleCallback' in window) requestIdleCallback(() => resolve(), { timeout: 2000 });
-        else setTimeout(resolve, 1000);
+        const start = () => {
+            controller.abort();
+            resolve();
+        };
+
+        for (const type of ['pointerdown', 'keydown', 'wheel', 'touchstart']) {
+            window.addEventListener(type, start, { passive: true, signal: controller.signal });
+        }
+
+        setTimeout(start, ms);
     });
 
 const load = async (key: string): Promise<PostHog> => {
-    await afterPageLoad();
-    await whenIdle();
+    await firstInteractionOrTimeout(5000);
     const { posthog } = await import('posthog-js');
 
     // Cookieless and EU-hosted so the site needs no consent banner; /ingest is proxied in vercel.json.
