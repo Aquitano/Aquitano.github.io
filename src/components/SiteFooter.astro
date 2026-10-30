@@ -102,6 +102,10 @@ const isHome = Astro.url.pathname === '/';
         <p class="meta">
             ©2026 {site.name}
             <span class="max-[359px]:hidden md:max-xl:hidden"> · {site.location}</span>
+            <span aria-hidden="true"> · </span>
+            <a href="/privacy" class="link-line touch-target text-fg transition-colors duration-200 hover:text-accent">
+                Privacy
+            </a>
         </p>
         {buildSha && (
             <p class="meta flex items-center gap-1.5">
