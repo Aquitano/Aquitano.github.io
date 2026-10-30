@@ -217,8 +217,12 @@ const SHORTCUTS = [
         for (const card of section.querySelectorAll<HTMLElement>('[data-card-wrapper]')) stops.push(card);
     }
 
+    const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const isTyping = (el: Element | null) =>
+        el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+
     if (dialog && stops.length) {
-        const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const HEADER_OFFSET = 88;
 
         const wrappers = stops.filter((s) => s.hasAttribute('data-card-wrapper'));
@@ -272,9 +276,6 @@ const SHORTCUTS = [
         window.addEventListener('load', measure);
         document.fonts?.ready.then(measure);
 
-        const isTyping = (el: Element | null) =>
-            el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
-
         const open = () => {
             if (dialog.open) return;
             dialog.showModal();
@@ -321,7 +322,9 @@ const SHORTCUTS = [
 
             if (e.key === '?') {
                 e.preventDefault();
-                dialog.open ? close() : open();
+
+                if (dialog.open) close();
+                else open();
 
                 return;
             }

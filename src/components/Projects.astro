@@ -140,6 +140,14 @@ const CASCADE = 14;
 
     const VIEWPORT_MARGIN = 16;
 
+    const naturalTop = (el: HTMLElement) => {
+        el.style.position = 'static';
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        el.style.position = '';
+
+        return top;
+    };
+
     const root = document.querySelector<HTMLElement>('[data-projects]');
 
     if (root) {
@@ -166,14 +174,6 @@ const CASCADE = 14;
             placeCards();
             ScrollTrigger.refresh();
         }).observe(root);
-
-        const naturalTop = (el: HTMLElement) => {
-            el.style.position = 'static';
-            const top = el.getBoundingClientRect().top + window.scrollY;
-            el.style.position = '';
-
-            return top;
-        };
 
         // Returning to the tab re-focuses the last element; that is not a reason to scroll.
         let focusedAtBlur: Element | null = null;

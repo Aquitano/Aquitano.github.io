@@ -67,7 +67,7 @@ import { opticalIndent } from '../lib/displayTitle';
             );
         });
 
-        document.fonts.ready.then(() => {
+        document.fonts.ready.then(() =>
             ScrollTrigger.create({
                 trigger: '[data-manifesto]',
                 start: 'top 95%',
@@ -86,7 +86,7 @@ import { opticalIndent } from '../lib/displayTitle';
                         },
                     });
                 },
-            });
-        });
+            }),
+        );
     }
 </script>

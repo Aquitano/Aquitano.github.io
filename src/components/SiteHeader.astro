@@ -84,15 +84,15 @@ const NAV = [
         }
     };
 
+    // Jumps land a section's content, not its top padding, under the header, so measure from there.
+    const contentTop = (el: HTMLElement) =>
+        el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).paddingTop);
+
     if (location.pathname === '/') {
         const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-minimap]')).map((el) => ({
             el,
             navId: el.dataset.nav ?? el.id,
         }));
-
-        // Jumps land a section's content, not its top padding, under the header, so measure from there.
-        const contentTop = (el: HTMLElement) =>
-            el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).paddingTop);
 
         let current: string | undefined;
         let queued = false;

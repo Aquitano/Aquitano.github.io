@@ -193,6 +193,13 @@ const isHome = Astro.url.pathname === '/';
         }
     }
 
+    const copy = async (text: string) => {
+        if (!navigator.clipboard?.writeText) return false;
+        await navigator.clipboard.writeText(text);
+
+        return true;
+    };
+
     const btn = document.querySelector<HTMLButtonElement>('[data-copy-email]');
 
     const def = btn?.querySelector<HTMLElement>('[data-copy-default]');
@@ -205,13 +212,6 @@ const isHome = Astro.url.pathname === '/';
 
     if (btn && def && done && fail) {
         let timer: ReturnType<typeof setTimeout>;
-
-        const copy = async (text: string) => {
-            if (!navigator.clipboard?.writeText) return false;
-            await navigator.clipboard.writeText(text);
-
-            return true;
-        };
 
         const selectEmail = () => {
             if (!emailText) return;

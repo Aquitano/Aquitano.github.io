@@ -6,7 +6,7 @@ import ProjectDetail from '../../components/ProjectDetail.astro';
 import { site } from '../../lib/data';
 
 export async function getStaticPaths() {
-    const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+    const work = (await getCollection('work')).toSorted((a, b) => a.data.order - b.data.order);
 
     return work.map((entry, index) => ({
         params: { slug: entry.id },

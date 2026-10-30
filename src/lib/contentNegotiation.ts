@@ -176,11 +176,9 @@ export function negotiateRequest(request: Request, operations: RoutingOperations
         });
     }
 
-    const headers: Record<string, string> = { vary: VARY };
-
-    if (markdownAsset) {
-        headers.link = `<${markdownAsset}>; rel="alternate"; type="text/markdown"`;
-    }
-
-    return operations.next({ headers });
+    return operations.next({
+        headers: markdownAsset
+            ? { vary: VARY, link: `<${markdownAsset}>; rel="alternate"; type="text/markdown"` }
+            : { vary: VARY },
+    });
 }
