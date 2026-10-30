@@ -22,7 +22,7 @@ export default defineConfig({
         'typescript/no-non-null-assertion': 'warn',
         'typescript/switch-exhaustiveness-check': 'warn',
         'typescript/no-floating-promises': 'error',
-        'import/no-unassigned-import': ['warn', { allow: ['**/*.css', '@fontsource-variable/*'] }],
+        'import/no-unassigned-import': ['warn', { allow: ['**/*.css'] }],
         'oxc/no-accumulating-spread': 'error',
         'anti-slop/no-array-filter-map': 'error',
         'anti-slop/no-reduce-accumulator-copy': 'error',
