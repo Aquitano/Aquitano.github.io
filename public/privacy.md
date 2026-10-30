@@ -8,8 +8,6 @@ Thomas Breindl, Passau, Germany, [contact@thomasbreindl.me](mailto:contact@thoma
 
 Vercel Inc. (USA) hosts the site and processes your IP address, request time, URL, referrer, and user agent to deliver pages and protect them against abuse (Art. 6(1)(f) GDPR). Vercel acts under a data processing agreement and is certified under the EU-U.S. Data Privacy Framework. Request logs are deleted after one day at most.
 
-The archived school project under [/showcase/griffin](/showcase/griffin/) also loads fonts from Google, icons from cdnjs (Cloudflare), and a 3D model from Sketchfab, which receive your IP address.
-
 ## Analytics
 
 PostHog counts visits in cookieless mode, so nothing is stored in your browser. It records the pages you view, where you came from, the links you click, how far you scroll, JavaScript errors, and page speed, to improve the site (Art. 6(1)(f) GDPR). PostHog Inc. (USA) processes this data under a data processing agreement on servers in Frankfurt, does not store your IP address, and keeps events for the retention period of its plan.
