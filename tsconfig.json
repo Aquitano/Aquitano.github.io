@@ -1,12 +1,11 @@
 {
     "extends": "astro/tsconfigs/strict",
     "compilerOptions": {
-        "baseUrl": ".",
         "moduleResolution": "Bundler",
         "paths": {
-            "@/*": ["src/*"],
-            "@assets/*": ["src/assets/*"]
-        },
+            "@/*": ["./src/*"],
+            "@assets/*": ["./src/assets/*"]
+        }
     },
     "include": ["src/**/*", ".astro/types.d.ts"],
     "exclude": ["public/**/*", "dist/**/*"]
