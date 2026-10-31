@@ -1,7 +1,9 @@
 import { gsap, prefersReducedMotion } from '../gsap';
-import { createStage, everyFrame, random } from './stage';
+import { createStage, cssVar, everyFrame, random, styleUntil } from './stage';
 
-type Flake = { x: number; y: number; vx: number; vy: number; depth: number; phase: number };
+type Flake = { x: number; y: number; vx: number; vy: number; phase: number };
+
+type Layer = { near: number; radius: number; alpha: number; share: number; flakes: Flake[] };
 
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
@@ -13,48 +15,65 @@ const REPEL_RADIUS = 110;
 
 const clampScroll = gsap.utils.clamp(-60, 60);
 
+const flakeCount = (width: number, height: number) => gsap.utils.clamp(24, 120, Math.round((width * height) / 12_000));
+
 export function start(signal: AbortSignal) {
-    const stage = createStage(document.body, { position: 'fixed', zIndex: '45' }, signal);
+    // 100lvh keeps the canvas from resizing whenever a mobile URL bar shows or hides.
+    const stage = createStage(document.body, signal, {
+        placement: { position: 'fixed', zIndex: '-1', height: '100lvh' },
+        maxDpr: 1,
+    });
 
     if (!stage) return;
 
-    const still = prefersReducedMotion();
-    const color = getComputedStyle(document.documentElement).getPropertyValue('--fg');
-    const flakes: Flake[] = [];
+    // Snow falls behind the text. Without its own stacking context, body paints its background over a negative z-index.
+    styleUntil(signal, document.body, { isolation: 'isolate' });
 
-    const settle = () => {
-        const { width, height } = stage;
-        const count = gsap.utils.clamp(40, 140, Math.round((width * height) / 12_000));
+    const { ctx } = stage;
+    const color = cssVar('--fg');
 
-        while (flakes.length < count) {
-            flakes.push({
-                x: random(0, width),
-                y: random(0, height),
-                vx: 0,
-                vy: 0,
-                depth: Math.random(),
-                phase: random(0, 7),
-            });
+    // Three depths, batched so each frame costs one fill per layer rather than one per flake.
+    const layers: Layer[] = [
+        { near: 0.4, radius: 0.9, alpha: 0.35, share: 0.5, flakes: [] },
+        { near: 0.7, radius: 1.5, alpha: 0.55, share: 0.3, flakes: [] },
+        { near: 1, radius: 2.3, alpha: 0.8, share: 0.2, flakes: [] },
+    ];
+
+    const populate = (total: number, width: number, height: number) => {
+        for (const layer of layers) {
+            const count = Math.round(total * layer.share);
+
+            while (layer.flakes.length < count) {
+                layer.flakes.push({ x: random(0, width), y: random(0, height), vx: 0, vy: 0, phase: random(0, 7) });
+            }
+
+            layer.flakes.length = count;
         }
-
-        flakes.length = still ? Math.round(count / 2) : count;
     };
 
-    const draw = (flake: Flake) => {
-        const near = 0.35 + flake.depth * 0.65;
-        stage.ctx.globalAlpha = 0.2 + near * 0.6;
-        stage.ctx.beginPath();
-        stage.ctx.arc(flake.x, flake.y, 0.5 + near * 1.9, 0, Math.PI * 2);
-        stage.ctx.fill();
+    const paint = (scaleX: number, scaleY: number) => {
+        ctx.clearRect(0, 0, stage.width, stage.height);
+        ctx.fillStyle = color;
+
+        for (const { radius, alpha, flakes } of layers) {
+            ctx.globalAlpha = alpha;
+            ctx.beginPath();
+
+            for (const { x, y } of flakes) {
+                ctx.moveTo(x * scaleX + radius, y * scaleY);
+                ctx.arc(x * scaleX, y * scaleY, radius, 0, Math.PI * 2);
+            }
+
+            ctx.fill();
+        }
     };
 
-    // Reduced motion gets one still frame, redrawn only when the viewport changes.
-    if (still) {
+    // Reduced motion gets a still frame. Flakes live in 0-1 coordinates so a resize rescales them instead of reshuffling.
+    if (prefersReducedMotion()) {
         stage.onResize = () => {
-            flakes.length = 0;
-            settle();
-            stage.ctx.fillStyle = color;
-            flakes.forEach(draw);
+            if (!layers[0].flakes.length) populate(flakeCount(stage.width, stage.height) / 2, 1, 1);
+
+            paint(stage.width, stage.height);
         };
 
         return;
@@ -76,44 +95,42 @@ export function start(signal: AbortSignal) {
     document.documentElement.addEventListener('pointerleave', () => (pointerX = -Infinity), { signal });
 
     everyFrame(signal, (time, dt) => {
-        const { ctx, width, height } = stage;
+        const { width, height } = stage;
 
         if (!width) return;
 
-        settle();
+        populate(flakeCount(width, height), width, height);
 
         // Flakes sit in the page rather than on the glass, so scrolling carries them along, near ones further.
         const scrolled = clampScroll(window.scrollY - lastScrollY);
         lastScrollY = window.scrollY;
         const damping = Math.exp(-2.5 * dt);
 
-        ctx.clearRect(0, 0, width, height);
-        ctx.fillStyle = color;
+        for (const { near, flakes } of layers) {
+            for (const flake of flakes) {
+                const dx = flake.x - pointerX;
+                const dy = flake.y - pointerY;
+                const distance = Math.hypot(dx, dy);
 
-        for (const flake of flakes) {
-            const near = 0.35 + flake.depth * 0.65;
-            const dx = flake.x - pointerX;
-            const dy = flake.y - pointerY;
-            const distance = Math.hypot(dx, dy);
+                if (distance < REPEL_RADIUS && distance > 0) {
+                    const force = (1 - distance / REPEL_RADIUS) * 900 * dt;
+                    flake.vx += (dx / distance) * force;
+                    flake.vy += (dy / distance) * force;
+                }
 
-            if (distance < REPEL_RADIUS && distance > 0) {
-                const force = (1 - distance / REPEL_RADIUS) * 900 * dt;
-                flake.vx += (dx / distance) * force;
-                flake.vy += (dy / distance) * force;
+                flake.vx *= damping;
+                flake.vy *= damping;
+                flake.x += (Math.sin(time * 0.7 + flake.phase) * 16 * near + flake.vx) * dt;
+                flake.y += ((16 + 40 * near) * near + flake.vy) * dt - scrolled * near * 0.4;
+
+                if (flake.y > height + 4) Object.assign(flake, { y: -4, x: random(0, width) });
+                else if (flake.y < -4) Object.assign(flake, { y: height + 4, x: random(0, width) });
+
+                if (flake.x > width + 4) flake.x = -4;
+                else if (flake.x < -4) flake.x = width + 4;
             }
-
-            flake.vx *= damping;
-            flake.vy *= damping;
-            flake.x += (Math.sin(time * 0.7 + flake.phase) * 16 * near + flake.vx) * dt;
-            flake.y += ((16 + 40 * near) * near + flake.vy) * dt - scrolled * near * 0.4;
-
-            if (flake.y > height + 4) Object.assign(flake, { y: -4, x: random(0, width) });
-            else if (flake.y < -4) Object.assign(flake, { y: height + 4, x: random(0, width) });
-
-            if (flake.x > width + 4) flake.x = -4;
-            else if (flake.x < -4) flake.x = width + 4;
-
-            draw(flake);
         }
+
+        paint(1, 1);
     });
 }

@@ -1,5 +1,5 @@
 import { prefersReducedMotion } from '../gsap';
-import { styleUntil } from './stage';
+import { EASE_OUT_STRONG, styleUntil } from './stage';
 
 const SPIDER_HEIGHT = 29;
 
@@ -13,7 +13,7 @@ const SPIDER = `
     <circle cx="1.1" cy="5.8" r="0.7" fill="var(--accent)" stroke="none" />
 </svg>`;
 
-export const icon = SPIDER.replace(`width="32" height="${SPIDER_HEIGHT}"`, 'width="18" height="16"');
+export const icon = SPIDER;
 
 const HIDDEN_Y = -80;
 
@@ -41,7 +41,7 @@ function darkenGrid(hero: HTMLElement, signal: AbortSignal) {
     if (glow) {
         styleUntil(signal, glow, {
             background:
-                'radial-gradient(300px 300px at var(--mx) var(--my), oklch(0.7165 0.1409 50.91 / 0.28), transparent 70%)',
+                'radial-gradient(300px 300px at var(--mx) var(--my), color-mix(in oklch, var(--accent) 28%, transparent), transparent 70%)',
         });
     }
 }
@@ -119,8 +119,7 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
         });
     };
 
-    const descend = (delay: number) =>
-        moveTo(restingY(), { duration: 2600, delay, easing: 'cubic-bezier(0.23, 1, 0.32, 1)' });
+    const descend = (delay: number) => moveTo(restingY(), { duration: 2600, delay, easing: EASE_OUT_STRONG });
 
     const fleeFrom = (e: PointerEvent) => {
         const body = drop.querySelector('svg')?.getBoundingClientRect();

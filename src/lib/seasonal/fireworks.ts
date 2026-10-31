@@ -1,5 +1,5 @@
 import { gsap, prefersReducedMotion } from '../gsap';
-import { createStage, everyFrame, random } from './stage';
+import { createStage, cssVar, everyFrame, random } from './stage';
 
 type Particle = { x: number; y: number; vx: number; vy: number; age: number; ttl: number; color: string };
 
@@ -12,22 +12,24 @@ const GRAVITY = 140;
 
 const FLIGHT_S = 1.1;
 
-const PALETTE = ['#e8874a', '#f6c177', '#e9e9e4'];
+const GOLD = '#f6c177';
 
-// Where reduced motion shows its still bursts, as fractions of the hero.
+// Where reduced motion shows its still bursts, as fractions of the hero: the empty band above the role line.
 const STILL_BURSTS = [
-    [0.2, 0.22],
-    [0.52, 0.12],
-    [0.8, 0.3],
+    [0.18, 0.12],
+    [0.5, 0.08],
+    [0.8, 0.14],
 ];
 
 export function start(signal: AbortSignal) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
-    const stage = hero && createStage(hero, { position: 'absolute', zIndex: '0' }, signal);
+    const stage = hero && createStage(hero, signal, { placement: { position: 'absolute', zIndex: '0' }, maxDpr: 1 });
 
     if (!hero || !stage) return;
 
     const { ctx } = stage;
+    const white = cssVar('--fg');
+    const palette = [cssVar('--accent'), GOLD, white];
     const rockets: Particle[] = [];
     const sparks: Particle[] = [];
 
@@ -42,7 +44,7 @@ export function start(signal: AbortSignal) {
                 vy: Math.sin(angle) * speed,
                 age: 0,
                 ttl: random(1.1, 1.9),
-                color: Math.random() < 0.75 ? color : '#e9e9e4',
+                color: Math.random() < 0.75 ? color : white,
             });
         }
     };
@@ -88,7 +90,7 @@ export function start(signal: AbortSignal) {
 
     // Reduced motion gets a still frame of bursts caught mid-air; a click adds one where it lands.
     if (prefersReducedMotion()) {
-        const bursts = STILL_BURSTS.map(([fx, fy]) => ({ fx, fy, color: gsap.utils.random(PALETTE) }));
+        const bursts = STILL_BURSTS.map(([fx, fy]) => ({ fx, fy, color: gsap.utils.random(palette) }));
 
         const develop = () => {
             sparks.length = 0;
@@ -107,7 +109,7 @@ export function start(signal: AbortSignal) {
         stage.onResize = develop;
         onEmptyClick((e) => {
             const { x, y } = pointInHero(e);
-            bursts.push({ fx: x / stage.width, fy: y / stage.height, color: gsap.utils.random(PALETTE) });
+            bursts.push({ fx: x / stage.width, fy: y / stage.height, color: gsap.utils.random(palette) });
 
             if (bursts.length > 5) bursts.shift();
 
@@ -129,7 +131,7 @@ export function start(signal: AbortSignal) {
         const x = toX + random(-60, 60);
         const y = stage.height + 8;
         const vy = (toY - y - 0.5 * GRAVITY * FLIGHT_S ** 2) / FLIGHT_S;
-        rockets.push({ x, y, vx: (toX - x) / FLIGHT_S, vy, age: 0, ttl: FLIGHT_S, color: gsap.utils.random(PALETTE) });
+        rockets.push({ x, y, vx: (toX - x) / FLIGHT_S, vy, age: 0, ttl: FLIGHT_S, color: gsap.utils.random(palette) });
     };
 
     onEmptyClick((e) => {

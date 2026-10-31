@@ -188,11 +188,13 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             trackSectionViews();
         </script>
         <script>
-            import { currentSeason, seasons } from '../lib/seasons';
+            import { isSwitchedOff, seasonForThisPage, seasons } from '../lib/seasons';
 
-            const season = currentSeason();
+            const season = seasonForThisPage();
 
-            const awayTitle = season ? seasons[season].awayTitle : '[ still shipping ] — TB';
+            // Read when the tab hides, so switching the season off also retires its title.
+            const awayTitle = () =>
+                season && !isSwitchedOff(season) ? seasons[season].awayTitle : '[ still shipping ] — TB';
 
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
@@ -209,7 +211,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
             document.addEventListener('visibilitychange', () => {
                 if (leaving) return;
-                document.title = document.hidden ? awayTitle : onPageTitle;
+                document.title = document.hidden ? awayTitle() : onPageTitle;
             });
 
             const signature = [
