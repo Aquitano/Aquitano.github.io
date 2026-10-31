@@ -267,6 +267,40 @@ body {
         }
     }
 
+    /* Floating corner buttons: hidden until a script adds .is-shown, and .is-away steps them aside past the hero. */
+    .corner-pill {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        pointer-events: none;
+        transition:
+            opacity 450ms var(--ease-out-strong),
+            transform 450ms var(--ease-out-strong),
+            visibility 450ms,
+            color 200ms,
+            border-color 200ms;
+    }
+
+    .corner-pill.is-shown {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        pointer-events: auto;
+    }
+
+    .corner-pill.is-away:not(:focus-visible) {
+        opacity: 0;
+        transform: translateY(10px);
+        pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .corner-pill {
+            transition: opacity 200ms linear;
+            transform: none;
+        }
+    }
+
     /* Pressable feedback */
     .pressable {
         transition: transform 140ms var(--ease-out-strong);

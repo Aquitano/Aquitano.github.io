@@ -9,6 +9,8 @@ type SeasonConfig = {
     awayTitle: string;
     /** Hero effects have nothing to decorate on pages without the home page hero. */
     scope: 'hero' | 'site';
+    /** Only a mouse can trigger the effect, so touch screens skip it. */
+    mouseOnly?: boolean;
     loadEffect: () => Promise<SeasonalEffect>;
 };
 
@@ -23,6 +25,7 @@ export const seasons = {
         label: 'April Fools prank',
         awayTitle: '[ totally shipping ] — TB',
         scope: 'hero',
+        mouseOnly: true,
         loadEffect: () => import('./seasonal/aprilFools'),
     },
     easter: {
@@ -91,9 +94,36 @@ export function seasonOn(date: Date): Season | undefined {
     return undefined;
 }
 
-/** `?season=christmas` previews a season on any day. */
-export function currentSeason() {
+/** The season whose effect can run on this page and device; `?season=christmas` previews one on any day. */
+export function seasonForThisPage() {
     const preview = new URLSearchParams(location.search).get('season');
+    const season = isSeason(preview) ? preview : seasonOn(new Date());
 
-    return isSeason(preview) ? preview : seasonOn(new Date());
+    if (!season) return undefined;
+
+    const { scope, mouseOnly }: SeasonConfig = seasons[season];
+    const hasHero = document.querySelector('[data-hero]') !== null;
+    const hasMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    return (scope === 'site' || hasHero) && (!mouseOnly || hasMouse) ? season : undefined;
+}
+
+// Holds the one season the visitor switched off, so the other seasons still play.
+const OFF_KEY = 'seasonal-effects-off';
+
+export function isSwitchedOff(season: Season) {
+    try {
+        return localStorage.getItem(OFF_KEY) === season;
+    } catch {
+        return false;
+    }
+}
+
+export function rememberSwitch(season: Season, on: boolean) {
+    try {
+        if (on) localStorage.removeItem(OFF_KEY);
+        else localStorage.setItem(OFF_KEY, season);
+    } catch {
+        /* storage blocked */
+    }
 }

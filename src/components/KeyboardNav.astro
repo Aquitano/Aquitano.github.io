@@ -62,7 +62,7 @@ const SHORTCUTS = [
     data-kbd-hint
     type="button"
     aria-label="Show keyboard shortcuts"
-    class="kbd-hint group fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border border-line bg-bg-raise/80 px-3 py-1.5 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg data-off:flex pointer-fine:flex"
+    class="kbd-hint corner-pill group fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border border-line bg-bg-raise/80 px-3 py-1.5 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg data-off:flex pointer-fine:flex"
 >
     <kbd class="kbd-cap">?</kbd>
     <span class="meta transition-colors duration-200 group-hover:text-fg">Shortcuts</span>
@@ -95,32 +95,6 @@ const SHORTCUTS = [
         color: var(--accent);
     }
 
-    .kbd-hint {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-        pointer-events: none;
-        transition:
-            opacity 450ms var(--ease-out-strong),
-            transform 450ms var(--ease-out-strong),
-            visibility 450ms,
-            color 200ms,
-            border-color 200ms;
-    }
-
-    .kbd-hint.is-shown {
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        pointer-events: auto;
-    }
-
-    .kbd-hint.is-away:not(:focus-visible) {
-        opacity: 0;
-        transform: translateY(10px);
-        pointer-events: none;
-    }
-
     .kbd-hint::after {
         content: '';
         position: absolute;
@@ -148,10 +122,6 @@ const SHORTCUTS = [
     }
 
     @media (prefers-reduced-motion: reduce) {
-        .kbd-hint {
-            transition: opacity 200ms linear;
-            transform: none;
-        }
         .kbd-hint.is-pulse::after {
             animation: none;
         }

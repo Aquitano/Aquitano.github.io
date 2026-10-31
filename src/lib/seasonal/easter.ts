@@ -1,5 +1,5 @@
 import { prefersReducedMotion } from '../gsap';
-import { styleUntil } from './stage';
+import { EASE_OUT_STRONG, styleUntil } from './stage';
 
 export const icon = `
 <svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
@@ -8,8 +8,6 @@ export const icon = `
 </svg>`;
 
 const CRACK = ['0 48%', '12% 56%', '26% 44%', '40% 56%', '54% 44%', '68% 56%', '82% 44%', '100% 52%'];
-
-const EASE = 'cubic-bezier(0.23, 1, 0.32, 1)';
 
 const half = (clipPath: string) => {
     const el = document.createElement('span');
@@ -40,7 +38,7 @@ export function start(signal: AbortSignal) {
 
     const button = document.createElement('button');
     button.type = 'button';
-    button.ariaLabel = 'Crack open the Easter egg';
+    button.setAttribute('aria-label', 'Crack open the Easter egg');
     Object.assign(button.style, {
         position: 'absolute',
         bottom: 'calc(100% + 1px)',
@@ -55,7 +53,7 @@ export function start(signal: AbortSignal) {
     button.append(egg);
 
     const note = document.createElement('span');
-    note.role = 'status';
+    note.setAttribute('role', 'status');
     note.className = 'meta text-accent';
     Object.assign(note.style, {
         position: 'absolute',
@@ -96,18 +94,19 @@ export function start(signal: AbortSignal) {
         'click',
         () => {
             wobble?.cancel();
-            button.disabled = true;
+            // aria-disabled rather than disabled, which would drop keyboard focus to the page.
+            button.setAttribute('aria-disabled', 'true');
             button.style.cursor = 'default';
             lid.animate([{ transform: 'none', opacity: 1 }, lidOff], {
                 duration: still ? 200 : 900,
-                easing: EASE,
+                easing: EASE_OUT_STRONG,
                 fill: 'forwards',
             });
             note.textContent = 'Happy Easter';
             note.animate([noteIn, { opacity: 1, transform: 'none' }], {
                 duration: still ? 200 : 600,
                 delay: 150,
-                easing: EASE,
+                easing: EASE_OUT_STRONG,
                 fill: 'backwards',
             });
         },
