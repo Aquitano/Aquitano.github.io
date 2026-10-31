@@ -1,10 +1,12 @@
 import { PUBLIC_POSTHOG_KEY } from 'astro:env/client';
 import type { PostHog } from 'posthog-js';
+import type { Season } from './seasons';
 
 type AnalyticsEvents = {
     section_viewed: { section: string };
     email_copied: undefined;
     keyboard_shortcuts_toggled: { enabled: boolean };
+    seasonal_effects_toggled: { season: Season; enabled: boolean };
 };
 
 // The SDK's ~100 KB parse is the site's only long task, so it waits until the visitor

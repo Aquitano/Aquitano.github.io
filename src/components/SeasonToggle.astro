@@ -1,0 +1,123 @@
+<button
+    data-season-toggle
+    type="button"
+    aria-pressed="true"
+    hidden
+    class="season-toggle fixed right-4 bottom-4 z-40 grid size-10 cursor-pointer place-items-center rounded-full border border-line bg-bg-raise/80 text-accent backdrop-blur-sm hover:border-fg/25 aria-[pressed=false]:text-muted pointer-coarse:size-11"
+>
+    <span data-season-icon aria-hidden="true" class="contents"></span>
+    <span data-season-label class="sr-only"></span>
+</button>
+
+<style>
+    .season-toggle {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition:
+            opacity 450ms var(--ease-out-strong),
+            transform 450ms var(--ease-out-strong),
+            visibility 450ms,
+            color 200ms,
+            border-color 200ms;
+    }
+
+    .season-toggle.is-shown {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    .season-toggle :global(svg) {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
+
+    /* Off draws a strike through the season's icon. */
+    .season-toggle[aria-pressed='false']::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 1.375rem;
+        height: 1.5px;
+        border-radius: 9999px;
+        background: currentColor;
+        rotate: -45deg;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .season-toggle {
+            transition: opacity 200ms linear;
+            transform: none;
+        }
+    }
+</style>
+
+<script>
+    import { track } from '../lib/analytics';
+    import { currentSeason, seasons, type Season } from '../lib/seasons';
+
+    // Holds the season the visitor switched off, so next year's other seasons still play.
+    const OFF_KEY = 'seasonal-effects-off';
+
+    const switchedOff = (season: Season) => {
+        try {
+            return localStorage.getItem(OFF_KEY) === season;
+        } catch {
+            return false;
+        }
+    };
+
+    const remember = (season: Season, on: boolean) => {
+        try {
+            if (on) localStorage.removeItem(OFF_KEY);
+            else localStorage.setItem(OFF_KEY, season);
+        } catch {
+            /* storage blocked */
+        }
+    };
+
+    const mount = async (season: Season, toggle: HTMLButtonElement) => {
+        const { label } = seasons[season];
+        const effect = await seasons[season].loadEffect();
+        let running: AbortController | undefined;
+
+        const turn = (on: boolean) => {
+            running?.abort();
+            running = on ? new AbortController() : undefined;
+
+            if (running) effect.start(running.signal);
+
+            toggle.setAttribute('aria-pressed', String(on));
+            toggle.title = `${label}: ${on ? 'on' : 'off'}`;
+        };
+
+        const icon = toggle.querySelector('[data-season-icon]');
+        const name = toggle.querySelector('[data-season-label]');
+
+        if (icon) icon.innerHTML = effect.icon;
+
+        if (name) name.textContent = label;
+
+        turn(!switchedOff(season));
+        toggle.addEventListener('click', () => {
+            const on = toggle.getAttribute('aria-pressed') !== 'true';
+            turn(on);
+            remember(season, on);
+            track('seasonal_effects_toggled', { season, enabled: on });
+        });
+
+        toggle.hidden = false;
+        // Waits out the hero intro so the button arrives after the page has settled.
+        setTimeout(() => toggle.classList.add('is-shown'), 1600);
+    };
+
+    const season = currentSeason();
+
+    const toggle = document.querySelector<HTMLButtonElement>('[data-season-toggle]');
+
+    if (season && toggle && (seasons[season].scope === 'site' || document.querySelector('[data-hero]'))) {
+        void mount(season, toggle);
+    }
+</script>
