@@ -5,6 +5,9 @@ const on = (year: number, month: number, day: number) => seasonOn(new Date(year,
 
 describe('season calendar', () => {
     test('fixed-date seasons start and end on their boundary days', () => {
+        expect(on(2026, 10, 3)).toBeUndefined();
+        expect(on(2026, 10, 4)).toBe('birthday');
+        expect(on(2026, 10, 5)).toBeUndefined();
         expect(on(2026, 10, 23)).toBeUndefined();
         expect(on(2026, 10, 24)).toBe('halloween');
         expect(on(2026, 10, 31)).toBe('halloween');
@@ -24,6 +27,13 @@ describe('season calendar', () => {
         expect(on(2027, 3, 30)).toBeUndefined();
         expect(on(2028, 4, 14)).toBe('easter');
         expect(on(2028, 4, 17)).toBe('easter');
+    });
+
+    test("Programmer's Day is the 256th day, a day earlier in leap years", () => {
+        expect(on(2027, 9, 12)).toBeUndefined();
+        expect(on(2027, 9, 13)).toBe('programmers-day');
+        expect(on(2028, 9, 12)).toBe('programmers-day');
+        expect(on(2028, 9, 13)).toBeUndefined();
     });
 
     test('April Fools wins when Easter Sunday falls on 1 April', () => {
