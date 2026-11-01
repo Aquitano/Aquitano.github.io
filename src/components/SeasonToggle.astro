@@ -1,0 +1,102 @@
+<button
+    data-season-toggle
+    type="button"
+    aria-pressed="true"
+    class="season-toggle corner-pill group fixed right-4 bottom-4 z-40 flex cursor-pointer items-center gap-2 rounded-full border border-line bg-bg-raise/80 p-3 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg pointer-fine:px-3 pointer-fine:py-2"
+>
+    <span data-season-icon aria-hidden="true" class="season-icon relative grid size-4.5 place-items-center"></span>
+    <span
+        data-season-label
+        class="meta sr-only transition-colors duration-200 group-hover:text-fg pointer-fine:not-sr-only"
+    ></span>
+</button>
+
+<style>
+    .season-icon :global(svg) {
+        width: 100%;
+        height: 100%;
+    }
+
+    .season-toggle[aria-pressed='true'] .season-icon {
+        color: var(--accent);
+    }
+
+    /* Off strikes through the season's icon. */
+    .season-toggle[aria-pressed='false'] .season-icon::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 1.375rem;
+        height: 1.5px;
+        border-radius: 9999px;
+        background: currentColor;
+        rotate: -45deg;
+    }
+</style>
+
+<script>
+    import { track } from '../lib/analytics';
+    import {
+        isSwitchedOff,
+        rememberSwitch,
+        seasonForThisPage,
+        seasons,
+        type Season,
+        type SeasonalEffect,
+    } from '../lib/seasons';
+
+    const mount = (season: Season, effect: SeasonalEffect, toggle: HTMLButtonElement) => {
+        const { label, scope } = seasons[season];
+        let running: AbortController | undefined;
+
+        const turn = (on: boolean) => {
+            running?.abort();
+            running = on ? new AbortController() : undefined;
+
+            if (running) effect.start(running.signal);
+
+            toggle.setAttribute('aria-pressed', String(on));
+            toggle.title = `${label}: ${on ? 'on' : 'off'}`;
+        };
+
+        const icon = toggle.querySelector('[data-season-icon]');
+        const name = toggle.querySelector('[data-season-label]');
+
+        if (icon) icon.innerHTML = effect.icon;
+
+        if (name) name.textContent = label;
+
+        turn(!isSwitchedOff(season));
+        toggle.addEventListener('click', () => {
+            const on = toggle.getAttribute('aria-pressed') !== 'true';
+            turn(on);
+            rememberSwitch(season, on);
+            track('seasonal_effects_toggled', { season, enabled: on });
+        });
+
+        // A hero effect has nothing to switch once the hero is gone, so the pill steps aside like the shortcuts hint.
+        const hero = document.querySelector('[data-hero]');
+
+        if (scope === 'hero' && hero) {
+            new IntersectionObserver(([entry]) => toggle.classList.toggle('is-away', !entry.isIntersecting)).observe(
+                hero,
+            );
+        }
+
+        // Waits out the hero intro so the pill arrives after the page has settled.
+        setTimeout(() => toggle.classList.add('is-shown'), 1600);
+    };
+
+    const season = seasonForThisPage();
+
+    const toggle = document.querySelector<HTMLButtonElement>('[data-season-toggle]');
+
+    if (season && toggle) {
+        // A chunk that fails to load (offline, or a deploy replaced it) only costs the visitor the seasonal extras.
+        seasons[season].loadEffect().then(
+            (effect) => mount(season, effect, toggle),
+            () => {},
+        );
+    }
+</script>

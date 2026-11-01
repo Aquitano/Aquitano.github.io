@@ -6,6 +6,7 @@ import '../styles/global.css';
 import { site, socials } from '../lib/data';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import SeasonToggle from '../components/SeasonToggle.astro';
 
 export interface Props {
     title?: string;
@@ -164,6 +165,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <SiteHeader />
         <slot />
         <SiteFooter />
+        <SeasonToggle />
 
         {/* Browsers follow a URL fragment only after the module scripts run; reloads keep their restored scroll. */}
         <script is:inline>
@@ -186,6 +188,14 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             trackSectionViews();
         </script>
         <script>
+            import { isSwitchedOff, seasonForThisPage, seasons } from '../lib/seasons';
+
+            const season = seasonForThisPage();
+
+            // Read when the tab hides, so switching the season off also retires its title.
+            const awayTitle = () =>
+                season && !isSwitchedOff(season) ? seasons[season].awayTitle : '[ still shipping ] — TB';
+
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
 
@@ -201,13 +211,14 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 
             document.addEventListener('visibilitychange', () => {
                 if (leaving) return;
-                document.title = document.hidden ? '[ still shipping ] — TB' : onPageTitle;
+                document.title = document.hidden ? awayTitle() : onPageTitle;
             });
 
             const signature = [
                 '%cThomas Breindl%c  Software Developer & Designer\n',
                 '%cYou opened the console — good instinct.\n',
                 'Hand-built, no template: Astro · GSAP · Tailwind · no framework runtime.\n',
+                `Some days bring extras. Preview one with ?season=${Object.keys(seasons).join('|')}\n`,
                 'Like the build? %ccontact@thomasbreindl.me',
             ].join('');
 
