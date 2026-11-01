@@ -1,5 +1,6 @@
 import { prefersReducedMotion } from '../gsap';
-import { EASE_OUT_STRONG, styleUntil } from './stage';
+import { placeOnLedge } from './ledge';
+import { EASE_OUT_STRONG } from './stage';
 
 export const icon = `
 <svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
@@ -18,10 +19,6 @@ const half = (clipPath: string) => {
 };
 
 export function start(signal: AbortSignal) {
-    const ledge = document.querySelector<HTMLElement>('[data-hero-ledge]');
-
-    if (!ledge) return;
-
     const still = prefersReducedMotion();
 
     const egg = document.createElement('span');
@@ -36,80 +33,37 @@ export function start(signal: AbortSignal) {
     const lid = half(`polygon(0 0, 100% 0, ${CRACK.toReversed().join(', ')})`);
     egg.append(lid, half(`polygon(${CRACK.join(', ')}, 100% 100%, 0 100%)`));
 
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.setAttribute('aria-label', 'Crack open the Easter egg');
-    Object.assign(button.style, {
-        position: 'absolute',
-        bottom: 'calc(100% + 1px)',
-        left: '56%',
-        display: 'flex',
-        alignItems: 'end',
-        justifyContent: 'center',
-        width: '44px',
-        height: '44px',
-        cursor: 'pointer',
-    });
-    button.append(egg);
-
-    const note = document.createElement('span');
-    note.setAttribute('role', 'status');
-    note.className = 'meta text-accent';
-    Object.assign(note.style, {
-        position: 'absolute',
-        whiteSpace: 'nowrap',
-        bottom: 'calc(100% + 36px)',
-        left: 'calc(56% + 22px)',
-        translate: '-50% 0',
-    });
-
-    styleUntil(signal, ledge, { position: 'relative' });
-    ledge.append(button, note);
-    signal.addEventListener('abort', () => {
-        button.remove();
-        note.remove();
-    });
-
-    const wobble = still
-        ? undefined
-        : egg.animate(
-              [
-                  { rotate: '0deg' },
-                  { rotate: '0deg', offset: 0.82 },
-                  { rotate: '-12deg', offset: 0.86 },
-                  { rotate: '10deg', offset: 0.9 },
-                  { rotate: '-6deg', offset: 0.94 },
-                  { rotate: '3deg', offset: 0.97 },
-                  { rotate: '0deg' },
-              ],
-              { duration: 4200, delay: 1500, iterations: Infinity },
-          );
-
-    // Reduced motion keeps the reveal but swaps the lid's flight and the note's rise for plain fades.
+    // Reduced motion keeps the reveal but swaps the lid's flight for a plain fade.
     const lidOff = still ? { opacity: 0 } : { transform: 'translate(-6px, -22px) rotate(-40deg)', opacity: 0 };
+    let wobble: Animation | undefined;
 
-    const noteIn = still ? { opacity: 0 } : { opacity: 0, transform: 'translateY(8px)' };
-
-    button.addEventListener(
-        'click',
-        () => {
+    const placed = placeOnLedge(signal, {
+        label: 'Crack open the Easter egg',
+        toy: egg,
+        note: 'Happy Easter',
+        still,
+        onPress: () => {
             wobble?.cancel();
-            // aria-disabled rather than disabled, which would drop keyboard focus to the page.
-            button.setAttribute('aria-disabled', 'true');
-            button.style.cursor = 'default';
             lid.animate([{ transform: 'none', opacity: 1 }, lidOff], {
                 duration: still ? 200 : 900,
                 easing: EASE_OUT_STRONG,
                 fill: 'forwards',
             });
-            note.textContent = 'Happy Easter';
-            note.animate([noteIn, { opacity: 1, transform: 'none' }], {
-                duration: still ? 200 : 600,
-                delay: 150,
-                easing: EASE_OUT_STRONG,
-                fill: 'backwards',
-            });
         },
-        { once: true, signal },
+    });
+
+    if (!placed || still) return;
+
+    wobble = egg.animate(
+        [
+            { rotate: '0deg' },
+            { rotate: '0deg', offset: 0.82 },
+            { rotate: '-12deg', offset: 0.86 },
+            { rotate: '10deg', offset: 0.9 },
+            { rotate: '-6deg', offset: 0.94 },
+            { rotate: '3deg', offset: 0.97 },
+            { rotate: '0deg' },
+        ],
+        { duration: 4200, delay: 1500, iterations: Infinity },
     );
 }
