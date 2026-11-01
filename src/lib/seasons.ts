@@ -28,6 +28,18 @@ export const seasons = {
         mouseOnly: true,
         loadEffect: () => import('./seasonal/aprilFools'),
     },
+    'programmers-day': {
+        label: "Programmer's Day",
+        awayTitle: '[ day 0x100 ] — TB',
+        scope: 'hero',
+        loadEffect: () => import('./seasonal/programmersDay'),
+    },
+    birthday: {
+        label: 'Birthday candle',
+        awayTitle: '[ a year older ] — TB',
+        scope: 'hero',
+        loadEffect: () => import('./seasonal/birthday'),
+    },
     easter: {
         label: 'Easter egg',
         awayTitle: '[ hiding eggs ] — TB',
@@ -74,19 +86,25 @@ const easterSunday = (year: number) => {
 };
 
 export function seasonOn(date: Date): Season | undefined {
+    const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
+    const midnight = new Date(year, month - 1, day);
 
     if ((month === 12 && day === 31) || (month === 1 && day === 1)) return 'new-year';
 
     if (month === 4 && day === 1) return 'april-fools';
 
+    if (month === 10 && day === 4) return 'birthday';
+
     if (month === 10 && day >= 24) return 'halloween';
 
     if (month === 12) return 'christmas';
 
-    const midnight = new Date(date.getFullYear(), date.getMonth(), day);
-    const daysFromEaster = Math.round((midnight.getTime() - easterSunday(date.getFullYear()).getTime()) / DAY_MS);
+    // January 256 rolls over to the year's 256th day: 13 September, or the 12th in leap years.
+    if (midnight.getTime() === new Date(year, 0, 256).getTime()) return 'programmers-day';
+
+    const daysFromEaster = Math.round((midnight.getTime() - easterSunday(year).getTime()) / DAY_MS);
 
     // Good Friday to Easter Monday, both public holidays in Germany.
     if (daysFromEaster >= -2 && daysFromEaster <= 1) return 'easter';
