@@ -2,7 +2,7 @@
 
 <p align="center">
   <h3 align="center">Readme of Portfolio</h3>
-  <p align="center">✨My <a href="https://thomasbreindl.me">portfolio website</a>. Built with Astro, TailwindCSS &amp; TypeScript, with GSAP-powered animations and a dot-matrix hero. Hosted on Vercel. ✨</p>
+  <p align="center">✨My <a href="https://thomasbreindl.me/?utm_source=github&utm_medium=readme">portfolio website</a>. Built with Astro, TailwindCSS &amp; TypeScript, with GSAP-powered animations and a dot-matrix hero. Hosted on Vercel. ✨</p>
 </p>
 
 <p>

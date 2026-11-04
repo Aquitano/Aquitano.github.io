@@ -179,11 +179,13 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             initSmoothScroll();
         </script>
         <script>
-            import { initAnalytics, trackSectionViews } from '../lib/analytics';
+            import { initAnalytics, trackLinkClicks, trackSectionViews } from '../lib/analytics';
 
             initAnalytics();
 
             trackSectionViews();
+
+            trackLinkClicks();
         </script>
         <script>
             // Restore the title the current page shipped with, not a hardcoded home title.

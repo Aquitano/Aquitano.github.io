@@ -1,10 +1,12 @@
 import { PUBLIC_POSTHOG_KEY } from 'astro:env/client';
 import type { PostHog } from 'posthog-js';
+import { isExternalHref } from './links';
 
 type AnalyticsEvents = {
     section_viewed: { section: string };
     email_copied: undefined;
     keyboard_shortcuts_toggled: { enabled: boolean };
+    link_clicked: { href: string };
 };
 
 // The SDK's ~100 KB parse is the site's only long task, so it waits until the visitor
@@ -74,4 +76,16 @@ export function trackSectionViews() {
     );
 
     for (const section of document.querySelectorAll('[data-minimap]')) observer.observe(section);
+}
+
+// Autocapture misses the click that triggers the SDK load. track() waits for the SDK, and these
+// links leave the page open (new tab or mail client), so the event still gets sent.
+export function trackLinkClicks() {
+    document.addEventListener('click', ({ target }) => {
+        if (!(target instanceof Element)) return;
+
+        const link = target.closest('a');
+
+        if (link && isExternalHref(link.getAttribute('href') ?? '')) track('link_clicked', { href: link.href });
+    });
 }
