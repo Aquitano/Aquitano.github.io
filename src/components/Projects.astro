@@ -25,7 +25,7 @@ const CASCADE = 14;
                 <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                     <article
                         data-card
-                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12"
+                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 focus-within:border-fg/25 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12"
                     >
                         <a href={`/work/${entry.id}`} tabindex="-1" aria-hidden="true" class="absolute inset-0 z-10" />
                         {/* per-project glow */}
@@ -42,7 +42,7 @@ const CASCADE = 14;
                         />
 
                         <header class="relative flex items-start justify-between gap-4">
-                            <span class="meta">©{p.year}</span>
+                            <span class="meta">{p.year}</span>
                             <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
                         </header>
 
@@ -83,12 +83,12 @@ const CASCADE = 14;
                                     </li>
                                 ))}
                             </ul>
-                            <div class="flex flex-wrap gap-x-6 gap-y-2">
+                            <div class="flex flex-wrap gap-x-6 gap-y-4 pointer-coarse:gap-y-7">
                                 <a
                                     href={`/work/${entry.id}`}
                                     class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-accent uppercase"
                                 >
-                                    Case Study <span aria-hidden="true">→</span>
+                                    Case Study<span class="sr-only">: {p.title}</span> <span aria-hidden="true">→</span>
                                 </a>
                                 {p.links.map((link) => (
                                     <a
@@ -101,7 +101,11 @@ const CASCADE = 14;
                                         }
                                         class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
                                     >
-                                        {link.label} <span aria-hidden="true">↗</span>
+                                        {link.label}
+                                        <span class="sr-only"> for {p.title}</span>{' '}
+                                        <span aria-hidden="true">
+                                            {link.external || isExternalHref(link.href) ? '↗' : '→'}
+                                        </span>
                                         {(link.external || isExternalHref(link.href)) && (
                                             <span class="sr-only">(opens in new tab)</span>
                                         )}
@@ -115,7 +119,7 @@ const CASCADE = 14;
                             class="pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full bg-accent px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.14em] whitespace-nowrap text-black uppercase opacity-0 md:block"
                             aria-hidden="true"
                         >
-                            View Case ↗
+                            View Case Study
                         </div>
 
                         <div

@@ -16,9 +16,8 @@ tasks:
     - Frontend
     - 3D Modeling
 links:
-    - label: Demo
+    - label: Archived demo (German)
       href: /showcase/griffin/
-      external: true
 accent: '#ff7a5c'
 image: ../../assets/work/griffin-energy.webp
 order: 6
@@ -30,4 +29,4 @@ The product packaging was designed in Adobe Photoshop and conveys the Griffin En
 
 For realistic product shots, I built a 3D model of the can in Blender and rendered it photorealistically.
 
-The accompanying website is built with modern JavaScript, optimized for different screen sizes, and integrates the 3D renders through animations.
+The accompanying website is built with JavaScript, optimized for different screen sizes, and integrates the 3D renders through animations.

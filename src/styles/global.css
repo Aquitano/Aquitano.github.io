@@ -73,6 +73,7 @@
 
 html {
     background: var(--bg);
+    color-scheme: dark;
 }
 
 /* A stopped Lenis already swallows wheel and touch; clipping overflow as well would hide the scrollbar and shift the page. */
@@ -126,11 +127,15 @@ body {
 }
 
 @layer components {
+    #main-content {
+        scroll-margin-top: 5.5rem;
+    }
+
     .section-x {
         --gutter: 1.25rem;
         --rail: 0rem;
-        padding-left: max(var(--gutter), calc((100% - 96rem) / 2));
-        padding-right: max(calc(var(--gutter) + var(--rail)), calc((100% - 96rem) / 2));
+        padding-left: max(var(--gutter), env(safe-area-inset-left), calc((100% - 96rem) / 2));
+        padding-right: max(calc(var(--gutter) + var(--rail)), env(safe-area-inset-right), calc((100% - 96rem) / 2));
     }
 
     @media (min-width: 768px) {
@@ -300,5 +305,12 @@ body {
     }
     ::-webkit-scrollbar-thumb:hover {
         background: var(--muted);
+    }
+}
+
+@layer base {
+    :where(a, button) {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: color-mix(in oklch, var(--accent) 20%, transparent);
     }
 }

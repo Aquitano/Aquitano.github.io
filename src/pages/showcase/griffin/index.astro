@@ -1,4 +1,5 @@
 ---
+import DemoNotice from '../../../components/GriffinDemoNotice.astro';
 import "font-awesome/css/font-awesome.min.css";
 import "@fontsource/yantramanav/300.css";
 import "@fontsource/yantramanav/400.css";
@@ -16,6 +17,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
         <link rel="shortcut icon" type="image/x-icon" href={getGriffinAsset('favicon.jpg')} />
@@ -27,6 +29,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
         {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
     </head>
     <body>
+        <DemoNotice />
         <!-- ==== Start header --><!-- header-desktop -->
         <header class="header home2">
             <!-- header-main -->
@@ -37,12 +40,14 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                         <div class="navbar-header">
                             <!-- Logo -->
                             <div class="navbar-brand">
-                                <a class="logo" href="index.html">
+                                <a class="logo" href="/showcase/griffin/">
                                     <img
                                         src={getGriffinAsset('images/2logo.png')}
                                         alt="Griffin Energy Drink Markenlogo"
                                         style="width: 73%;"
                                         loading="lazy"
+                                        width="225"
+                                        height="115"
                                     />
                                 </a>
                             </div>
@@ -51,10 +56,10 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                         <!-- Main navigation -->
                         <div class="otf-flex-item"></div>
                         <ul class="main-nav nav navbar-nav navbar-right">
-                            <li class="dropdown active"><a href="/" rel="prefetch">Home</a></li>
-                            <li class="dropdown"><a href="Product/" rel="prefetch">Product</a></li>
+                            <li class="dropdown active"><a aria-current="page" href="/showcase/griffin/" rel="prefetch">Home</a></li>
+                            <li class="dropdown"><a href="/showcase/griffin/Product/" rel="prefetch">Product</a></li>
                             <li class="dropdown">
-                                <a href="Donation-Code/" rel="prefetch">Donation-Code</a>
+                                <a href="/showcase/griffin/Donation-Code/" rel="prefetch">Donation-Code</a>
                             </li>
                         </ul>
                         <!-- /Main navigation -->
@@ -95,40 +100,35 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                         class="navbar-toggle collapsed"
                         data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1"
+                        aria-controls="bs-example-navbar-collapse-1"
                         aria-expanded="false"
                     >
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">Navigation öffnen</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span></button
                     ><!-- logo -->
                     <div class="navbar-brand">
-                        <a class="logo" href="index.html"
-                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Drink Markenlogo" loading="lazy" />
+                        <a class="logo" href="/showcase/griffin/"
+                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Drink Markenlogo" loading="lazy" width="225" height="115" />
                             <!-- logo -->
                         </a>
                         <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
                                 <li class="active">
-                                    <a href="/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                                    <a aria-current="page" href="/showcase/griffin/" rel="prefetch"
                                         >Home</a
                                     >
                                 </li>
                                 <li class="">
                                     <a
-                                        href="Product/"
-                                        role="button"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
+                                        href="/showcase/griffin/Product/"
                                         rel="prefetch">Product</a
                                     >
                                 </li>
                                 <li class="">
                                     <a
-                                        href="Donation-Code/"
-                                        role="button"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
+                                        href="/showcase/griffin/Donation-Code/"
                                         rel="prefetch">Donation-Code</a
                                     >
                                 </li>
@@ -140,87 +140,24 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
         </div>
         <!-- /header-mobile -->
         <!-- ===== End header -->
-        <main>
-            <!-- ==== Start slider -->
-            <section class="section-main-slider">
-                <div
-                    class="main-slider my-slider slider-pro skin2"
-                    id="my-slider-1"
-                    data-slider-width="100%"
-                    data-slider-height="925"
-                >
-                    <div class="sp-slides text-white">
-                        <div
-                            class="sp-slide section-bg"
-                            style={`background-image: url(${heroImageUrl});`}
-                        >
-                            <div class="container">
-                                <div style="z-index: 10; position: relative; text-shadow: 2px 2px 50px #000;">
-                                    <h2
-                                        class="sp-layer main-slider__title font-400"
-                                        data-horizontal="0"
-                                        data-vertical="300"
-                                        data-show-transition="up"
-                                        data-hide-transition="left"
-                                        data-show-duration="800"
-                                        data-show-delay="800"
-                                        data-hide-delay="800"
-                                    >
-                                        The Original*
-                                    </h2>
-                                    <h2
-                                        class="sp-layer main-slider__title font-bold"
-                                        data-horizontal="0"
-                                        data-vertical="380"
-                                        data-show-transition="up"
-                                        data-hide-transition="left"
-                                        data-show-duration="800"
-                                        data-show-delay="800"
-                                        data-hide-delay="800"
-                                    >
-                                        Brummselbeeren Drink
-                                    </h2>
-                                    <div
-                                        class="sp-layer main-slider__text"
-                                        data-horizontal="0"
-                                        data-vertical="500"
-                                        data-show-transition="up"
-                                        data-hide-transition="left"
-                                        data-show-duration="800"
-                                        data-show-delay="1200"
-                                        data-hide-delay="1200"
-                                    >
-                                        <div class="main-slider__btn-group">
-                                            <a class="btn btn-features btn-primary mt-60" href="Product"
-                                                >Jetzt kaufen <i class="fa fa-long-arrow-right" aria-hidden="true"
-                                                ></i></a
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                                <span
-                                    class="sp-layer main-slider__img"
-                                    data-horizontal="600"
-                                    data-vertical="120"
-                                    data-width="45%"
-                                    data-show-transition="up"
-                                    data-hide-transition="left"
-                                    data-show-duration="800"
-                                    data-show-delay="400"
-                                    data-hide-delay="400"
-                                    id="main-slider__img"
-                                    ><img
-                                        src={getGriffinAsset('images/untitled2.png')}
-                                        alt="Zwei Dosen Griffin Energy Drink"
-                                        loading="lazy"
-                                        class="img-responsive"
-                                    />
-                                </span>
-                            </div>
-                        </div>
+        <main id="demo-content" tabindex="-1">
+            <section class="griffin-hero" style={`--hero-image: url(${heroImageUrl})`}>
+                <div class="container griffin-hero-grid">
+                    <div class="griffin-hero-copy">
+                        <h1><span>The Original*</span> Brummselbeeren Drink</h1>
+                        <a class="btn btn-primary" href="/showcase/griffin/Product/">
+                            Produkt ansehen <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        </a>
                     </div>
+                    <img
+                        src={getGriffinAsset('images/untitled2.png')}
+                        alt="Zwei Dosen Griffin Energy Drink"
+                        width="826"
+                        height="1002"
+                        fetchpriority="high"
+                        class="griffin-hero-image"
+                    />
                 </div>
-                <!-- end main-slider -->
             </section>
             <!-- ==== End slider --><!-- ==== Start feature-icon-absolute -->
             <section class="features feature-icon-absolute clearfix text-center">
@@ -233,6 +170,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                         src={getGriffinAsset('images/icon-feature2.png')}
                                         alt="Symbol Blitz für Energie"
                                         loading="lazy"
+                                        width="60"
+                                        height="60"
                                     />
                                 </div>
                                 <div class="features-description">
@@ -248,6 +187,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                         src={getGriffinAsset('images/icon-feature1.png')}
                                         alt="Icon Blatt für Bio-Zutaten"
                                         loading="lazy"
+                                        width="58"
+                                        height="60"
                                     />
                                 </div>
                                 <div class="features-description">
@@ -263,6 +204,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                         src={getGriffinAsset('images/icon-feature3.png')}
                                         alt="Icon Dose Größe"
                                         loading="lazy"
+                                        width="32"
+                                        height="60"
                                     />
                                 </div>
                                 <div class="features-description">
@@ -278,6 +221,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                         src={getGriffinAsset('images/icon-feature9.png')}
                                         alt="Icon Recycling-Symbol"
                                         loading="lazy"
+                                        width="60"
+                                        height="66"
                                     />
                                 </div>
                                 <div class="features-description">
@@ -308,6 +253,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                         src={getGriffinAsset('images/icon-feature5.png')}
                                         alt="Coffein"
                                         loading="lazy"
+                                        width="46"
+                                        height="60"
                                     />
                                 </div>
                                 <div class="features-description">
@@ -320,7 +267,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                             </div>
                             <div class="features_list pt-50 pb-50" style="margin-top: 60px">
                                 <div class="features-images">
-                                    <img src={getGriffinAsset('images/icon-feature10.png')} alt="Icon Baum Nachhaltigkeit" loading="lazy" />
+                                    <img src={getGriffinAsset('images/icon-feature10.png')} alt="Icon Baum Nachhaltigkeit" loading="lazy" width="60" height="61" />
                                 </div>
                                 <div class="features-description">
                                     <h4>Nachhaltigkeit</h4>
@@ -336,7 +283,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                         <div class="col-md-4">
                             <div class="features_list pt-50 pb-50">
                                 <div class="features-images">
-                                    <img src={getGriffinAsset('images/icon-feature2.png')} alt="Icon Vitamin Blitz" loading="lazy" />
+                                    <img src={getGriffinAsset('images/icon-feature2.png')} alt="Icon Vitamin Blitz" loading="lazy" width="60" height="60" />
                                 </div>
                                 <div class="features-description">
                                     <h4>Vitamine und Minerale</h4>
@@ -349,7 +296,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                             </div>
                             <div class="features_list pt-50 pb-50">
                                 <div class="features-images">
-                                    <img src={getGriffinAsset('images/icon-feature11.png')} alt="Icon Spenden Hand Herz" loading="lazy" />
+                                    <img src={getGriffinAsset('images/icon-feature11.png')} alt="Icon Spenden Hand Herz" loading="lazy" width="60" height="82" />
                                 </div>
                                 <div class="features-description">
                                     <h4>Spenden</h4>
@@ -376,19 +323,21 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                     <div class="product-block">
                                         <div class="product-image">
                                             <div class="product-thumbnail">
-                                                <a href="Product"
+                                                <a href="/showcase/griffin/Product/"
                                                     ><img
                                                         src={getGriffinAsset('images/untitled5-min.png')}
                                                         alt="Griffin Energy"
                                                         loading="lazy"
                                                         class="product-featured-image"
+                                                        width="275"
+                                                        height="372"
                                                     /></a
                                                 >
                                             </div>
                                         </div>
                                         <div class="product-meta">
                                             <h4 class="product-name">
-                                                <a href="./Product">Griffin Energy</a>
+                                                <a href="/showcase/griffin/Product/">Griffin Energy</a>
                                             </h4>
                                             <div class="product-price">
                                                 <span class="amout"
@@ -396,8 +345,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                                 >
                                             </div>
                                             <div class="product-footer">
-                                                <a href="Product" class="btn btn-primary"
-                                                    >Kaufen<i class="fa fa-shopping-bag" aria-hidden="true"></i></a
+                                                <a href="/showcase/griffin/Product/" class="btn btn-primary"
+                                                    >Produkt ansehen <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a
                                                 >
                                             </div>
                                         </div>
@@ -412,19 +361,21 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                     <div class="product-block">
                                         <div class="product-image">
                                             <div class="product-thumbnail">
-                                                <a href="Product2/" title=""
+                                                <a href="/showcase/griffin/Product2/" title=""
                                                     ><img
                                                         src={getGriffinAsset('images/untitled5b-min.png')}
-                                                        alt=""
+                                                        alt="Griffin No Caffeine ansehen"
                                                         loading="lazy"
                                                         class="product-featured-image"
+                                                        width="275"
+                                                        height="372"
                                                     /></a
                                                 >
                                             </div>
                                         </div>
                                         <div class="product-meta">
                                             <h4 class="product-name">
-                                                <a href="Product2/" title="">Griffin No Caffeine</a>
+                                                <a href="/showcase/griffin/Product2/" title="">Griffin No Caffeine</a>
                                             </h4>
                                             <div class="product-price">
                                                 <span class="amout"
@@ -432,8 +383,8 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                                 >
                                             </div>
                                             <div class="product-footer">
-                                                <a href="Product2/" class="btn btn-primary"
-                                                    >Kaufen<i class="fa fa-shopping-bag" aria-hidden="true"></i></a
+                                                <a href="/showcase/griffin/Product2/" class="btn btn-primary"
+                                                    >Produkt ansehen <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a
                                                 >
                                             </div>
                                         </div>
@@ -452,15 +403,14 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                         <div class="contact-form-container">
                             <div class="col-md-6 col-sm-12">
                                 <div class="contact-form_heading text-uppercase">
-                                    <span>BEKOMME 10% AUF DEINE</span>
-                                    <h4>ERSTE BESTELLUNG</h4>
+                                    <span>NEWSLETTER</span>
+                                    <h4>NUR ALS DEMO</h4>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="newsletter">
                                     <p class="newsletter-description">
-                                        Als ein Willkommensgeschenk für neue Kunden bieten wir 10% auf den ersten
-                                        Einkauf an!
+                                        Der Newsletter ist Teil des Schulprojekts. Eine Anmeldung ist in dieser Demo nicht möglich.
                                     </p>
                                     <form
                                         action="#"
@@ -476,11 +426,14 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                                                     class="form-control"
                                                     type="email"
                                                     name="EMAIL"
+                                                    aria-label="E-Mail-Adresse (Demo)"
+                                                    autocomplete="email"
+                                                    disabled
                                                     placeholder="Deine Email-Adresse"
                                                     required
                                                 />
                                                 <span class="input-group-btn"
-                                                    ><button type="submit" class="search-submit btn">
+                                                    ><button type="button" class="search-submit btn" aria-label="Newsletter-Anmeldung in der Demo nicht verfügbar" disabled>
                                                         <span class="fa fa-paper-plane-o" aria-hidden="true"
                                                         ></span></button
                                                     ></span
@@ -502,7 +455,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" loading="lazy" />
+                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" loading="lazy" width="196" height="122" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke.<br />
                                 <a href="/privacy" style="text-decoration: underline">Datenschutz / Privacy</a>
@@ -515,17 +468,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
                 <div class="container">
                     <div class="copyright_container">
                         <div class="col-md-4 col-sm-6">
-                            <ul class="social">
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-google"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                            </ul>
+
                         </div>
                         <div class="copyright col-md-4 col-sm-6">GreenGriffin © 2021. All rights reserved</div>
                     </div>
@@ -533,7 +476,7 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
             </div>
         </footer>
         <!-- ==== End footer --><!-- Back to top -->
-        <div id="back-to-top"></div>
+        <button id="back-to-top" type="button" aria-label="Nach oben"></button>
         <!-- /Back to to --><!-- ====Start Preloader -->
         <div id="preloader">
             <div class="preloader"><span></span><span></span><span></span><span></span></div>
@@ -542,30 +485,66 @@ const homeBackgroundUrl = getGriffinAsset('images/home2_bg2.png');
         {
             griffinPageScripts.map((scriptUrl) => <script src={scriptUrl} defer is:inline></script>)
         }
-        <script defer is:inline>
-            const setMainSlider = () => {
-                const mainSliderImg = document.getElementById('main-slider__img');
-                if (window.innerWidth < 992) {
-                    mainSliderImg.style.setProperty('left', '0', 'important');
-                    mainSliderImg.style.setProperty('width', '95%', 'important');
-                    mainSliderImg.style.setProperty('z-index', '0', 'important');
-                    mainSliderImg.style.setProperty('filter', 'blur(2px)', 'important');
-                } else {
-                    mainSliderImg.style.setProperty('z-index', '15', 'important');
-                }
-            };
-            document.addEventListener('DOMContentLoaded', () => {
-                setTimeout(() => {
-                    setMainSlider();
-                }, 500);
-                $('#preloader').delay(600).fadeOut();
-            });
 
-            window.addEventListener('resize', () => {
-                setTimeout(() => {
-                    setMainSlider();
-                }, 500);
-            });
-        </script>
     </body>
 </html>
+
+<style>
+    .griffin-hero {
+        background: linear-gradient(90deg, rgb(0 0 0 / 78%), rgb(0 0 0 / 35%)), var(--hero-image) center / cover;
+        color: #fff;
+        padding: 48px 0 128px;
+    }
+
+    .griffin-hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        align-items: center;
+        gap: 32px;
+        min-height: min(55svh, 500px);
+    }
+
+    .griffin-hero-grid::before,
+    .griffin-hero-grid::after {
+        display: none;
+    }
+
+    .griffin-hero-copy h1 {
+        margin: 0 0 32px;
+        color: inherit;
+        font-size: clamp(32px, 4.5vw, 64px);
+        font-weight: 700;
+        line-height: 1.15;
+        text-wrap: balance;
+    }
+
+    .griffin-hero-copy h1 span {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 0.7em;
+        font-weight: 400;
+    }
+
+    .griffin-hero-image {
+        width: 100%;
+        height: auto;
+        max-height: 500px;
+        object-fit: contain;
+    }
+
+    @media (max-width: 767px) {
+        .griffin-hero {
+            padding: 40px 0;
+        }
+
+        .griffin-hero-grid {
+            grid-template-columns: minmax(0, 1fr);
+            min-height: auto;
+            gap: 24px;
+        }
+
+        .griffin-hero-image {
+            max-height: 220px;
+        }
+    }
+</style>
