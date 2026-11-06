@@ -1,258 +1,128 @@
 ---
 import { site } from '../lib/data';
-import Magnetic from './Magnetic.astro';
-import { opticalIndent } from '../lib/displayTitle';
 ---
 
-<section
-    id="top"
-    data-hero
-    data-minimap="Intro"
-    class="relative flex min-h-svh flex-col justify-end overflow-hidden pt-20 short:pt-18"
->
-    <div class="hero-bg pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-        <span class="hero-glow"></span>
-    </div>
-
-    <div class="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-40 bg-linear-to-b from-transparent to-bg"></div>
-
-    <div data-hero-parallax class="section-x relative z-10 pb-10 md:pb-14 short:pb-6">
-        <div data-hero-dim>
-            <p
-                class="intro-fade meta mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-fg/70 short:mb-3"
-                style="--intro-delay: 740ms"
-            >
-                <span class="text-balance">
-                    {site.role} · {site.status}
-                </span>
-            </p>
-            <h1 class="display text-[clamp(2.75rem,min(15.2vw,26svh),16rem)] short:text-[clamp(2.75rem,min(15.2vw,21svh),16rem)]">
-                <span class="block overflow-y-clip pb-[0.06em]">
-                    <span class="intro-rise block" style={`--intro-delay: 150ms; ${opticalIndent('Thomas')}`}>
-                        Thomas
-                    </span>
-                </span>
-                <span class="block overflow-y-clip pb-[0.06em]">
-                    <span
-                        class="intro-rise display-outline block"
-                        style={`--intro-delay: 240ms; ${opticalIndent('Breindl')}`}
-                    >
-                        Breindl
-                    </span>
-                </span>
+<section id="top" data-hero data-minimap="Intro" class="section-x hero">
+    <div class="hero-intro">
+        <div>
+            <p class="mb-5 text-sm text-muted">{site.role}</p>
+            <h1 class="heading hero-name">
+                Thomas
+                <br />
+                Breindl
             </h1>
-        </div>
-
-        <div class="mt-8 flex flex-col gap-8 border-t border-line pt-6 md:mt-12 md:flex-row md:items-end md:justify-between short:mt-5 short:flex-row short:items-end short:justify-between short:pt-4">
-            <p
-                class="intro-fade max-w-md text-base leading-relaxed text-muted md:max-w-sm md:text-lg lg:max-w-md short:max-w-md short:text-base"
-                style="--intro-delay: 810ms"
-            >
-                Building robust backend systems, event pipelines, and interfaces people enjoy using. Currently studying
-                CS in <span class="whitespace-nowrap text-fg">Passau, Germany</span>.
+            <p class="mt-6 max-w-sm text-base leading-relaxed text-muted">
+                Backend systems and the interfaces around them. Studying computer science in {site.location}.
             </p>
-            <div
-                class="intro-fade flex flex-wrap items-center gap-3 md:shrink-0 md:flex-nowrap short:flex-nowrap"
-                style="--intro-delay: 880ms"
-            >
-                <Magnetic class="inline-flex" strength={0.2}>
-                    <a
-                        href="#work"
-                        class="cta-glide pressable flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 font-mono text-xs font-medium tracking-[0.14em] text-black uppercase"
-                    >
-                        <span class="cta-glide-label">
-                            <span class="cta-glide-label-in">View Work</span>
-                            <span class="cta-glide-label-out" aria-hidden="true">
-                                View Work
-                            </span>
-                        </span>
-                        <span class="cta-glide-arrow" aria-hidden="true">
-                            →
-                        </span>
-                    </a>
-                </Magnetic>
-                <a
-                    href="#about"
-                    aria-label="Scroll to about section"
-                    class="group ml-1 flex items-center gap-2.5 rounded-full"
-                >
-                    <span class="meta transition-colors duration-300 group-hover:text-accent">Scroll</span>
-                    <span class="grid size-11 place-items-center overflow-hidden rounded-full border border-fg/20 text-accent transition-colors duration-300 group-hover:border-accent">
-                        <svg
-                            class="scroll-cue-arrow"
-                            width="11"
-                            height="13"
-                            viewBox="0 0 10 12"
-                            fill="none"
-                            aria-hidden="true"
-                        >
-                            <path d="M5 1v10m0 0L1 7m4 4 4-4" stroke="currentColor" stroke-width="1.2"></path>
-                        </svg>
-                    </span>
+            <div class="mt-7 flex flex-wrap items-center gap-6">
+                <a href="#work" class="action-link">
+                    Explore my work <span aria-hidden="true">↘</span>
+                </a>
+                <a href="#contact" class="link-line touch-target text-sm text-muted transition-colors hover:text-fg">
+                    Get in touch
                 </a>
             </div>
         </div>
+        <figure class="retention-study">
+            <figcaption>
+                <p class="mb-3 text-xs text-accent">Engineering at Cloudflare</p>
+                <h2 class="text-xl leading-snug font-medium tracking-tight md:text-2xl">
+                    Keeping data through an outage.
+                </h2>
+                <p class="mt-3 max-w-md text-sm leading-relaxed text-muted">
+                    Compaction for an analytics pipeline handling 100M events/s.
+                </p>
+            </figcaption>
+            <div
+                class="retention-bars"
+                role="img"
+                aria-label="Retention in controlled outage tests increased from 51 percent without compaction to 77 percent with compaction."
+            >
+                <div class="retention-row">
+                    <div class="mb-2 flex items-baseline justify-between gap-4 text-xs text-muted">
+                        <span>Without compaction</span>
+                        <span>51%</span>
+                    </div>
+                    <div class="retention-track">
+                        <span style="width:51%" class="bg-fg/25"></span>
+                    </div>
+                </div>
+                <div class="retention-row">
+                    <div class="mb-2 flex items-baseline justify-between gap-4 text-xs text-fg">
+                        <span>With compaction</span>
+                        <span>77%</span>
+                    </div>
+                    <div class="retention-track">
+                        <span style="width:77%" class="bg-accent"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <p class="text-muted">Controlled outage tests · 2026 internship</p>
+                <a href="#experience" class="link-line touch-target text-fg">
+                    Read about the work <span aria-hidden="true">↓</span>
+                </a>
+            </div>
+        </figure>
+    </div>
+    <div data-hero-tools class="hero-tools">
+        <p class="text-xs text-muted">Java, Go, Kotlin & TypeScript</p>
     </div>
 </section>
 
 <style>
-    .hero-bg {
-        --mx: 70%;
-        --my: 30%;
-        background-image: radial-gradient(
-            circle,
-            color-mix(in oklch, var(--muted) 38%, transparent) 1px,
-            transparent 1.5px
-        );
-        background-size: 26px 26px;
-        background-position: center;
-        -webkit-mask-image: radial-gradient(120% 100% at 70% 24%, #000 28%, transparent 78%);
-        mask-image: radial-gradient(120% 100% at 70% 24%, #000 28%, transparent 78%);
-        opacity: 0.55;
+    .hero {
+        padding-top: clamp(7.5rem, 10vw, 9rem);
+        padding-bottom: 1rem;
     }
-
-    .hero-glow {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-            420px 420px at var(--mx) var(--my),
-            oklch(0.7165 0.1409 50.91 / 0.1),
-            transparent 68%
-        );
+    .hero-intro {
+        display: grid;
+        gap: 3rem;
+        align-items: center;
     }
-
-    .scroll-cue-arrow {
-        animation: cue-drop 2.2s linear infinite;
+    .hero-name {
+        font-size: clamp(3.5rem, 7.5vw, 7rem);
+        letter-spacing: -0.045em;
     }
-
-    @keyframes cue-drop {
-        0% {
-            transform: translateY(-190%);
-            opacity: 0;
-            animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        30% {
-            transform: none;
-            opacity: 1;
-        }
-        70% {
-            transform: none;
-            opacity: 1;
-            animation-timing-function: cubic-bezier(0.7, 0, 0.84, 0);
-        }
-        100% {
-            transform: translateY(190%);
-            opacity: 0;
-        }
+    .retention-study {
+        border-left: 1px solid var(--line);
+        padding: clamp(1.25rem, 3vw, 2.5rem);
     }
-
-    .cta-glide-label {
-        position: relative;
-        display: inline-block;
+    .retention-bars {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+    .retention-track {
+        height: 1.25rem;
         overflow: hidden;
-        height: 1rem;
-        line-height: 1rem;
+        border-radius: 3px;
+        background: var(--line);
     }
-
-    .cta-glide-label-in,
-    .cta-glide-label-out {
+    .retention-track span {
         display: block;
-        transition: transform 420ms var(--ease-out-strong);
+        height: 100%;
     }
-
-    .cta-glide-label-out {
-        position: absolute;
-        inset: 0;
-        transform: translateY(110%);
+    .hero-tools {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1.25rem;
     }
-
-    .cta-glide-arrow {
-        display: inline-block;
-        transition: transform 420ms var(--ease-out-strong);
-    }
-
-    .cta-glide:focus-visible .cta-glide-label-in {
-        transform: translateY(-110%);
-    }
-
-    .cta-glide:focus-visible .cta-glide-label-out {
-        transform: translateY(0);
-    }
-
-    .cta-glide:focus-visible .cta-glide-arrow {
-        transform: translateX(5px);
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        .cta-glide:hover .cta-glide-label-in {
-            transform: translateY(-110%);
-        }
-        .cta-glide:hover .cta-glide-label-out {
-            transform: translateY(0);
-        }
-        .cta-glide:hover .cta-glide-arrow {
-            transform: translateX(5px);
+    @media (min-width: 1024px) {
+        .hero-intro {
+            grid-template-columns: 1fr 1.15fr;
+            gap: clamp(3rem, 6vw, 7rem);
         }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-        .scroll-cue-arrow {
-            animation: none;
+    @media (orientation: landscape) and (max-height: 30rem) {
+        .hero {
+            padding-top: 6rem;
         }
-        .cta-glide-label-in,
-        .cta-glide-label-out,
-        .cta-glide-arrow {
-            transition: none;
-        }
-        .cta-glide-label-out {
-            display: none;
-        }
-        .cta-glide:hover .cta-glide-label-in,
-        .cta-glide:focus-visible .cta-glide-label-in {
-            transform: none;
+        .hero-name {
+            font-size: 4rem;
         }
     }
 </style>
-
-<script>
-    import { gsap, prefersReducedMotion } from '../lib/gsap';
-
-    const bg = document.querySelector<HTMLElement>('[data-hero] .hero-bg');
-
-    const heroEl = document.querySelector<HTMLElement>('[data-hero]');
-
-    if (bg && heroEl && !prefersReducedMotion() && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-        let mx = 50;
-        let my = 32;
-        let queued = false;
-
-        const apply = () => {
-            queued = false;
-            bg.style.setProperty('--mx', `${mx}%`);
-            bg.style.setProperty('--my', `${my}%`);
-        };
-
-        heroEl.addEventListener(
-            'pointermove',
-            (e) => {
-                const r = heroEl.getBoundingClientRect();
-                mx = ((e.clientX - r.left) / r.width) * 100;
-                my = ((e.clientY - r.top) / r.height) * 100;
-
-                if (!queued) {
-                    queued = true;
-                    requestAnimationFrame(apply);
-                }
-            },
-            { passive: true },
-        );
-    }
-
-    const root = document.querySelector<HTMLElement>('[data-hero]');
-
-    if (root && !prefersReducedMotion()) {
-        const scrub = { trigger: root, start: 'top top', end: 'bottom top', scrub: true };
-        gsap.to('[data-hero-parallax]', { y: 28, ease: 'none', scrollTrigger: scrub });
-        gsap.to('[data-hero-dim]', { autoAlpha: 0.4, ease: 'none', scrollTrigger: scrub });
-    }
-</script>

@@ -4,20 +4,16 @@ import SectionHeading from './SectionHeading.astro';
 ---
 
 <section id="stack" data-stack-section data-minimap="Stack" class="section-x section-y">
-    <SectionHeading index="04" title="Stack" />
-    <div class="grid grid-cols-1 gap-px overflow-hidden border border-line bg-line min-[360px]:grid-cols-2 lg:grid-cols-4">
+    <SectionHeading index="05" title="Stack" />
+    <dl class="grid gap-x-12 gap-y-6 md:grid-cols-2">
         {stack.map((group) => (
-            <div data-stack-col class="min-w-0 bg-bg px-4 py-6 md:p-8">
-                <h3 class="meta mb-5 wrap-break-word text-accent">{group.label}</h3>
-                <ul class="space-y-2">
-                    {group.items.map((item) => (
-                        <li class="text-sm text-fg/85 md:text-base">{item}</li>
-                    ))}
-                </ul>
+            <div data-stack-col>
+                <dt class="mb-2 text-sm font-medium text-fg">{group.label}</dt>
+                <dd class="text-sm leading-relaxed text-muted">{group.items.join(', ')}</dd>
             </div>
         ))}
-    </div>
-    <div data-stack-col class="flex items-baseline gap-x-8 border border-t-0 border-line px-5 py-5 md:px-8">
+    </dl>
+    <div data-stack-col class="mt-10 flex items-baseline gap-x-8 border-t border-line pt-6">
         <span class="meta">Spoken</span>
         <div class="flex flex-col gap-x-8 gap-y-2 sm:flex-row sm:flex-wrap">
             {languages.map((lang) => (

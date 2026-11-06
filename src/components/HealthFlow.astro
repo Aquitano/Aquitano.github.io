@@ -1,0 +1,20 @@
+---
+import ProviderTracks from './ProviderTracks.astro';
+import { reconciliationRules } from '../lib/reconciliation';
+---
+
+<div class="health-flow">
+    <p class="mb-4 text-sm font-medium text-[#e6c8d6]">Steps · two sources, one read</p>
+    <ProviderTracks rule={reconciliationRules[0]} />
+    <p class="mt-4 text-[0.6875rem] text-[#b9a0ad]">Schematic intervals · original records preserved</p>
+</div>
+<style>
+    .health-flow {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(1.25rem, 2.5vw, 2.5rem);
+        background: #171216;
+    }
+</style>

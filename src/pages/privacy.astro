@@ -12,8 +12,8 @@ const { Content } = await render(entry);
 
 <Layout title={`Privacy | ${site.name}`} description="How thomasbreindl.me handles server logs, email and your data.">
     <main id="main-content" tabindex="-1" class="section-x pt-28 pb-16 md:pt-40">
-        <a href="/" class="link-line pressable touch-target meta inline-block text-fg">
-            <span aria-hidden="true">←</span> Home
+        <a href="/" class="link-line touch-target inline-block text-sm text-muted hover:text-fg">
+            <span aria-hidden="true">←</span> Back to home
         </a>
         <article class="mt-10 max-w-2xl space-y-6 text-base leading-relaxed text-fg/85 md:mt-14">
             <Content />
@@ -24,22 +24,23 @@ const { Content } = await render(entry);
 <style>
     article :global(h1) {
         margin-bottom: 3rem;
-        font-size: clamp(2.25rem, 9vw, 6rem);
-        font-stretch: 125%;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        line-height: var(--display-leading);
-        text-transform: uppercase;
+        font-size: clamp(2.25rem, 8vw, 5rem);
+        font-stretch: 100%;
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 1.05;
+        text-transform: none;
         color: var(--fg);
     }
 
     article :global(h2) {
         padding-top: 1.5rem;
-        font-family: var(--font-mono);
-        font-size: 0.6875rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--accent);
+        font-family: var(--font-sans);
+        font-size: 1.125rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        text-transform: none;
+        color: var(--fg);
     }
 
     article :global(ul) {
@@ -55,7 +56,7 @@ const { Content } = await render(entry);
     }
 
     article :global(a:hover) {
-        text-decoration-color: var(--accent);
+        text-decoration-color: var(--fg);
     }
 
     article :global(strong) {

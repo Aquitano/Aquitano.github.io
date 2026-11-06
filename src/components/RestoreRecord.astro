@@ -1,0 +1,53 @@
+---
+const output = [
+    'cloned 12 files into /tmp/aqt-restore-drill.p733mX/restore',
+    '==> diffing the restored tree against the original',
+    '==> verifying the restored encrypted Git remote',
+    '==> PASS: backup restore reproduced the folder and encrypted Git remote',
+];
+---
+
+<figure class="overflow-hidden rounded-xl border border-[#294454] bg-[#0e171c]">
+    <figcaption class="flex flex-wrap items-center justify-between gap-3 border-b border-[#294454] px-5 py-4 text-xs md:px-8">
+        <span class="text-[#b2c9d6]">aqt / Linux CI / restore drill</span>
+        <span class="text-[#89a4b4]">Recorded 1 Nov 2026</span>
+    </figcaption>
+    <div class="px-5 py-8 md:px-10 md:py-12">
+        <p class="mb-8 max-w-xl text-2xl font-medium tracking-tight text-[#e6f2f8] md:text-4xl">
+            Recover the files.
+            <br />
+            Verify the Git history.
+        </p>
+        <pre class="font-mono text-xs leading-[2] wrap-anywhere whitespace-pre-wrap text-[#a8bdc9] md:text-sm"><code>{output.map((line, i) => <span class:list={['record-line block', i === output.length - 1 && 'mt-4 text-[#a7e3c6]']}>{line}</span>)}</code></pre>
+    </div>
+    <div class="flex flex-wrap justify-between gap-x-6 gap-y-4 border-t border-[#294454] px-5 py-5 text-xs text-[#89a4b4] md:px-8">
+        <span>Historical output · commit 5210451</span>
+        <div class="flex flex-wrap gap-x-6 gap-y-4">
+            <a
+                class="link-line touch-target inline-flex min-h-11 items-center text-[#d9e9f2]"
+                href="/evidence/aqt-restore-2026-11-01.txt"
+            >
+                Archived excerpt
+            </a>
+            <a
+                class="link-line touch-target inline-flex min-h-11 items-center text-[#d9e9f2]"
+                href="https://github.com/Aquitano/aqt-sync/actions/runs/41282154931"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Original CI run <span aria-hidden="true">↗</span>
+                <span class="sr-only"> (opens in new tab)</span>
+            </a>
+        </div>
+    </div>
+</figure>
+
+<style>
+    .record-line {
+        padding-left: 1.5em;
+        text-indent: -1.5em;
+    }
+    .touch-target::after {
+        bottom: 0.75rem;
+    }
+</style>

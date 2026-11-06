@@ -1,0 +1,380 @@
+---
+import FlightPlot from './FlightPlot.astro';
+
+interface Props {
+    projectId: string;
+}
+
+const { projectId } = Astro.props;
+---
+
+{projectId === 'aqt-sync' && (
+    <section class="section-x evidence-section">
+        <div class="evidence-intro">
+            <p class="mb-3 text-xs text-muted">Design decision</p>
+            <h2 class="heading text-3xl md:text-4xl">The server stores bytes it cannot read.</h2>
+            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+                The client-to-server boundary, including the operational metadata that remains visible.
+            </p>
+        </div>
+        <figure class="encryption-figure">
+            <div class="encryption-device">
+                <p class="mb-6 font-mono text-xs text-accent">On the device</p>
+                <div class="key-step">
+                    <span>Passphrase</span>
+                    <small>Argon2id derives the unlock key</small>
+                </div>
+                <div class="key-step">
+                    <span>Random root key</span>
+                    <small>Wraps per-resource content keys</small>
+                </div>
+                <div class="key-step">
+                    <span>Files & filenames</span>
+                    <small>XChaCha20-Poly1305 encryption</small>
+                </div>
+            </div>
+            <div class="encryption-boundary">
+                <span aria-hidden="true">→</span>
+                <p>Contents and filenames are sealed before upload</p>
+            </div>
+            <div class="encryption-server">
+                <p class="mb-6 font-mono text-xs text-muted">On the server</p>
+                <ul class="space-y-3 text-sm">
+                    <li>Ciphertext</li>
+                    <li>Wrapped keys & public keys</li>
+                    <li>Sizes, timing & operational metadata</li>
+                </ul>
+                <p class="mt-7 border-t border-line pt-5 text-sm text-muted">
+                    No passphrase. No plaintext decryption keys.
+                </p>
+            </div>
+            <figcaption class="encryption-caption">
+                Architecture diagram, based on the project’s{' '}
+                <a
+                    href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/docs/threat-model.md"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    threat model<span class="sr-only"> (opens in new tab)</span>
+                </a>
+                .
+            </figcaption>
+        </figure>
+        <div class="mt-12 grid gap-8 md:grid-cols-[1fr_1.5fr]">
+            <div>
+                <h2 class="text-2xl font-medium tracking-tight">A backup is only useful if it restores.</h2>
+                <p class="mt-4 text-sm leading-relaxed text-muted">
+                    The repository’s restore drill runs real binaries. It checks a clean-machine recovery, not just
+                    whether a backup command exits successfully.
+                </p>
+                <a
+                    class="link-line touch-target mt-5 inline-flex min-h-11 items-center gap-1 text-sm text-fg"
+                    href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/scripts/restore-drill.sh"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Inspect the restore drill <span aria-hidden="true">↗</span>
+                    <span class="sr-only"> (opens in new tab)</span>
+                </a>
+            </div>
+            <ol class="restore-steps">
+                <li>Back up a test server.</li>
+                <li>Start a fresh server from the copy.</li>
+                <li>Recover with an email and passphrase on a clean client profile.</li>
+                <li>Compare file contents, executable bits, symlinks, and encrypted Git refs.</li>
+            </ol>
+        </div>
+    </section>
+)}
+{projectId === 'aqt-health' && (
+    <section class="section-x evidence-section">
+        <div class="evidence-intro">
+            <p class="mb-3 text-xs text-muted">Data design</p>
+            <h2 class="heading text-3xl md:text-4xl">Preserve the source. Reconcile the read.</h2>
+            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+                Provider payloads remain available for audit and reprocessing. Canonical endpoints apply source
+                priorities without deleting the raw rows.
+            </p>
+        </div>
+        <div class="policy-column-labels" aria-hidden="true">
+            <span>Metric</span>
+            <span>Preferred source</span>
+            <span>Overlap rule</span>
+        </div>
+        <dl class="policy-rules">
+            <div>
+                <dt>Steps & activity</dt>
+                <dd>
+                    <span class="rule-label">Preferred source</span>Google Health / Health Connect
+                </dd>
+                <dd>
+                    <span class="rule-label">Overlap rule</span>Keep higher-priority overlapping intervals. Preserve
+                    non-overlapping intervals.
+                </dd>
+            </div>
+            <div>
+                <dt>Sleep</dt>
+                <dd>
+                    <span class="rule-label">Preferred source</span>Withings
+                </dd>
+                <dd>
+                    <span class="rule-label">Overlap rule</span>Keep all sessions from the best-ranked provider for each
+                    UTC start date.
+                </dd>
+            </div>
+            <div>
+                <dt>Body measurements</dt>
+                <dd>
+                    <span class="rule-label">Preferred source</span>Withings
+                </dd>
+                <dd>
+                    <span class="rule-label">Overlap rule</span>Keep the best-ranked provider’s samples in each
+                    30-second bin.
+                </dd>
+            </div>
+            <div>
+                <dt>Heart rate</dt>
+                <dd>
+                    <span class="rule-label">Preferred source</span>Context-dependent
+                </dd>
+                <dd>
+                    <span class="rule-label">Overlap rule</span>Google Health normally comes first. Sleep-context
+                    samples follow the sleep ranking.
+                </dd>
+            </div>
+        </dl>
+        <p class="mt-5 max-w-3xl text-sm leading-relaxed text-muted">
+            The integration suite runs the application’s Flyway migrations against temporary PostgreSQL databases. Each
+            test is isolated.{' '}
+            <a
+                class="underline underline-offset-4 hover:text-fg"
+                href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                See the test setup<span class="sr-only"> (opens in new tab)</span>
+            </a>
+            .
+        </p>
+    </section>
+)}
+{projectId === 'frontiers-to-space' && (
+    <section class="section-x evidence-section">
+        <div class="evidence-intro">
+            <p class="mb-3 text-xs text-muted">Recorded flight data</p>
+            <h2 class="heading text-3xl md:text-4xl">Five hours of measurements.</h2>
+            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+                English plots redrawn from the mission’s 429 filtered telemetry records. The horizontal axis uses the
+                original Unix timestamps, including gaps between packets.
+            </p>
+        </div>
+        <div class="grid gap-6 lg:grid-cols-2">
+            <FlightPlot metric="temperature" />
+            <FlightPlot metric="pressure" />
+        </div>
+        <div class="mt-6 flex flex-wrap gap-x-7 gap-y-5 text-sm">
+            <a
+                class="link-line touch-target"
+                href="https://github.com/Aquitano/FrontiersToSpace/blob/2fb1b9a35821a83a70aa6f4bb118f472eaba2ae5/data/filtered_data.json"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Original measurements <span aria-hidden="true">↗</span>
+                <span class="sr-only"> (opens in new tab)</span>
+            </a>
+            <a
+                class="link-line touch-target"
+                href="https://space.thomasbreindl.me/dashboard"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Interactive mission dashboard <span aria-hidden="true">↗</span>
+                <span class="sr-only"> (opens in new tab)</span>
+            </a>
+        </div>
+    </section>
+)}
+{projectId === 'griffin-energy' && (
+    <section class="section-x evidence-section">
+        <div class="evidence-intro">
+            <p class="mb-3 text-xs text-muted">Product artifacts</p>
+            <h2 class="heading text-3xl md:text-4xl">Two variants, one fictional brand.</h2>
+            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+                The original Blender renders show the packaging applied to the can model. The yellow band distinguishes
+                Energy from No Caffeine.
+            </p>
+        </div>
+        <div class="can-renders">
+            <figure>
+                <img
+                    src="/showcase/griffin/images/untitled5-min.png"
+                    alt="Original Blender render of the Griffin Energy can and its packaging."
+                    width="275"
+                    height="372"
+                    loading="lazy"
+                />
+                <figcaption>Energy</figcaption>
+            </figure>
+            <figure>
+                <img
+                    src="/showcase/griffin/images/untitled5b-min.png"
+                    alt="Original Blender render of the Griffin No Caffeine variant."
+                    width="275"
+                    height="372"
+                    loading="lazy"
+                />
+                <figcaption>No Caffeine</figcaption>
+            </figure>
+        </div>
+    </section>
+)}
+<style>
+    .evidence-section {
+        padding-block: clamp(3rem, 6vw, 5rem);
+        border-top: 1px solid var(--line);
+    }
+    .evidence-intro {
+        margin-bottom: 2.5rem;
+    }
+    .encryption-figure {
+        display: grid;
+        gap: 1.5rem;
+        border: 1px solid var(--line);
+        border-radius: 0.75rem;
+        background: var(--bg-raise);
+        padding: clamp(1.25rem, 3vw, 2.5rem);
+    }
+    .key-step {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        border-top: 1px solid var(--line);
+        padding-block: 1rem;
+        font-size: 1rem;
+    }
+    .key-step small {
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+    .encryption-boundary {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--muted);
+        font-size: 0.75rem;
+    }
+    .encryption-boundary span {
+        transform: rotate(90deg);
+        color: var(--accent);
+        font-size: 2rem;
+    }
+    .encryption-server {
+        border: 1px solid var(--line);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        align-self: center;
+    }
+    .encryption-caption {
+        grid-column: 1/-1;
+        border-top: 1px solid var(--line);
+        padding-top: 1rem;
+        font-size: 0.75rem;
+        color: var(--muted);
+    }
+    .encryption-caption a {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+    .restore-steps {
+        list-style: decimal;
+        padding-left: 1.5rem;
+    }
+    .restore-steps li {
+        padding: 0 0 1rem 0.5rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.875rem;
+        line-height: 1.6;
+    }
+    .policy-column-labels {
+        display: none;
+    }
+    .policy-rules > div {
+        display: grid;
+        gap: 1rem;
+        padding-block: 1.5rem;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.875rem;
+        line-height: 1.6;
+    }
+    .policy-rules dt {
+        font-weight: 500;
+    }
+    .policy-rules dd {
+        color: var(--muted);
+    }
+    .rule-label {
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.6875rem;
+        color: var(--fg);
+    }
+    .can-renders {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.5rem;
+        border-radius: 0.75rem;
+        padding: clamp(1rem, 3vw, 3rem);
+        background: #fff;
+        color: #181818;
+    }
+    .can-renders figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .can-renders img {
+        width: min(100%, 275px);
+        height: auto;
+    }
+    .can-renders figcaption {
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+    @media (min-width: 768px) {
+        .policy-column-labels,
+        .policy-rules > div {
+            display: grid;
+            grid-template-columns: 1fr 1.25fr 2fr;
+            gap: 2rem;
+        }
+        .policy-column-labels {
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+        .rule-label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+        }
+        .encryption-figure {
+            grid-template-columns: 1.1fr 0.6fr 1fr;
+            align-items: center;
+        }
+        .encryption-boundary span {
+            transform: none;
+        }
+        .encryption-boundary {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>

@@ -1,0 +1,115 @@
+---
+import { reconciliationRules as rules } from '../lib/reconciliation';
+import ProviderTracks from './ProviderTracks.astro';
+---
+
+<figure class="policy-demo">
+    <figcaption class="mb-6">
+        <p class="mb-2 text-xs text-muted">Canonical metrics</p>
+        <h2 class="text-2xl font-medium tracking-tight md:text-3xl">Two providers. One source policy.</h2>
+        <p class="mt-3 text-sm leading-relaxed text-muted">
+            Select a metric to see which records enter the canonical read.
+        </p>
+    </figcaption>
+    <div class="policy-content">
+        <fieldset class="policy-selector">
+            <legend class="sr-only">Metric policy</legend>
+            {rules.map((rule, i) => (
+                <label class="policy-option">
+                    <input
+                        type="radio"
+                        name="canonical-policy"
+                        value={rule.id}
+                        checked={i === 0}
+                        aria-describedby={`${rule.id}-policy-result`}
+                        aria-controls={`${rule.id}-policy-panel`}
+                    />
+                    <span>{rule.label}</span>
+                </label>
+            ))}
+        </fieldset>
+        {rules.map((rule) => (
+            <div class="policy-panel" data-policy={rule.id} id={`${rule.id}-policy-panel`}>
+                <ProviderTracks rule={rule} />
+                <div class="policy-result" id={`${rule.id}-policy-result`}>
+                    <h3 class="text-xl font-medium tracking-tight">{rule.result}</h3>
+                    <p class="mt-3 text-sm leading-relaxed text-fg/80">{rule.policy}</p>
+                </div>
+            </div>
+        ))}
+    </div>
+    <p class="mt-6 border-t border-[#59404c] pt-4 text-xs leading-relaxed text-muted">
+        Schematic records, not patient readings. Lengths are illustrative. Every original record remains in PostgreSQL.
+    </p>
+    <a
+        class="link-line touch-target mt-4 inline-block text-xs text-fg/80 hover:text-fg"
+        href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#canonical-metrics"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        Read the documented rules <span aria-hidden="true">↗</span>
+        <span class="sr-only"> (opens in new tab)</span>
+    </a>
+</figure>
+<style>
+    .policy-demo {
+        padding: clamp(1.25rem, 4vw, 3rem);
+        border: 1px solid #59404c;
+        border-radius: 0.75rem;
+        background: #171216;
+    }
+    .policy-selector {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    .policy-option {
+        position: relative;
+        cursor: pointer;
+    }
+    .policy-option input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+    }
+    .policy-option > span {
+        display: grid;
+        min-height: 44px;
+        place-items: center;
+        border: 1px solid #59404c;
+        border-radius: 0.375rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+    .policy-option input:checked + span {
+        border-color: #d4a7bc;
+        background: #39232f;
+        color: #fff;
+    }
+    .policy-option input:focus-visible + span {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+    }
+    .policy-panel {
+        display: none;
+        gap: 2rem;
+        align-items: center;
+    }
+    .policy-content:has(input[value='steps']:checked) [data-policy='steps'],
+    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'],
+    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] {
+        display: grid;
+    }
+    .policy-result {
+        border-left: 2px solid #b78199;
+        padding-left: 1.5rem;
+    }
+    @media (min-width: 768px) {
+        .policy-panel {
+            grid-template-columns: 1.1fr 1fr;
+            gap: 3rem;
+        }
+    }
+</style>

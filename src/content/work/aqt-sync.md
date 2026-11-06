@@ -3,6 +3,7 @@ title: aqt-sync
 subtitle: Encrypted File Sync
 year: '2026'
 description: 'Self-hosted, zero-knowledge file and folder sync written in Go. The client encrypts contents and filenames before upload, FastCDC chunking means only changed chunks are re‑sent, and tracked folders sync two‑way with snapshots and conflict handling. Git history can be pushed to an encrypted remote.'
+summary: 'Encrypted files, snapshots, and Git history. One self-hosted Go binary.'
 tags:
     - Go
     - SQLite
@@ -19,14 +20,26 @@ links:
     - label: GitHub
       href: https://github.com/Aquitano/aqt-sync
 accent: '#5cc8ff'
-image: ../../assets/work/aqt-sync.webp
+image: ../../assets/work/aqt-sync-site.webp
 order: 1
 ---
 
-I built aqt to sync files and folders between my machines through a server I run myself. The client encrypts file contents and filenames with XChaCha20-Poly1305 before upload. Argon2id turns the passphrase into a key that wraps a random root key. The server stores ciphertext, public keys, wrapped key records, and operational metadata such as sizes and timestamps. It never receives the passphrase or a plaintext decryption key.
+## Problem
 
-The client splits files into chunks with FastCDC, seals them with keyed convergent encryption, and addresses them in a Merkle DAG. Unchanged chunks are never re‑sent, and a file that appears in several folders is stored once.
+I wanted file and folder sync across my machines without giving my server plaintext. The same tool also had to carry encrypted Git history for my notes.
 
-Tracked folders sync two‑way with snapshots and named checkpoints, and a per-folder conflict policy decides whether a conflict blocks the sync, keeps a copy, or merges. A Git remote helper stores repository history as encrypted bundles behind an `aqt::` remote. That is how I back up my personal notes: Git handles history and merges, and aqt encrypts the bundles before they reach my server.
+## A key hierarchy that allows passphrase changes
 
-The server is one static Go binary with a SQLite data directory. Releases ship with a signed manifest that `aqt update` verifies before installing. A restore drill tests recovery end to end: it backs up a test server, starts a fresh server from the copy, restores on a clean client profile from only an email and a passphrase, and compares the restored files byte for byte.
+The passphrase unlocks a random root key rather than deriving the master key directly. Changing a passphrase rewraps one key record instead of encrypting every file again. A compromised root key requires the separate, more expensive recovery operation.
+
+File contents and filenames are sealed on the client. The server still sees ciphertext sizes, timing, public keys, and operational metadata. The architecture diagram below makes that boundary explicit.
+
+## Transfer only the changed chunks
+
+FastCDC splits files into chunks, which the client seals with keyed convergent encryption and addresses in a Merkle DAG. Unchanged chunks are not resent. Tracked folders add two-way sync, snapshots, and per-folder conflict policies.
+
+For my notes, a Git remote helper stores history as encrypted bundles behind an `aqt::` remote. Git handles history and merges; aqt seals the bundles before upload.
+
+## Delivery and recovery
+
+The server is one static Go binary with a SQLite data directory. Releases carry a signed manifest that `aqt update` verifies before installing. The recorded CI output above comes from a clean-server restore drill. Its recovery steps and source are documented below.

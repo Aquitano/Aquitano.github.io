@@ -11,6 +11,7 @@ const work = defineCollection({
             subtitle: z.string(),
             year: z.string(),
             description: z.string(),
+            summary: z.string(),
             tags: z.array(z.string()),
             tasks: z.array(z.string()),
             links: z

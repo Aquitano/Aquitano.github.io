@@ -1,7 +1,6 @@
 ---
 import { site, socials } from '../lib/data';
 import { buildSha, commitUrl, buildDate } from '../lib/buildStamp';
-import { opticalIndent } from '../lib/displayTitle';
 
 const isHome = Astro.url.pathname === '/';
 ---
@@ -17,17 +16,17 @@ const isHome = Astro.url.pathname === '/';
 >
     <div class="mb-16 md:mb-24">
         <p data-footer-reveal class="meta mb-6">
-            {isHome && <span class="text-accent">/05 </span>}Got an interesting problem?
+            {isHome && <span class="text-accent">/06 </span>}Got an interesting problem?
         </p>
         <a href={`mailto:${site.email}`} class="group block w-fit">
             <span class="block overflow-y-clip pb-[0.06em]">
                 <span
                     data-footer-headline
-                    class="display block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent"
+                    class="heading block text-[clamp(2.8rem,10vw,9rem)] transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent"
                 >
-                    <span style={opticalIndent('Let’s')}>Let’s</span>{' '}
+                    <span>Let’s</span>{' '}
                     <span class="whitespace-nowrap">
-                        Talk
+                        talk.
                         <span
                             aria-hidden="true"
                             class="ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-out-strong group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"

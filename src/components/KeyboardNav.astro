@@ -1,7 +1,7 @@
 ---
 const SHORTCUTS = [
-    { keys: ['j'], label: 'Next section' },
-    { keys: ['k'], label: 'Previous section' },
+    { keys: ['j'], label: 'Next stop' },
+    { keys: ['k'], label: 'Previous stop' },
     { keys: ['g', 'g'], label: 'Jump to top' },
     { keys: ['Shift', 'G'], label: 'Jump to contact' },
     { keys: ['?'], label: 'Toggle this panel' },
@@ -21,7 +21,7 @@ const SHORTCUTS = [
                 data-kbd-close
                 type="button"
                 aria-label="Close (Esc)"
-                class="meta -mr-2 grid min-h-11 min-w-11 place-items-center rounded-full px-2 text-muted transition-colors duration-200 hover:text-fg"
+                class="meta -mr-2 grid min-h-11 min-w-11 place-items-center rounded-md px-2 text-muted transition-colors duration-200 hover:text-fg"
             >
                 esc
             </button>
@@ -62,7 +62,7 @@ const SHORTCUTS = [
     data-kbd-hint
     type="button"
     aria-label="Show keyboard shortcuts"
-    class="kbd-hint group fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border border-line bg-bg-raise/80 px-3 py-1.5 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg data-off:flex pointer-fine:md:flex"
+    class="kbd-hint group relative z-40 ml-auto hidden shrink-0 items-center gap-2 rounded-full border border-line bg-bg-raise/80 px-3 py-1.5 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg data-off:flex pointer-fine:md:flex"
 >
     <kbd class="kbd-cap">?</kbd>
     <span class="meta transition-colors duration-200 group-hover:text-fg">Shortcuts</span>
@@ -85,6 +85,8 @@ const SHORTCUTS = [
     }
 
     .kbd-switch {
+        min-width: 44px;
+        min-height: 44px;
         transition:
             color 200ms,
             border-color 200ms;
@@ -93,13 +95,6 @@ const SHORTCUTS = [
     .kbd-switch[aria-checked='true'] {
         border-color: color-mix(in oklch, var(--accent) 60%, transparent);
         color: var(--accent);
-    }
-
-    @media (max-width: 767px) {
-        .kbd-hint[data-off] {
-            bottom: auto;
-            top: 4.5rem;
-        }
     }
 
     .kbd-hint {
@@ -234,28 +229,24 @@ const SHORTCUTS = [
     if (dialog && stops.length) {
         const HEADER_OFFSET = 88;
 
-        const wrappers = stops.filter((s) => s.hasAttribute('data-card-wrapper'));
         let targets: number[] = [];
 
-        // Land each stop where an anchor jump would: cards at their sticky offset, sections by their scroll margin.
         const offsetOf = (el: HTMLElement) => {
-            const offset = parseFloat(
-                el.hasAttribute('data-card-wrapper') ? el.style.top : getComputedStyle(el).scrollMarginTop,
-            );
+            const offset = parseFloat(getComputedStyle(el).scrollMarginTop);
 
             return Number.isNaN(offset) ? HEADER_OFFSET : offset;
         };
 
         const measure = () => {
-            const saved = wrappers.map((w) => w.style.position);
-
-            for (const w of wrappers) w.style.position = 'static';
             targets = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el)));
-            wrappers.forEach((w, i) => (w.style.position = saved[i]));
         };
 
         const currentIndex = () => {
-            const line = targetScrollY() + 8;
+            const scroll = targetScrollY();
+            const focused = stops.findIndex((stop) => stop === document.activeElement);
+
+            if (focused >= 0 && Math.abs(targets[focused] - scroll) <= 8) return focused;
+            const line = scroll + 8;
             let idx = 0;
             targets.forEach((t, i) => {
                 if (t <= line) idx = i;
@@ -392,8 +383,8 @@ const SHORTCUTS = [
                 hint.classList.remove('is-pulse');
             });
 
-            // Past the hero the pill would sit over body text in the left gutter.
             const hero = document.querySelector('[data-hero]');
+            hero?.querySelector('[data-hero-tools]')?.append(hint);
 
             if (hero) {
                 new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting)).observe(

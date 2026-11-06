@@ -6,6 +6,7 @@ wrap:
 subtitle: E-Commerce Platform
 year: '2021'
 description: 'An e-commerce platform for video games with Ajax-powered live search, sorting, and dynamic product data served by PHP and MySQL. User management built on hashed & salted passwords with client-side validation for secure registration and login.'
+summary: 'An early full-stack game store with live search and account management.'
 tags:
     - PHP
     - MySQL
@@ -15,19 +16,27 @@ tasks:
     - Frontend
     - Backend
 links:
-    - label: Live Site
+    - label: Website
       href: https://bettergaming.thomasbreindl.me
     - label: GitHub
       href: https://github.com/Aquitano/BetterGaming
 accent: '#5ee9b5'
-image: ../../assets/work/bettergaming.webp
+image: ../../assets/work/bettergaming-interface.webp
 order: 5
 ---
 
+## The project
+
 BetterGaming is an e-commerce platform for video games. The application uses server-side PHP and a MySQL database to load and display product data dynamically.
+
+## Interface behavior
 
 The frontend uses JavaScript ES6, PaceJS and scroll-based animations for a smooth user experience.
 
+## Live search
+
 A core feature is the live search: Ajax requests display search results in real time, with sorting options to refine them further.
+
+## Accounts
 
 User management relies on hashed and salted passwords along with client-side HTML5 validation for secure registration and login.
