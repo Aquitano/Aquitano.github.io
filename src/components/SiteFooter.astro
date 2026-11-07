@@ -10,7 +10,7 @@ const isHome = Astro.url.pathname === '/';
     data-footer
     data-minimap="Contact"
     class:list={[
-        'section-x relative overflow-hidden pb-8',
+        'section-x relative shrink-0 overflow-hidden pb-8',
         isHome ? 'section-y--major pointer-fine:pb-20' : 'border-t border-line pt-8',
     ]}
 >
