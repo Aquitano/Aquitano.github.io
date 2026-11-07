@@ -91,6 +91,13 @@ import ProviderTracks from './ProviderTracks.astro';
             border-color 200ms,
             color 200ms;
     }
+    @media (hover: hover) {
+        .policy-option:hover input:not(:checked) + span {
+            border-color: color-mix(in oklch, var(--fg) 35%, transparent);
+            color: var(--fg);
+        }
+    }
+
     .policy-option input:checked + span {
         border-color: var(--project);
         background: var(--project);

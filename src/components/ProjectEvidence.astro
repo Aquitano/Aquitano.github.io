@@ -43,7 +43,7 @@ const policies = [
     {
         metric: 'Body measurements',
         source: 'Withings',
-        rule: 'Keep the best-ranked provider’s samples in each 30-second bin.',
+        rule: 'Keep the best-ranked provider’s samples in each 30‑second bin.',
     },
     {
         metric: 'Heart rate',
@@ -55,8 +55,8 @@ const policies = [
 
 {projectId === 'aqt-sync' && (
     <Fragment>
-        <section class="section-x pb-16 md:pb-24">
-            <SectionHeading index="01" title="Recovery, verified" />
+        <section class="section-x border-t border-line py-16 md:py-24">
+            <SectionHeading index="01" title="Recovery, verified" ruled={false} />
             <p data-detail-reveal class={leadClass}>
                 A backup is only useful if it restores. The repository’s restore drill runs real binaries and checks a
                 clean-machine recovery, not just whether a backup command exits successfully.
@@ -84,14 +84,14 @@ const policies = [
                 <RestoreRecord />
             </div>
         </section>
-        <section class="section-x pb-16 md:pb-24">
-            <SectionHeading index="02" title="What the server sees" />
+        <section class="section-x border-t border-line py-16 md:py-24">
+            <SectionHeading index="02" title="What the server sees" ruled={false} />
             <p data-detail-reveal class={leadClass}>
                 The server stores bytes it cannot read. This is the client-to-server boundary, including the operational
                 metadata that remains visible.
             </p>
             <figure data-detail-reveal class="overflow-hidden rounded-2xl border border-line">
-                <div class="grid gap-px bg-line md:grid-cols-[1fr_minmax(9rem,0.45fr)_1fr]">
+                <div class="grid gap-px bg-line lg:grid-cols-[1fr_minmax(9rem,0.45fr)_1fr]">
                     <div class="bg-bg-raise p-6 md:p-10">
                         <p class="meta mb-6 text-(--project)">On the device</p>
                         <ul>
@@ -103,8 +103,8 @@ const policies = [
                             ))}
                         </ul>
                     </div>
-                    <div class="flex items-center gap-4 bg-bg-raise p-6 md:flex-col md:justify-center md:text-center">
-                        <span class="text-3xl text-(--project) max-md:rotate-90" aria-hidden="true">
+                    <div class="flex items-center gap-4 bg-bg-raise p-6 lg:flex-col lg:justify-center lg:text-center">
+                        <span class="text-3xl text-(--project) max-lg:rotate-90" aria-hidden="true">
                             →
                         </span>
                         <p class="meta">Contents and filenames are sealed before upload</p>
@@ -121,7 +121,7 @@ const policies = [
                         </p>
                     </div>
                 </div>
-                <figcaption class="border-t border-line bg-bg-raise px-6 py-4 font-mono text-xs text-muted md:px-10">
+                <figcaption class="border-t border-line bg-bg-raise px-6 py-4 font-mono text-xs text-muted md:px-10 pointer-coarse:py-6">
                     Architecture diagram, based on the project’s{' '}
                     <a
                         class="link-line touch-target text-fg"
@@ -129,7 +129,8 @@ const policies = [
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        threat model<span class="sr-only"> (opens in new tab)</span>
+                        threat model <span aria-hidden="true">↗</span>
+                        <span class="sr-only">(opens in new tab)</span>
                     </a>
                     .
                 </figcaption>
@@ -139,8 +140,8 @@ const policies = [
 )}
 
 {projectId === 'aqt-health' && (
-    <section class="section-x pb-16 md:pb-24">
-        <SectionHeading index="01" title="Source priorities" />
+    <section class="section-x border-t border-line py-16 md:py-24">
+        <SectionHeading index="01" title="Source priorities" ruled={false} />
         <p data-detail-reveal class={leadClass}>
             Provider payloads remain available for audit and reprocessing. Canonical endpoints apply source priorities
             without deleting the raw rows.
@@ -167,25 +168,27 @@ const policies = [
                 ))}
             </dl>
         </div>
-        <p data-detail-reveal class="mt-8 max-w-3xl border-t border-line pt-6 text-sm leading-relaxed text-muted">
-            The integration suite runs the application’s Flyway migrations against temporary PostgreSQL databases. Each
-            test is isolated.{' '}
+        <div data-detail-reveal class="mt-8 border-t border-line pt-6">
+            <p class="max-w-3xl text-sm leading-relaxed text-muted">
+                The integration suite runs the application’s Flyway migrations against temporary PostgreSQL databases.
+                Each test is isolated.
+            </p>
             <a
-                class="link-line touch-target text-fg"
+                class:list={[linkClass, 'mt-4 inline-block']}
                 href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                Inspect the test setup <span aria-hidden="true">↗</span>
+                Test setup <span aria-hidden="true">↗</span>
                 <span class="sr-only">(opens in new tab)</span>
             </a>
-        </p>
+        </div>
     </section>
 )}
 
 {projectId === 'frontiers-to-space' && (
-    <section class="section-x pb-16 md:pb-24">
-        <SectionHeading index="01" title="Flight telemetry" />
+    <section class="section-x border-t border-line py-16 md:py-24">
+        <SectionHeading index="01" title="Flight telemetry" ruled={false} />
         <p data-detail-reveal class={leadClass}>
             Five hours of measurements from 8 July 2023. These English plots are redrawn from the mission’s 429 filtered
             telemetry records. Times are UTC. The horizontal axis uses the original Unix timestamps, including gaps
