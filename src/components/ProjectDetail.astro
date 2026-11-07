@@ -64,8 +64,17 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                             class="mx-auto max-h-[32rem] w-full object-contain"
                         />
                     </div>
-                    <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-[0.8125rem] text-muted">
-                        Original product render, created in Blender.
+                    <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-3 text-[0.8125rem] text-muted">
+                        <span>Original product render, created in Blender.</span>
+                        <a
+                            class="link-line touch-target"
+                            href="/showcase/griffin/images/untitled2.png"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Full image <span aria-hidden="true">↗</span>
+                            <span class="sr-only"> of {project.title} (opens in new tab)</span>
+                        </a>
                     </figcaption>
                 </figure>
             ) : (
@@ -85,55 +94,71 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                                 widths={[640, 960, 1280, 1920, 2400]}
                                 sizes={
                                     project.title === 'ChillFlow'
-                                        ? '(min-width:1008px) 2400px, 260vw'
-                                        : '(min-width:1008px) 928px, calc(100vw - 2.5rem)'
+                                        ? '(max-width:767px) 380vw, 2400px'
+                                        : project.title === 'FrontiersToSpace'
+                                          ? '(min-width:1408px) 640px, (min-width:1024px) calc(50vw - 4rem), (min-width:768px) 640px, calc(100vw - 2.5rem)'
+                                          : '(min-width:1008px) 928px, (min-width:768px) calc(100vw - 5rem), calc(100vw - 2.5rem)'
                                 }
                                 priority
                                 class="block h-auto w-full"
                             />
                         </div>
-                        {project.title === 'ChillFlow' && (
-                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-[0.8125rem] text-muted">
-                                Original 2025 landing page, cropped from the supplied render. The hosted demo is
-                                unavailable.
-                            </figcaption>
-                        )}
-                        {project.title === 'BetterGaming' && (
-                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-[0.8125rem] text-muted">
-                                Search for “Assassin”, sorted by price in the public demo. Captured results:
-                                <ol
-                                    aria-label="Captured results in ascending price order"
-                                    class="mt-4 grid gap-3 text-sm text-fg sm:grid-cols-3 sm:gap-x-6"
-                                >
-                                    {[
-                                        { title: 'Assassins Creed Origins', price: '9.89€' },
-                                        { title: 'Assassins Creed Odyssey', price: '11.99€' },
-                                        { title: 'Assassins Creed Valhalla', price: '34.78€' },
-                                    ].map((result) => (
-                                        <li class="flex justify-between gap-4 sm:flex-col sm:gap-1">
-                                            <span>{result.title}</span>
-                                            <span class="font-mono text-[0.8125rem] text-muted">{result.price}</span>
-                                        </li>
-                                    ))}
-                                </ol>
-                            </figcaption>
-                        )}
-                        {project.title === 'FrontiersToSpace' && (
-                            <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-2 text-[0.8125rem] text-muted">
-                                <span>
-                                    Original 2023 dashboard, in German. The map is framed around the recorded route.
-                                </span>
+                        <figcaption class="border-t border-line bg-bg-raise px-5 py-3 text-[0.8125rem] text-muted">
+                            {project.title === 'ChillFlow' && (
+                                <p>
+                                    Original 2025 landing page, cropped to its focus prompt. The hosted demo is
+                                    unavailable.
+                                </p>
+                            )}
+                            {project.title === 'BetterGaming' && (
+                                <>
+                                    Search for “Assassin”, sorted by price in the public demo. Captured results:
+                                    <ol
+                                        aria-label="Captured results in ascending price order"
+                                        class="mt-4 grid gap-3 text-sm text-fg sm:grid-cols-3 sm:gap-x-6"
+                                    >
+                                        {[
+                                            { title: 'Assassins Creed Origins', price: '9.89€' },
+                                            { title: 'Assassins Creed Odyssey', price: '11.99€' },
+                                            { title: 'Assassins Creed Valhalla', price: '34.78€' },
+                                        ].map((result) => (
+                                            <li class="flex justify-between gap-4 sm:flex-col sm:gap-1">
+                                                <span>{result.title}</span>
+                                                <span class="font-mono text-[0.8125rem] text-muted">
+                                                    {result.price}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </>
+                            )}
+                            {project.title === 'FrontiersToSpace' && (
+                                <p>Original 2023 dashboard, in German. The map is framed around the recorded route.</p>
+                            )}
+                            <div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
                                 <a
                                     class="link-line touch-target"
-                                    href="https://www.openstreetmap.org/copyright"
+                                    href={project.image.src}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    Map data © OpenStreetMap contributors <span aria-hidden="true">↗</span>
-                                    <span class="sr-only"> (opens in new tab)</span>
+                                    {project.title === 'ChillFlow' ? 'Full mockup' : 'Full image'}{' '}
+                                    <span aria-hidden="true">↗</span>
+                                    <span class="sr-only"> of {project.title} (opens in new tab)</span>
                                 </a>
-                            </figcaption>
-                        )}
+                                {project.title === 'FrontiersToSpace' && (
+                                    <a
+                                        class="link-line touch-target"
+                                        href="https://www.openstreetmap.org/copyright"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Map data © OpenStreetMap contributors <span aria-hidden="true">↗</span>
+                                        <span class="sr-only"> (opens in new tab)</span>
+                                    </a>
+                                )}
+                            </div>
+                        </figcaption>
                     </figure>
                 )
             )}
@@ -216,24 +241,32 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
         max-width: 58rem;
         margin-inline: 0;
     }
+    .split-intro .historical-interface {
+        margin-left: auto;
+    }
     .landing-interface {
-        max-width: 28rem;
+        max-width: 36rem;
     }
     .mission-interface {
         max-width: 40rem;
     }
     .interface-crop {
         position: relative;
-        aspect-ratio: 915 / 400;
+        aspect-ratio: 630 / 280;
         overflow: hidden;
     }
     .interface-crop :global(img) {
         position: absolute;
-        width: 262.3%;
+        width: 380.952%;
         max-width: none;
         height: auto;
-        left: -93.77%;
-        top: -97.5%;
+        left: -159.048%;
+        top: -182.143%;
+    }
+    @media (max-width: 1023px) {
+        .landing-interface {
+            max-width: none;
+        }
     }
     .case-title {
         font-size: clamp(2.5rem, 7vw, 6rem);
