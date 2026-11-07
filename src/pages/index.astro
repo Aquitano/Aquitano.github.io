@@ -14,7 +14,7 @@ const work = (await getCollection('work')).toSorted((a, b) => a.data.order - b.d
 ---
 
 <Layout>
-    <main>
+    <main id="main-content" tabindex="-1">
         <Hero />
         <FocusAreas />
         <Manifesto />

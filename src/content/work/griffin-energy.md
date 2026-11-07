@@ -16,9 +16,8 @@ tasks:
     - Frontend
     - 3D Modeling
 links:
-    - label: Demo
+    - label: Archived demo (German)
       href: /showcase/griffin/
-      external: true
 accent: '#ff7a5c'
 image: ../../assets/work/griffin-energy.webp
 order: 6
