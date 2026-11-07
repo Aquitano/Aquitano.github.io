@@ -31,7 +31,7 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
                     <article
                         data-card
                         style={`--project: ${p.accent}`}
-                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 focus-within:border-fg/25 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_1fr_auto]"
+                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 focus-within:border-fg/25 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12 md:max-lg:min-h-[min(80svh,52rem)] lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:grid-rows-[auto_1fr_auto]"
                     >
                         <a href={`/work/${entry.id}`} tabindex="-1" aria-hidden="true" class="absolute inset-0 z-10" />
                         {/* per-project glow */}
@@ -47,7 +47,7 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
                             aria-hidden="true"
                         />
 
-                        <header class="relative flex items-start justify-between gap-4 lg:col-start-1 lg:row-start-1 lg:pr-8">
+                        <header class="relative flex items-start justify-between gap-4 lg:col-span-2">
                             <span class="meta">©{p.year}</span>
                             <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
                         </header>
@@ -55,7 +55,7 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
                         {art && (
                             <div
                                 data-card-visual
-                                class="relative mt-8 hidden aspect-[5/2] md:block lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:my-2 lg:mt-0 lg:ml-10 lg:aspect-auto"
+                                class="relative mt-8 hidden min-h-40 md:block md:flex-1 lg:col-start-2 lg:row-start-2 lg:my-2 lg:ml-10"
                             >
                                 <PixelArt art={art} />
                             </div>
