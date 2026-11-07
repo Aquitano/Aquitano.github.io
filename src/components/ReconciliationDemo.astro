@@ -21,7 +21,6 @@ import ProviderTracks from './ProviderTracks.astro';
                         name="canonical-policy"
                         value={rule.id}
                         checked={i === 0}
-                        aria-describedby={`${rule.id}-policy-result`}
                         aria-controls={`${rule.id}-policy-panel`}
                     />
                     <span>{rule.label}</span>
@@ -38,6 +37,7 @@ import ProviderTracks from './ProviderTracks.astro';
             </div>
         ))}
     </div>
+    <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-policy-announcement></p>
     <p class="mt-6 border-t border-[#59404c] pt-4 text-xs leading-relaxed text-muted">
         Schematic records, not patient readings. Lengths are illustrative. Every original record remains in PostgreSQL.
     </p>
@@ -58,7 +58,11 @@ import ProviderTracks from './ProviderTracks.astro';
         border-radius: 0.75rem;
         background: #171216;
     }
+    .policy-content {
+        display: grid;
+    }
     .policy-selector {
+        grid-area: 1 / 1;
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
@@ -93,14 +97,16 @@ import ProviderTracks from './ProviderTracks.astro';
         outline-offset: 3px;
     }
     .policy-panel {
-        display: none;
+        display: grid;
+        grid-area: 2 / 1;
+        visibility: hidden;
         gap: 2rem;
         align-items: center;
     }
     .policy-content:has(input[value='steps']:checked) [data-policy='steps'],
     .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'],
     .policy-content:has(input[value='heart']:checked) [data-policy='heart'] {
-        display: grid;
+        visibility: visible;
     }
     .policy-result {
         border-left: 2px solid #b78199;
@@ -113,3 +119,15 @@ import ProviderTracks from './ProviderTracks.astro';
         }
     }
 </style>
+
+<script>
+    const announcement = document.querySelector<HTMLElement>('[data-policy-announcement]');
+
+    for (const input of document.querySelectorAll<HTMLInputElement>('input[name="canonical-policy"]')) {
+        input.addEventListener('change', () => {
+            const result = document.getElementById(`${input.value}-policy-result`);
+
+            if (announcement && result) announcement.textContent = result.innerText;
+        });
+    }
+</script>

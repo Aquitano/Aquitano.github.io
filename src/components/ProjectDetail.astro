@@ -78,7 +78,11 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
                         <Picture
                             src={project.image}
                             formats={['avif', 'webp']}
-                            alt={`${project.title}: ${project.subtitle}`}
+                            alt={
+                                project.title === 'ChillFlow'
+                                    ? 'ChillFlow web introduction with a focus prompt over a dark circular background.'
+                                    : 'BetterGaming storefront with search, navigation, and a game-sale illustration.'
+                            }
                             widths={[640, 960, 1280, 1920, 2400]}
                             sizes={
                                 project.title === 'ChillFlow'

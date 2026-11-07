@@ -2,7 +2,7 @@
 
 /* SiteHeader toggles these scroll-state classes imperatively, so they aren't
    discoverable in markup — safelist them explicitly. */
-@source inline('border-line/70 bg-bg/95 py-3 md:py-3.5');
+@source inline('border-line/70 bg-bg py-3 md:py-3.5');
 
 @custom-variant short (@media (orientation: landscape) and (max-height: 30rem));
 
@@ -102,13 +102,13 @@ body {
 
 @layer base {
     /* Sections that only receive focus from jump shortcuts (tabindex="-1") don't get a ring. */
-    :where(a, button, [tabindex]:not([tabindex='-1'])):focus-visible {
+    :where(a, button, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 3px;
     }
 
     @supports not selector(:focus-visible) {
-        :where(a, button, [tabindex]:not([tabindex='-1'])):focus {
+        :where(a, button, summary, [tabindex]:not([tabindex='-1'])):focus {
             outline: 2px solid var(--accent);
             outline-offset: 3px;
         }
@@ -270,16 +270,15 @@ body {
         transform-origin: left;
     }
 
-    @media (pointer: coarse) {
-        .touch-target {
-            --touch-pad: 0.875rem;
-            padding-block: var(--touch-pad);
-            margin-block: calc(-1 * var(--touch-pad));
-        }
+    .touch-target {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        gap: 0.25rem;
+    }
 
-        .touch-target.link-line::after {
-            bottom: calc(var(--touch-pad) - 2px);
-        }
+    .touch-target.link-line::after {
+        bottom: calc((44px - 1lh) / 2 - 2px);
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -318,11 +317,6 @@ body {
 /* Toggled from script over the links' own text colour, so it stays outside the layer to win. */
 .nav-active {
     color: var(--accent);
-}
-
-.nav-active.link-line::after {
-    transform: scaleX(1);
-    transform-origin: left;
 }
 
 @media (min-width: 768px) {

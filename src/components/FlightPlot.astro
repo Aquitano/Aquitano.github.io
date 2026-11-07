@@ -97,10 +97,9 @@ const extreme = metric === 'temperature' ? Math.min(...values) : Math.max(...val
                 vector-effect="non-scaling-stroke"
             />
         </svg>
-        {scale.ticks.map((value, i) => (
+        {scale.ticks.map((value) => (
             <span aria-hidden="true" class="y-label" style={`top:${y(value * scale.divisor) / 10}%`}>
                 {value.toLocaleString('en-US')}
-                {i === scale.ticks.length - 1 ? ` ${scale.unit}` : ''}
             </span>
         ))}
         {ticks.map((time, i) => (
@@ -110,13 +109,19 @@ const extreme = metric === 'temperature' ? Math.min(...values) : Math.max(...val
                     'x-label',
                     i === 0 && 'first-tick',
                     i === ticks.length - 1 && 'last-tick',
-                    i % 2 === 1 && 'intermediate-tick',
+                    i !== 0 && i !== 2 && 'intermediate-tick',
                 ]}
                 style={`left:${x(time) / 10}%`}
             >
                 {timeLabel(time)}
             </span>
         ))}
+        <span aria-hidden="true" class="y-label axis-unit">
+            {scale.unit}
+        </span>
+        <span aria-hidden="true" class="x-label last-tick mobile-endpoint" style={`left:${x(end) / 10}%`}>
+            {timeLabel(end)}
+        </span>
     </div>
     <p class="plot-footnote">UTC · points positioned by timestamp · {measurements.length} measurements</p>
 </figure>
@@ -167,6 +172,12 @@ const extreme = metric === 'temperature' ? Math.min(...values) : Math.max(...val
         right: calc(100% + 0.75rem);
         transform: translateY(-50%);
     }
+    .axis-unit {
+        top: -1.5rem;
+    }
+    .mobile-endpoint {
+        display: none;
+    }
     .first-tick {
         transform: none;
     }
@@ -182,6 +193,9 @@ const extreme = metric === 'temperature' ? Math.min(...values) : Math.max(...val
         color: var(--muted);
     }
     @media (max-width: 640px) {
+        .mobile-endpoint {
+            display: inline;
+        }
         .intermediate-tick {
             display: none;
         }

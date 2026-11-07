@@ -1,0 +1,148 @@
+---
+const modes = [
+    { id: 'without', label: 'Without compaction', retained: 51 },
+    { id: 'with', label: 'With compaction', retained: 77 },
+];
+---
+
+<figure class="retention-study">
+    <figcaption>
+        <p class="mb-3 text-xs text-accent">Engineering at Cloudflare</p>
+        <h2 class="max-w-md text-2xl leading-snug font-medium tracking-tight md:text-3xl">
+            Keeping data through an outage.
+        </h2>
+        <p class="mt-3 max-w-md text-sm leading-relaxed text-muted">
+            Compaction for an analytics pipeline handling 100M events/s.
+        </p>
+    </figcaption>
+    <fieldset class="retention-selector">
+        <legend class="sr-only">Compare retention during controlled outage tests</legend>
+        {modes.map((mode) => (
+            <label>
+                <input
+                    type="radio"
+                    name="retention-mode"
+                    value={mode.id}
+                    checked={mode.id === 'with'}
+                    aria-label={`${mode.label}: ${mode.retained} percent retained`}
+                    aria-controls="retention-output"
+                />
+                <span>{mode.label}</span>
+            </label>
+        ))}
+    </fieldset>
+    <div id="retention-output" class="retention-output">
+        {modes.map((mode) => (
+            <p class="retention-result" data-retention={mode.id}>
+                <span class="retention-value">{mode.retained}%</span>
+                <span class="pb-2 text-sm text-muted">data retained</span>
+            </p>
+        ))}
+    </div>
+    <div class="retention-cells" aria-hidden="true">
+        {Array.from({ length: 100 }, (_, i) => (
+            <span
+                class:list={[
+                    'retention-cell',
+                    i < modes[0].retained && 'retained-base',
+                    i >= modes[0].retained && i < modes[1].retained && 'retained-extra',
+                ]}
+            ></span>
+        ))}
+    </div>
+    <p class="mt-3 text-xs leading-relaxed text-muted">Each cell represents one percentage point.</p>
+    <div class="mt-4 flex flex-wrap items-center justify-between gap-x-5 gap-y-2 text-xs">
+        <p class="text-muted">Controlled outage tests · 2026 internship</p>
+        <a href="#experience" class="link-line touch-target text-fg">
+            Read about the work <span aria-hidden="true">↓</span>
+        </a>
+    </div>
+</figure>
+<style>
+    .retention-study {
+        border-left: 1px solid var(--line);
+        padding-left: clamp(1.25rem, 3vw, 2.5rem);
+    }
+    .retention-selector {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    .retention-selector label {
+        position: relative;
+        cursor: pointer;
+    }
+    .retention-selector input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+    }
+    .retention-selector label > span {
+        display: flex;
+        min-height: 44px;
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.75rem;
+    }
+    .retention-selector input:checked + span {
+        border-color: var(--accent);
+        color: var(--fg);
+    }
+    .retention-selector input:focus-visible + span {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+    }
+    .retention-output {
+        display: grid;
+        margin-block: 1rem 1.5rem;
+    }
+    .retention-result {
+        display: flex;
+        grid-area: 1 / 1;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        visibility: hidden;
+    }
+    .retention-value {
+        font-size: clamp(4.25rem, 7vw, 6.5rem);
+        font-weight: 600;
+        letter-spacing: -0.06em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+    }
+    .retention-cells {
+        display: grid;
+        grid-template-columns: repeat(20, minmax(0, 1fr));
+        gap: 4px;
+    }
+    .retention-cell {
+        height: clamp(8px, 1.1vw, 14px);
+        border: 1px solid var(--line);
+        border-radius: 1px;
+        background: var(--bg-raise);
+        transition:
+            background-color 160ms,
+            border-color 160ms;
+    }
+    .retention-study:has(input[value='without']:checked) [data-retention='without'],
+    .retention-study:has(input[value='with']:checked) [data-retention='with'] {
+        visibility: visible;
+    }
+    .retention-study:has(input[value='without']:checked) .retained-base {
+        background: var(--fg);
+        border-color: var(--fg);
+    }
+    .retention-study:has(input[value='with']:checked) .retained-base,
+    .retention-study:has(input[value='with']:checked) .retained-extra {
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .retention-cell {
+            transition: none;
+        }
+    }
+</style>

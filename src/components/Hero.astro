@@ -1,5 +1,6 @@
 ---
 import { site } from '../lib/data';
+import RetentionStudy from './RetentionStudy.astro';
 ---
 
 <section id="top" data-hero data-minimap="Intro" class="section-x hero">
@@ -23,47 +24,7 @@ import { site } from '../lib/data';
                 </a>
             </div>
         </div>
-        <figure class="retention-study">
-            <figcaption>
-                <p class="mb-3 text-xs text-accent">Engineering at Cloudflare</p>
-                <h2 class="text-xl leading-snug font-medium tracking-tight md:text-2xl">
-                    Keeping data through an outage.
-                </h2>
-                <p class="mt-3 max-w-md text-sm leading-relaxed text-muted">
-                    Compaction for an analytics pipeline handling 100M events/s.
-                </p>
-            </figcaption>
-            <div
-                class="retention-bars"
-                role="img"
-                aria-label="Retention in controlled outage tests increased from 51 percent without compaction to 77 percent with compaction."
-            >
-                <div class="retention-row">
-                    <div class="mb-2 flex items-baseline justify-between gap-4 text-xs text-muted">
-                        <span>Without compaction</span>
-                        <span>51%</span>
-                    </div>
-                    <div class="retention-track">
-                        <span style="width:51%" class="bg-fg/25"></span>
-                    </div>
-                </div>
-                <div class="retention-row">
-                    <div class="mb-2 flex items-baseline justify-between gap-4 text-xs text-fg">
-                        <span>With compaction</span>
-                        <span>77%</span>
-                    </div>
-                    <div class="retention-track">
-                        <span style="width:77%" class="bg-accent"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs">
-                <p class="text-muted">Controlled outage tests · 2026 internship</p>
-                <a href="#experience" class="link-line touch-target text-fg">
-                    Read about the work <span aria-hidden="true">↓</span>
-                </a>
-            </div>
-        </figure>
+        <RetentionStudy />
     </div>
     <div data-hero-tools class="hero-tools">
         <p class="text-xs text-muted">Java, Go, Kotlin & TypeScript</p>
@@ -78,30 +39,11 @@ import { site } from '../lib/data';
     .hero-intro {
         display: grid;
         gap: 3rem;
-        align-items: center;
+        align-items: start;
     }
     .hero-name {
-        font-size: clamp(3.5rem, 7.5vw, 7rem);
+        font-size: clamp(3rem, 5vw, 5rem);
         letter-spacing: -0.045em;
-    }
-    .retention-study {
-        border-left: 1px solid var(--line);
-        padding: clamp(1.25rem, 3vw, 2.5rem);
-    }
-    .retention-bars {
-        display: grid;
-        gap: 1.5rem;
-        margin-top: 2rem;
-    }
-    .retention-track {
-        height: 1.25rem;
-        overflow: hidden;
-        border-radius: 3px;
-        background: var(--line);
-    }
-    .retention-track span {
-        display: block;
-        height: 100%;
     }
     .hero-tools {
         display: flex;
