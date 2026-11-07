@@ -1,17 +1,20 @@
 ---
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
+import ProjectEvidence from './ProjectEvidence.astro';
+import ReconciliationDemo from './ReconciliationDemo.astro';
 import { isExternalHref } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
+    id: string;
     project: CollectionEntry<'work'>['data'];
     index: number;
     total: number;
     next: { title: string; wrap?: string[]; slug: string; accent: string };
 }
 
-const { project, index, total, next } = Astro.props;
+const { id, project, index, total, next } = Astro.props;
 
 const title = displayTitle(project.title, project.wrap);
 
@@ -28,7 +31,7 @@ const fadeStart = 700 + (title.lines.length - 1) * LINE_STAGGER;
 const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
 ---
 
-<div id="top" data-detail class="relative overflow-x-clip">
+<div id="top" data-detail style={`--project: ${project.accent}`} class="relative overflow-x-clip">
     {/* per-project glow */}
     <div
         class="pointer-events-none absolute top-0 -right-1/4 h-[60svh] w-[70%] rounded-full opacity-[0.1] blur-3xl"
@@ -92,14 +95,36 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     <Picture
                         src={project.image}
                         formats={['avif', 'webp']}
-                        alt={`${project.title} — ${project.subtitle}`}
+                        alt={project.imageAlt ?? `${project.title} — ${project.subtitle}`}
                         widths={[640, 960, 1280, 1600, 2400]}
                         sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
                         priority
+                        style={`object-position: ${project.imagePosition}`}
                         class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover"
                     />
                 </div>
             </div>
+            {(project.imageCaption || project.imageCredit) && (
+                <p class="mt-4 flex flex-wrap justify-between gap-x-6 gap-y-1 font-mono text-xs leading-relaxed text-muted">
+                    <span>{project.imageCaption}</span>
+                    {project.imageCredit && (
+                        <a
+                            href={project.imageCredit.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="link-line touch-target text-fg/85"
+                        >
+                            {project.imageCredit.label}
+                            <span class="sr-only">(opens in new tab)</span>
+                        </a>
+                    )}
+                </p>
+            )}
+        </div>
+    )}
+    {id === 'aqt-health' && (
+        <div class="section-x relative pt-2 pb-10 md:pb-16">
+            <ReconciliationDemo />
         </div>
     )}
 
@@ -165,6 +190,8 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             <slot />
         </div>
     </div>
+
+    <ProjectEvidence projectId={id} />
 
     <a
         href={`/work/${next.slug}`}
@@ -245,6 +272,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
         const revealItems = offscreen([
             ...root.querySelectorAll('[data-detail-para]'),
             ...root.querySelectorAll('[data-detail-prose] > *'),
+            ...root.querySelectorAll('[data-detail-reveal]'),
             ...root.querySelectorAll('[data-detail-next]'),
         ]);
 
@@ -254,5 +282,29 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             once: true,
             onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }),
         });
+
+        for (const plot of offscreen([...root.querySelectorAll<HTMLElement>('[data-plot-line]')])) {
+            gsap.fromTo(
+                plot,
+                { clipPath: 'inset(-5% 100% -5% 0)' },
+                {
+                    clipPath: 'inset(-5% 0% -5% 0)',
+                    duration: 1.8,
+                    ease: 'power2.inOut',
+                    scrollTrigger: { trigger: plot, start: 'top 80%', once: true },
+                },
+            );
+        }
+
+        for (const terminal of offscreen([...root.querySelectorAll<HTMLElement>('[data-terminal]')])) {
+            gsap.from(terminal.querySelectorAll('[data-terminal-line]'), {
+                opacity: 0,
+                x: -8,
+                duration: 0.5,
+                stagger: 0.35,
+                delay: 0.4,
+                scrollTrigger: { trigger: terminal, start: 'top 80%', once: true },
+            });
+        }
     }
 </script>

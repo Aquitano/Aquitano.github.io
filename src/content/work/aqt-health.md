@@ -29,6 +29,6 @@ Ingestion is idempotent. Each batch carries an external ID per source instance, 
 
 Sync jobs run on the server, so closing the browser does not stop them. After a restart the service requeues unfinished jobs, which is safe because ingestion deduplicates by provider record ID. A job that has restarted three times fails instead of resuming, so a crash cannot loop.
 
-Two devices often record the same thing. Read endpoints reconcile overlapping rows into canonical results: steps and activity prefer Google Health, body measurements and sleep prefer Withings, and when sleep sessions overlap the recording with more stages wins. Heart-rate samples from different sources within 30 seconds of each other count as one. The raw provider rows stay untouched, so ingestion output can always be audited.
+Two devices often record the same thing. Read endpoints reconcile overlapping rows into canonical results: steps and activity prefer Google Health, body measurements and sleep prefer Withings, and every sleep session from the best-ranked provider for a date is kept, so naps survive. Heart-rate samples from different sources within 30 seconds of each other count as one. The raw provider rows stay untouched, so ingestion output can always be audited.
 
 The service runs on Ktor 3 with Exposed and Flyway migrations and serves an OpenAPI spec generated from its routes. CI publishes container images for the API and a Next.js frontend on every push to main.
