@@ -11,25 +11,27 @@ const isHome = Astro.url.pathname === '/';
     data-minimap="Contact"
     class:list={[
         'section-x relative overflow-hidden pb-8',
-        isHome ? 'section-y--major pointer-fine:pb-20' : 'section-y--lead border-t border-line',
+        isHome ? 'section-y--major pointer-fine:pb-20' : 'border-t border-line pt-8',
     ]}
 >
-    <div class:list={[isHome ? 'mb-16 md:mb-24' : 'mb-8 md:mb-12']}>
-        <p data-footer-reveal class="meta mb-6">
-            {isHome && <span class="text-accent">/06 </span>}Got an interesting problem?
-        </p>
+    <div class:list={[isHome ? 'mb-16 md:mb-24' : 'mb-4 flex flex-wrap items-center gap-x-6 gap-y-2']}>
+        {isHome && (
+            <p data-footer-reveal class="meta mb-6">
+                <span class="text-accent">/06 </span>Got an interesting problem?
+            </p>
+        )}
         <a href={`mailto:${site.email}`} class="group inline-flex min-h-11 w-fit items-center">
             <span class="block overflow-y-clip pb-[0.06em]">
                 <span
-                    data-footer-headline
+                    data-footer-headline={isHome || undefined}
                     class:list={[
                         'heading block transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent',
-                        isHome ? 'text-[clamp(2.8rem,10vw,9rem)]' : 'text-[clamp(2rem,5vw,4rem)]',
+                        isHome ? 'text-[clamp(2.8rem,10vw,9rem)]' : 'text-xl',
                     ]}
                 >
-                    <span>Let’s</span>{' '}
+                    <span>{isHome ? 'Let’s' : 'Email'}</span>{' '}
                     <span class="whitespace-nowrap">
-                        talk.
+                        {isHome ? 'talk.' : 'me'}
                         <span
                             aria-hidden="true"
                             class="ml-[0.1em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-out-strong group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em]"
@@ -40,13 +42,16 @@ const isHome = Astro.url.pathname === '/';
                 </span>
             </span>
         </a>
-        <div data-footer-reveal>
+        <div data-footer-reveal={isHome || undefined}>
             <button
                 data-copy-email
                 data-email={site.email}
                 type="button"
                 aria-label={`Copy email address: ${site.email}`}
-                class="pressable group/copy mt-3 flex min-h-11 cursor-pointer flex-wrap items-center gap-x-3 gap-y-2 py-3 font-mono text-xs text-muted transition-[color,transform] duration-200 hover:text-fg"
+                class:list={[
+                    'pressable group/copy flex min-h-11 cursor-pointer flex-wrap items-center gap-x-3 gap-y-2 py-3 font-mono text-xs text-muted transition-[color,transform] duration-200 hover:text-fg',
+                    isHome && 'mt-3',
+                ]}
             >
                 <span data-copy-text>{site.email}</span>
                 <span data-copy-status role="status" aria-live="polite" class="inline-flex items-center">
@@ -75,19 +80,28 @@ const isHome = Astro.url.pathname === '/';
     </div>
 
     <div
-        data-footer-reveal
-        class="grid divide-y divide-line border-y border-line sm:grid-cols-3 sm:divide-y-0 sm:border-x"
+        data-footer-reveal={isHome || undefined}
+        class:list={[
+            isHome
+                ? 'grid divide-y divide-line border-y border-line sm:grid-cols-3 sm:divide-y-0 sm:border-x'
+                : 'flex flex-wrap gap-x-6',
+        ]}
     >
         {socials.map((social) => (
             <a
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group flex items-center justify-between border-line py-5 transition-colors duration-300 hover:bg-bg-raise active:bg-bg-raise sm:border-r sm:px-5 sm:last:border-r-0"
+                class:list={[
+                    'group flex min-h-11 items-center transition-colors duration-200',
+                    isHome
+                        ? 'justify-between border-line py-5 hover:bg-bg-raise active:bg-bg-raise sm:border-r sm:px-5 sm:last:border-r-0'
+                        : 'gap-2 hover:text-accent',
+                ]}
             >
                 <div>
                     <p class="text-sm font-medium">{social.label}</p>
-                    <p class="font-mono text-[0.6875rem] text-muted">{social.handle}</p>
+                    {isHome && <p class="font-mono text-[0.6875rem] text-muted">{social.handle}</p>}
                 </div>
                 <span class="sr-only">(opens in new tab)</span>
                 <span
@@ -100,10 +114,16 @@ const isHome = Astro.url.pathname === '/';
         ))}
     </div>
 
-    <div class="mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5">
+    <div
+        class:list={[
+            isHome
+                ? 'mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5'
+                : 'mt-4 flex flex-wrap items-center gap-x-6 gap-y-1',
+        ]}
+    >
         <p class="meta flex flex-wrap items-center gap-x-3 gap-y-3">
             <span>©2026 {site.name}</span>
-            <span class="max-[439px]:hidden md:max-2xl:hidden">{site.location}</span>
+            {isHome && <span class="max-[439px]:hidden md:max-2xl:hidden">{site.location}</span>}
             <a href="/privacy" class="link-line touch-target text-fg transition-colors duration-200 hover:text-accent">
                 Privacy
             </a>
@@ -124,7 +144,7 @@ const isHome = Astro.url.pathname === '/';
                 ) : (
                     <span class="text-fg">{buildSha}</span>
                 )}
-                {buildDate && (
+                {isHome && buildDate && (
                     <>
                         <span aria-hidden="true">·</span>
                         <span>{buildDate}</span>
@@ -132,7 +152,7 @@ const isHome = Astro.url.pathname === '/';
                 )}
             </p>
         )}
-        <div class="flex items-center lg:col-start-3 lg:justify-end">
+        <div class:list={['flex items-center', isHome && 'lg:col-start-3 lg:justify-end']}>
             <a href={isHome ? '#top' : '#main-content'} class="link-line touch-target meta text-fg">
                 Back to top <span aria-hidden="true">↑</span>
             </a>
@@ -182,7 +202,7 @@ const isHome = Astro.url.pathname === '/';
                 yPercent: 0,
                 duration: 1.1,
                 ease: 'power4.out',
-                scrollTrigger: { trigger: root, start: 'top 75%', once: true },
+                scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
             });
         }
 
@@ -194,7 +214,7 @@ const isHome = Astro.url.pathname === '/';
                 y: 48,
                 duration: 1,
                 stagger: 0.08,
-                scrollTrigger: { trigger: root, start: 'top 75%', once: true },
+                scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
             });
         }
     }

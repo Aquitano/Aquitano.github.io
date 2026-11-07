@@ -22,95 +22,99 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
 ---
 
 <div id="top" data-detail>
-    <header class="section-x pt-28 pb-10 md:pt-36 md:pb-12">
-        <a href="/#work" class="link-line touch-target text-sm text-muted hover:text-fg">
-            <span aria-hidden="true">←</span> All work
-        </a>
-        <div class="mt-8 flex items-baseline justify-between gap-4 md:mt-10">
-            <p class="text-sm text-muted">{project.subtitle}</p>
-            <p class="shrink-0 font-mono text-xs text-muted">
-                {project.year}{' '}
-                <span class="max-[359px]:hidden">
-                    · {index + 1}/{total}
-                </span>
-            </p>
-        </div>
-        <h1 class="heading case-title mt-5" aria-label={project.title}>
-            {titleParts.map((part, i) => (
-                <Fragment>
-                    {i > 0 && <wbr />}
-                    {part}
-                </Fragment>
-            ))}
-        </h1>
-        <p class="mt-6 max-w-3xl text-base leading-relaxed text-muted md:text-xl">{project.summary}</p>
-    </header>
-    <div class="section-x pb-12 md:pb-16">
-        {project.title === 'aqt-sync' ? (
-            <RestoreRecord />
-        ) : project.title === 'aqt-health' ? (
-            <ReconciliationDemo />
-        ) : project.title === 'Griffin Energy' ? (
-            <figure class="historical-interface overflow-hidden rounded-xl bg-[#f6f6f3] p-6 md:p-10">
-                <img
-                    src="/showcase/griffin/images/untitled2.png"
-                    alt="Original Blender render of both Griffin Energy variants."
-                    width="826"
-                    height="1002"
-                    class="mx-auto max-h-[32rem] w-full object-contain"
-                />
-                <figcaption class="mt-4 text-center text-xs text-black/60">
-                    Original product render, created in Blender.
-                </figcaption>
-            </figure>
-        ) : (
-            project.image && (
+    <div class:list={[project.title === 'Griffin Energy' && 'product-intro']}>
+        <header class="section-x pt-28 pb-10 md:pt-36 md:pb-12">
+            <a href="/#work" class="link-line touch-target text-sm text-muted hover:text-fg">
+                <span aria-hidden="true">←</span> All work
+            </a>
+            <div class="mt-8 flex items-baseline justify-between gap-4 md:mt-10">
+                <p class="text-sm text-muted">{project.subtitle}</p>
+                <p class="shrink-0 font-mono text-xs text-muted">
+                    {project.year}{' '}
+                    <span class="max-[359px]:hidden">
+                        · {index + 1}/{total}
+                    </span>
+                </p>
+            </div>
+            <h1 class="heading case-title mt-5" aria-label={project.title}>
+                {titleParts.map((part, i) => (
+                    <Fragment>
+                        {i > 0 && <wbr />}
+                        {part}
+                    </Fragment>
+                ))}
+            </h1>
+            <p class="mt-6 max-w-3xl text-base leading-relaxed text-muted md:text-xl">{project.summary}</p>
+        </header>
+        <div class="section-x pb-12 md:pb-16">
+            {project.title === 'aqt-sync' ? (
+                <RestoreRecord />
+            ) : project.title === 'aqt-health' ? (
+                <ReconciliationDemo />
+            ) : project.title === 'Griffin Energy' ? (
                 <figure class="historical-interface overflow-hidden rounded-xl border border-line">
-                    <div class:list={[project.title === 'ChillFlow' && 'interface-crop']}>
-                        <Picture
-                            src={project.image}
-                            formats={['avif', 'webp']}
-                            alt={project.imageAlt ?? `${project.title}: ${project.subtitle}`}
-                            widths={[640, 960, 1280, 1920, 2400]}
-                            sizes={
-                                project.title === 'ChillFlow'
-                                    ? '(min-width:1008px) 2400px, 260vw'
-                                    : '(min-width:1008px) 928px, calc(100vw - 2.5rem)'
-                            }
-                            priority
-                            class="block h-auto w-full"
+                    <div class="bg-[#f6f6f3] p-6 md:p-10">
+                        <img
+                            src="/showcase/griffin/images/untitled2.png"
+                            alt="Original Blender render of both Griffin Energy variants."
+                            width="826"
+                            height="1002"
+                            class="mx-auto max-h-[32rem] w-full object-contain"
                         />
                     </div>
-                    {project.title === 'ChillFlow' && (
-                        <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
-                            Original 2025 web prototype, cropped to the interface. The hosted demo is currently
-                            unavailable.
-                        </figcaption>
-                    )}
-                    {project.title === 'BetterGaming' && (
-                        <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
-                            Search for “Assassin”, sorted by price in the public demo.
-                        </figcaption>
-                    )}
-                    {project.title === 'FrontiersToSpace' && (
-                        <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-2 text-xs text-muted">
-                            <span>
-                                Original 2023 dashboard, in German. The map is framed around the recorded route.
-                            </span>
-                            <a
-                                class="link-line touch-target"
-                                href="https://www.openstreetmap.org/copyright"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Map data © OpenStreetMap contributors <span aria-hidden="true">↗</span>
-                                <span class="sr-only"> (opens in new tab)</span>
-                            </a>
-                        </figcaption>
-                    )}
+                    <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
+                        Original product render, created in Blender.
+                    </figcaption>
                 </figure>
-            )
-        )}
+            ) : (
+                project.image && (
+                    <figure class="historical-interface overflow-hidden rounded-xl border border-line">
+                        <div class:list={[project.title === 'ChillFlow' && 'interface-crop']}>
+                            <Picture
+                                src={project.image}
+                                formats={['avif', 'webp']}
+                                alt={project.imageAlt ?? `${project.title}: ${project.subtitle}`}
+                                widths={[640, 960, 1280, 1920, 2400]}
+                                sizes={
+                                    project.title === 'ChillFlow'
+                                        ? '(min-width:1008px) 2400px, 260vw'
+                                        : '(min-width:1008px) 928px, calc(100vw - 2.5rem)'
+                                }
+                                priority
+                                class="block h-auto w-full"
+                            />
+                        </div>
+                        {project.title === 'ChillFlow' && (
+                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
+                                Original 2025 web prototype, cropped to the interface. The hosted demo is currently
+                                unavailable.
+                            </figcaption>
+                        )}
+                        {project.title === 'BetterGaming' && (
+                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
+                                Search for “Assassin”, sorted by price in the public demo.
+                            </figcaption>
+                        )}
+                        {project.title === 'FrontiersToSpace' && (
+                            <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-2 text-xs text-muted">
+                                <span>
+                                    Original 2023 dashboard, in German. The map is framed around the recorded route.
+                                </span>
+                                <a
+                                    class="link-line touch-target"
+                                    href="https://www.openstreetmap.org/copyright"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Map data © OpenStreetMap contributors <span aria-hidden="true">↗</span>
+                                    <span class="sr-only"> (opens in new tab)</span>
+                                </a>
+                            </figcaption>
+                        )}
+                    </figure>
+                )
+            )}
+        </div>
     </div>
     <div class="section-x case-body border-t border-line py-12 md:py-16">
         <aside>
@@ -170,6 +174,21 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
     </a>
 </div>
 <style>
+    @media (min-width: 1024px) {
+        .product-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 9rem max(2.5rem, calc((100% - 96rem) / 2)) 4rem;
+        }
+        .product-intro > header,
+        .product-intro > div {
+            padding: 0;
+        }
+        .product-intro .historical-interface {
+            max-width: none;
+        }
+    }
     .historical-interface {
         max-width: 58rem;
         margin-inline: auto;

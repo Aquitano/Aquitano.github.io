@@ -9,8 +9,8 @@ import { site } from '../lib/data';
         tabindex="-1"
         class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 text-center"
     >
-        <p class="meta mb-6 text-accent">Error 404</p>
-        <h1 data-glitch class="display relative text-[clamp(5rem,28vw,20rem)]">
+        <p class="meta mb-6 text-muted">Page not found</p>
+        <h1 data-glitch aria-label="Page not found, error 404" class="display relative text-[clamp(5rem,28vw,20rem)]">
             <span class="display-outline">404</span>
             <span data-glitch-fill aria-hidden="true" class="glitch-fill absolute inset-0 text-accent">
                 404
@@ -20,7 +20,7 @@ import { site } from '../lib/data';
             This page drifted off into the stratosphere. Let’s get you back to solid ground.
         </p>
         <div class="mt-10 flex justify-center">
-            <a href="/" class="link-line touch-target text-sm text-accent">
+            <a href="/" class="link-line touch-target text-sm text-muted hover:text-fg">
                 <span aria-hidden="true">←</span> Back to home
             </a>
         </div>

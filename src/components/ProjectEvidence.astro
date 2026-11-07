@@ -1,5 +1,7 @@
 ---
 import FlightPlot from './FlightPlot.astro';
+import { Picture } from 'astro:assets';
+import catalogueCapture from '../assets/work/bettergaming-results-detail.webp';
 
 interface Props {
     projectId: string;
@@ -197,6 +199,35 @@ const { projectId } = Astro.props;
         </div>
     </section>
 )}
+{projectId === 'bettergaming' && (
+    <section class="section-x evidence-section">
+        <div class="evidence-intro">
+            <p class="mb-3 text-xs text-muted">Interface details</p>
+            <h2 class="heading text-3xl md:text-4xl">The filtered catalogue.</h2>
+            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
+                The public demo returns three matches for “Assassin”. Sorting by price puts Origins first and Valhalla
+                last.
+            </p>
+        </div>
+        <div class="grid max-w-5xl gap-4 md:grid-cols-3">
+            {[
+                { x: 68, title: 'Assassins Creed Origins', price: '9.89€' },
+                { x: 355, title: 'Assassins Creed Odyssey', price: '11.99€' },
+                { x: 642, title: 'Assassins Creed Valhalla', price: '34.78€' },
+            ].map((result) => (
+                <div class="catalogue-detail" style={`--capture-x:${(-result.x / 283) * 100}%`}>
+                    <Picture
+                        src={catalogueCapture}
+                        formats={['avif', 'webp']}
+                        alt={`${result.title}, ${result.price}, from the filtered catalogue capture.`}
+                        widths={[1280]}
+                        sizes="1280px"
+                    />
+                </div>
+            ))}
+        </div>
+    </section>
+)}
 {projectId === 'griffin-energy' && (
     <section class="section-x evidence-section">
         <div class="evidence-intro">
@@ -232,6 +263,23 @@ const { projectId } = Astro.props;
     </section>
 )}
 <style>
+    .catalogue-detail {
+        position: relative;
+        aspect-ratio: 283 / 64;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 0.5rem;
+        background: white;
+    }
+    .catalogue-detail :global(img) {
+        position: absolute;
+        width: 452.297%;
+        max-width: none;
+        height: auto;
+        left: var(--capture-x);
+        top: 0;
+        transform: translateY(-86%);
+    }
     .evidence-section {
         padding-block: clamp(3rem, 6vw, 5rem);
         border-top: 1px solid var(--line);
