@@ -38,7 +38,7 @@ Sync jobs run on the server, so closing the browser does not stop them. After a 
 
 ## Reconcile at read time
 
-Source priorities are applied when reading. The policy figure above shows how steps, sleep, and heart rate differ; the matrix below also covers body measurements. Filtering by provider happens before canonicalization, so original provider rows remain independently queryable.
+Source priorities are applied when reading. The policy figure above shows how steps, sleep, and heart rate differ; the matrix below also covers body measurements. Scalar reads group samples into 30-second bins per metric, context, and segment before choosing a provider. Filtering by provider happens before canonicalization, so original provider rows remain independently queryable.
 
 ## Implementation
 

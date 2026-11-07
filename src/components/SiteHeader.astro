@@ -17,10 +17,10 @@ const NAV = [
     >
         <a
             href="/#top"
-            class="touch-target flex min-h-11 min-w-11 items-center font-mono text-xs font-medium tracking-[0.14em] text-white uppercase"
+            class="touch-target flex min-h-11 min-w-11 items-center font-mono text-xs font-medium tracking-[0.14em] text-fg uppercase"
         >
             TB
-            <span aria-hidden="true" class="ml-1 text-white/50 max-[400px]:hidden">
+            <span aria-hidden="true" class="ml-1 text-fg/50 max-[400px]:hidden">
                 ©2026
             </span>
             <span class="sr-only">home</span>
@@ -31,7 +31,7 @@ const NAV = [
                     <a
                         href={item.href}
                         data-nav-link
-                        class="nav-link touch-target flex min-h-11 min-w-11 items-center justify-center font-mono text-xs tracking-[0.14em] text-white uppercase transition-colors duration-200 hover:text-fg"
+                        class="nav-link link-line touch-target flex min-h-11 min-w-11 items-center justify-center font-mono text-xs tracking-[0.14em] text-fg uppercase transition-colors duration-200"
                     >
                         {item.label}
                     </a>
@@ -139,15 +139,7 @@ const NAV = [
 </script>
 
 <style>
-    .nav-link {
-        position: relative;
-    }
-    .nav-link.nav-active::after {
-        content: '';
-        position: absolute;
-        inset-inline: 0;
+    .nav-link::after {
         bottom: 0.5rem;
-        height: 1px;
-        background: var(--accent);
     }
 </style>

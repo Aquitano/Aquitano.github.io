@@ -22,6 +22,7 @@ links:
       href: https://github.com/Aquitano/chill-flow/tree/e0349881f7b9c113f49763b950c9a149634d7ad6
 accent: '#4fd1c5'
 image: ../../assets/work/chill-flow.webp
+imageAlt: ChillFlow web introduction with a focus prompt over a dark circular background.
 order: 3
 ---
 

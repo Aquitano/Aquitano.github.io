@@ -19,6 +19,7 @@ const work = defineCollection({
                 .default([]),
             accent: z.string(),
             image: image().optional(),
+            imageAlt: z.string().optional(),
             order: z.number(),
         }),
 });

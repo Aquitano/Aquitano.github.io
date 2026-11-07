@@ -26,7 +26,8 @@ links:
     - label: Press
       href: https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html
 accent: '#9b8cff'
-image: ../../assets/work/frontiers-to-space.webp
+image: ../../assets/work/frontiers-dashboard.webp
+imageAlt: Original mission dashboard with telemetry charts and a Leaflet map of the recorded flight route.
 order: 4
 ---
 

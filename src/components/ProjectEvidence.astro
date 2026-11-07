@@ -145,17 +145,17 @@ const { projectId } = Astro.props;
         </dl>
         <p class="mt-5 max-w-3xl text-sm leading-relaxed text-muted">
             The integration suite runs the application’s Flyway migrations against temporary PostgreSQL databases. Each
-            test is isolated.{' '}
-            <a
-                class="underline underline-offset-4 hover:text-fg"
-                href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                See the test setup<span class="sr-only"> (opens in new tab)</span>
-            </a>
-            .
+            test is isolated.
         </p>
+        <a
+            class="link-line touch-target mt-3 text-sm text-fg hover:text-accent"
+            href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Inspect the test setup <span aria-hidden="true">↗</span>
+            <span class="sr-only"> (opens in new tab)</span>
+        </a>
     </section>
 )}
 {projectId === 'frontiers-to-space' && (
@@ -167,6 +167,9 @@ const { projectId } = Astro.props;
                 English plots redrawn from the mission’s 429 filtered telemetry records. The horizontal axis uses the
                 original Unix timestamps, including gaps between packets.
             </p>
+        </div>
+        <div class="mb-6">
+            <FlightPlot />
         </div>
         <div class="grid gap-6 lg:grid-cols-2">
             <FlightPlot metric="temperature" />

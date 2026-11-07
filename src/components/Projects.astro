@@ -30,7 +30,7 @@ const { work } = Astro.props;
                             ) : p.image ? (
                                 <Picture
                                     src={p.image}
-                                    alt={`${p.title} website preview`}
+                                    alt={p.imageAlt ?? `${p.title} website preview`}
                                     formats={['avif', 'webp']}
                                     widths={[480, 720, 960, 1280]}
                                     sizes="(min-width: 1616px) 752px, (min-width: 768px) calc((100vw - 7rem) / 2), calc(100vw - 2.5rem)"

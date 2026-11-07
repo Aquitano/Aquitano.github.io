@@ -2,7 +2,6 @@
 import { Picture } from 'astro:assets';
 import ReconciliationDemo from './ReconciliationDemo.astro';
 import RestoreRecord from './RestoreRecord.astro';
-import FlightPlot from './FlightPlot.astro';
 import type { CollectionEntry } from 'astro:content';
 import { isExternalHref } from '../lib/links';
 
@@ -24,7 +23,7 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
 
 <div id="top" data-detail>
     <header class="section-x pt-28 pb-10 md:pt-36 md:pb-12">
-        <a href="/#work" class="link-line touch-target inline-block text-sm text-muted hover:text-fg">
+        <a href="/#work" class="link-line touch-target text-sm text-muted hover:text-fg">
             <span aria-hidden="true">←</span> All work
         </a>
         <div class="mt-8 flex items-baseline justify-between gap-4 md:mt-10">
@@ -49,12 +48,10 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
     <div class="section-x pb-12 md:pb-16">
         {project.title === 'aqt-sync' ? (
             <RestoreRecord />
-        ) : project.title === 'FrontiersToSpace' ? (
-            <FlightPlot />
         ) : project.title === 'aqt-health' ? (
             <ReconciliationDemo />
         ) : project.title === 'Griffin Energy' ? (
-            <figure class="overflow-hidden rounded-xl bg-[#f6f6f3] p-6 md:p-10">
+            <figure class="historical-interface overflow-hidden rounded-xl bg-[#f6f6f3] p-6 md:p-10">
                 <img
                     src="/showcase/griffin/images/untitled2.png"
                     alt="Original Blender render of both Griffin Energy variants."
@@ -68,21 +65,12 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
             </figure>
         ) : (
             project.image && (
-                <figure
-                    class:list={[
-                        'overflow-hidden rounded-xl border border-line',
-                        ['ChillFlow', 'BetterGaming'].includes(project.title) && 'historical-interface',
-                    ]}
-                >
+                <figure class="historical-interface overflow-hidden rounded-xl border border-line">
                     <div class:list={[project.title === 'ChillFlow' && 'interface-crop']}>
                         <Picture
                             src={project.image}
                             formats={['avif', 'webp']}
-                            alt={
-                                project.title === 'ChillFlow'
-                                    ? 'ChillFlow web introduction with a focus prompt over a dark circular background.'
-                                    : 'BetterGaming storefront with search, navigation, and a game-sale illustration.'
-                            }
+                            alt={project.imageAlt ?? `${project.title}: ${project.subtitle}`}
                             widths={[640, 960, 1280, 1920, 2400]}
                             sizes={
                                 project.title === 'ChillFlow'
@@ -101,7 +89,23 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
                     )}
                     {project.title === 'BetterGaming' && (
                         <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
-                            The original 2021 storefront, captured from the existing demo.
+                            Search for “Assassin”, sorted by price in the public demo.
+                        </figcaption>
+                    )}
+                    {project.title === 'FrontiersToSpace' && (
+                        <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-2 text-xs text-muted">
+                            <span>
+                                Original 2023 dashboard, in German. The map is framed around the recorded route.
+                            </span>
+                            <a
+                                class="link-line touch-target"
+                                href="https://www.openstreetmap.org/copyright"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Map data © OpenStreetMap contributors <span aria-hidden="true">↗</span>
+                                <span class="sr-only"> (opens in new tab)</span>
+                            </a>
                         </figcaption>
                     )}
                 </figure>
@@ -110,7 +114,7 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
     </div>
     <div class="section-x case-body border-t border-line py-12 md:py-16">
         <aside>
-            <dl class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:sticky lg:top-28 lg:grid-cols-1">
+            <dl class="grid grid-cols-2 gap-6 lg:sticky lg:top-28 lg:grid-cols-1">
                 <div>
                     <dt class="mb-2 text-xs text-muted">Scope</dt>
                     <dd class="text-sm leading-relaxed text-fg/85">{project.tasks.join(', ')}</dd>
@@ -120,9 +124,9 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
                     <dd class="text-sm leading-relaxed text-fg/85">{project.tags.join(', ')}</dd>
                 </div>
                 {project.links.length > 0 && (
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2 lg:col-span-1">
                         <dt class="mb-2 text-xs text-muted">Explore</dt>
-                        <dd class="flex flex-wrap items-start gap-x-5 gap-y-5 lg:flex-col">
+                        <dd class="flex flex-wrap items-start gap-x-5 gap-y-1">
                             {project.links.map((link) => (
                                 <a
                                     href={link.href}

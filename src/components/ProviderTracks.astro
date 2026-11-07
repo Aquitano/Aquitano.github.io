@@ -3,12 +3,13 @@ import type { reconciliationRules } from '../lib/reconciliation';
 
 interface Props {
     rule: (typeof reconciliationRules)[number];
+    compact?: boolean;
 }
 
-const { rule } = Astro.props;
+const { rule, compact = false } = Astro.props;
 ---
 
-<div class="policy-tracks">
+<div class:list={['policy-tracks', compact && 'compact']}>
     <div class="track-axis" aria-hidden="true">
         {rule.axis.map((label) => (
             <span>{label}</span>
@@ -101,5 +102,16 @@ const { rule } = Astro.props;
         width: 16px;
         height: 10px;
         border-radius: 2px;
+    }
+    @media (max-width: 767px) {
+        .compact .track-axis {
+            margin-bottom: 0.75rem;
+        }
+        .compact .provider-track + .provider-track {
+            margin-top: 0.75rem;
+        }
+        .compact .track-legend {
+            margin-top: 0.75rem;
+        }
     }
 </style>

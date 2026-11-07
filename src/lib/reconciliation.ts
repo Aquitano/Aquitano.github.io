@@ -2,8 +2,8 @@ export const reconciliationRules = [
     {
         id: 'steps',
         label: 'Steps',
-        result: 'Keep unique intervals. Resolve the overlaps.',
-        policy: 'Google Health wins where intervals overlap. Withings still contributes intervals outside that overlap.',
+        result: 'Keep unique intervals.',
+        policy: 'Google Health wins overlaps. Keep the remaining Withings intervals.',
         axis: ['Earlier interval', 'Later interval'],
         tracks: [
             { provider: 'Google Health', segments: [{ start: 1, span: 8, kept: true }] },
@@ -19,8 +19,8 @@ export const reconciliationRules = [
     {
         id: 'sleep',
         label: 'Sleep',
-        result: 'Keep the night and the nap from Withings.',
-        policy: 'For each UTC start date, keep every session from the best-ranked provider. A shorter nap is not discarded.',
+        result: 'Keep the night and nap.',
+        policy: 'Withings ranks first. Keep all its sessions for the same UTC start date.',
         axis: ['Night session', 'Nap · same UTC start date'],
         tracks: [
             { provider: 'Google Health', segments: [{ start: 1, span: 7, kept: false }] },
@@ -36,8 +36,8 @@ export const reconciliationRules = [
     {
         id: 'heart',
         label: 'Heart rate',
-        result: 'The preferred source changes with context.',
-        policy: 'Within a 30-second bin, metric, context, and segment, keep the best-ranked provider’s samples. Sleep context uses the sleep ranking.',
+        result: 'Rank by context.',
+        policy: 'Google Health normally ranks first. Withings ranks first during sleep.',
         axis: ['Normal context', 'Sleep context'],
         tracks: [
             {

@@ -14,15 +14,18 @@ const isHome = Astro.url.pathname === '/';
         isHome ? 'section-y--major pointer-fine:pb-20' : 'section-y--lead border-t border-line',
     ]}
 >
-    <div class="mb-16 md:mb-24">
+    <div class:list={[isHome ? 'mb-16 md:mb-24' : 'mb-8 md:mb-12']}>
         <p data-footer-reveal class="meta mb-6">
             {isHome && <span class="text-accent">/06 </span>}Got an interesting problem?
         </p>
-        <a href={`mailto:${site.email}`} class="group block w-fit">
+        <a href={`mailto:${site.email}`} class="group inline-flex min-h-11 w-fit items-center">
             <span class="block overflow-y-clip pb-[0.06em]">
                 <span
                     data-footer-headline
-                    class="heading block text-[clamp(2.8rem,10vw,9rem)] transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent"
+                    class:list={[
+                        'heading block transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent',
+                        isHome ? 'text-[clamp(2.8rem,10vw,9rem)]' : 'text-[clamp(2rem,5vw,4rem)]',
+                    ]}
                 >
                     <span>Let’s</span>{' '}
                     <span class="whitespace-nowrap">
@@ -130,7 +133,7 @@ const isHome = Astro.url.pathname === '/';
             </p>
         )}
         <div class="flex items-center lg:col-start-3 lg:justify-end">
-            <a href={isHome ? '#top' : '#main-content'} class="link-line touch-target meta inline-block text-fg">
+            <a href={isHome ? '#top' : '#main-content'} class="link-line touch-target meta text-fg">
                 Back to top <span aria-hidden="true">↑</span>
             </a>
         </div>
