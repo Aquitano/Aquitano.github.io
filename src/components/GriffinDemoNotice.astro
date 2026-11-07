@@ -188,5 +188,12 @@
 
         new MutationObserver(syncLabel).observe(toggle, { attributes: true, attributeFilter: ['aria-expanded'] });
         syncLabel();
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key !== 'Escape' || toggle.getAttribute('aria-expanded') !== 'true') return;
+            event.preventDefault();
+            toggle.click();
+            toggle.focus();
+        });
     }
 </script>
