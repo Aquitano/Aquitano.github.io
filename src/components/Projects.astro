@@ -234,8 +234,9 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
         });
 
         if (supportsHover() && !prefersReducedMotion()) {
-            for (const card of root.querySelectorAll<HTMLElement>('[data-card]')) {
+            for (const [i, card] of [...root.querySelectorAll<HTMLElement>('[data-card]')].entries()) {
                 const chip = card.querySelector<HTMLElement>('[data-card-chip]');
+                const next = wrappers[i + 1];
 
                 if (!chip) continue;
                 gsap.set(chip, { xPercent: -50, yPercent: -140, autoAlpha: 0, scale: 0.6 });
@@ -259,7 +260,15 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
                     yTo(y);
                 };
 
-                const show = () => gsap.to(chip, { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' });
+                // A card stacked behind the next one only shows a thin strip, which would clip the chip to a sliver.
+                const stacked = () =>
+                    !!next &&
+                    next.getBoundingClientRect().top < card.getBoundingClientRect().top + chip.offsetHeight * 2;
+
+                const show = () => {
+                    if (!stacked()) gsap.to(chip, { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' });
+                };
+
                 const hide = () => gsap.to(chip, { autoAlpha: 0, scale: 0.6, duration: 0.25 });
 
                 card.addEventListener('mouseenter', (e) => {
