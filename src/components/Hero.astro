@@ -21,7 +21,6 @@ import RetentionStudy from './RetentionStudy.astro';
                 <a href="#contact" class="link-line touch-target text-sm text-muted transition-colors hover:text-fg">
                     Get in touch
                 </a>
-                <div data-hero-tools class="hero-tools"></div>
             </div>
         </div>
         <RetentionStudy />
@@ -42,15 +41,6 @@ import RetentionStudy from './RetentionStudy.astro';
         font-size: clamp(3rem, 5vw, 5rem);
         letter-spacing: -0.045em;
     }
-    .hero-tools {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 1rem;
-    }
-    .hero-tools:empty {
-        display: none;
-    }
     @media (min-width: 768px) {
         .hero-intro {
             grid-template-columns: 1fr 1.15fr;
@@ -59,7 +49,7 @@ import RetentionStudy from './RetentionStudy.astro';
     }
     @media (min-width: 1024px) {
         .hero-intro {
-            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-columns: minmax(0, 1fr);
             gap: 0 3rem;
         }
         .hero-identity {
@@ -81,10 +71,8 @@ import RetentionStudy from './RetentionStudy.astro';
             max-width: 38rem;
         }
         .hero-actions {
-            grid-column: 2;
-            grid-row: 3;
-            align-self: end;
-            margin-top: 1.5rem;
+            grid-column: 1;
+            margin-top: 1.25rem;
         }
     }
     @media (max-width: 767px) {

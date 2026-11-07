@@ -60,12 +60,13 @@ const SHORTCUTS = [
 
 <button
     data-kbd-hint
+    hidden
     type="button"
     aria-label="Show keyboard shortcuts"
-    class="kbd-hint group relative z-40 ml-auto hidden min-h-11 shrink-0 items-center gap-2 rounded-full border border-line bg-bg-raise/80 px-3 py-1.5 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg data-off:flex pointer-fine:md:flex"
+    class="kbd-hint group relative ml-auto hidden min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-md px-1 py-1.5 text-muted hover:text-fg data-off:flex pointer-fine:md:flex"
 >
     <kbd class="kbd-cap">?</kbd>
-    <span class="meta transition-colors duration-200 group-hover:text-fg">Shortcuts</span>
+    <span class="text-sm transition-colors duration-200 group-hover:text-fg">Shortcuts</span>
 </button>
 
 <style>
@@ -78,7 +79,7 @@ const SHORTCUTS = [
         padding: 3px 9px;
         color: var(--fg);
         font-family: var(--font-mono);
-        font-size: 0.6875rem;
+        font-size: 0.75rem;
         line-height: 1.4;
         letter-spacing: 0.06em;
         text-align: center;
@@ -98,65 +99,10 @@ const SHORTCUTS = [
     }
 
     .kbd-hint {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-        pointer-events: none;
-        transition:
-            opacity 450ms var(--ease-out-strong),
-            transform 450ms var(--ease-out-strong),
-            visibility 450ms,
-            color 200ms,
-            border-color 200ms;
+        transition: color 200ms;
     }
-
-    .kbd-hint.is-shown {
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        pointer-events: auto;
-    }
-
-    .kbd-hint.is-away:not(:focus-visible) {
-        opacity: 0;
-        transform: translateY(10px);
-        pointer-events: none;
-    }
-
-    .kbd-hint::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 9999px;
-        border: 1px solid var(--accent);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .kbd-hint.is-pulse::after {
-        animation: kbd-ping 2.6s var(--ease-out-strong) 1;
-    }
-
-    @keyframes kbd-ping {
-        0% {
-            opacity: 0.7;
-            transform: scale(1);
-        }
-        70%,
-        100% {
-            opacity: 0;
-            transform: scale(1.7);
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .kbd-hint {
-            transition: opacity 200ms linear;
-            transform: none;
-        }
-        .kbd-hint.is-pulse::after {
-            animation: none;
-        }
+    .kbd-hint[hidden] {
+        display: none;
     }
 
     .kbd-dialog,
@@ -300,7 +246,7 @@ const SHORTCUTS = [
             toggle?.setAttribute('aria-checked', String(enabled));
 
             if (toggleText) toggleText.textContent = enabled ? 'On' : 'Off';
-            // With shortcuts off, the pill is the only way back to this switch, so it renders on touch screens too.
+            // With shortcuts off, the button is the only way back to this switch, so it renders on touch screens too.
             hint?.toggleAttribute('data-off', !enabled);
         };
 
@@ -378,43 +324,9 @@ const SHORTCUTS = [
         }
 
         if (hint) {
-            hint.addEventListener('click', () => {
-                open();
-                hint.classList.remove('is-pulse');
-            });
-
-            const hero = document.querySelector('[data-hero]');
-            hero?.querySelector('[data-hero-tools]')?.append(hint);
-
-            if (hero) {
-                new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting)).observe(
-                    hero,
-                );
-            }
-
-            // Ping once per session.
-            const PULSE_KEY = 'kbd-hint-pulsed';
-            let pulsed = false;
-
-            try {
-                pulsed = sessionStorage.getItem(PULSE_KEY) === '1';
-            } catch {
-                /* storage blocked */
-            }
-
-            setTimeout(() => {
-                hint.classList.add('is-shown');
-
-                if (pulsed) return;
-
-                try {
-                    sessionStorage.setItem(PULSE_KEY, '1');
-                } catch {
-                    /* storage blocked */
-                }
-
-                setTimeout(() => hint.classList.add('is-pulse'), reduce() ? 0 : 520);
-            }, 5000);
+            hint.addEventListener('click', open);
+            document.querySelector('[data-shortcut-tools]')?.append(hint);
+            hint.hidden = false;
         }
     }
 </script>

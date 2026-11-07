@@ -58,19 +58,19 @@ const isHome = Astro.url.pathname === '/';
                     <span
                         data-copy-default
                         aria-hidden="true"
-                        class="rounded-full border border-line px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] uppercase transition-colors duration-200 group-hover/copy:border-accent/60 group-hover/copy:text-accent"
+                        class="rounded-full border border-line px-2.5 py-0.5 text-xs tracking-[0.14em] uppercase transition-colors duration-200 group-hover/copy:border-accent/60 group-hover/copy:text-accent"
                     >
                         Copy
                     </span>
                     <span
                         data-copy-done
-                        class="pop-in hidden rounded-full border border-transparent bg-accent px-2.5 py-0.5 text-[0.625rem] font-medium tracking-[0.14em] text-black uppercase"
+                        class="pop-in hidden rounded-full border border-transparent bg-accent px-2.5 py-0.5 text-xs font-medium tracking-[0.14em] text-black uppercase"
                     >
                         Copied <span aria-hidden="true">✓</span>
                     </span>
                     <span
                         data-copy-fail
-                        class="hidden rounded-full border border-line px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] text-muted uppercase"
+                        class="hidden rounded-full border border-line px-2.5 py-0.5 text-xs tracking-[0.14em] text-muted uppercase"
                     >
                         Select and copy
                     </span>
@@ -101,7 +101,7 @@ const isHome = Astro.url.pathname === '/';
             >
                 <div>
                     <p class="text-sm font-medium">{social.label}</p>
-                    {isHome && <p class="font-mono text-[0.6875rem] text-muted">{social.handle}</p>}
+                    {isHome && <p class="font-mono text-xs text-muted">{social.handle}</p>}
                 </div>
                 <span class="sr-only">(opens in new tab)</span>
                 <span
@@ -123,7 +123,7 @@ const isHome = Astro.url.pathname === '/';
     >
         <p class="meta flex flex-wrap items-center gap-x-3 gap-y-3">
             <span>©2026 {site.name}</span>
-            {isHome && <span class="max-[439px]:hidden md:max-2xl:hidden">{site.location}</span>}
+            {isHome && <span class="hidden 2xl:inline">{site.location}</span>}
             <a href="/privacy" class="link-line touch-target text-fg transition-colors duration-200 hover:text-accent">
                 Privacy
             </a>
@@ -158,6 +158,7 @@ const isHome = Astro.url.pathname === '/';
             </a>
         </div>
     </div>
+    {isHome && <div data-shortcut-tools class="flex justify-end"></div>}
 </footer>
 
 <style>

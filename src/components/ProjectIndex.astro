@@ -13,7 +13,7 @@ const { work } = Astro.props;
     <SectionHeading index="02" title="More projects" />
     <div
         aria-hidden="true"
-        class="hidden grid-cols-[1.4fr_1fr_4rem_1rem] gap-6 border-b border-line pb-4 text-xs text-muted md:grid"
+        class="hidden grid-cols-[1.4fr_1fr_4rem_1rem] gap-6 border-b border-line pb-4 text-[0.8125rem] text-muted md:grid"
     >
         <span>Project</span>
         <span>Project type</span>
@@ -28,11 +28,10 @@ const { work } = Astro.props;
             >
                 <h3 class="text-xl font-medium tracking-tight md:text-2xl">{data.title}</h3>
                 <p class="col-start-1 row-start-2 text-sm text-muted md:col-auto md:row-auto">{data.subtitle}</p>
-                <p class="col-start-2 row-start-1 font-mono text-xs text-muted md:col-auto md:row-auto">{data.year}</p>
-                <span
-                    aria-hidden="true"
-                    class="hidden text-muted transition-transform group-hover:translate-x-1 md:block"
-                >
+                <p class="col-start-2 row-start-1 font-mono text-[0.8125rem] text-muted md:col-auto md:row-auto">
+                    {data.year}
+                </p>
+                <span aria-hidden="true" class="hidden text-muted transition-colors group-hover:text-accent md:block">
                     →
                 </span>
             </a>

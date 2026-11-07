@@ -7,7 +7,7 @@ const modes = [
 
 <figure class="retention-study">
     <figcaption>
-        <a href="#experience" class="link-line touch-target mb-1 text-[0.8125rem] text-accent">
+        <a href="#experience" class="link-line touch-target mb-1 text-sm text-accent">
             Cloudflare internship · 2026 <span aria-hidden="true">↘</span>
         </a>
         <h2 class="max-w-md text-xl leading-snug font-medium tracking-tight md:text-2xl">
@@ -36,7 +36,7 @@ const modes = [
             {modes.map((mode) => (
                 <p class="retention-result" data-retention={mode.id}>
                     <span class="retention-value">{mode.retained}%</span>
-                    <span class="pb-2 text-sm text-muted">data retained</span>
+                    <span class="text-sm text-muted">data retained</span>
                 </p>
             ))}
         </div>
@@ -82,7 +82,7 @@ const modes = [
         align-items: center;
         border-bottom: 1px solid var(--line);
         color: var(--muted);
-        font-size: 0.8125rem;
+        font-size: 0.875rem;
     }
     .retention-selector input:checked + span {
         border-color: var(--accent);
@@ -92,16 +92,23 @@ const modes = [
         outline: 2px solid var(--accent);
         outline-offset: 3px;
     }
+    .retention-proof {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        align-items: center;
+        margin-top: 1rem;
+    }
     .retention-output {
         display: grid;
-        margin-block: 0.5rem 1rem;
     }
     .retention-result {
         display: flex;
+        flex-direction: column;
         grid-area: 1 / 1;
-        align-items: end;
+        align-items: start;
         justify-content: flex-start;
-        gap: 1rem;
+        gap: 0.25rem;
         visibility: hidden;
     }
     .retention-value {
@@ -113,11 +120,15 @@ const modes = [
     }
     .retention-cells {
         display: grid;
-        grid-template-columns: repeat(20, minmax(0, 1fr));
-        gap: 4px;
+        grid-template-columns: repeat(10, minmax(0, 1fr));
+        grid-template-rows: repeat(10, minmax(0, 1fr));
+        width: 100%;
+        max-width: 9.5rem;
+        justify-self: end;
+        aspect-ratio: 1;
+        gap: 3px;
     }
     .retention-cell {
-        height: clamp(8px, 1.1vw, 14px);
         border: 1px solid var(--line);
         border-radius: 1px;
         background: var(--bg-raise);
@@ -148,33 +159,11 @@ const modes = [
         .retention-selector {
             margin-top: 0.5rem;
         }
-        .retention-proof {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            align-items: center;
-            margin-top: 1rem;
-        }
-        .retention-output {
-            margin: 0;
-        }
-        .retention-result {
-            flex-direction: column;
-            align-items: start;
-            gap: 0.25rem;
-        }
-        .retention-result > span:last-child {
-            padding-bottom: 0;
-        }
         .retention-value {
             font-size: 3.5rem;
         }
         .retention-cells {
-            grid-template-columns: repeat(10, minmax(0, 1fr));
-            gap: 3px;
-        }
-        .retention-cell {
-            height: 6px;
+            max-width: 7.5rem;
         }
     }
     @media (min-width: 1024px) {
@@ -187,7 +176,7 @@ const modes = [
             border-top: 1px solid var(--line);
             padding-left: 0;
             padding-top: 1.5rem;
-            margin-top: 3rem;
+            margin-top: 2rem;
         }
         figcaption {
             grid-column: 1;
@@ -210,6 +199,7 @@ const modes = [
             justify-content: end;
             gap: 3rem;
             align-items: center;
+            margin-top: 0;
         }
         .retention-output {
             margin: 0;
@@ -223,13 +213,8 @@ const modes = [
             font-size: clamp(6rem, 8vw, 8rem);
         }
         .retention-cells {
-            grid-template-columns: repeat(10, minmax(0, 1fr));
-            grid-template-rows: repeat(10, minmax(0, 1fr));
-            aspect-ratio: 1;
+            max-width: none;
             gap: 5px;
-        }
-        .retention-cell {
-            height: auto;
         }
     }
     @media (prefers-reduced-motion: reduce) {

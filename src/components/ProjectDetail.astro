@@ -31,7 +31,7 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
             </a>
             <div class="mt-8 flex items-baseline justify-between gap-4 md:mt-10">
                 <p class="text-sm text-muted">{project.subtitle}</p>
-                <p class="shrink-0 font-mono text-xs text-muted">
+                <p class="shrink-0 font-mono text-[0.8125rem] text-muted">
                     {project.year}{' '}
                     <span class="max-[359px]:hidden">
                         · {index + 1}/{total}
@@ -67,7 +67,7 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                     <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-3 text-[0.8125rem] text-muted">
                         <span>Original product render, created in Blender.</span>
                         <a
-                            class="link-line touch-target"
+                            class="link-line touch-target text-sm"
                             href="/showcase/griffin/images/untitled2.png"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -84,9 +84,15 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                             'historical-interface overflow-hidden rounded-xl border border-line',
                             project.title === 'ChillFlow' && 'landing-interface',
                             project.title === 'FrontiersToSpace' && 'mission-interface',
+                            project.title === 'BetterGaming' && 'catalogue-interface',
                         ]}
                     >
-                        <div class:list={[project.title === 'ChillFlow' && 'interface-crop']}>
+                        <div
+                            class:list={[
+                                project.title === 'ChillFlow' && 'interface-crop',
+                                project.title === 'BetterGaming' && 'bg-white',
+                            ]}
+                        >
                             <Picture
                                 src={project.image}
                                 formats={['avif', 'webp']}
@@ -96,8 +102,8 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                                     project.title === 'ChillFlow'
                                         ? '(max-width:767px) 380vw, 2400px'
                                         : project.title === 'FrontiersToSpace'
-                                          ? '(min-width:1408px) 640px, (min-width:1024px) calc(50vw - 4rem), (min-width:768px) 640px, calc(100vw - 2.5rem)'
-                                          : '(min-width:1008px) 928px, (min-width:768px) calc(100vw - 5rem), calc(100vw - 2.5rem)'
+                                          ? '(min-width:1408px) 640px, (min-width:1024px) calc(50vw - 4rem), (min-width:768px) calc(100vw - 5rem), calc(100vw - 2.5rem)'
+                                          : '(min-width:1264px) 928px, (min-width:1024px) calc(100vw - 21rem), (min-width:768px) calc(100vw - 5rem), calc(100vw - 2.5rem)'
                                 }
                                 priority
                                 class="block h-auto w-full"
@@ -137,7 +143,7 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                             )}
                             <div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
                                 <a
-                                    class="link-line touch-target"
+                                    class="link-line touch-target text-sm"
                                     href={project.image.src}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -148,7 +154,7 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
                                 </a>
                                 {project.title === 'FrontiersToSpace' && (
                                     <a
-                                        class="link-line touch-target"
+                                        class="link-line touch-target text-sm"
                                         href="https://www.openstreetmap.org/copyright"
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -168,16 +174,16 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
         <aside>
             <dl class="grid grid-cols-2 gap-6 lg:sticky lg:top-28 lg:grid-cols-1">
                 <div>
-                    <dt class="mb-2 text-xs text-muted">Scope</dt>
+                    <dt class="mb-2 text-[0.8125rem] text-muted">Scope</dt>
                     <dd class="text-sm leading-relaxed text-fg/85">{project.tasks.join(', ')}</dd>
                 </div>
                 <div>
-                    <dt class="mb-2 text-xs text-muted">Stack</dt>
+                    <dt class="mb-2 text-[0.8125rem] text-muted">Stack</dt>
                     <dd class="text-sm leading-relaxed text-fg/85">{project.tags.join(', ')}</dd>
                 </div>
                 {project.links.length > 0 && (
                     <div class="col-span-2 lg:col-span-1">
-                        <dt class="mb-2 text-xs text-muted">Explore</dt>
+                        <dt class="mb-2 text-[0.8125rem] text-muted">Explore</dt>
                         <dd class="flex flex-wrap items-start gap-x-5 gap-y-1">
                             {project.links.map((link) => (
                                 <a
@@ -250,6 +256,26 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
     .mission-interface {
         max-width: 40rem;
     }
+    .catalogue-interface {
+        max-width: none;
+    }
+    @media (min-width: 1024px) {
+        .catalogue-interface {
+            display: grid;
+            grid-template-columns: minmax(0, 58rem) minmax(16rem, 1fr);
+        }
+        .catalogue-interface figcaption {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 0;
+            border-left: 1px solid var(--line);
+            padding: 1.5rem;
+        }
+        .catalogue-interface ol {
+            grid-template-columns: 1fr;
+        }
+    }
     .interface-crop {
         position: relative;
         aspect-ratio: 630 / 280;
@@ -264,8 +290,18 @@ const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.t
         top: -182.143%;
     }
     @media (max-width: 1023px) {
-        .landing-interface {
+        .historical-interface {
             max-width: none;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .interface-crop {
+            aspect-ratio: 915 / 400;
+        }
+        .interface-crop :global(img) {
+            width: 262.3%;
+            left: -93.77%;
+            top: -97.5%;
         }
     }
     .case-title {
