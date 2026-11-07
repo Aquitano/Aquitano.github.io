@@ -54,7 +54,7 @@ export const experience = [
         period: ['Aug - Sep 2025'],
         highlights: [
             'Moved non-critical provider calls off the request path onto ActiveMQ/JMS, cutting production P95 initial response latency by 50% to ~150ms in a system handling 1.5M events/day',
-            'Added Prometheus metrics and Grafana dashboards for async latency, failures, and per-provider performance',
+            'Added Prometheus metrics and Grafana dashboards for async latency, failures, and per‑provider performance',
         ],
     },
     {

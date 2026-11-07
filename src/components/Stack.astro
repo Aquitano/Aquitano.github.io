@@ -7,7 +7,7 @@ import SectionHeading from './SectionHeading.astro';
     <SectionHeading index="04" title="Stack" />
     <div class="grid grid-cols-1 gap-px overflow-hidden border border-line bg-line min-[360px]:grid-cols-2 lg:grid-cols-4">
         {stack.map((group) => (
-            <div data-stack-col class="min-w-0 bg-bg px-4 py-6 md:p-8">
+            <div data-stack-col class="min-w-0 bg-bg px-5 py-6 md:p-8">
                 <h3 class="meta mb-5 wrap-break-word text-accent">{group.label}</h3>
                 <ul class="space-y-2">
                     {group.items.map((item) => (
