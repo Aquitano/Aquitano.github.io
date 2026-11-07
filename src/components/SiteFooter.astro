@@ -23,7 +23,7 @@ const isHome = Astro.url.pathname === '/';
             <span class="block overflow-y-clip pb-[0.06em]">
                 <span
                     data-footer-headline
-                    class="display block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300 group-hover:text-accent"
+                    class="display block text-[clamp(2.8rem,11.5vw,11rem)] transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent"
                 >
                     <span style={opticalIndent('Let’s')}>Let’s</span>{' '}
                     <span class="whitespace-nowrap">
@@ -44,7 +44,7 @@ const isHome = Astro.url.pathname === '/';
                 data-email={site.email}
                 type="button"
                 aria-label={`Copy email address: ${site.email}`}
-                class="pressable group/copy mt-3 flex min-h-11 cursor-pointer items-center gap-3 py-3 font-mono text-xs text-muted transition-[color,transform] duration-200 hover:text-fg"
+                class="pressable group/copy mt-3 flex min-h-11 cursor-pointer flex-wrap items-center gap-x-3 gap-y-2 py-3 font-mono text-xs text-muted transition-[color,transform] duration-200 hover:text-fg"
             >
                 <span data-copy-text>{site.email}</span>
                 <span data-copy-status role="status" aria-live="polite" class="inline-flex items-center">
@@ -65,7 +65,7 @@ const isHome = Astro.url.pathname === '/';
                         data-copy-fail
                         class="hidden rounded-full border border-line px-2.5 py-0.5 text-[0.625rem] tracking-[0.14em] text-muted uppercase"
                     >
-                        Copy failed
+                        Select and copy
                     </span>
                 </span>
             </button>
@@ -90,7 +90,7 @@ const isHome = Astro.url.pathname === '/';
                 <span class="sr-only">(opens in new tab)</span>
                 <span
                     aria-hidden="true"
-                    class="text-muted transition-all duration-300 ease-out-strong group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:text-accent"
+                    class="text-muted transition-[color,transform] duration-300 ease-out-strong group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5 group-focus-visible:text-accent"
                 >
                     ↗
                 </span>
@@ -99,10 +99,9 @@ const isHome = Astro.url.pathname === '/';
     </div>
 
     <div class="mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5">
-        <p class="meta">
-            ©2026 {site.name}
-            <span class="max-[359px]:hidden md:max-xl:hidden"> · {site.location}</span>
-            <span aria-hidden="true"> · </span>
+        <p class="meta flex flex-wrap items-center gap-x-3 gap-y-3">
+            <span>©2026 {site.name}</span>
+            <span class="max-[439px]:hidden md:max-2xl:hidden">{site.location}</span>
             <a href="/privacy" class="link-line touch-target text-fg transition-colors duration-200 hover:text-accent">
                 Privacy
             </a>
@@ -132,7 +131,7 @@ const isHome = Astro.url.pathname === '/';
             </p>
         )}
         <div class="flex items-center lg:col-start-3 lg:justify-end">
-            <a href="#top" class="link-line touch-target meta inline-block text-fg">
+            <a href={isHome ? '#top' : '#main-content'} class="link-line touch-target meta inline-block text-fg">
                 Back to top <span aria-hidden="true">↑</span>
             </a>
         </div>
@@ -181,7 +180,7 @@ const isHome = Astro.url.pathname === '/';
                 yPercent: 0,
                 duration: 1.1,
                 ease: 'power4.out',
-                scrollTrigger: { trigger: root, start: 'top 75%', once: true },
+                scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
             });
         }
 
@@ -193,7 +192,7 @@ const isHome = Astro.url.pathname === '/';
                 y: 48,
                 duration: 1,
                 stagger: 0.08,
-                scrollTrigger: { trigger: root, start: 'top 75%', once: true },
+                scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
             });
         }
     }

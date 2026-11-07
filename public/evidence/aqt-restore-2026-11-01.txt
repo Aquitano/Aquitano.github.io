@@ -1,0 +1,17 @@
+aqt-sync: recorded Linux CI restore-drill excerpt
+
+Run: https://github.com/Aquitano/aqt-sync/actions/runs/41282154931
+Commit: 5210451b686f1a5b55113b63383f394d0279960e
+Run created: 2026-11-01T06:46:20Z
+Conclusion: success
+Job: race test + restore drill
+Retrieved: 2026-11-06
+
+Selected output lines below retain the original UTC timestamps and text.
+ANSI terminal formatting and GitHub's repeated job/step columns were removed.
+This is a historical CI excerpt, not a new local run.
+
+2026-11-01T06:53:29.1263436Z cloned 12 files into /tmp/aqt-restore-drill.p733mX/restore
+2026-11-01T06:53:29.1621886Z ==> diffing the restored tree against the original
+2026-11-01T06:53:29.1736998Z ==> verifying the restored encrypted Git remote
+2026-11-01T06:53:29.1865672Z ==> PASS: backup restore reproduced the folder and encrypted Git remote

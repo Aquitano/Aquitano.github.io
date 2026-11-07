@@ -1,0 +1,1433 @@
+[
+    { "time": 1688803252, "altitude": 401.7264, "temperature": 40, "pressure": 974.6, "humidity": 28 },
+    { "time": 1688803313, "altitude": 410.8704, "temperature": 40.55555555555556, "pressure": 974.6, "humidity": 27 },
+    { "time": 1688803374, "altitude": 402.336, "temperature": 40.55555555555556, "pressure": 974.6, "humidity": 27 },
+    { "time": 1688803434, "altitude": 409.956, "temperature": 41.666666666666664, "pressure": 974.6, "humidity": 27 },
+    { "time": 1688803495, "altitude": 398.9832, "temperature": 42.22222222222222, "pressure": 974.4, "humidity": 28 },
+    { "time": 1688803555, "altitude": 405.384, "temperature": 38.888888888888886, "pressure": 974.4, "humidity": 32 },
+    { "time": 1688803615, "altitude": 399.8976, "temperature": 36.11111111111111, "pressure": 974.5, "humidity": 32 },
+    { "time": 1688803675, "altitude": 402.6408, "temperature": 39.44444444444444, "pressure": 974.4, "humidity": 25 },
+    { "time": 1688803735, "altitude": 399.8976, "temperature": 36.666666666666664, "pressure": 974.5, "humidity": 30 },
+    { "time": 1688803796, "altitude": 405.6888, "temperature": 35.55555555555556, "pressure": 974.5, "humidity": 31 },
+    { "time": 1688803856, "altitude": 406.6032, "temperature": 36.11111111111111, "pressure": 974.4, "humidity": 31 },
+    { "time": 1688803916, "altitude": 406.2984, "temperature": 35, "pressure": 974.2, "humidity": 29 },
+    { "time": 1688803977, "altitude": 402.6408, "temperature": 38.888888888888886, "pressure": 974.4, "humidity": 31 },
+    { "time": 1688804037, "altitude": 395.3256, "temperature": 37.77777777777778, "pressure": 974.5, "humidity": 29 },
+    { "time": 1688804226, "altitude": 400.812, "temperature": 33.888888888888886, "pressure": 974.5, "humidity": 34 },
+    { "time": 1688804348, "altitude": 399.8976, "temperature": 32.77777777777778, "pressure": 974.7, "humidity": 35 },
+    { "time": 1688804363, "altitude": 398.9832, "temperature": 33.333333333333336, "pressure": 974.5, "humidity": 34 },
+    { "time": 1688804423, "altitude": 396.5448, "temperature": 32.22222222222222, "pressure": 974.6, "humidity": 35 },
+    { "time": 1688804483, "altitude": 395.9352, "temperature": 33.888888888888886, "pressure": 974.6, "humidity": 35 },
+    { "time": 1688804604, "altitude": 392.2776, "temperature": 34.44444444444444, "pressure": 974.6, "humidity": 34 },
+    { "time": 1688804664, "altitude": 395.0208, "temperature": 35, "pressure": 974.7, "humidity": 33 },
+    { "time": 1688804724, "altitude": 395.6304, "temperature": 33.888888888888886, "pressure": 974.7, "humidity": 33 },
+    { "time": 1688804784, "altitude": 396.8496, "temperature": 34.44444444444444, "pressure": 974.7, "humidity": 33 },
+    { "time": 1688804845, "altitude": 397.764, "temperature": 35, "pressure": 974.6, "humidity": 32 },
+    { "time": 1688804905, "altitude": 400.2024, "temperature": 36.666666666666664, "pressure": 974.6, "humidity": 32 },
+    { "time": 1688804965, "altitude": 395.0208, "temperature": 37.22222222222222, "pressure": 974.6, "humidity": 31 },
+    { "time": 1688805025, "altitude": 398.3736, "temperature": 37.77777777777778, "pressure": 974.6, "humidity": 29 },
+    { "time": 1688805086, "altitude": 394.716, "temperature": 38.333333333333336, "pressure": 974.5, "humidity": 30 },
+    { "time": 1688805146, "altitude": 396.8496, "temperature": 36.666666666666664, "pressure": 974.6, "humidity": 31 },
+    { "time": 1688805206, "altitude": 392.5824, "temperature": 35.55555555555556, "pressure": 974.6, "humidity": 30 },
+    { "time": 1688805266, "altitude": 399.8976, "temperature": 35, "pressure": 974.6, "humidity": 32 },
+    { "time": 1688805327, "altitude": 395.9352, "temperature": 36.11111111111111, "pressure": 974.5, "humidity": 31 },
+    { "time": 1688805387, "altitude": 394.4112, "temperature": 36.666666666666664, "pressure": 974.6, "humidity": 30 },
+    { "time": 1688805447, "altitude": 395.9352, "temperature": 36.666666666666664, "pressure": 974.6, "humidity": 31 },
+    { "time": 1688805507, "altitude": 398.6784, "temperature": 35.55555555555556, "pressure": 974.6, "humidity": 31 },
+    { "time": 1688805567, "altitude": 396.5448, "temperature": 35.55555555555556, "pressure": 974.6, "humidity": 33 },
+    { "time": 1688805627, "altitude": 396.8496, "temperature": 36.666666666666664, "pressure": 974.5, "humidity": 31 },
+    { "time": 1688805809, "altitude": 392.8872, "temperature": 38.333333333333336, "pressure": 974.5, "humidity": 29 },
+    { "time": 1688805870, "altitude": 390.4488, "temperature": 38.888888888888886, "pressure": 974.5, "humidity": 27 },
+    { "time": 1688805931, "altitude": 396.8496, "temperature": 39.44444444444444, "pressure": 974.6, "humidity": 28 },
+    { "time": 1688805991, "altitude": 395.3256, "temperature": 40.55555555555556, "pressure": 974.5, "humidity": 27 },
+    { "time": 1688806052, "altitude": 396.8496, "temperature": 40, "pressure": 974.6, "humidity": 28 },
+    { "time": 1688806112, "altitude": 402.0312, "temperature": 40, "pressure": 974.5, "humidity": 27 },
+    { "time": 1688806173, "altitude": 397.4592, "temperature": 40.55555555555556, "pressure": 974.5, "humidity": 27 },
+    { "time": 1688806233, "altitude": 397.764, "temperature": 41.666666666666664, "pressure": 974.5, "humidity": 26 },
+    { "time": 1688806293, "altitude": 396.24, "temperature": 41.11111111111111, "pressure": 974.5, "humidity": 26 },
+    { "time": 1688806349, "altitude": 398.9832, "temperature": 39.44444444444444, "pressure": 974.4, "humidity": 26 },
+    { "time": 1688806410, "altitude": 397.4592, "temperature": 36.11111111111111, "pressure": 974.4, "humidity": 30 },
+    { "time": 1688806431, "altitude": 398.3736, "temperature": 35, "pressure": 974.4, "humidity": 31 },
+    { "time": 1688806457, "altitude": 401.7264, "temperature": 33.888888888888886, "pressure": 974, "humidity": 32 },
+    { "time": 1688806464, "altitude": 418.4904, "temperature": 33.333333333333336, "pressure": 971.9, "humidity": 32 },
+    { "time": 1688806524, "altitude": 616.6104, "temperature": 30, "pressure": 950.2, "humidity": 35 },
+    { "time": 1688806584, "altitude": 798.8808, "temperature": 28.88888888888889, "pressure": 931.4, "humidity": 36 },
+    { "time": 1688806596, "altitude": 833.3232, "temperature": 28.333333333333332, "pressure": 927.2, "humidity": 37 },
+    { "time": 1688806657, "altitude": 1029.3096, "temperature": 25.555555555555554, "pressure": 906.1, "humidity": 41 },
+    { "time": 1688806717, "altitude": 1267.6632, "temperature": 23.88888888888889, "pressure": 881.1, "humidity": 43 },
+    { "time": 1688806778, "altitude": 1509.6744, "temperature": 22.77777777777778, "pressure": 856.8, "humidity": 32 },
+    { "time": 1688806830, "altitude": 1692.5544, "temperature": 22.22222222222222, "pressure": 838.1, "humidity": 32 },
+    {
+        "time": 1688806837,
+        "altitude": 1719.0720000000001,
+        "temperature": 22.22222222222222,
+        "pressure": 835.5,
+        "humidity": 32
+    },
+    {
+        "time": 1688806866,
+        "altitude": 1830.6288000000002,
+        "temperature": 21.11111111111111,
+        "pressure": 824.5,
+        "humidity": 34
+    },
+    {
+        "time": 1688806876,
+        "altitude": 1869.6432000000002,
+        "temperature": 20.555555555555554,
+        "pressure": 820.9,
+        "humidity": 33
+    },
+    { "time": 1688806916, "altitude": 2017.1664, "temperature": 19.444444444444443, "pressure": 806.3, "humidity": 35 },
+    { "time": 1688806976, "altitude": 2250.3384, "temperature": 18.333333333333332, "pressure": 784.1, "humidity": 40 },
+    {
+        "time": 1688807037,
+        "altitude": 2496.3120000000004,
+        "temperature": 17.22222222222222,
+        "pressure": 761.5,
+        "humidity": 42
+    },
+    {
+        "time": 1688807098,
+        "altitude": 2741.9808000000003,
+        "temperature": 16.666666666666668,
+        "pressure": 739,
+        "humidity": 14
+    },
+    {
+        "time": 1688807158,
+        "altitude": 2993.4408000000003,
+        "temperature": 15.555555555555555,
+        "pressure": 717.2,
+        "humidity": 14
+    },
+    {
+        "time": 1688807218,
+        "altitude": 3243.9864000000002,
+        "temperature": 14.444444444444445,
+        "pressure": 695.4,
+        "humidity": 13
+    },
+    { "time": 1688807279, "altitude": 3509.1624, "temperature": 12.777777777777777, "pressure": 673.2, "humidity": 17 },
+    { "time": 1688807339, "altitude": 3764.28, "temperature": 11.666666666666666, "pressure": 652.2, "humidity": 20 },
+    { "time": 1688807400, "altitude": 4037.9904, "temperature": 8.88888888888889, "pressure": 630.4, "humidity": 24 },
+    { "time": 1688807460, "altitude": 4326.636, "temperature": 8.333333333333334, "pressure": 608.3, "humidity": 18 },
+    { "time": 1688807520, "altitude": 4602.7848, "temperature": 9.444444444444445, "pressure": 587.4, "humidity": 14 },
+    {
+        "time": 1688807581,
+        "altitude": 4880.457600000001,
+        "temperature": 9.444444444444445,
+        "pressure": 567,
+        "humidity": 16
+    },
+    { "time": 1688807641, "altitude": 5163.312, "temperature": 8.88888888888889, "pressure": 546.8, "humidity": 16 },
+    { "time": 1688807702, "altitude": 5447.9952, "temperature": 5, "pressure": 527.4, "humidity": 16 },
+    {
+        "time": 1688807762,
+        "altitude": 5728.106400000001,
+        "temperature": -0.5555555555555556,
+        "pressure": 507.7,
+        "humidity": 16
+    },
+    {
+        "time": 1688807823,
+        "altitude": 6014.0088000000005,
+        "temperature": -1.1111111111111112,
+        "pressure": 489.1,
+        "humidity": 23
+    },
+    { "time": 1688807884, "altitude": 6279.1848, "temperature": -3.888888888888889, "pressure": 472.3, "humidity": 33 },
+    {
+        "time": 1688807944,
+        "altitude": 6556.2480000000005,
+        "temperature": -6.666666666666666,
+        "pressure": 455.1,
+        "humidity": 33
+    },
+    {
+        "time": 1688808005,
+        "altitude": 6840.9312,
+        "temperature": -2.2222222222222223,
+        "pressure": 438.2,
+        "humidity": 27
+    },
+    {
+        "time": 1688808066,
+        "altitude": 7107.3264,
+        "temperature": -2.2222222222222223,
+        "pressure": 422.3,
+        "humidity": 21
+    },
+    { "time": 1688808126, "altitude": 7395.3624, "temperature": -6.111111111111111, "pressure": 406.3, "humidity": 23 },
+    {
+        "time": 1688808187,
+        "altitude": 7630.668000000001,
+        "temperature": -11.11111111111111,
+        "pressure": 393.3,
+        "humidity": 20
+    },
+    {
+        "time": 1688808247,
+        "altitude": 7859.877600000001,
+        "temperature": -7.222222222222222,
+        "pressure": 381.2,
+        "humidity": 18
+    },
+    {
+        "time": 1688808308,
+        "altitude": 8052.816000000001,
+        "temperature": -11.666666666666666,
+        "pressure": 371.3,
+        "humidity": 18
+    },
+    {
+        "time": 1688808368,
+        "altitude": 8314.3344,
+        "temperature": -13.333333333333332,
+        "pressure": 357.8,
+        "humidity": 19
+    },
+    { "time": 1688808429, "altitude": 8576.4624, "temperature": -17.22222222222222, "pressure": 345, "humidity": 21 },
+    {
+        "time": 1688808489,
+        "altitude": 8842.552800000001,
+        "temperature": -19.444444444444443,
+        "pressure": 332.1,
+        "humidity": 23
+    },
+    {
+        "time": 1688808549,
+        "altitude": 9147.6576,
+        "temperature": -20.555555555555554,
+        "pressure": 317.9,
+        "humidity": 25
+    },
+    {
+        "time": 1688808610,
+        "altitude": 9429.292800000001,
+        "temperature": -22.77777777777778,
+        "pressure": 305.3,
+        "humidity": 24
+    },
+    { "time": 1688808671, "altitude": 9700.26, "temperature": -26.11111111111111, "pressure": 293.5, "humidity": 25 },
+    {
+        "time": 1688808731,
+        "altitude": 9922.459200000001,
+        "temperature": -24.444444444444443,
+        "pressure": 284.1,
+        "humidity": 21
+    },
+    {
+        "time": 1688808792,
+        "altitude": 10122.103200000001,
+        "temperature": -25.555555555555554,
+        "pressure": 275.9,
+        "humidity": 19
+    },
+    {
+        "time": 1688808852,
+        "altitude": 10362.8952,
+        "temperature": -23.333333333333332,
+        "pressure": 266.2,
+        "humidity": 18
+    },
+    {
+        "time": 1688808912,
+        "altitude": 10590.276,
+        "temperature": -25.555555555555554,
+        "pressure": 257.2,
+        "humidity": 16
+    },
+    {
+        "time": 1688808973,
+        "altitude": 10769.4984,
+        "temperature": -26.666666666666664,
+        "pressure": 250.4,
+        "humidity": 15
+    },
+    {
+        "time": 1688809033,
+        "altitude": 10955.1216,
+        "temperature": -28.333333333333332,
+        "pressure": 243.4,
+        "humidity": 15
+    },
+    { "time": 1688809094, "altitude": 11159.0328, "temperature": -28.88888888888889, "pressure": 236, "humidity": 15 },
+    {
+        "time": 1688809154,
+        "altitude": 11362.944000000001,
+        "temperature": -27.22222222222222,
+        "pressure": 228.6,
+        "humidity": 15
+    },
+    {
+        "time": 1688809215,
+        "altitude": 11564.4168,
+        "temperature": -28.333333333333332,
+        "pressure": 221.8,
+        "humidity": 15
+    },
+    { "time": 1688809276, "altitude": 11764.365600000001, "temperature": -30, "pressure": 215.1, "humidity": 14 },
+    {
+        "time": 1688809336,
+        "altitude": 12031.3704,
+        "temperature": -30.555555555555554,
+        "pressure": 206.6,
+        "humidity": 14
+    },
+    {
+        "time": 1688809396,
+        "altitude": 12247.168800000001,
+        "temperature": -31.11111111111111,
+        "pressure": 200,
+        "humidity": 14
+    },
+    {
+        "time": 1688809456,
+        "altitude": 12434.6208,
+        "temperature": -32.77777777777778,
+        "pressure": 194.3,
+        "humidity": 13
+    },
+    { "time": 1688809517, "altitude": 12620.244, "temperature": -32.22222222222222, "pressure": 189, "humidity": 13 },
+    {
+        "time": 1688809577,
+        "altitude": 12820.1928,
+        "temperature": -32.77777777777778,
+        "pressure": 183.3,
+        "humidity": 13
+    },
+    { "time": 1688809638, "altitude": 13010.388, "temperature": -30, "pressure": 178.2, "humidity": 13 },
+    {
+        "time": 1688809699,
+        "altitude": 13196.316,
+        "temperature": -28.333333333333332,
+        "pressure": 173.7,
+        "humidity": 13
+    },
+    {
+        "time": 1688809759,
+        "altitude": 13393.8264,
+        "temperature": -28.333333333333332,
+        "pressure": 168.3,
+        "humidity": 12
+    },
+    {
+        "time": 1688809820,
+        "altitude": 13596.5184,
+        "temperature": -27.77777777777778,
+        "pressure": 163.4,
+        "humidity": 12
+    },
+    { "time": 1688809880, "altitude": 13780.008, "temperature": -27.22222222222222, "pressure": 159, "humidity": 12 },
+    {
+        "time": 1688809941,
+        "altitude": 13979.3472,
+        "temperature": -27.77777777777778,
+        "pressure": 154.3,
+        "humidity": 12
+    },
+    {
+        "time": 1688810001,
+        "altitude": 14168.9328,
+        "temperature": -26.11111111111111,
+        "pressure": 149.9,
+        "humidity": 12
+    },
+    {
+        "time": 1688810061,
+        "altitude": 14371.320000000002,
+        "temperature": -26.666666666666664,
+        "pressure": 145.5,
+        "humidity": 12
+    },
+    {
+        "time": 1688810121,
+        "altitude": 14570.3544,
+        "temperature": -28.333333333333332,
+        "pressure": 141.3,
+        "humidity": 12
+    },
+    { "time": 1688810182, "altitude": 14776.0944, "temperature": -27.22222222222222, "pressure": 137, "humidity": 12 },
+    {
+        "time": 1688810242,
+        "altitude": 14984.2728,
+        "temperature": -28.333333333333332,
+        "pressure": 132.8,
+        "humidity": 12
+    },
+    {
+        "time": 1688810303,
+        "altitude": 15174.468,
+        "temperature": -28.333333333333332,
+        "pressure": 129.1,
+        "humidity": 11
+    },
+    {
+        "time": 1688810363,
+        "altitude": 15368.930400000001,
+        "temperature": -28.333333333333332,
+        "pressure": 125.4,
+        "humidity": 11
+    },
+    {
+        "time": 1688810423,
+        "altitude": 15574.6704,
+        "temperature": -28.333333333333332,
+        "pressure": 121.6,
+        "humidity": 11
+    },
+    {
+        "time": 1688810484,
+        "altitude": 15797.174400000002,
+        "temperature": -26.666666666666664,
+        "pressure": 117.6,
+        "humidity": 11
+    },
+    {
+        "time": 1688810544,
+        "altitude": 16019.6784,
+        "temperature": -25.555555555555554,
+        "pressure": 113.7,
+        "humidity": 11
+    },
+    {
+        "time": 1688810605,
+        "altitude": 16229.076000000001,
+        "temperature": -27.22222222222222,
+        "pressure": 110.3,
+        "humidity": 11
+    },
+    {
+        "time": 1688810666,
+        "altitude": 16433.9016,
+        "temperature": -27.77777777777778,
+        "pressure": 106.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688810726,
+        "altitude": 16631.716800000002,
+        "temperature": -30.555555555555554,
+        "pressure": 103.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688810786,
+        "altitude": 16827.0936,
+        "temperature": -28.88888888888889,
+        "pressure": 100.7,
+        "humidity": 11
+    },
+    { "time": 1688810804, "altitude": 16890.1872, "temperature": -28.88888888888889, "pressure": 99.8, "humidity": 11 },
+    { "time": 1688810814, "altitude": 16927.3728, "temperature": -28.88888888888889, "pressure": 99.2, "humidity": 11 },
+    { "time": 1688810874, "altitude": 17141.952, "temperature": -30, "pressure": 96.1, "humidity": 11 },
+    {
+        "time": 1688810930,
+        "altitude": 17339.157600000002,
+        "temperature": -31.11111111111111,
+        "pressure": 93.3,
+        "humidity": 11
+    },
+    { "time": 1688810943, "altitude": 17380.9152, "temperature": -31.11111111111111, "pressure": 92.6, "humidity": 11 },
+    { "time": 1688810957, "altitude": 17427.2448, "temperature": -30.555555555555554, "pressure": 92, "humidity": 11 },
+    {
+        "time": 1688810970,
+        "altitude": 17447.9712,
+        "temperature": -30.555555555555554,
+        "pressure": 91.7,
+        "humidity": 11
+    },
+    { "time": 1688810977, "altitude": 17492.7768, "temperature": -31.11111111111111, "pressure": 91.1, "humidity": 11 },
+    {
+        "time": 1688810989,
+        "altitude": 17536.0584,
+        "temperature": -30.555555555555554,
+        "pressure": 90.5,
+        "humidity": 11
+    },
+    {
+        "time": 1688811004,
+        "altitude": 17584.8264,
+        "temperature": -29.444444444444443,
+        "pressure": 89.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688811050,
+        "altitude": 17742.7128,
+        "temperature": -29.444444444444443,
+        "pressure": 87.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688811061,
+        "altitude": 17765.8776,
+        "temperature": -29.444444444444443,
+        "pressure": 87.6,
+        "humidity": 11
+    },
+    {
+        "time": 1688811088,
+        "altitude": 17867.9856,
+        "temperature": -30.555555555555554,
+        "pressure": 86.2,
+        "humidity": 11
+    },
+    {
+        "time": 1688811100,
+        "altitude": 17892.0648,
+        "temperature": -30.555555555555554,
+        "pressure": 85.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688811120,
+        "altitude": 17976.1896,
+        "temperature": -29.444444444444443,
+        "pressure": 84.7,
+        "humidity": 11
+    },
+    { "time": 1688811133, "altitude": 18018.252, "temperature": -28.333333333333332, "pressure": 84.2, "humidity": 11 },
+    { "time": 1688811145, "altitude": 18042.3312, "temperature": -28.333333333333332, "pressure": 84, "humidity": 11 },
+    {
+        "time": 1688811150,
+        "altitude": 18075.2496,
+        "temperature": -28.333333333333332,
+        "pressure": 83.5,
+        "humidity": 11
+    },
+    { "time": 1688811169, "altitude": 18143.22, "temperature": -28.88888888888889, "pressure": 82.6, "humidity": 11 },
+    {
+        "time": 1688811185,
+        "altitude": 18203.5704,
+        "temperature": -28.333333333333332,
+        "pressure": 81.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688811229,
+        "altitude": 18369.3816,
+        "temperature": -29.444444444444443,
+        "pressure": 79.9,
+        "humidity": 11
+    },
+    { "time": 1688811243, "altitude": 18413.5776, "temperature": -30, "pressure": 79.4, "humidity": 11 },
+    {
+        "time": 1688811256,
+        "altitude": 18459.9072,
+        "temperature": -29.444444444444443,
+        "pressure": 78.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688811265,
+        "altitude": 18388.8888,
+        "temperature": -29.444444444444443,
+        "pressure": 79.7,
+        "humidity": 11
+    },
+    {
+        "time": 1688811270,
+        "altitude": 18504.7128,
+        "temperature": -29.444444444444443,
+        "pressure": 78.3,
+        "humidity": 11
+    },
+    { "time": 1688811281, "altitude": 18528.792, "temperature": -29.444444444444443, "pressure": 78, "humidity": 11 },
+    { "time": 1688811294, "altitude": 18573.902400000003, "temperature": -30, "pressure": 77.5, "humidity": 11 },
+    { "time": 1688811305, "altitude": 18626.6328, "temperature": -30, "pressure": 76.9, "humidity": 11 },
+    { "time": 1688811322, "altitude": 18683.3256, "temperature": -28.88888888888889, "pressure": 76.3, "humidity": 11 },
+    {
+        "time": 1688811341,
+        "altitude": 18746.724000000002,
+        "temperature": -29.444444444444443,
+        "pressure": 75.6,
+        "humidity": 11
+    },
+    { "time": 1688811353, "altitude": 18772.3272, "temperature": -28.88888888888889, "pressure": 75.2, "humidity": 11 },
+    { "time": 1688811382, "altitude": 18884.7984, "temperature": -27.77777777777778, "pressure": 73.9, "humidity": 11 },
+    { "time": 1688811405, "altitude": 18963.4368, "temperature": -27.22222222222222, "pressure": 73.1, "humidity": 11 },
+    { "time": 1688811418, "altitude": 19007.0232, "temperature": -27.22222222222222, "pressure": 72.6, "humidity": 11 },
+    { "time": 1688811430, "altitude": 19031.1024, "temperature": -27.77777777777778, "pressure": 72.5, "humidity": 11 },
+    { "time": 1688811438, "altitude": 19075.2984, "temperature": -27.22222222222222, "pressure": 71.9, "humidity": 11 },
+    { "time": 1688811450, "altitude": 19100.9016, "temperature": -27.77777777777778, "pressure": 71.7, "humidity": 11 },
+    { "time": 1688811465, "altitude": 18909.4872, "temperature": -27.77777777777778, "pressure": 73.7, "humidity": 11 },
+    { "time": 1688811477, "altitude": 19208.496, "temperature": -29.444444444444443, "pressure": 70.5, "humidity": 11 },
+    {
+        "time": 1688811496,
+        "altitude": 19253.911200000002,
+        "temperature": -28.88888888888889,
+        "pressure": 70,
+        "humidity": 11
+    },
+    {
+        "time": 1688811506,
+        "altitude": 19300.2408,
+        "temperature": -29.444444444444443,
+        "pressure": 69.5,
+        "humidity": 11
+    },
+    {
+        "time": 1688811522,
+        "altitude": 19349.9232,
+        "temperature": -28.333333333333332,
+        "pressure": 69.1,
+        "humidity": 11
+    },
+    {
+        "time": 1688811536,
+        "altitude": 19402.9584,
+        "temperature": -28.333333333333332,
+        "pressure": 68.5,
+        "humidity": 11
+    },
+    {
+        "time": 1688811549,
+        "altitude": 19451.4216,
+        "temperature": -28.333333333333332,
+        "pressure": 68.1,
+        "humidity": 11
+    },
+    {
+        "time": 1688811557,
+        "altitude": 19480.0728,
+        "temperature": -28.333333333333332,
+        "pressure": 67.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688811563,
+        "altitude": 19503.2376,
+        "temperature": -28.333333333333332,
+        "pressure": 67.5,
+        "humidity": 11
+    },
+    { "time": 1688811570, "altitude": 19553.8344, "temperature": -28.88888888888889, "pressure": 67, "humidity": 11 },
+    { "time": 1688811581, "altitude": 19579.7424, "temperature": -28.88888888888889, "pressure": 66.8, "humidity": 11 },
+    { "time": 1688811638, "altitude": 19790.664, "temperature": -27.77777777777778, "pressure": 64.7, "humidity": 11 },
+    { "time": 1688811698, "altitude": 20000.366400000003, "temperature": -25, "pressure": 62.7, "humidity": 11 },
+    { "time": 1688811715, "altitude": 20059.497600000002, "temperature": -25, "pressure": 62.3, "humidity": 11 },
+    { "time": 1688811726, "altitude": 20084.796000000002, "temperature": -25, "pressure": 62, "humidity": 11 },
+    { "time": 1688811741, "altitude": 20151.5472, "temperature": -25, "pressure": 61.4, "humidity": 11 },
+    { "time": 1688811801, "altitude": 20358.2016, "temperature": -26.11111111111111, "pressure": 59.6, "humidity": 11 },
+    { "time": 1688811821, "altitude": 20428.9152, "temperature": -26.11111111111111, "pressure": 59, "humidity": 11 },
+    { "time": 1688811832, "altitude": 20452.6896, "temperature": -26.11111111111111, "pressure": 58.8, "humidity": 11 },
+    { "time": 1688811840, "altitude": 20494.1424, "temperature": -26.11111111111111, "pressure": 58.4, "humidity": 11 },
+    {
+        "time": 1688811852,
+        "altitude": 20383.195200000002,
+        "temperature": -26.11111111111111,
+        "pressure": 59.4,
+        "humidity": 11
+    },
+    { "time": 1688811859, "altitude": 20538.948, "temperature": -26.666666666666664, "pressure": 58.1, "humidity": 11 },
+    {
+        "time": 1688811864,
+        "altitude": 20562.4176,
+        "temperature": -26.666666666666664,
+        "pressure": 57.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688811870,
+        "altitude": 20596.2504,
+        "temperature": -26.666666666666664,
+        "pressure": 57.6,
+        "humidity": 11
+    },
+    {
+        "time": 1688811883,
+        "altitude": 20638.3128,
+        "temperature": -26.666666666666664,
+        "pressure": 57.2,
+        "humidity": 11
+    },
+    { "time": 1688811896, "altitude": 20680.68, "temperature": -26.11111111111111, "pressure": 56.8, "humidity": 11 },
+    {
+        "time": 1688811913,
+        "altitude": 20737.677600000003,
+        "temperature": -26.11111111111111,
+        "pressure": 56.4,
+        "humidity": 11
+    },
+    { "time": 1688811926, "altitude": 20784.0072, "temperature": -26.11111111111111, "pressure": 56, "humidity": 11 },
+    { "time": 1688811986, "altitude": 20993.4048, "temperature": -26.11111111111111, "pressure": 54.4, "humidity": 11 },
+    {
+        "time": 1688812046,
+        "altitude": 21200.9736,
+        "temperature": -24.444444444444443,
+        "pressure": 52.8,
+        "humidity": 11
+    },
+    { "time": 1688812107, "altitude": 21407.0184, "temperature": -23.88888888888889, "pressure": 51.3, "humidity": 11 },
+    {
+        "time": 1688812167,
+        "altitude": 21612.758400000002,
+        "temperature": -22.77777777777778,
+        "pressure": 49.8,
+        "humidity": 11
+    },
+    {
+        "time": 1688812200,
+        "altitude": 21727.3632,
+        "temperature": -23.333333333333332,
+        "pressure": 48.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688812222,
+        "altitude": 21805.0872,
+        "temperature": -24.444444444444443,
+        "pressure": 48.4,
+        "humidity": 11
+    },
+    { "time": 1688812282, "altitude": 22019.9712, "temperature": -24.444444444444443, "pressure": 47, "humidity": 11 },
+    {
+        "time": 1688812333,
+        "altitude": 20757.794400000002,
+        "temperature": -26.11111111111111,
+        "pressure": 56.2,
+        "humidity": 11
+    },
+    {
+        "time": 1688812342,
+        "altitude": 22229.3688,
+        "temperature": -24.444444444444443,
+        "pressure": 45.6,
+        "humidity": 11
+    },
+    {
+        "time": 1688812403,
+        "altitude": 22437.852000000003,
+        "temperature": -22.77777777777778,
+        "pressure": 44.4,
+        "humidity": 11
+    },
+    { "time": 1688812463, "altitude": 22649.9928, "temperature": -22.22222222222222, "pressure": 43, "humidity": 11 },
+    {
+        "time": 1688812523,
+        "altitude": 22881.945600000003,
+        "temperature": -21.666666666666668,
+        "pressure": 41.7,
+        "humidity": 11
+    },
+    {
+        "time": 1688812584,
+        "altitude": 23121.213600000003,
+        "temperature": -21.666666666666668,
+        "pressure": 40.3,
+        "humidity": 11
+    },
+    {
+        "time": 1688812644,
+        "altitude": 23342.193600000002,
+        "temperature": -22.22222222222222,
+        "pressure": 39.1,
+        "humidity": 11
+    },
+    {
+        "time": 1688812704,
+        "altitude": 23565.307200000003,
+        "temperature": -21.11111111111111,
+        "pressure": 38,
+        "humidity": 10
+    },
+    {
+        "time": 1688812765,
+        "altitude": 23803.0512,
+        "temperature": -20.555555555555554,
+        "pressure": 36.7,
+        "humidity": 11
+    },
+    {
+        "time": 1688812825,
+        "altitude": 24052.3776,
+        "temperature": -19.444444444444443,
+        "pressure": 35.5,
+        "humidity": 10
+    },
+    { "time": 1688812886, "altitude": 24292.2552, "temperature": -20, "pressure": 34.4, "humidity": 10 },
+    {
+        "time": 1688812947,
+        "altitude": 24513.235200000003,
+        "temperature": -20.555555555555554,
+        "pressure": 33.4,
+        "humidity": 10
+    },
+    { "time": 1688813007, "altitude": 24732.0816, "temperature": -21.11111111111111, "pressure": 32.4, "humidity": 11 },
+    {
+        "time": 1688813067,
+        "altitude": 24967.692000000003,
+        "temperature": -22.77777777777778,
+        "pressure": 31.4,
+        "humidity": 11
+    },
+    { "time": 1688813127, "altitude": 25219.152000000002, "temperature": -20, "pressure": 30.4, "humidity": 11 },
+    {
+        "time": 1688813188,
+        "altitude": 25476.098400000003,
+        "temperature": -20.555555555555554,
+        "pressure": 29.4,
+        "humidity": 10
+    },
+    { "time": 1688813249, "altitude": 25740.9696, "temperature": -20, "pressure": 28.5, "humidity": 11 },
+    { "time": 1688813310, "altitude": 25996.6968, "temperature": -20, "pressure": 27.5, "humidity": 10 },
+    { "time": 1688813370, "altitude": 26244.1944, "temperature": -18.88888888888889, "pressure": 26.6, "humidity": 11 },
+    {
+        "time": 1688813431,
+        "altitude": 26505.408000000003,
+        "temperature": -17.77777777777778,
+        "pressure": 25.7,
+        "humidity": 10
+    },
+    { "time": 1688813492, "altitude": 26754.1248, "temperature": -17.22222222222222, "pressure": 24.9, "humidity": 10 },
+    { "time": 1688813552, "altitude": 26987.9064, "temperature": -16.11111111111111, "pressure": 24.2, "humidity": 10 },
+    {
+        "time": 1688813613,
+        "altitude": 27225.9552,
+        "temperature": -15.555555555555555,
+        "pressure": 23.5,
+        "humidity": 10
+    },
+    { "time": 1688813674, "altitude": 27478.3296, "temperature": -16.11111111111111, "pressure": 22.8, "humidity": 10 },
+    {
+        "time": 1688813734,
+        "altitude": 27706.929600000003,
+        "temperature": -13.88888888888889,
+        "pressure": 22.2,
+        "humidity": 10
+    },
+    {
+        "time": 1688813794,
+        "altitude": 27961.742400000003,
+        "temperature": -13.333333333333332,
+        "pressure": 21.5,
+        "humidity": 10
+    },
+    {
+        "time": 1688813855,
+        "altitude": 28214.726400000003,
+        "temperature": -14.444444444444445,
+        "pressure": 20.8,
+        "humidity": 10
+    },
+    {
+        "time": 1688813915,
+        "altitude": 28468.6248,
+        "temperature": -14.444444444444445,
+        "pressure": 20.1,
+        "humidity": 10
+    },
+    { "time": 1688813975, "altitude": 28712.16, "temperature": -13.333333333333332, "pressure": 19.6, "humidity": 10 },
+    { "time": 1688814036, "altitude": 28970.3256, "temperature": -14.444444444444445, "pressure": 19, "humidity": 10 },
+    { "time": 1688814096, "altitude": 29238.8544, "temperature": -13.88888888888889, "pressure": 18.4, "humidity": 10 },
+    {
+        "time": 1688814157,
+        "altitude": 29519.2704,
+        "temperature": -13.333333333333332,
+        "pressure": 17.9,
+        "humidity": 10
+    },
+    {
+        "time": 1688814217,
+        "altitude": 29778.350400000003,
+        "temperature": -13.88888888888889,
+        "pressure": 17.3,
+        "humidity": 10
+    },
+    { "time": 1688814278, "altitude": 30035.2968, "temperature": -11.666666666666666, "pressure": 16.8, "humidity": 1 },
+    { "time": 1688814339, "altitude": 30293.4624, "temperature": -11.11111111111111, "pressure": 16.3, "humidity": 1 },
+    {
+        "time": 1688814399,
+        "altitude": 30535.778400000003,
+        "temperature": -12.222222222222221,
+        "pressure": 15.9,
+        "humidity": 1
+    },
+    { "time": 1688814459, "altitude": 30794.553600000003, "temperature": -10, "pressure": 15.4, "humidity": 1 },
+    {
+        "time": 1688814519,
+        "altitude": 31038.393600000003,
+        "temperature": -11.11111111111111,
+        "pressure": 15,
+        "humidity": 1
+    },
+    { "time": 1688814580, "altitude": 31285.5864, "temperature": -10, "pressure": 14.7, "humidity": 1 },
+    { "time": 1688814641, "altitude": 31530.3408, "temperature": -10, "pressure": 14.3, "humidity": 1 },
+    { "time": 1688814702, "altitude": 31779.0576, "temperature": -10.555555555555555, "pressure": 13.9, "humidity": 1 },
+    {
+        "time": 1688814762,
+        "altitude": 32006.438400000003,
+        "temperature": -10.555555555555555,
+        "pressure": 13.5,
+        "humidity": 1
+    },
+    { "time": 1688814823, "altitude": 32230.771200000003, "temperature": -10, "pressure": 13.2, "humidity": 1 },
+    { "time": 1688814884, "altitude": 32469.7344, "temperature": -10, "pressure": 12.9, "humidity": 1 },
+    {
+        "time": 1688814944,
+        "altitude": 32710.526400000002,
+        "temperature": -8.88888888888889,
+        "pressure": 12.6,
+        "humidity": 1
+    },
+    { "time": 1688815004, "altitude": 32952.8424, "temperature": -10, "pressure": 12.3, "humidity": 1 },
+    { "time": 1688815065, "altitude": 33186.624, "temperature": -8.333333333333334, "pressure": 12, "humidity": 1 },
+    { "time": 1688815126, "altitude": 33364.0176, "temperature": -6.666666666666666, "pressure": 11.8, "humidity": 9 },
+    { "time": 1688815186, "altitude": 33537.4488, "temperature": -6.666666666666666, "pressure": 11.6, "humidity": 1 },
+    { "time": 1688815246, "altitude": 33758.7336, "temperature": -6.666666666666666, "pressure": 11.4, "humidity": 1 },
+    { "time": 1688815307, "altitude": 33989.4672, "temperature": -7.777777777777778, "pressure": 11.1, "humidity": 1 },
+    {
+        "time": 1688815368,
+        "altitude": 34179.052800000005,
+        "temperature": -8.88888888888889,
+        "pressure": 10.9,
+        "humidity": 1
+    },
+    { "time": 1688815428, "altitude": 34345.1688, "temperature": -8.333333333333334, "pressure": 10.7, "humidity": 1 },
+    {
+        "time": 1688815488,
+        "altitude": 34500.312000000005,
+        "temperature": -6.666666666666666,
+        "pressure": 10.6,
+        "humidity": 1
+    },
+    { "time": 1688815548, "altitude": 34660.6368, "temperature": -7.222222222222222, "pressure": 10.4, "humidity": 1 },
+    { "time": 1688815609, "altitude": 34801.7592, "temperature": -6.111111111111111, "pressure": 10.2, "humidity": 1 },
+    {
+        "time": 1688815669,
+        "altitude": 34923.984000000004,
+        "temperature": -5.555555555555555,
+        "pressure": 10.2,
+        "humidity": 9
+    },
+    { "time": 1688815729, "altitude": 35069.0688, "temperature": -5.555555555555555, "pressure": 10, "humidity": 9 },
+    { "time": 1688815790, "altitude": 35233.9656, "temperature": -8.333333333333334, "pressure": 9.9, "humidity": 1 },
+    { "time": 1688815850, "altitude": 35399.1672, "temperature": -6.666666666666666, "pressure": 9.8, "humidity": 1 },
+    { "time": 1688815910, "altitude": 35538.7656, "temperature": -8.88888888888889, "pressure": 9.7, "humidity": 1 },
+    {
+        "time": 1688815971,
+        "altitude": 35646.969600000004,
+        "temperature": -8.88888888888889,
+        "pressure": 9.5,
+        "humidity": 1
+    },
+    { "time": 1688816032, "altitude": 35757.3072, "temperature": -8.333333333333334, "pressure": 9.4, "humidity": 1 },
+    { "time": 1688816092, "altitude": 35870.0832, "temperature": -9.444444444444445, "pressure": 9.4, "humidity": 1 },
+    { "time": 1688816157, "altitude": 35970.972, "temperature": -6.111111111111111, "pressure": 9.3, "humidity": 1 },
+    { "time": 1688816212, "altitude": 36031.0176, "temperature": -4.444444444444445, "pressure": 9.3, "humidity": 9 },
+    { "time": 1688816273, "altitude": 36060.888, "temperature": -6.666666666666666, "pressure": 9.2, "humidity": 1 },
+    {
+        "time": 1688816334,
+        "altitude": 36076.128000000004,
+        "temperature": -8.333333333333334,
+        "pressure": 9.2,
+        "humidity": 1
+    },
+    { "time": 1688816395, "altitude": 36106.3032, "temperature": -8.333333333333334, "pressure": 9.2, "humidity": 1 },
+    { "time": 1688816455, "altitude": 36185.2464, "temperature": -2.2222222222222223, "pressure": 9.2, "humidity": 9 },
+    { "time": 1688816515, "altitude": 36251.0832, "temperature": -5, "pressure": 9.1, "humidity": 9 },
+    { "time": 1688816575, "altitude": 36277.296, "temperature": -3.888888888888889, "pressure": 9, "humidity": 9 },
+    { "time": 1688816636, "altitude": 36297.7176, "temperature": -3.888888888888889, "pressure": 9, "humidity": 9 },
+    { "time": 1688816697, "altitude": 36332.16, "temperature": 0, "pressure": 9, "humidity": 9 },
+    {
+        "time": 1688816757,
+        "altitude": 36372.088800000005,
+        "temperature": -1.1111111111111112,
+        "pressure": 9,
+        "humidity": 9
+    },
+    { "time": 1688816817, "altitude": 36415.675200000005, "temperature": 0, "pressure": 9, "humidity": 9 },
+    { "time": 1688816877, "altitude": 36426.648, "temperature": 1.6666666666666665, "pressure": 8.9, "humidity": 9 },
+    { "time": 1688816938, "altitude": 36417.1992, "temperature": 0, "pressure": 8.9, "humidity": 9 },
+    { "time": 1688816999, "altitude": 36441.2784, "temperature": -1.1111111111111112, "pressure": 8.9, "humidity": 9 },
+    { "time": 1688817059, "altitude": 36485.4744, "temperature": 2.7777777777777777, "pressure": 9, "humidity": 9 },
+    { "time": 1688817119, "altitude": 36500.1048, "temperature": 3.333333333333333, "pressure": 8.8, "humidity": 9 },
+    { "time": 1688817180, "altitude": 36472.9776, "temperature": 0, "pressure": 8.8, "humidity": 9 },
+    { "time": 1688817241, "altitude": 36462.3096, "temperature": 0, "pressure": 8.8, "humidity": 9 },
+    { "time": 1688817301, "altitude": 36515.9544, "temperature": -3.333333333333333, "pressure": 8.8, "humidity": 9 },
+    { "time": 1688817362, "altitude": 36599.1648, "temperature": -5.555555555555555, "pressure": 8.7, "humidity": 9 },
+    { "time": 1688817422, "altitude": 36643.3608, "temperature": -7.222222222222222, "pressure": 8.7, "humidity": 9 },
+    {
+        "time": 1688817483,
+        "altitude": 36624.768000000004,
+        "temperature": -6.111111111111111,
+        "pressure": 8.7,
+        "humidity": 9
+    },
+    { "time": 1688817544, "altitude": 36598.86, "temperature": -6.111111111111111, "pressure": 8.7, "humidity": 9 },
+    { "time": 1688817604, "altitude": 36632.0832, "temperature": -1.6666666666666665, "pressure": 8.8, "humidity": 9 },
+    { "time": 1688817665, "altitude": 36722.6088, "temperature": 3.333333333333333, "pressure": 8.7, "humidity": 9 },
+    { "time": 1688817726, "altitude": 36805.5144, "temperature": 1.1111111111111112, "pressure": 8.6, "humidity": 9 },
+    {
+        "time": 1688817786,
+        "altitude": 36824.412000000004,
+        "temperature": 2.7777777777777777,
+        "pressure": 8.6,
+        "humidity": 9
+    },
+    { "time": 1688817846, "altitude": 36790.5792, "temperature": 5.555555555555555, "pressure": 8.5, "humidity": 9 },
+    { "time": 1688817907, "altitude": 36783.8736, "temperature": 1.1111111111111112, "pressure": 8.5, "humidity": 9 },
+    { "time": 1688817967, "altitude": 36825.936, "temperature": -1.6666666666666665, "pressure": 8.5, "humidity": 9 },
+    {
+        "time": 1688818028,
+        "altitude": 36880.495200000005,
+        "temperature": 1.1111111111111112,
+        "pressure": 8.5,
+        "humidity": 9
+    },
+    { "time": 1688818088, "altitude": 36896.649600000004, "temperature": 5, "pressure": 8.5, "humidity": 8 },
+    { "time": 1688818149, "altitude": 36880.1904, "temperature": 3.333333333333333, "pressure": 8.5, "humidity": 9 },
+    { "time": 1688818209, "altitude": 36881.1048, "temperature": 5, "pressure": 8.5, "humidity": 9 },
+    { "time": 1688818270, "altitude": 36922.5576, "temperature": 6.111111111111111, "pressure": 8.4, "humidity": 8 },
+    { "time": 1688818330, "altitude": 36973.764, "temperature": 2.7777777777777777, "pressure": 8.3, "humidity": 9 },
+    { "time": 1688818391, "altitude": 37000.5864, "temperature": -0.5555555555555556, "pressure": 8.3, "humidity": 9 },
+    { "time": 1688818452, "altitude": 36994.7952, "temperature": 3.888888888888889, "pressure": 8.4, "humidity": 9 },
+    { "time": 1688818512, "altitude": 36998.148, "temperature": 6.111111111111111, "pressure": 8.3, "humidity": 8 },
+    { "time": 1688818573, "altitude": 37030.4568, "temperature": 6.111111111111111, "pressure": 8.3, "humidity": 8 },
+    { "time": 1688818633, "altitude": 37084.1016, "temperature": 3.888888888888889, "pressure": 8.3, "humidity": 9 },
+    { "time": 1688818694, "altitude": 37117.9344, "temperature": 8.333333333333334, "pressure": 8.3, "humidity": 8 },
+    { "time": 1688818755, "altitude": 37117.6296, "temperature": 4.444444444444445, "pressure": 8.2, "humidity": 8 },
+    { "time": 1688818815, "altitude": 37111.8384, "temperature": 3.333333333333333, "pressure": 8.2, "humidity": 9 },
+    { "time": 1688818876, "altitude": 34898.076, "temperature": 0.5555555555555556, "pressure": 9.7, "humidity": 9 },
+    { "time": 1688818936, "altitude": 31609.5888, "temperature": -3.888888888888889, "pressure": 13.6, "humidity": 9 },
+    { "time": 1688818951, "altitude": 30983.5296, "temperature": -6.111111111111111, "pressure": 14.7, "humidity": 9 },
+    {
+        "time": 1688818973,
+        "altitude": 30108.448800000002,
+        "temperature": -7.777777777777778,
+        "pressure": 16.2,
+        "humidity": 9
+    },
+    {
+        "time": 1688818983,
+        "altitude": 29728.972800000003,
+        "temperature": -7.777777777777778,
+        "pressure": 16.9,
+        "humidity": 8
+    },
+    {
+        "time": 1688818995,
+        "altitude": 29462.882400000002,
+        "temperature": -8.88888888888889,
+        "pressure": 17.4,
+        "humidity": 9
+    },
+    { "time": 1688819003, "altitude": 28995.3192, "temperature": -9.444444444444445, "pressure": 18.4, "humidity": 9 },
+    { "time": 1688819019, "altitude": 28449.422400000003, "temperature": -10, "pressure": 19.7, "humidity": 9 },
+    { "time": 1688819033, "altitude": 28220.517600000003, "temperature": -10, "pressure": 20.2, "humidity": 9 },
+    { "time": 1688819040, "altitude": 27891.3336, "temperature": -11.11111111111111, "pressure": 21.1, "humidity": 9 },
+    { "time": 1688819056, "altitude": 27225.9552, "temperature": -12.777777777777777, "pressure": 22.9, "humidity": 9 },
+    { "time": 1688819063, "altitude": 26996.4408, "temperature": -14.444444444444445, "pressure": 23.6, "humidity": 9 },
+    { "time": 1688819094, "altitude": 27787.7504, "temperature": -9.444444444444445, "pressure": 18.9, "humidity": 9 },
+    { "time": 1688819118, "altitude": 25430.3784, "temperature": -20, "pressure": 28.5, "humidity": 9 },
+    {
+        "time": 1688819129,
+        "altitude": 25260.300000000003,
+        "temperature": -21.666666666666668,
+        "pressure": 29.9,
+        "humidity": 1
+    },
+    {
+        "time": 1688819136,
+        "altitude": 25057.303200000002,
+        "temperature": -24.444444444444443,
+        "pressure": 30.7,
+        "humidity": 1
+    },
+    {
+        "time": 1688819145,
+        "altitude": 24680.875200000002,
+        "temperature": -28.88888888888889,
+        "pressure": 32.3,
+        "humidity": 10
+    },
+    {
+        "time": 1688819164,
+        "altitude": 24346.814400000003,
+        "temperature": -31.11111111111111,
+        "pressure": 33.9,
+        "humidity": 10
+    },
+    { "time": 1688819170, "altitude": 24166.3728, "temperature": -32.22222222222222, "pressure": 34.7, "humidity": 10 },
+    { "time": 1688819190, "altitude": 23607.0648, "temperature": -35.55555555555556, "pressure": 37.7, "humidity": 10 },
+    { "time": 1688819205, "altitude": 23224.8456, "temperature": -36.11111111111111, "pressure": 39.5, "humidity": 10 },
+    { "time": 1688819224, "altitude": 22792.0296, "temperature": -37.77777777777778, "pressure": 42, "humidity": 10 },
+    {
+        "time": 1688819236,
+        "altitude": 22643.896800000002,
+        "temperature": -37.77777777777778,
+        "pressure": 42.9,
+        "humidity": 10
+    },
+    { "time": 1688819281, "altitude": 21651.468, "temperature": -40.55555555555556, "pressure": 49.5, "humidity": 11 },
+    {
+        "time": 1688819295,
+        "altitude": 21388.1208,
+        "temperature": -41.666666666666664,
+        "pressure": 51.5,
+        "humidity": 11
+    },
+    {
+        "time": 1688819308,
+        "altitude": 21099.780000000002,
+        "temperature": -41.666666666666664,
+        "pressure": 53.6,
+        "humidity": 11
+    },
+    { "time": 1688819322, "altitude": 20816.6208, "temperature": -42.77777777777778, "pressure": 55.7, "humidity": 11 },
+    {
+        "time": 1688819336,
+        "altitude": 20563.332000000002,
+        "temperature": -42.77777777777778,
+        "pressure": 57.9,
+        "humidity": 11
+    },
+    { "time": 1688819349, "altitude": 20292.06, "temperature": -43.333333333333336, "pressure": 59.9, "humidity": 11 },
+    { "time": 1688819361, "altitude": 20159.472, "temperature": -43.333333333333336, "pressure": 60.8, "humidity": 10 },
+    {
+        "time": 1688819368,
+        "altitude": 20026.884000000002,
+        "temperature": -43.888888888888886,
+        "pressure": 62.5,
+        "humidity": 11
+    },
+    { "time": 1688819375, "altitude": 19915.0224, "temperature": -45, "pressure": 63.7, "humidity": 11 },
+    { "time": 1688819386, "altitude": 19612.356, "temperature": -46.11111111111111, "pressure": 66.3, "humidity": 11 },
+    {
+        "time": 1688819398,
+        "altitude": 19505.0664,
+        "temperature": -46.666666666666664,
+        "pressure": 67.7,
+        "humidity": 11
+    },
+    {
+        "time": 1688819405,
+        "altitude": 19379.7936,
+        "temperature": -46.666666666666664,
+        "pressure": 68.8,
+        "humidity": 11
+    },
+    { "time": 1688819410, "altitude": 19260.0072, "temperature": -46.666666666666664, "pressure": 70, "humidity": 11 },
+    {
+        "time": 1688819418,
+        "altitude": 19140.830400000003,
+        "temperature": -47.22222222222222,
+        "pressure": 71.2,
+        "humidity": 11
+    },
+    {
+        "time": 1688819424,
+        "altitude": 19023.177600000003,
+        "temperature": -47.77777777777778,
+        "pressure": 72.5,
+        "humidity": 11
+    },
+    { "time": 1688819432, "altitude": 18920.7648, "temperature": -48.33333333333333, "pressure": 73.7, "humidity": 11 },
+    { "time": 1688819439, "altitude": 18806.16, "temperature": -48.33333333333333, "pressure": 75, "humidity": 11 },
+    {
+        "time": 1688819446,
+        "altitude": 18689.1168,
+        "temperature": -48.888888888888886,
+        "pressure": 76.3,
+        "humidity": 11
+    },
+    { "time": 1688819452, "altitude": 18572.988, "temperature": -49.44444444444444, "pressure": 77.6, "humidity": 11 },
+    { "time": 1688819461, "altitude": 18348.0456, "temperature": -50, "pressure": 80.4, "humidity": 11 },
+    { "time": 1688819474, "altitude": 18137.4288, "temperature": -50.55555555555556, "pressure": 83, "humidity": 11 },
+    { "time": 1688819486, "altitude": 18029.5296, "temperature": -51.11111111111111, "pressure": 84.4, "humidity": 11 },
+    { "time": 1688819493, "altitude": 17921.3256, "temperature": -51.11111111111111, "pressure": 85.6, "humidity": 11 },
+    { "time": 1688819500, "altitude": 17812.8168, "temperature": -51.11111111111111, "pressure": 87, "humidity": 11 },
+    { "time": 1688819507, "altitude": 17724.4248, "temperature": -51.11111111111111, "pressure": 88.5, "humidity": 11 },
+    { "time": 1688819515, "altitude": 17511.6744, "temperature": -51.11111111111111, "pressure": 91.2, "humidity": 11 },
+    { "time": 1688819529, "altitude": 17301.972, "temperature": -51.666666666666664, "pressure": 93.9, "humidity": 11 },
+    { "time": 1688819545, "altitude": 17069.4096, "temperature": -52.22222222222222, "pressure": 97.5, "humidity": 11 },
+    {
+        "time": 1688819557,
+        "altitude": 16972.1784,
+        "temperature": -51.666666666666664,
+        "pressure": 98.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688819562,
+        "altitude": 16829.532,
+        "temperature": -51.666666666666664,
+        "pressure": 100.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688819575,
+        "altitude": 16650.9192,
+        "temperature": -51.11111111111111,
+        "pressure": 103.9,
+        "humidity": 11
+    },
+    {
+        "time": 1688819586,
+        "altitude": 16554.2976,
+        "temperature": -51.11111111111111,
+        "pressure": 105.3,
+        "humidity": 11
+    },
+    {
+        "time": 1688819642,
+        "altitude": 15792.602400000002,
+        "temperature": -51.11111111111111,
+        "pressure": 118.1,
+        "humidity": 11
+    },
+    { "time": 1688819663, "altitude": 15545.4096, "temperature": -50, "pressure": 122.5, "humidity": 11 },
+    {
+        "time": 1688819676,
+        "altitude": 15374.112000000001,
+        "temperature": -49.44444444444444,
+        "pressure": 125.6,
+        "humidity": 11
+    },
+    {
+        "time": 1688819737,
+        "altitude": 14617.9032,
+        "temperature": -47.77777777777778,
+        "pressure": 140.5,
+        "humidity": 11
+    },
+    { "time": 1688819797, "altitude": 13914.12, "temperature": -48.888888888888886, "pressure": 156.2, "humidity": 11 },
+    {
+        "time": 1688819858,
+        "altitude": 13249.9608,
+        "temperature": -48.33333333333333,
+        "pressure": 172.7,
+        "humidity": 11
+    },
+    { "time": 1688819918, "altitude": 12620.244, "temperature": -49.44444444444444, "pressure": 189.8, "humidity": 11 },
+    {
+        "time": 1688819979,
+        "altitude": 12048.1344,
+        "temperature": -51.666666666666664,
+        "pressure": 207.2,
+        "humidity": 12
+    },
+    { "time": 1688820040, "altitude": 11482.4256, "temperature": -51.666666666666664, "pressure": 226, "humidity": 12 },
+    {
+        "time": 1688820100,
+        "altitude": 10938.052800000001,
+        "temperature": -48.888888888888886,
+        "pressure": 245.2,
+        "humidity": 13
+    },
+    {
+        "time": 1688820160,
+        "altitude": 10422.3312,
+        "temperature": -46.11111111111111,
+        "pressure": 265.1,
+        "humidity": 15
+    },
+    { "time": 1688820221, "altitude": 9921.24, "temperature": -42.22222222222222, "pressure": 285.1, "humidity": 16 },
+    {
+        "time": 1688820281,
+        "altitude": 9459.1632,
+        "temperature": -38.888888888888886,
+        "pressure": 305.2,
+        "humidity": 22
+    },
+    { "time": 1688820342, "altitude": 9005.0112, "temperature": -35.55555555555556, "pressure": 325.8, "humidity": 34 },
+    { "time": 1688820403, "altitude": 8552.688, "temperature": -32.22222222222222, "pressure": 347.3, "humidity": 45 },
+    {
+        "time": 1688820463,
+        "altitude": 8111.032800000001,
+        "temperature": -28.88888888888889,
+        "pressure": 369.4,
+        "humidity": 46
+    },
+    {
+        "time": 1688820523,
+        "altitude": 7662.6720000000005,
+        "temperature": -25.555555555555554,
+        "pressure": 392.9,
+        "humidity": 62
+    },
+    {
+        "time": 1688820584,
+        "altitude": 7231.989600000001,
+        "temperature": -21.666666666666668,
+        "pressure": 416.6,
+        "humidity": 67
+    },
+    {
+        "time": 1688820645,
+        "altitude": 6814.413600000001,
+        "temperature": -18.88888888888889,
+        "pressure": 440.8,
+        "humidity": 66
+    },
+    {
+        "time": 1688820705,
+        "altitude": 6398.3616,
+        "temperature": -15.555555555555555,
+        "pressure": 465.7,
+        "humidity": 65
+    },
+    { "time": 1688820766, "altitude": 6000.5976, "temperature": -13.333333333333332, "pressure": 491, "humidity": 67 },
+    {
+        "time": 1688820826,
+        "altitude": 5612.892000000001,
+        "temperature": -11.666666666666666,
+        "pressure": 516.4,
+        "humidity": 61
+    },
+    {
+        "time": 1688820887,
+        "altitude": 5239.8168000000005,
+        "temperature": -8.88888888888889,
+        "pressure": 542.1,
+        "humidity": 48
+    },
+    { "time": 1688820947, "altitude": 4861.56, "temperature": -6.666666666666666, "pressure": 569, "humidity": 59 },
+    { "time": 1688821007, "altitude": 4500.372, "temperature": -4.444444444444445, "pressure": 595.7, "humidity": 64 },
+    { "time": 1688821068, "altitude": 4143.756, "temperature": -1.6666666666666665, "pressure": 623, "humidity": 70 },
+    { "time": 1688821128, "altitude": 3792.6264, "temperature": 0.5555555555555556, "pressure": 651.4, "humidity": 62 },
+    {
+        "time": 1688821152,
+        "altitude": 3660.0384000000004,
+        "temperature": 2.2222222222222223,
+        "pressure": 662.2,
+        "humidity": 63
+    },
+    { "time": 1688821180, "altitude": 3493.3128, "temperature": 3.333333333333333, "pressure": 675.8, "humidity": 62 },
+    {
+        "time": 1688821196,
+        "altitude": 3403.7016000000003,
+        "temperature": 3.888888888888889,
+        "pressure": 683.4,
+        "humidity": 62
+    },
+    {
+        "time": 1688821225,
+        "altitude": 3239.1096000000002,
+        "temperature": 5.555555555555555,
+        "pressure": 697.3,
+        "humidity": 62
+    },
+    {
+        "time": 1688821286,
+        "altitude": 2905.3536000000004,
+        "temperature": 8.333333333333334,
+        "pressure": 726.4,
+        "humidity": 48
+    },
+    { "time": 1688821346, "altitude": 2569.464, "temperature": 11.11111111111111, "pressure": 756, "humidity": 29 },
+    { "time": 1688821407, "altitude": 2259.7872, "temperature": 13.333333333333332, "pressure": 785, "humidity": 15 },
+    { "time": 1688821420, "altitude": 2188.1592, "temperature": 13.333333333333332, "pressure": 791.6, "humidity": 18 },
+    {
+        "time": 1688821434,
+        "altitude": 2118.0552000000002,
+        "temperature": 13.333333333333332,
+        "pressure": 798,
+        "humidity": 31
+    },
+    {
+        "time": 1688821447,
+        "altitude": 2053.1328000000003,
+        "temperature": 13.333333333333332,
+        "pressure": 804.6,
+        "humidity": 36
+    },
+    { "time": 1688821461, "altitude": 1984.8576, "temperature": 13.333333333333332, "pressure": 811.1, "humidity": 41 },
+    { "time": 1688821468, "altitude": 1950.1104, "temperature": 13.88888888888889, "pressure": 814.4, "humidity": 41 },
+    { "time": 1688821475, "altitude": 1915.9728, "temperature": 13.88888888888889, "pressure": 817.6, "humidity": 42 },
+    { "time": 1688821482, "altitude": 1886.712, "temperature": 14.444444444444445, "pressure": 820.8, "humidity": 43 },
+    {
+        "time": 1688821488,
+        "altitude": 1851.9648000000002,
+        "temperature": 14.444444444444445,
+        "pressure": 824.1,
+        "humidity": 43
+    },
+    { "time": 1688821502, "altitude": 1783.3848, "temperature": 15, "pressure": 830.6, "humidity": 43 },
+    { "time": 1688821509, "altitude": 1748.028, "temperature": 15.555555555555555, "pressure": 834, "humidity": 44 },
+    {
+        "time": 1688821516,
+        "altitude": 1720.9008000000001,
+        "temperature": 15.555555555555555,
+        "pressure": 837.3,
+        "humidity": 44
+    },
+    { "time": 1688821529, "altitude": 1652.6256, "temperature": 16.11111111111111, "pressure": 843.7, "humidity": 43 },
+    {
+        "time": 1688821543,
+        "altitude": 1584.0456000000001,
+        "temperature": 16.666666666666668,
+        "pressure": 850.3,
+        "humidity": 42
+    },
+    {
+        "time": 1688821550,
+        "altitude": 1549.9080000000001,
+        "temperature": 17.22222222222222,
+        "pressure": 853.7,
+        "humidity": 41
+    },
+    { "time": 1688821557, "altitude": 1521.5616, "temperature": 17.22222222222222, "pressure": 857, "humidity": 40 },
+    {
+        "time": 1688821573,
+        "altitude": 1442.3136000000002,
+        "temperature": 17.77777777777778,
+        "pressure": 864.9,
+        "humidity": 41
+    },
+    {
+        "time": 1688821586,
+        "altitude": 1373.4288000000001,
+        "temperature": 18.333333333333332,
+        "pressure": 871.7,
+        "humidity": 45
+    },
+    { "time": 1688821600, "altitude": 1300.8864, "temperature": 18.88888888888889, "pressure": 879, "humidity": 45 },
+    { "time": 1688821635, "altitude": 1129.8936, "temperature": 20.555555555555554, "pressure": 897, "humidity": 42 },
+    { "time": 1688821642, "altitude": 1094.8416, "temperature": 20.555555555555554, "pressure": 900.5, "humidity": 42 },
+    { "time": 1688821648, "altitude": 1057.656, "temperature": 21.11111111111111, "pressure": 904.4, "humidity": 41 },
+    { "time": 1688821655, "altitude": 1021.08, "temperature": 21.11111111111111, "pressure": 908.1, "humidity": 41 },
+    { "time": 1688821662, "altitude": 983.2848, "temperature": 21.666666666666668, "pressure": 911.9, "humidity": 41 },
+    { "time": 1688821669, "altitude": 942.7464, "temperature": 21.666666666666668, "pressure": 916, "humidity": 41 },
+    {
+        "time": 1688821676,
+        "altitude": 913.7904000000001,
+        "temperature": 22.22222222222222,
+        "pressure": 919.7,
+        "humidity": 40
+    },
+    {
+        "time": 1688821683,
+        "altitude": 880.2624000000001,
+        "temperature": 22.77777777777778,
+        "pressure": 923.1,
+        "humidity": 39
+    },
+    { "time": 1688821696, "altitude": 799.7952, "temperature": 23.333333333333332, "pressure": 931.6, "humidity": 39 },
+    {
+        "time": 1688821710,
+        "altitude": 718.4136000000001,
+        "temperature": 23.88888888888889,
+        "pressure": 939.9,
+        "humidity": 38
+    },
+    {
+        "time": 1688821717,
+        "altitude": 685.4952000000001,
+        "temperature": 24.444444444444443,
+        "pressure": 943.9,
+        "humidity": 38
+    },
+    { "time": 1688821723, "altitude": 649.5288, "temperature": 24.444444444444443, "pressure": 947.7, "humidity": 36 },
+    { "time": 1688821730, "altitude": 615.0864, "temperature": 25, "pressure": 951.2, "humidity": 36 },
+    { "time": 1688821743, "altitude": 556.26, "temperature": 25.555555555555554, "pressure": 957.7, "humidity": 35 },
+    {
+        "time": 1688821766,
+        "altitude": 451.10400000000004,
+        "temperature": 26.666666666666664,
+        "pressure": 969.5,
+        "humidity": 34
+    }
+]

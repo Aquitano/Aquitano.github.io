@@ -5,7 +5,8 @@ import { site } from '../lib/data';
 
 <Layout title={`Page Not Found | ${site.name}`} description="The page you were looking for does not exist." noindex>
     <main
-        id="top"
+        id="main-content"
+        tabindex="-1"
         class="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-5 text-center"
     >
         <p class="meta mb-6 text-accent">Error 404</p>
@@ -30,11 +31,11 @@ import { site } from '../lib/data';
             aria-label="Recovery links"
             class="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 pointer-coarse:mt-7 pointer-coarse:gap-y-7"
         >
-            <a href="/sitemap-index.xml" class="link-line touch-target meta text-fg">
-                Sitemap
+            <a href="/#work" class="link-line touch-target meta text-fg">
+                View work
             </a>
-            <a href="/llms.txt" class="link-line touch-target meta text-fg">
-                Agent guide
+            <a href="/#about" class="link-line touch-target meta text-fg">
+                About
             </a>
             <a href="/#contact" class="link-line touch-target meta text-fg">
                 Contact

@@ -1,0 +1,185 @@
+---
+import { reconciliationRules as rules } from '../lib/reconciliation';
+import ProviderTracks from './ProviderTracks.astro';
+---
+
+<figure class="policy-demo" data-detail-reveal>
+    <figcaption class="mb-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 md:mb-10">
+        <h2 class="display text-[clamp(1.75rem,4.2vw,3rem)] leading-[1.05]">Two sources, one read</h2>
+        <p class="meta">Canonical metrics</p>
+    </figcaption>
+    <div class="policy-content">
+        <fieldset class="policy-selector">
+            <legend class="sr-only">Metric policy</legend>
+            {rules.map((rule, i) => (
+                <label class="policy-option">
+                    <input
+                        type="radio"
+                        name="canonical-policy"
+                        value={rule.id}
+                        checked={i === 0}
+                        aria-controls={`${rule.id}-policy-panel`}
+                    />
+                    <span>{rule.label}</span>
+                </label>
+            ))}
+        </fieldset>
+        {rules.map((rule) => (
+            <div class="policy-panel" data-policy={rule.id} id={`${rule.id}-policy-panel`}>
+                <ProviderTracks rule={rule} compact />
+                <div class="policy-result" id={`${rule.id}-policy-result`}>
+                    <h3 class="display text-[clamp(1.1rem,1.9vw,1.6rem)] leading-[1.1]">{rule.result}</h3>
+                    <p class="mt-3 text-sm leading-relaxed text-fg/85 md:text-base">{rule.policy}</p>
+                </div>
+            </div>
+        ))}
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-policy-announcement></p>
+    <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-line pt-5 md:mt-8">
+        <p class="meta">Schematic records, not real health data</p>
+        <a
+            class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
+            href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#canonical-metrics"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Documented rules <span aria-hidden="true">↗</span>
+            <span class="sr-only">(opens in new tab)</span>
+        </a>
+    </div>
+</figure>
+<style>
+    .policy-demo {
+        padding: clamp(1.25rem, 4vw, 3rem);
+        border: 1px solid var(--line);
+        border-radius: 1rem;
+        background: var(--bg-raise);
+    }
+    .policy-content {
+        display: grid;
+    }
+    .policy-selector {
+        grid-area: 1 / 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+    }
+    .policy-option {
+        position: relative;
+        cursor: pointer;
+    }
+    .policy-option input {
+        position: absolute;
+        opacity: 0;
+        width: 1px;
+        height: 1px;
+    }
+    .policy-option > span {
+        display: grid;
+        min-height: 44px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0.5rem 1.25rem;
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        transition:
+            background-color 200ms,
+            border-color 200ms,
+            color 200ms;
+    }
+    .policy-option input:checked + span {
+        border-color: var(--project);
+        background: var(--project);
+        color: #0a0a0b;
+    }
+    .policy-option input:focus-visible + span {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+    }
+    .policy-panel {
+        display: grid;
+        grid-area: 2 / 1;
+        visibility: hidden;
+        gap: 2rem;
+        align-items: center;
+    }
+    .policy-content:has(input[value='steps']:checked) [data-policy='steps'],
+    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'],
+    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] {
+        visibility: visible;
+    }
+    .policy-result {
+        border-left: 1px solid var(--line);
+        padding-left: 1.5rem;
+    }
+    .policy-panel :global(.record-segment) {
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 700ms var(--ease-out-strong);
+    }
+    .policy-panel .policy-result {
+        opacity: 0;
+        transition: opacity 400ms 120ms;
+    }
+    .policy-content:has(input[value='steps']:checked) [data-policy='steps'] :global(.record-segment),
+    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'] :global(.record-segment),
+    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] :global(.record-segment) {
+        transform: none;
+    }
+    .policy-content:has(input[value='steps']:checked) [data-policy='steps'] .policy-result,
+    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'] .policy-result,
+    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] .policy-result {
+        opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .policy-panel :global(.record-segment),
+        .policy-panel .policy-result,
+        .policy-option > span {
+            transition: none;
+        }
+    }
+    @media (max-width: 767px) {
+        .policy-selector {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.375rem;
+            margin-bottom: 1rem;
+        }
+        .policy-option > span {
+            padding-inline: 0.375rem;
+            white-space: nowrap;
+        }
+        .policy-panel {
+            gap: 1rem;
+        }
+        .policy-result {
+            border-left: 0;
+            border-top: 1px solid var(--line);
+            padding-left: 0;
+            padding-top: 0.75rem;
+        }
+    }
+    @media (min-width: 768px) {
+        .policy-panel {
+            grid-template-columns: 1.1fr 1fr;
+            gap: 3rem;
+        }
+    }
+</style>
+
+<script>
+    const announcement = document.querySelector<HTMLElement>('[data-policy-announcement]');
+
+    for (const input of document.querySelectorAll<HTMLInputElement>('input[name="canonical-policy"]')) {
+        input.addEventListener('change', () => {
+            const result = document.getElementById(`${input.value}-policy-result`);
+
+            if (announcement && result)
+                announcement.textContent = [...result.children].map((el) => el.textContent?.trim()).join(' ');
+        });
+    }
+</script>

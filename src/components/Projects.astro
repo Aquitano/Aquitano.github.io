@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import AsciiArt from './AsciiArt.astro';
 import SectionHeading from './SectionHeading.astro';
 import { isExternalHref } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
@@ -13,6 +14,8 @@ const { work } = Astro.props;
 const STICKY_TOP = 88;
 
 const CASCADE = 14;
+
+const asciiArt = import.meta.glob<string>('../assets/ascii/*.txt', { query: '?raw', import: 'default', eager: true });
 ---
 
 <section id="work" data-projects data-minimap="Work" class="section-x section-y section-y--major">
@@ -21,11 +24,13 @@ const CASCADE = 14;
         {work.map((entry, i) => {
             const p = entry.data;
             const title = displayTitle(p.title, p.wrap);
+            const art = asciiArt[`../assets/ascii/${entry.id}.txt`];
             return (
                 <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                     <article
                         data-card
-                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12"
+                        style={`--project: ${p.accent}`}
+                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 focus-within:border-fg/25 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_1fr_auto]"
                     >
                         <a href={`/work/${entry.id}`} tabindex="-1" aria-hidden="true" class="absolute inset-0 z-10" />
                         {/* per-project glow */}
@@ -41,12 +46,21 @@ const CASCADE = 14;
                             aria-hidden="true"
                         />
 
-                        <header class="relative flex items-start justify-between gap-4">
+                        <header class="relative flex items-start justify-between gap-4 lg:col-start-1 lg:row-start-1 lg:pr-8">
                             <span class="meta">©{p.year}</span>
                             <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
                         </header>
 
-                        <div class="relative my-8 md:my-10">
+                        {art && (
+                            <div
+                                data-card-visual
+                                class="[container-type:size] relative mt-8 hidden aspect-[5/2] place-items-center md:grid lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:aspect-auto lg:py-4 lg:pl-10"
+                            >
+                                <AsciiArt art={art} />
+                            </div>
+                        )}
+
+                        <div class="relative my-8 md:my-10 lg:col-start-1 lg:row-start-2 lg:self-center">
                             <p class="mb-4 flex items-center gap-2 font-mono text-xs tracking-[0.14em] uppercase md:text-sm">
                                 <span
                                     class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
@@ -55,7 +69,7 @@ const CASCADE = 14;
                                 />
                                 {p.subtitle}
                             </p>
-                            <h3 class="display text-[clamp(1.9rem,5.8vw,5.8rem)]">
+                            <h3 class="display text-[clamp(1.9rem,5.8vw,5.8rem)] lg:text-[min(5.5vw,5.8rem)]">
                                 {title.lines.map((words, j) => (
                                     <Fragment>
                                         {j > 0 && (title.joiner || <wbr />)}
@@ -70,12 +84,12 @@ const CASCADE = 14;
                                     </Fragment>
                                 ))}
                             </h3>
-                            <p class="mt-6 max-w-lg text-sm leading-relaxed text-muted max-md:line-clamp-5 md:text-base">
+                            <p class="mt-6 max-w-lg text-sm leading-relaxed text-muted max-md:line-clamp-5 md:text-base lg:pr-8 lg:max-xl:line-clamp-5">
                                 {p.description}
                             </p>
                         </div>
 
-                        <footer class="relative z-20 flex flex-col gap-6 border-t border-line pt-6 xl:flex-row xl:items-center xl:justify-between">
+                        <footer class="relative z-20 flex flex-col gap-6 border-t border-line pt-6 lg:col-span-2 xl:flex-row xl:items-center xl:justify-between">
                             <ul class="flex flex-wrap gap-2">
                                 {p.tags.map((tag) => (
                                     <li class="rounded-full border border-line px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] text-fg/70 uppercase">
@@ -88,7 +102,7 @@ const CASCADE = 14;
                                     href={`/work/${entry.id}`}
                                     class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-accent uppercase"
                                 >
-                                    Case Study <span aria-hidden="true">→</span>
+                                    Case Study<span class="sr-only">: {p.title}</span> <span aria-hidden="true">→</span>
                                 </a>
                                 {p.links.map((link) => (
                                     <a
@@ -101,7 +115,11 @@ const CASCADE = 14;
                                         }
                                         class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
                                     >
-                                        {link.label} <span aria-hidden="true">↗</span>
+                                        {link.label}
+                                        <span class="sr-only"> for {p.title}</span>{' '}
+                                        <span aria-hidden="true">
+                                            {link.external || isExternalHref(link.href) ? '↗' : '→'}
+                                        </span>
                                         {(link.external || isExternalHref(link.href)) && (
                                             <span class="sr-only">(opens in new tab)</span>
                                         )}
@@ -115,7 +133,7 @@ const CASCADE = 14;
                             class="pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full bg-accent px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.14em] whitespace-nowrap text-black uppercase opacity-0 md:block"
                             aria-hidden="true"
                         >
-                            View Case ↗
+                            View Case Study
                         </div>
 
                         <div

@@ -1,0 +1,220 @@
+---
+import FlightPlot from './FlightPlot.astro';
+import RestoreRecord from './RestoreRecord.astro';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+    projectId: string;
+}
+
+const { projectId } = Astro.props;
+
+const linkClass =
+    'link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase';
+
+const leadClass = 'mb-10 max-w-3xl text-base leading-relaxed text-fg/85 md:mb-14 md:text-lg lg:ml-22';
+
+const restoreSteps = [
+    'Back up a test server.',
+    'Start a fresh server from the copy.',
+    'Recover with an email and passphrase on a clean client profile.',
+    'Compare file contents, executable bits, symlinks, and encrypted Git refs.',
+];
+
+const deviceSteps = [
+    { label: 'Passphrase', detail: 'Argon2id derives the unlock key' },
+    { label: 'Random root key', detail: 'Wraps per-resource content keys' },
+    { label: 'Files & filenames', detail: 'XChaCha20-Poly1305 encryption' },
+];
+
+const serverSees = ['Ciphertext', 'Wrapped keys & public keys', 'Sizes, timing & operational metadata'];
+
+const policies = [
+    {
+        metric: 'Steps',
+        source: 'Google Health / Health Connect',
+        rule: 'Keep higher-priority overlapping intervals. Preserve non-overlapping intervals.',
+    },
+    {
+        metric: 'Sleep',
+        source: 'Withings',
+        rule: 'Keep all sessions from the best-ranked provider for each UTC start date.',
+    },
+    {
+        metric: 'Body measurements',
+        source: 'Withings',
+        rule: 'Keep the best-ranked provider’s samples in each 30-second bin.',
+    },
+    {
+        metric: 'Heart rate',
+        source: 'Context-dependent',
+        rule: 'Google Health normally comes first. Sleep-context samples follow the sleep ranking.',
+    },
+];
+---
+
+{projectId === 'aqt-sync' && (
+    <Fragment>
+        <section class="section-x section-y">
+            <SectionHeading index="01" title="Recovery, verified" />
+            <p data-detail-reveal class={leadClass}>
+                A backup is only useful if it restores. The repository’s restore drill runs real binaries and checks a
+                clean-machine recovery, not just whether a backup command exits successfully.
+            </p>
+            <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:gap-14">
+                <div data-detail-reveal>
+                    <ol>
+                        {restoreSteps.map((step, i) => (
+                            <li class="flex gap-5 border-t border-line py-4 text-sm leading-relaxed text-fg/85 md:text-base">
+                                <span class="meta pt-1 tabular-nums">0{i + 1}</span>
+                                {step}
+                            </li>
+                        ))}
+                    </ol>
+                    <a
+                        class:list={[linkClass, 'mt-4 inline-block']}
+                        href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/scripts/restore-drill.sh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Drill source <span aria-hidden="true">↗</span>
+                        <span class="sr-only">(opens in new tab)</span>
+                    </a>
+                </div>
+                <RestoreRecord />
+            </div>
+        </section>
+        <section class="section-x section-y">
+            <SectionHeading index="02" title="What the server sees" />
+            <p data-detail-reveal class={leadClass}>
+                The server stores bytes it cannot read. This is the client-to-server boundary, including the operational
+                metadata that remains visible.
+            </p>
+            <figure data-detail-reveal class="overflow-hidden rounded-2xl border border-line">
+                <div class="grid gap-px bg-line md:grid-cols-[1fr_minmax(9rem,0.45fr)_1fr]">
+                    <div class="bg-bg-raise p-6 md:p-10">
+                        <p class="meta mb-6 text-(--project)">On the device</p>
+                        <ul>
+                            {deviceSteps.map((step) => (
+                                <li class="border-t border-line py-4">
+                                    <span class="block text-base md:text-lg">{step.label}</span>
+                                    <span class="mt-1 block font-mono text-xs text-muted">{step.detail}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div class="flex items-center gap-4 bg-bg-raise p-6 md:flex-col md:justify-center md:text-center">
+                        <span class="text-3xl text-(--project) max-md:rotate-90" aria-hidden="true">
+                            →
+                        </span>
+                        <p class="meta">Contents and filenames are sealed before upload</p>
+                    </div>
+                    <div class="flex flex-col bg-bg-raise p-6 md:p-10">
+                        <p class="meta mb-6">On the server</p>
+                        <ul>
+                            {serverSees.map((item) => (
+                                <li class="border-t border-line py-4 text-base md:text-lg">{item}</li>
+                            ))}
+                        </ul>
+                        <p class="display mt-auto border-t border-line pt-6 text-[clamp(1.1rem,1.9vw,1.6rem)] leading-[1.1]">
+                            No passphrase. No plaintext decryption keys.
+                        </p>
+                    </div>
+                </div>
+                <figcaption class="border-t border-line bg-bg-raise px-6 py-4 font-mono text-xs text-muted md:px-10">
+                    Architecture diagram, based on the project’s{' '}
+                    <a
+                        class="link-line touch-target text-fg"
+                        href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/docs/threat-model.md"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        threat model<span class="sr-only"> (opens in new tab)</span>
+                    </a>
+                    .
+                </figcaption>
+            </figure>
+        </section>
+    </Fragment>
+)}
+
+{projectId === 'aqt-health' && (
+    <section class="section-x section-y">
+        <SectionHeading index="01" title="Source priorities" />
+        <p data-detail-reveal class={leadClass}>
+            Provider payloads remain available for audit and reprocessing. Canonical endpoints apply source priorities
+            without deleting the raw rows.
+        </p>
+        <div data-detail-reveal>
+            <div class="hidden grid-cols-[1fr_1.25fr_2fr] gap-8 pb-4 md:grid" aria-hidden="true">
+                <span class="meta">Metric</span>
+                <span class="meta">Preferred source</span>
+                <span class="meta">Overlap rule</span>
+            </div>
+            <dl>
+                {policies.map((policy) => (
+                    <div class="grid gap-2 border-t border-line py-5 md:grid-cols-[1fr_1.25fr_2fr] md:gap-8">
+                        <dt class="text-base text-fg md:text-lg">{policy.metric}</dt>
+                        <dd class="font-mono text-xs leading-relaxed text-(--project) md:pt-1">
+                            <span class="sr-only">Preferred source: </span>
+                            {policy.source}
+                        </dd>
+                        <dd class="text-sm leading-relaxed text-fg/85 md:text-base">
+                            <span class="sr-only">Overlap rule: </span>
+                            {policy.rule}
+                        </dd>
+                    </div>
+                ))}
+            </dl>
+        </div>
+        <p data-detail-reveal class="mt-8 max-w-3xl border-t border-line pt-6 text-sm leading-relaxed text-muted">
+            The integration suite runs the application’s Flyway migrations against temporary PostgreSQL databases. Each
+            test is isolated.{' '}
+            <a
+                class="link-line touch-target text-fg"
+                href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Inspect the test setup <span aria-hidden="true">↗</span>
+                <span class="sr-only">(opens in new tab)</span>
+            </a>
+        </p>
+    </section>
+)}
+
+{projectId === 'frontiers-to-space' && (
+    <section class="section-x section-y">
+        <SectionHeading index="01" title="Flight telemetry" />
+        <p data-detail-reveal class={leadClass}>
+            Five hours of measurements from 8 July 2023. These English plots are redrawn from the mission’s 429 filtered
+            telemetry records. Times are UTC. The horizontal axis uses the original Unix timestamps, including gaps
+            between packets.
+        </p>
+        <FlightPlot />
+        <div class="mt-4 grid gap-4 md:mt-6 md:gap-6 lg:grid-cols-2">
+            <FlightPlot metric="temperature" />
+            <FlightPlot metric="pressure" />
+        </div>
+        <div class="mt-8 flex flex-wrap gap-x-6 gap-y-4 pointer-coarse:gap-y-7">
+            <a
+                class={linkClass}
+                href="https://github.com/Aquitano/FrontiersToSpace/blob/2fb1b9a35821a83a70aa6f4bb118f472eaba2ae5/data/filtered_data.json"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Original measurements <span aria-hidden="true">↗</span>
+                <span class="sr-only">(opens in new tab)</span>
+            </a>
+            <a
+                class={linkClass}
+                href="https://space.thomasbreindl.me/dashboard"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Interactive mission dashboard <span aria-hidden="true">↗</span>
+                <span class="sr-only">(opens in new tab)</span>
+            </a>
+        </div>
+    </section>
+)}
