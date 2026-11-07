@@ -55,7 +55,7 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
                         {art && (
                             <div
                                 data-card-visual
-                                class="relative mt-8 hidden min-h-40 md:block md:flex-1 lg:col-start-2 lg:row-start-2 lg:my-2 lg:ml-10"
+                                class="relative mt-8 hidden h-56 md:block lg:col-start-2 lg:row-start-2 lg:my-8 lg:ml-10 lg:h-auto short:hidden"
                             >
                                 <PixelArt art={art} />
                             </div>
