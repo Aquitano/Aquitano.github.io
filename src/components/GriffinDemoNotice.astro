@@ -9,6 +9,20 @@
 </aside>
 
 <style>
+    :global(body) {
+        display: flex;
+        min-height: 100svh;
+        flex-direction: column;
+    }
+
+    :global(body > main) {
+        flex: 1;
+    }
+
+    :global(body > :is(header, .header-mobile, .demo-notice, footer)) {
+        flex-shrink: 0;
+    }
+
     @font-face {
         font-family: 'Archivo Variable';
         font-style: normal;

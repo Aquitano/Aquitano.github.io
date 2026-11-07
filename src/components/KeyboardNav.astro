@@ -62,7 +62,7 @@ const SHORTCUTS = [
     data-kbd-hint
     hidden
     type="button"
-    aria-label="Show homepage keyboard shortcuts"
+    aria-label="Show homepage shortcuts"
     class="kbd-hint group relative ml-auto hidden min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-md px-1 py-1.5 text-muted hover:text-fg data-off:flex pointer-fine:md:flex"
 >
     <kbd class="kbd-cap">?</kbd>
@@ -184,12 +184,21 @@ const SHORTCUTS = [
         };
 
         const measure = () => {
-            targets = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el)));
+            const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+            targets = stops.map((el) =>
+                Math.max(
+                    0,
+                    Math.min(maxScroll, Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el))),
+                ),
+            );
         };
 
         const currentIndex = () => {
             const scroll = targetScrollY();
-            const focused = stops.findIndex((stop) => stop === document.activeElement);
+            const active = document.activeElement;
+            const focusedCard = active?.closest('[data-card-wrapper]');
+            const focused = stops.findIndex((stop) => stop === active || stop === focusedCard);
 
             if (focused >= 0 && Math.abs(targets[focused] - scroll) <= 8) return focused;
             const line = scroll + 8;
@@ -206,8 +215,12 @@ const SHORTCUTS = [
             const stop = stops[j];
             scrollToTarget(targets[j], { immediate: reduce() });
 
-            if (!stop.hasAttribute('tabindex')) stop.setAttribute('tabindex', '-1');
-            stop.focus({ preventScroll: true });
+            const focusTarget = stop.hasAttribute('data-card-wrapper')
+                ? (stop.querySelector<HTMLElement>('a[href]') ?? stop)
+                : stop;
+
+            if (focusTarget === stop && !stop.hasAttribute('tabindex')) stop.setAttribute('tabindex', '-1');
+            focusTarget.focus({ preventScroll: true });
         };
 
         measure();
