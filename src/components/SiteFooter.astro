@@ -99,10 +99,11 @@ const isHome = Astro.url.pathname === '/';
     </div>
 
     <div class="mt-8 flex flex-col gap-3 sm:border-x sm:border-transparent sm:px-5 md:flex-row md:items-center md:justify-between lg:grid lg:grid-cols-3 lg:gap-0 lg:px-0 *:lg:px-5">
+        {/* Each dot is bound to the item after it, so a wrapped line never ends on a separator. */}
         <p class="meta">
-            ©2026 {site.name}
-            <span class="max-[359px]:hidden md:max-xl:hidden"> · {site.location}</span>
-            <span aria-hidden="true"> · </span>
+            ©2026 {site.name}{' '}
+            <span class="whitespace-nowrap max-[359px]:hidden md:max-xl:hidden">· {site.location}</span>{' '}
+            <span aria-hidden="true">·</span>&nbsp;
             <a href="/privacy" class="link-line touch-target text-fg transition-colors duration-200 hover:text-accent">
                 Privacy
             </a>
@@ -173,29 +174,37 @@ const isHome = Astro.url.pathname === '/';
     const root = document.querySelector<HTMLElement>('[data-footer]');
 
     if (root && !prefersReducedMotion()) {
+        const tweens: ReturnType<typeof gsap.to>[] = [];
         const [headline] = offscreen(gsap.utils.toArray<HTMLElement>('[data-footer-headline]'));
 
         if (headline) {
             gsap.set(headline, { y: 0, yPercent: 110 });
-            gsap.to(headline, {
-                yPercent: 0,
-                duration: 1.1,
-                ease: 'power4.out',
-                scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
-            });
+            tweens.push(
+                gsap.to(headline, {
+                    yPercent: 0,
+                    duration: 1.1,
+                    ease: 'power4.out',
+                    scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
+                }),
+            );
         }
 
         const reveals = offscreen(gsap.utils.toArray<HTMLElement>('[data-footer-reveal]'));
 
         if (reveals.length) {
-            gsap.from(reveals, {
-                opacity: 0,
-                y: 48,
-                duration: 1,
-                stagger: 0.08,
-                scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
-            });
+            tweens.push(
+                gsap.from(reveals, {
+                    opacity: 0,
+                    y: 48,
+                    duration: 1,
+                    stagger: 0.08,
+                    scrollTrigger: { trigger: root, start: 'clamp(top 75%)', once: true },
+                }),
+            );
         }
+
+        // Tabbing into the footer does not always scroll far enough to fire the reveal, which would leave a focused link invisible.
+        root.addEventListener('focusin', () => tweens.forEach((tween) => tween.progress(1)), { once: true });
     }
 
     const copy = async (text: string) => {
