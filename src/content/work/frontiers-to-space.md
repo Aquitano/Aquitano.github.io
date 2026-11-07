@@ -29,7 +29,7 @@ image: ../../assets/work/frontiers-dashboard.webp
 imageAlt: 'Original mission dashboard with telemetry charts above a map of the recorded flight route.'
 imageCaption: 'The original 2023 mission dashboard, in German, framed around the recorded route.'
 imageCredit:
-    label: Map data © OpenStreetMap contributors
+    label: © OpenStreetMap contributors
     href: https://www.openstreetmap.org/copyright
 order: 4
 ---

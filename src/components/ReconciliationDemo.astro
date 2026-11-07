@@ -36,7 +36,7 @@ import ProviderTracks from './ProviderTracks.astro';
     </div>
     <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-policy-announcement></p>
     <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-line pt-5 md:mt-8">
-        <p class="meta">Schematic records, not patient data</p>
+        <p class="meta">Schematic records, not real health data</p>
         <a
             class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
             href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#canonical-metrics"
@@ -179,7 +179,7 @@ import ProviderTracks from './ProviderTracks.astro';
             const result = document.getElementById(`${input.value}-policy-result`);
 
             if (announcement && result)
-                announcement.textContent = result.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+                announcement.textContent = [...result.children].map((el) => el.textContent?.trim()).join(' ');
         });
     }
 </script>
