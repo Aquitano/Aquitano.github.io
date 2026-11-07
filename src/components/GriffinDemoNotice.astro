@@ -4,7 +4,7 @@
 <aside class="demo-notice" aria-label="Archived project demo" lang="en">
     <p>Archived school project in German. Browsing only, no orders or donations.</p>
     <a href="/work/griffin-energy">
-        <span aria-hidden="true">←</span> Back to case study
+        <span aria-hidden="true">←</span> <span class="demo-notice-label">Back to case study</span>
     </a>
 </aside>
 
@@ -59,7 +59,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 0.25rem 1.5rem;
-        padding: 12px max(20px, env(safe-area-inset-right)) 12px max(20px, env(safe-area-inset-left));
+        padding: 12px max(15px, env(safe-area-inset-right)) 12px max(15px, env(safe-area-inset-left));
         background: #0a0a0b;
         color: #e9e9e4;
         font:
@@ -99,15 +99,23 @@
         gap: 8px;
         min-height: 44px;
         color: #e8874a;
+        text-decoration: none;
+    }
+
+    .demo-notice-label {
         text-decoration: underline;
         text-underline-offset: 4px;
+    }
+
+    :global(body .btn-primary:focus) {
+        color: #fff;
     }
 
     .demo-notice a:hover {
         color: #e9e9e4;
     }
 
-    :global(body :is(a, button, input):focus-visible) {
+    :global(body :is(a, button, input, .btn):focus-visible) {
         outline: 2px solid #b91c1c;
         outline-offset: 4px;
     }
@@ -121,8 +129,7 @@
         display: none;
     }
 
-    :global(button:disabled),
-    :global(input:disabled) {
+    :global(body :is(button, input):disabled) {
         cursor: not-allowed;
         opacity: 0.65;
     }
