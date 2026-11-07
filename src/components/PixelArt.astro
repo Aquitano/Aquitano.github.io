@@ -1,0 +1,158 @@
+---
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+    art: ImageMetadata;
+}
+
+const { art } = Astro.props;
+---
+
+<div data-pixel-art class="pixel-art">
+    <img src={art.src} width={art.width} height={art.height} alt="" decoding="async" />
+    <canvas aria-hidden="true"></canvas>
+</div>
+
+<style>
+    .pixel-art {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+    }
+
+    /* Without the script the source still shows, scaled without smoothing. */
+    .pixel-art img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: pixelated;
+    }
+
+    .pixel-art canvas {
+        display: none;
+    }
+
+    .pixel-art[data-ready] img {
+        display: none;
+    }
+
+    .pixel-art[data-ready] canvas {
+        display: block;
+    }
+</style>
+
+<script>
+    import { ScrollTrigger, prefersReducedMotion, supportsHover } from '../lib/gsap';
+
+    type Cell = { x: number; y: number; color: string | null };
+
+    const UNLIT_ALPHA = 0.07;
+
+    const setUp = async (root: HTMLElement) => {
+        const img = root.querySelector('img');
+        const canvas = root.querySelector('canvas');
+        const ctx = canvas?.getContext('2d');
+
+        if (!img || !canvas || !ctx) return;
+        await img.decode().catch(() => undefined);
+
+        const cols = img.naturalWidth;
+        const rows = img.naturalHeight;
+        const source = document.createElement('canvas');
+        source.width = cols;
+        source.height = rows;
+        const sourceCtx = source.getContext('2d', { willReadFrequently: true });
+
+        if (!sourceCtx || !cols || !rows) return;
+        sourceCtx.drawImage(img, 0, 0);
+        const { data } = sourceCtx.getImageData(0, 0, cols, rows);
+
+        const cells: Cell[] = [];
+
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+                const i = (y * cols + x) * 4;
+                cells.push({ x, y, color: data[i + 3] ? `rgb(${data[i]} ${data[i + 1]} ${data[i + 2]})` : null });
+            }
+        }
+
+        const palette = [...new Set(cells.flatMap((cell) => (cell.color ? [cell.color] : [])))];
+        const unlit = getComputedStyle(root).getPropertyValue('--project').trim() || '#888';
+        let size = 0;
+
+        // Whole device pixels per cell keep every gap the same width at any panel size.
+        const fit = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const box = root.getBoundingClientRect();
+            size = Math.max(2, Math.floor(Math.min(box.width / cols, box.height / rows) * dpr));
+            canvas.width = cols * size;
+            canvas.height = rows * size;
+            canvas.style.width = `${(cols * size) / dpr}px`;
+            canvas.style.height = `${(rows * size) / dpr}px`;
+        };
+
+        const draw = (colorOf: (cell: Cell, index: number) => string | null) => {
+            const gapX = Math.max(1, Math.round(size * 0.2));
+            const gapY = Math.max(1, Math.round(size * 0.1));
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            cells.forEach((cell, index) => {
+                const color = colorOf(cell, index);
+                ctx.globalAlpha = color ? 1 : UNLIT_ALPHA;
+                ctx.fillStyle = color ?? unlit;
+                ctx.fillRect(cell.x * size, cell.y * size, size - gapX, size - gapY);
+            });
+            ctx.globalAlpha = 1;
+        };
+
+        const settled = (cell: Cell) => cell.color;
+
+        let decoding = false;
+
+        // Cells show noise until their own settle time, sweeping left to right.
+        const decode = (duration: number) => {
+            if (decoding) return;
+            decoding = true;
+            const settle = cells.map((cell) => (cell.x / cols) * 0.55 + Math.random() * 0.45);
+            const start = performance.now();
+
+            const frame = (now: number) => {
+                const t = (now - start) / duration;
+                draw((cell, i) =>
+                    t >= settle[i]
+                        ? cell.color
+                        : Math.random() < 0.5
+                          ? null
+                          : palette[Math.floor(Math.random() * palette.length)],
+                );
+
+                if (t < 1) requestAnimationFrame(frame);
+                else {
+                    draw(settled);
+                    decoding = false;
+                }
+            };
+
+            requestAnimationFrame(frame);
+        };
+
+        fit();
+        draw(settled);
+        root.toggleAttribute('data-ready', true);
+        new ResizeObserver(() => {
+            fit();
+
+            if (!decoding) draw(settled);
+        }).observe(root);
+
+        if (prefersReducedMotion()) return;
+
+        ScrollTrigger.create({ trigger: root, start: 'top bottom', once: true, onEnter: () => decode(1400) });
+
+        if (supportsHover()) root.closest('[data-card]')?.addEventListener('mouseenter', () => decode(700));
+    };
+
+    for (const root of document.querySelectorAll<HTMLElement>('[data-pixel-art]')) void setUp(root);
+</script>

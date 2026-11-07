@@ -1,6 +1,7 @@
 ---
+import type { ImageMetadata } from 'astro';
 import type { CollectionEntry } from 'astro:content';
-import AsciiArt from './AsciiArt.astro';
+import PixelArt from './PixelArt.astro';
 import SectionHeading from './SectionHeading.astro';
 import { isExternalHref } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
@@ -15,7 +16,7 @@ const STICKY_TOP = 88;
 
 const CASCADE = 14;
 
-const asciiArt = import.meta.glob<string>('../assets/ascii/*.txt', { query: '?raw', import: 'default', eager: true });
+const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*.png', { eager: true });
 ---
 
 <section id="work" data-projects data-minimap="Work" class="section-x section-y section-y--major">
@@ -24,7 +25,7 @@ const asciiArt = import.meta.glob<string>('../assets/ascii/*.txt', { query: '?ra
         {work.map((entry, i) => {
             const p = entry.data;
             const title = displayTitle(p.title, p.wrap);
-            const art = asciiArt[`../assets/ascii/${entry.id}.txt`];
+            const art = pixelArt[`../assets/pixel/${entry.id}.png`]?.default;
             return (
                 <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                     <article
@@ -54,9 +55,9 @@ const asciiArt = import.meta.glob<string>('../assets/ascii/*.txt', { query: '?ra
                         {art && (
                             <div
                                 data-card-visual
-                                class="[container-type:size] relative mt-8 hidden aspect-[5/2] place-items-center md:grid lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:aspect-auto lg:py-4 lg:pl-10"
+                                class="relative mt-8 hidden aspect-[5/2] md:block lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:my-2 lg:mt-0 lg:ml-10 lg:aspect-auto"
                             >
-                                <AsciiArt art={art} />
+                                <PixelArt art={art} />
                             </div>
                         )}
 
