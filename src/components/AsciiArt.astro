@@ -1,0 +1,87 @@
+---
+interface Props {
+    art: string;
+}
+
+const lines = Astro.props.art.trimEnd().split('\n');
+
+const cols = Math.max(...lines.map((line) => line.length));
+---
+
+<pre
+    data-ascii
+    aria-hidden="true"
+    style={`--cols: ${cols}; --rows: ${lines.length}`}
+    class="ascii"
+>{lines.join('\n')}</pre>
+
+<style>
+    /* Geist Mono's advance is 0.6em; the margins keep the widest line inside its panel. */
+    .ascii {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: min(calc(100cqw / (var(--cols) * 0.62)), calc(100cqh / (var(--rows) * 1.14)));
+        line-height: 1.1;
+        color: var(--project);
+        white-space: pre;
+        user-select: none;
+    }
+</style>
+
+<script>
+    import { ScrollTrigger, prefersReducedMotion, supportsHover } from '../lib/gsap';
+
+    const GLYPHS = '.:-=+*#%@';
+
+    // Every glyph shows noise until its own settle time; spaces stay put so the silhouette holds while it resolves.
+    const decode = (pre: HTMLElement, final: string, duration: number) => {
+        if (pre.dataset.decoding) return;
+        pre.dataset.decoding = '';
+        const chars = [...final];
+        const width = Math.max(...final.split('\n').map((line) => line.length));
+        let column = 0;
+
+        const settle = chars.map((char) => {
+            column = char === '\n' ? 0 : column + 1;
+
+            return (column / width) * 0.55 + Math.random() * 0.45;
+        });
+
+        const start = performance.now();
+
+        const frame = (now: number) => {
+            const t = (now - start) / duration;
+            pre.textContent = chars
+                .map((char, i) =>
+                    char === ' ' || char === '\n' || t >= settle[i]
+                        ? char
+                        : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+                )
+                .join('');
+
+            if (t < 1) requestAnimationFrame(frame);
+            else {
+                pre.textContent = final;
+                delete pre.dataset.decoding;
+            }
+        };
+
+        requestAnimationFrame(frame);
+    };
+
+    if (!prefersReducedMotion()) {
+        for (const pre of document.querySelectorAll<HTMLElement>('[data-ascii]')) {
+            const final = pre.textContent ?? '';
+
+            ScrollTrigger.create({
+                trigger: pre,
+                start: 'top bottom',
+                once: true,
+                onEnter: () => decode(pre, final, 1400),
+            });
+
+            if (supportsHover())
+                pre.closest('[data-card]')?.addEventListener('mouseenter', () => decode(pre, final, 700));
+        }
+    }
+</script>

@@ -1,9 +1,7 @@
 ---
-import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import ProviderTracks from './ProviderTracks.astro';
+import AsciiArt from './AsciiArt.astro';
 import SectionHeading from './SectionHeading.astro';
-import { reconciliationRules } from '../lib/reconciliation';
 import { isExternalHref } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
@@ -16,6 +14,8 @@ const { work } = Astro.props;
 const STICKY_TOP = 88;
 
 const CASCADE = 14;
+
+const asciiArt = import.meta.glob<string>('../assets/ascii/*.txt', { query: '?raw', import: 'default', eager: true });
 ---
 
 <section id="work" data-projects data-minimap="Work" class="section-x section-y section-y--major">
@@ -24,27 +24,25 @@ const CASCADE = 14;
         {work.map((entry, i) => {
             const p = entry.data;
             const title = displayTitle(p.title, p.wrap);
+            const art = asciiArt[`../assets/ascii/${entry.id}.txt`];
             return (
                 <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
                     <article
                         data-card
                         style={`--project: ${p.accent}`}
-                        class="group/card relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 focus-within:border-fg/25 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12 md:pb-0 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_1fr_auto]"
+                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 focus-within:border-fg/25 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_1fr_auto]"
                     >
                         <a href={`/work/${entry.id}`} tabindex="-1" aria-hidden="true" class="absolute inset-0 z-10" />
                         {/* per-project glow */}
                         <div
-                            class:list={[
-                                'pointer-events-none absolute -top-1/3 -right-1/4 h-[80%] w-[80%] rounded-full opacity-[0.13] blur-3xl',
-                                p.image && !p.cutout && 'lg:right-[22%]',
-                            ]}
+                            class="pointer-events-none absolute -top-1/3 -right-1/4 h-[80%] w-[80%] rounded-full opacity-[0.13] blur-3xl"
                             style={`background: ${p.accent}`}
                             aria-hidden="true"
                         />
 
                         <span
                             data-num={`0${i + 1}`}
-                            class="display pointer-events-none absolute right-4 -bottom-6 text-[clamp(8rem,22vw,20rem)] opacity-[0.045] select-none before:content-[attr(data-num)] md:-bottom-12 lg:right-[calc(50%+1rem)]"
+                            class="display pointer-events-none absolute right-4 -bottom-6 text-[clamp(8rem,22vw,20rem)] opacity-[0.045] select-none before:content-[attr(data-num)] md:-bottom-12"
                             aria-hidden="true"
                         />
 
@@ -53,57 +51,17 @@ const CASCADE = 14;
                             <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
                         </header>
 
-                        <div
-                            data-card-visual
-                            class:list={[
-                                'relative -mx-6 mt-4 overflow-hidden md:-mx-12 md:mt-8 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:-mt-12 lg:-mr-12 lg:ml-0 lg:aspect-auto',
-                                !p.cutout && 'border-y border-line lg:border-y-0 lg:border-l',
-                                p.image && !p.cutout ? 'aspect-[5/2]' : 'aspect-[2/1]',
-                            ]}
-                        >
-                            <div class="absolute inset-0 origin-top-left transition-transform duration-700 ease-out-strong motion-safe:group-hover/card:scale-[1.03]">
-                                {p.cutout ? (
-                                    <Picture
-                                        src={p.cutout}
-                                        formats={['avif', 'webp']}
-                                        alt="Griffin Energy and Griffin No Caffeine cans, rendered in Blender."
-                                        widths={[480, 826]}
-                                        sizes="(min-width: 1024px) 40vw, 80vw"
-                                        class="absolute inset-0 size-full object-contain p-1 md:p-4 lg:p-10"
-                                    />
-                                ) : p.image ? (
-                                    <Picture
-                                        src={p.image}
-                                        formats={['avif', 'webp']}
-                                        alt={p.imageAlt ?? `${p.title}: ${p.subtitle}`}
-                                        widths={[640, 960, 1280, 1800]}
-                                        sizes="(min-width: 1536px) 1100px, (min-width: 1024px) max(70vw, 800px), 100vw"
-                                        style={`object-position: ${p.imagePosition}`}
-                                        class="absolute inset-x-0 top-0 h-[106%] w-full object-cover"
-                                    />
-                                ) : (
-                                    <div class="absolute inset-0 flex flex-col justify-center bg-[color-mix(in_oklch,var(--project)_5%,transparent)] px-6 py-2 md:p-10">
-                                        <p class="meta mb-6 text-fg/85 max-md:hidden">Steps · two sources, one read</p>
-                                        <ProviderTracks rule={reconciliationRules[0]} compact />
-                                        <p class="meta mt-5 max-md:hidden">Schematic, not real health data</p>
-                                    </div>
-                                )}
+                        {art && (
+                            <div
+                                data-card-visual
+                                class="[container-type:size] relative mt-8 hidden aspect-[5/2] place-items-center md:grid lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:aspect-auto lg:py-4 lg:pl-10"
+                            >
+                                <AsciiArt art={art} />
                             </div>
-                            {p.imageCredit && (
-                                <a
-                                    href={p.imageCredit.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="touch-target absolute right-2 bottom-2 z-20 rounded bg-black/70 px-2 py-1 font-mono text-[0.5625rem] text-white/85 hover:text-white md:text-[0.625rem]"
-                                >
-                                    {p.imageCredit.label}
-                                    <span class="sr-only">(opens in new tab)</span>
-                                </a>
-                            )}
-                        </div>
+                        )}
 
-                        <div class="relative my-4 md:my-8 lg:col-start-1 lg:row-start-2 lg:my-10 lg:self-center">
-                            <p class="mb-3 flex items-center gap-2 font-mono text-xs tracking-[0.14em] uppercase md:mb-4 md:text-sm">
+                        <div class="relative my-8 md:my-10 lg:col-start-1 lg:row-start-2 lg:self-center">
+                            <p class="mb-4 flex items-center gap-2 font-mono text-xs tracking-[0.14em] uppercase md:text-sm">
                                 <span
                                     class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
                                     style={`background: ${p.accent}`}
@@ -126,20 +84,20 @@ const CASCADE = 14;
                                     </Fragment>
                                 ))}
                             </h3>
-                            <p class="mt-4 max-w-lg text-sm leading-relaxed text-muted max-md:line-clamp-2 md:mt-6 md:text-base lg:pr-8 lg:max-xl:line-clamp-5">
+                            <p class="mt-6 max-w-lg text-sm leading-relaxed text-muted max-md:line-clamp-5 md:text-base lg:pr-8 lg:max-xl:line-clamp-5">
                                 {p.description}
                             </p>
                         </div>
 
-                        <footer class="relative z-20 flex flex-col gap-6 border-t border-line pt-4 md:-mx-12 md:px-12 md:py-6 lg:col-span-2 xl:flex-row xl:items-center xl:justify-between">
-                            <ul class="hidden flex-wrap gap-2 md:flex">
+                        <footer class="relative z-20 flex flex-col gap-6 border-t border-line pt-6 lg:col-span-2 xl:flex-row xl:items-center xl:justify-between">
+                            <ul class="flex flex-wrap gap-2">
                                 {p.tags.map((tag) => (
                                     <li class="rounded-full border border-line px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] text-fg/70 uppercase">
                                         {tag}
                                     </li>
                                 ))}
                             </ul>
-                            <div class="flex flex-wrap gap-x-6 gap-y-4 pointer-coarse:gap-y-7">
+                            <div class="flex flex-wrap gap-x-6 gap-y-2">
                                 <a
                                     href={`/work/${entry.id}`}
                                     class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-accent uppercase"
@@ -318,25 +276,6 @@ const CASCADE = 14;
 
         if (!prefersReducedMotion()) {
             wrappers.forEach((wrapper, i) => {
-                const capture = wrapper.querySelector('[data-card-visual] img.object-cover');
-
-                if (capture) {
-                    gsap.fromTo(
-                        capture,
-                        { yPercent: -3 },
-                        {
-                            yPercent: 0,
-                            ease: 'none',
-                            scrollTrigger: {
-                                trigger: wrapper,
-                                start: 'top bottom',
-                                end: () => `top ${wrapper.style.top === 'auto' ? '0px' : wrapper.style.top}`,
-                                scrub: true,
-                            },
-                        },
-                    );
-                }
-
                 if (i === wrappers.length - 1) return;
                 const card = wrapper.querySelector('[data-card]');
                 const next = wrappers[i + 1];

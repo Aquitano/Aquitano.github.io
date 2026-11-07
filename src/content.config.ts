@@ -22,7 +22,6 @@ const work = defineCollection({
             imagePosition: z.string().default('left top'),
             imageCaption: z.string().optional(),
             imageCredit: z.object({ label: z.string(), href: z.string() }).optional(),
-            cutout: image().optional(),
             order: z.number(),
         }),
 });
