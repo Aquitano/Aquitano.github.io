@@ -16,10 +16,14 @@ tasks:
     - Frontend
     - 3D Modeling
 links:
-    - label: Archived demo (German)
+    - label: Archived demo
       href: /showcase/griffin/
 accent: '#ff7a5c'
-image: ../../assets/work/griffin-energy.webp
+image: ../../assets/work/griffin-hand.webp
+imagePosition: right center
+imageAlt: 'A hand holding a Griffin Energy can against a dark gym.'
+imageCaption: 'Blender render and photo composite from the original 2020 site.'
+cutout: ../../assets/work/griffin-cans.webp
 order: 6
 ---
 

@@ -17,12 +17,13 @@ tasks:
     - Backend
     - Product
 links:
-    - label: Live Site
-      href: https://chill-flow-roan.vercel.app
-    - label: GitHub
-      href: https://github.com/Aquitano/chill-flow
+    - label: Web source (2025)
+      href: https://github.com/Aquitano/chill-flow/tree/e0349881f7b9c113f49763b950c9a149634d7ad6
 accent: '#4fd1c5'
-image: ../../assets/work/chill-flow.webp
+image: ../../assets/work/chill-flow-focus.webp
+imagePosition: center
+imageAlt: 'ChillFlow landing page with a “Flow into productivity” headline and a focus prompt over a dark circle.'
+imageCaption: 'The 2025 landing page, cropped from the original mockup. The hosted demo is no longer online.'
 order: 3
 ---
 

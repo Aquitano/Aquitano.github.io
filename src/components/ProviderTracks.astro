@@ -1,0 +1,125 @@
+---
+import type { reconciliationRules } from '../lib/reconciliation';
+
+interface Props {
+    rule: (typeof reconciliationRules)[number];
+    compact?: boolean;
+}
+
+const { rule, compact = false } = Astro.props;
+---
+
+<div class:list={['policy-tracks', compact && 'compact']}>
+    <div class="track-axis" aria-hidden="true">
+        {rule.axis.map((label) => (
+            <span>{label}</span>
+        ))}
+    </div>
+    {rule.tracks.map((track) => (
+        <div class="provider-track">
+            <p>{track.provider}</p>
+            <div class="track-segments">
+                {track.segments.map((segment) => (
+                    <span
+                        class:list={['record-segment', segment.kept ? 'kept' : 'raw-only']}
+                        style={`grid-column:${segment.start} / span ${segment.span}`}
+                    >
+                        <span class="sr-only">{segment.kept ? 'Kept in canonical read' : 'Raw record only'}</span>
+                    </span>
+                ))}
+            </div>
+        </div>
+    ))}
+    <div class="track-legend">
+        <span>
+            <i class="kept" aria-hidden="true"></i>Kept in read
+        </span>
+        <span>
+            <i class="raw-only" aria-hidden="true"></i>Raw only
+        </span>
+    </div>
+</div>
+<style>
+    .track-axis {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+    }
+    .track-axis span:last-child {
+        text-align: right;
+    }
+    .provider-track + .provider-track {
+        margin-top: 1.25rem;
+    }
+    .provider-track p {
+        margin-bottom: 0.5rem;
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+    .track-segments {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 3px;
+        min-height: 30px;
+        padding-block: 6px;
+    }
+    .record-segment {
+        border-radius: 3px;
+        min-height: 18px;
+    }
+    .kept {
+        background: var(--project);
+        border: 1px solid var(--project);
+    }
+    .raw-only {
+        background: color-mix(in oklch, var(--project) 8%, transparent);
+        border: 1px dashed color-mix(in oklch, var(--project) 60%, var(--line));
+    }
+    .track-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        color: var(--muted);
+        font-family: var(--font-mono);
+        font-size: 0.6875rem;
+    }
+    .track-legend > span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .track-legend i {
+        display: block;
+        width: 16px;
+        height: 10px;
+        border-radius: 2px;
+    }
+    @media (max-width: 767px) {
+        .compact .track-axis {
+            margin-bottom: 0.5rem;
+        }
+        .compact .provider-track + .provider-track {
+            margin-top: 0.375rem;
+        }
+        .compact .provider-track p {
+            margin-bottom: 0.125rem;
+        }
+        .compact .track-segments {
+            min-height: 22px;
+            padding-block: 2px;
+        }
+        .compact .record-segment {
+            min-height: 14px;
+        }
+        .compact .track-legend {
+            margin-top: 0.375rem;
+        }
+    }
+</style>

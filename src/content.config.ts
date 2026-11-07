@@ -18,6 +18,11 @@ const work = defineCollection({
                 .default([]),
             accent: z.string(),
             image: image().optional(),
+            imageAlt: z.string().optional(),
+            imagePosition: z.string().default('left top'),
+            imageCaption: z.string().optional(),
+            imageCredit: z.object({ label: z.string(), href: z.string() }).optional(),
+            cutout: image().optional(),
             order: z.number(),
         }),
 });

@@ -8,5 +8,5 @@ Thomas Breindl built ChillFlow, a focus workspace that pairs lo-fi music and an 
 
 Cloudflare R2 serves the audio, Drizzle on Postgres holds the data behind Hono API routes, and Clerk handles authentication. Accounts can export all their data as JSON or their focus sessions as CSV.
 
-- [Live site](https://chill-flow-roan.vercel.app)
+- [Web source (2025)](https://github.com/Aquitano/chill-flow/tree/e0349881f7b9c113f49763b950c9a149634d7ad6)
 - [Source](https://github.com/Aquitano/chill-flow)

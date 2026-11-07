@@ -25,7 +25,12 @@ links:
     - label: Press
       href: https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html
 accent: '#9b8cff'
-image: ../../assets/work/frontiers-to-space.webp
+image: ../../assets/work/frontiers-dashboard.webp
+imageAlt: 'Original mission dashboard with telemetry charts above a map of the recorded flight route.'
+imageCaption: 'The original 2023 mission dashboard, in German, framed around the recorded route.'
+imageCredit:
+    label: Map data © OpenStreetMap contributors
+    href: https://www.openstreetmap.org/copyright
 order: 4
 ---
 

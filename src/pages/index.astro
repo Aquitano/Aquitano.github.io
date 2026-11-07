@@ -17,9 +17,9 @@ const work = (await getCollection('work')).toSorted((a, b) => a.data.order - b.d
     <main id="main-content" tabindex="-1">
         <Hero />
         <FocusAreas />
+        <Projects work={work} />
         <Manifesto />
         <Experience />
-        <Projects work={work} />
         <Stack />
     </main>
     <Minimap />
