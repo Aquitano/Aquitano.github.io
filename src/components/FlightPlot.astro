@@ -62,8 +62,7 @@ const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values
 <figure class:list={['flight-plot', metric === 'altitude' && 'plot-overview']}>
     <figcaption class="plot-caption">
         <div>
-            <p class="mb-2 text-xs text-muted">8 July 2023 · recorded telemetry</p>
-            <h2 class="text-xl font-medium tracking-tight md:text-2xl">{scale.title}</h2>
+            <h3 class="text-xl font-medium tracking-tight md:text-2xl">{scale.title}</h3>
         </div>
         <p class="text-right">
             <span class="block text-xl font-medium tabular-nums md:text-3xl">
@@ -129,7 +128,6 @@ const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values
             {timeLabel(end)}
         </span>
     </div>
-    <p class="plot-footnote">UTC · points positioned by timestamp · {measurements.length} measurements</p>
 </figure>
 <style>
     .flight-plot {
@@ -193,14 +191,6 @@ const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values
     }
     .last-tick {
         transform: translateX(-100%);
-    }
-    .plot-footnote {
-        width: 100%;
-        border-top: 1px solid #353244;
-        padding-top: 1rem;
-        font-size: 0.75rem;
-        line-height: 1.7;
-        color: var(--muted);
     }
     @media (max-width: 640px) {
         .intermediate-tick {

@@ -1,7 +1,5 @@
 ---
 import FlightPlot from './FlightPlot.astro';
-import { Picture } from 'astro:assets';
-import catalogueCapture from '../assets/work/bettergaming-results-detail.webp';
 
 interface Props {
     projectId: string;
@@ -163,11 +161,11 @@ const { projectId } = Astro.props;
 {projectId === 'frontiers-to-space' && (
     <section class="section-x evidence-section">
         <div class="evidence-intro">
-            <p class="mb-3 text-xs text-muted">Recorded flight data</p>
+            <p class="mb-3 text-[0.8125rem] text-muted">Recorded flight data · 8 July 2023</p>
             <h2 class="heading text-3xl md:text-4xl">Five hours of measurements.</h2>
             <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-                English plots redrawn from the mission’s 429 filtered telemetry records. The horizontal axis uses the
-                original Unix timestamps, including gaps between packets.
+                English plots redrawn from the mission’s 429 filtered telemetry records. Times are UTC. The horizontal
+                axis uses the original Unix timestamps, including gaps between packets.
             </p>
         </div>
         <div class="mb-6">
@@ -199,87 +197,7 @@ const { projectId } = Astro.props;
         </div>
     </section>
 )}
-{projectId === 'bettergaming' && (
-    <section class="section-x evidence-section">
-        <div class="evidence-intro">
-            <p class="mb-3 text-xs text-muted">Interface details</p>
-            <h2 class="heading text-3xl md:text-4xl">The filtered catalogue.</h2>
-            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-                The public demo returns three matches for “Assassin”. Sorting by price puts Origins first and Valhalla
-                last.
-            </p>
-        </div>
-        <div class="grid max-w-5xl gap-4 md:grid-cols-3">
-            {[
-                { x: 68, title: 'Assassins Creed Origins', price: '9.89€' },
-                { x: 355, title: 'Assassins Creed Odyssey', price: '11.99€' },
-                { x: 642, title: 'Assassins Creed Valhalla', price: '34.78€' },
-            ].map((result) => (
-                <div class="catalogue-detail" style={`--capture-x:${(-result.x / 283) * 100}%`}>
-                    <Picture
-                        src={catalogueCapture}
-                        formats={['avif', 'webp']}
-                        alt={`${result.title}, ${result.price}, from the filtered catalogue capture.`}
-                        widths={[1280]}
-                        sizes="1280px"
-                    />
-                </div>
-            ))}
-        </div>
-    </section>
-)}
-{projectId === 'griffin-energy' && (
-    <section class="section-x evidence-section">
-        <div class="evidence-intro">
-            <p class="mb-3 text-xs text-muted">Product artifacts</p>
-            <h2 class="heading text-3xl md:text-4xl">Two variants, one fictional brand.</h2>
-            <p class="mt-4 max-w-2xl text-base leading-relaxed text-muted">
-                The original Blender renders show the packaging applied to the can model. Both variants share the same
-                layout; the text on the yellow band names the variant.
-            </p>
-        </div>
-        <div class="can-renders">
-            <figure>
-                <img
-                    src="/showcase/griffin/images/untitled5-min.png"
-                    alt="Original Blender render of the Griffin Energy can and its packaging."
-                    width="275"
-                    height="372"
-                    loading="lazy"
-                />
-                <figcaption>Energy</figcaption>
-            </figure>
-            <figure>
-                <img
-                    src="/showcase/griffin/images/untitled5b-min.png"
-                    alt="Original Blender render of the Griffin No Caffeine variant."
-                    width="275"
-                    height="372"
-                    loading="lazy"
-                />
-                <figcaption>No Caffeine</figcaption>
-            </figure>
-        </div>
-    </section>
-)}
 <style>
-    .catalogue-detail {
-        position: relative;
-        aspect-ratio: 283 / 64;
-        overflow: hidden;
-        border: 1px solid var(--line);
-        border-radius: 0.5rem;
-        background: white;
-    }
-    .catalogue-detail :global(img) {
-        position: absolute;
-        width: 452.297%;
-        max-width: none;
-        height: auto;
-        left: var(--capture-x);
-        top: 0;
-        transform: translateY(-86%);
-    }
     .evidence-section {
         padding-block: clamp(3rem, 6vw, 5rem);
         border-top: 1px solid var(--line);
@@ -372,29 +290,6 @@ const { projectId } = Astro.props;
         margin-bottom: 0.25rem;
         font-size: 0.6875rem;
         color: var(--fg);
-    }
-    .can-renders {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.5rem;
-        border-radius: 0.75rem;
-        padding: clamp(1rem, 3vw, 3rem);
-        background: #fff;
-        color: #181818;
-    }
-    .can-renders figure {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    .can-renders img {
-        width: min(100%, 275px);
-        height: auto;
-    }
-    .can-renders figcaption {
-        font-size: 0.875rem;
-        font-weight: 500;
     }
     @media (min-width: 768px) {
         .policy-column-labels,

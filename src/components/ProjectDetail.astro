@@ -16,13 +16,15 @@ const { project, index, total, next } = Astro.props;
 
 const opensNewTab = (link: (typeof project.links)[number]) => link.external || isExternalHref(link.href);
 
-const titleParts = project.title.split(/(?<=[a-z])(?=[A-Z])/);
+const titleParts = project.title.includes(' ')
+    ? [project.title]
+    : (project.wrap ?? project.title.split(/(?<=[a-z])(?=[A-Z])/));
 
-const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
+const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.title.split(/(?<=[a-z])(?=[A-Z])/));
 ---
 
 <div id="top" data-detail>
-    <div class:list={[project.title === 'Griffin Energy' && 'product-intro']}>
+    <div class:list={[['Griffin Energy', 'ChillFlow', 'FrontiersToSpace'].includes(project.title) && 'split-intro']}>
         <header class="section-x pt-28 pb-10 md:pt-36 md:pb-12">
             <a href="/#work" class="link-line touch-target text-sm text-muted hover:text-fg">
                 <span aria-hidden="true">←</span> All work
@@ -52,7 +54,7 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
             ) : project.title === 'aqt-health' ? (
                 <ReconciliationDemo />
             ) : project.title === 'Griffin Energy' ? (
-                <figure class="historical-interface overflow-hidden rounded-xl border border-line">
+                <figure class="historical-interface product-render overflow-hidden rounded-xl border border-line">
                     <div class="bg-[#f6f6f3] p-6 md:p-10">
                         <img
                             src="/showcase/griffin/images/untitled2.png"
@@ -62,13 +64,19 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
                             class="mx-auto max-h-[32rem] w-full object-contain"
                         />
                     </div>
-                    <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
+                    <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-[0.8125rem] text-muted">
                         Original product render, created in Blender.
                     </figcaption>
                 </figure>
             ) : (
                 project.image && (
-                    <figure class="historical-interface overflow-hidden rounded-xl border border-line">
+                    <figure
+                        class:list={[
+                            'historical-interface overflow-hidden rounded-xl border border-line',
+                            project.title === 'ChillFlow' && 'landing-interface',
+                            project.title === 'FrontiersToSpace' && 'mission-interface',
+                        ]}
+                    >
                         <div class:list={[project.title === 'ChillFlow' && 'interface-crop']}>
                             <Picture
                                 src={project.image}
@@ -85,18 +93,33 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
                             />
                         </div>
                         {project.title === 'ChillFlow' && (
-                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
-                                Original 2025 web prototype, cropped to the interface. The hosted demo is currently
+                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-[0.8125rem] text-muted">
+                                Original 2025 landing page, cropped from the supplied render. The hosted demo is
                                 unavailable.
                             </figcaption>
                         )}
                         {project.title === 'BetterGaming' && (
-                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-xs text-muted">
-                                Search for “Assassin”, sorted by price in the public demo.
+                            <figcaption class="border-t border-line bg-bg-raise px-5 py-4 text-[0.8125rem] text-muted">
+                                Search for “Assassin”, sorted by price in the public demo. Captured results:
+                                <ol
+                                    aria-label="Captured results in ascending price order"
+                                    class="mt-4 grid gap-3 text-sm text-fg sm:grid-cols-3 sm:gap-x-6"
+                                >
+                                    {[
+                                        { title: 'Assassins Creed Origins', price: '9.89€' },
+                                        { title: 'Assassins Creed Odyssey', price: '11.99€' },
+                                        { title: 'Assassins Creed Valhalla', price: '34.78€' },
+                                    ].map((result) => (
+                                        <li class="flex justify-between gap-4 sm:flex-col sm:gap-1">
+                                            <span>{result.title}</span>
+                                            <span class="font-mono text-[0.8125rem] text-muted">{result.price}</span>
+                                        </li>
+                                    ))}
+                                </ol>
                             </figcaption>
                         )}
                         {project.title === 'FrontiersToSpace' && (
-                            <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-2 text-xs text-muted">
+                            <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-2 text-[0.8125rem] text-muted">
                                 <span>
                                     Original 2023 dashboard, in German. The map is framed around the recorded route.
                                 </span>
@@ -175,23 +198,29 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
 </div>
 <style>
     @media (min-width: 1024px) {
-        .product-intro {
+        .split-intro {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 3rem;
             padding: 9rem max(2.5rem, calc((100% - 96rem) / 2)) 4rem;
         }
-        .product-intro > header,
-        .product-intro > div {
+        .split-intro > header,
+        .split-intro > div {
             padding: 0;
         }
-        .product-intro .historical-interface {
+        .split-intro .product-render {
             max-width: none;
         }
     }
     .historical-interface {
         max-width: 58rem;
-        margin-inline: auto;
+        margin-inline: 0;
+    }
+    .landing-interface {
+        max-width: 28rem;
+    }
+    .mission-interface {
+        max-width: 40rem;
     }
     .interface-crop {
         position: relative;
@@ -243,7 +272,7 @@ const nextParts = next.title.split(/(?<=[a-z])(?=[A-Z])/);
     }
     @media (min-width: 1024px) {
         .case-body {
-            grid-template-columns: minmax(12rem, 1fr) minmax(0, 42rem);
+            grid-template-columns: 16rem minmax(0, 42rem);
             gap: 4rem;
         }
         .case-prose {

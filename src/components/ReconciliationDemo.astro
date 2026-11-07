@@ -6,8 +6,7 @@ import ProviderTracks from './ProviderTracks.astro';
 <figure class="policy-demo">
     <figcaption class="mb-4 md:mb-6">
         <p class="mb-2 text-xs text-muted">Canonical metrics</p>
-        <h2 class="text-xl font-medium tracking-tight md:text-3xl">Two providers. One source policy.</h2>
-        <p class="mt-3 text-sm leading-relaxed text-muted">Choose a metric to compare its records.</p>
+        <h2 class="text-xl font-medium tracking-tight md:text-3xl">Two sources, one read.</h2>
     </figcaption>
     <div class="policy-content">
         <fieldset class="policy-selector">
@@ -36,11 +35,11 @@ import ProviderTracks from './ProviderTracks.astro';
         ))}
     </div>
     <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-policy-announcement></p>
-    <p class="mt-4 border-t border-[#59404c] pt-3 text-xs leading-relaxed text-muted">
-        Schematic records, not patient data. Raw rows stay in PostgreSQL.
+    <p class="mt-4 border-t border-[#59404c] pt-3 text-[0.8125rem] leading-relaxed text-muted">
+        Schematic records, not patient data.
     </p>
     <a
-        class="link-line touch-target mt-1 text-xs text-fg/80 hover:text-fg"
+        class="link-line touch-target mt-1 text-[0.8125rem] text-fg/80 hover:text-fg"
         href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#canonical-metrics"
         target="_blank"
         rel="noopener noreferrer"
@@ -112,7 +111,15 @@ import ProviderTracks from './ProviderTracks.astro';
     }
     @media (max-width: 767px) {
         .policy-selector {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.375rem;
             margin-bottom: 1rem;
+        }
+        .policy-option > span {
+            padding-inline: 0.375rem;
+            font-size: 0.8125rem;
+            white-space: nowrap;
         }
         .policy-panel {
             gap: 1rem;
