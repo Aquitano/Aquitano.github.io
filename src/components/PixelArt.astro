@@ -31,6 +31,13 @@ const { art } = Astro.props;
         image-rendering: pixelated;
     }
 
+    /* With the script and motion on, the art first appears by decoding, so the fallback must not flash in first. */
+    @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+        .pixel-art img {
+            visibility: hidden;
+        }
+    }
+
     .pixel-art canvas {
         display: none;
     }
@@ -45,11 +52,15 @@ const { art } = Astro.props;
 </style>
 
 <script>
-    import { ScrollTrigger, prefersReducedMotion, supportsHover } from '../lib/gsap';
+    import { ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
 
     type Cell = { x: number; y: number; color: string | null };
 
     const UNLIT_ALPHA = 0.07;
+
+    const DECODE_MS = 1400;
+
+    const NOISE_MS = 70;
 
     const setUp = async (root: HTMLElement) => {
         const img = root.querySelector('img');
@@ -118,49 +129,50 @@ const { art } = Astro.props;
 
         const settled = (cell: Cell) => cell.color;
 
-        let decoding = false;
+        // Until the panel scrolls in it shows only the empty grid, so the art appears once, by decoding.
+        let colorOf: (cell: Cell, index: number) => string | null = prefersReducedMotion() ? settled : () => null;
 
         // Cells show noise until their own settle time, sweeping left to right.
-        const decode = (duration: number) => {
-            if (decoding) return;
-            decoding = true;
+        const decode = () => {
             const settle = cells.map((cell) => (cell.x / cols) * 0.55 + Math.random() * 0.45);
+            // Noise is dense on the art and thins toward the edges like the grid, so no rectangle flashes up.
+            const noiseChance = cells.map((cell, i) => (cell.color ? 0.85 : (unlitAlpha[i] / UNLIT_ALPHA) * 0.3));
             const start = performance.now();
+            let tick = -1;
+            let noise: (string | null)[] = [];
 
             const frame = (now: number) => {
-                const t = (now - start) / duration;
-                draw((cell, i) =>
-                    t >= settle[i]
-                        ? cell.color
-                        : Math.random() < 0.5
-                          ? null
-                          : palette[Math.floor(Math.random() * palette.length)],
-                );
+                const elapsed = now - start;
+                const t = elapsed / DECODE_MS;
+
+                // Fresh noise on every frame would strobe at the display's refresh rate.
+                if (Math.floor(elapsed / NOISE_MS) !== tick) {
+                    tick = Math.floor(elapsed / NOISE_MS);
+                    noise = noiseChance.map((chance) =>
+                        Math.random() < chance ? palette[Math.floor(Math.random() * palette.length)] : null,
+                    );
+                }
+
+                colorOf = t < 1 ? (cell, i) => (t >= settle[i] ? cell.color : noise[i]) : settled;
+                draw(colorOf);
 
                 if (t < 1) requestAnimationFrame(frame);
-                else {
-                    draw(settled);
-                    decoding = false;
-                }
             };
 
             requestAnimationFrame(frame);
         };
 
         fit();
-        draw(settled);
+        draw(colorOf);
         root.toggleAttribute('data-ready', true);
         new ResizeObserver(() => {
             fit();
-
-            if (!decoding) draw(settled);
+            draw(colorOf);
         }).observe(root);
 
-        if (prefersReducedMotion()) return;
-
-        ScrollTrigger.create({ trigger: root, start: 'top bottom', once: true, onEnter: () => decode(1400) });
-
-        if (supportsHover()) root.closest('[data-card]')?.addEventListener('mouseenter', () => decode(700));
+        if (!prefersReducedMotion()) {
+            ScrollTrigger.create({ trigger: root, start: 'top bottom', once: true, onEnter: decode });
+        }
     };
 
     for (const root of document.querySelectorAll<HTMLElement>('[data-pixel-art]')) void setUp(root);
