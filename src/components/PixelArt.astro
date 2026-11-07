@@ -80,6 +80,14 @@ const { art } = Astro.props;
         }
 
         const palette = [...new Set(cells.flatMap((cell) => (cell.color ? [cell.color] : [])))];
+
+        // Unlit cells fade out toward the panel's edges, so the grid has no hard rectangle around the art.
+        const unlitAlpha = cells.map(({ x, y }) => {
+            const distance = Math.hypot((x + 0.5) / cols - 0.5, (y + 0.5) / rows - 0.5) * 2;
+
+            return UNLIT_ALPHA * Math.min(1, Math.max(0, (1 - distance) / 0.5));
+        });
+
         const unlit = getComputedStyle(root).getPropertyValue('--project').trim() || '#888';
         let size = 0;
 
@@ -95,12 +103,13 @@ const { art } = Astro.props;
         };
 
         const draw = (colorOf: (cell: Cell, index: number) => string | null) => {
-            const gapX = Math.max(1, Math.round(size * 0.2));
-            const gapY = Math.max(1, Math.round(size * 0.1));
+            // Below 4 device pixels a 1px gap would eat a third of each cell and wash the art out.
+            const gapX = size < 4 ? 0 : Math.max(1, Math.round(size * 0.2));
+            const gapY = size < 4 ? 0 : Math.max(1, Math.round(size * 0.1));
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             cells.forEach((cell, index) => {
                 const color = colorOf(cell, index);
-                ctx.globalAlpha = color ? 1 : UNLIT_ALPHA;
+                ctx.globalAlpha = color ? 1 : unlitAlpha[index];
                 ctx.fillStyle = color ?? unlit;
                 ctx.fillRect(cell.x * size, cell.y * size, size - gapX, size - gapY);
             });
