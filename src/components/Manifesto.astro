@@ -1,92 +1,11 @@
 ---
-import { manifesto, stats } from '../lib/data';
+import { manifesto } from '../lib/data';
 import SectionHeading from './SectionHeading.astro';
-import { opticalIndent } from '../lib/displayTitle';
 ---
 
-<section id="about" data-manifesto-section data-minimap="About" class="section-x section-y section-y--lead">
-    <SectionHeading index="01" title="About" />
-    <p class="sr-only">{manifesto}</p>
-    <p
-        data-manifesto
-        aria-hidden="true"
-        class="max-w-5xl text-2xl leading-snug font-medium tracking-[-0.015em] font-stretch-112% md:text-5xl md:leading-[1.12]"
-    >
+<section id="about" data-manifesto-section data-minimap="About" class="section-x section-y">
+    <SectionHeading index="03" title="About" />
+    <p data-manifesto class="max-w-3xl text-xl leading-relaxed text-fg/90 md:text-2xl">
         {manifesto}
     </p>
-
-    <div
-        data-stats
-        class="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-line bg-line sm:grid-cols-3 md:mt-24"
-    >
-        {stats.map((stat) => (
-            <div data-stat class="bg-bg p-6 md:p-8">
-                <p class="display text-5xl leading-display text-fg tabular-nums md:text-7xl" style={opticalIndent('0')}>
-                    <>
-                        <span data-count={stat.value}>{String(stat.value).padStart(2, '0')}</span>
-                        <span class="text-accent">{stat.suffix}</span>
-                    </>
-                </p>
-                {/* Below lg a cell is too narrow for the longest label, so every label breaks to two lines there. */}
-                <p class="meta mt-3 sm:max-lg:max-w-[12em]">{stat.label}</p>
-            </div>
-        ))}
-    </div>
 </section>
-
-<script>
-    import { SplitText } from 'gsap/SplitText';
-    import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
-
-    gsap.registerPlugin(SplitText);
-
-    if (!prefersReducedMotion()) {
-        offscreen(gsap.utils.toArray<HTMLElement>('[data-stat]')).forEach((cell, i) => {
-            const tl = gsap.timeline({
-                delay: i * 0.08,
-                scrollTrigger: { trigger: cell, start: 'top 88%', once: true },
-            });
-
-            tl.from(cell.children, { opacity: 0, y: 32 });
-
-            const counter = cell.querySelector<HTMLElement>('[data-count]');
-
-            if (!counter) return;
-            const count = { value: 0 };
-            tl.to(
-                count,
-                {
-                    value: Number(counter.dataset.count),
-                    duration: 1.4,
-                    ease: 'power2.out',
-                    onUpdate: () => {
-                        counter.textContent = String(Math.round(count.value)).padStart(2, '0');
-                    },
-                },
-                0,
-            );
-        });
-
-        document.fonts.ready.then(() =>
-            ScrollTrigger.create({
-                trigger: '[data-manifesto]',
-                start: 'top 95%',
-                once: true,
-                onEnter: () => {
-                    const split = SplitText.create('[data-manifesto]', { type: 'words', aria: 'none' });
-                    gsap.from(split.words, {
-                        opacity: 0.4,
-                        stagger: 0.04,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: '[data-manifesto]',
-                            start: 'top 78%',
-                            end: 'bottom 45%',
-                            scrub: true,
-                        },
-                    });
-                },
-            }),
-        );
-    }
-</script>

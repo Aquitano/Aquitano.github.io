@@ -1,7 +1,7 @@
 ---
 const SHORTCUTS = [
-    { keys: ['j'], label: 'Next section' },
-    { keys: ['k'], label: 'Previous section' },
+    { keys: ['j'], label: 'Next stop' },
+    { keys: ['k'], label: 'Previous stop' },
     { keys: ['g', 'g'], label: 'Jump to top' },
     { keys: ['Shift', 'G'], label: 'Jump to contact' },
     { keys: ['?'], label: 'Toggle this panel' },
@@ -11,17 +11,17 @@ const SHORTCUTS = [
 
 <dialog
     data-kbd-dialog
-    aria-label="Keyboard shortcuts"
+    aria-label="Homepage keyboard shortcuts"
     class="kbd-dialog m-auto w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-line bg-bg-raise/95 p-0 text-fg backdrop-blur-md"
 >
     <div class="p-6 md:p-7">
         <div class="mb-5 flex items-center justify-between border-b border-line pb-4">
-            <p class="meta text-accent">Keyboard</p>
+            <p class="meta text-accent">Homepage shortcuts</p>
             <button
                 data-kbd-close
                 type="button"
                 aria-label="Close (Esc)"
-                class="meta -mr-2 rounded-full px-2 text-muted transition-colors duration-200 hover:text-fg"
+                class="meta -mr-2 grid min-h-11 min-w-11 place-items-center rounded-md px-2 text-muted transition-colors duration-200 hover:text-fg"
             >
                 esc
             </button>
@@ -60,12 +60,13 @@ const SHORTCUTS = [
 
 <button
     data-kbd-hint
+    hidden
     type="button"
-    aria-label="Show keyboard shortcuts"
-    class="kbd-hint group fixed bottom-4 left-4 z-40 hidden items-center gap-2 rounded-full border border-line bg-bg-raise/80 px-3 py-1.5 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg data-off:flex pointer-fine:flex"
+    aria-label="Show homepage shortcuts"
+    class="kbd-hint group relative ml-auto hidden min-h-11 shrink-0 cursor-pointer items-center gap-2 rounded-md px-1 py-1.5 text-muted hover:text-fg data-off:flex pointer-fine:md:flex"
 >
     <kbd class="kbd-cap">?</kbd>
-    <span class="meta transition-colors duration-200 group-hover:text-fg">Shortcuts</span>
+    <span class="text-sm transition-colors duration-200 group-hover:text-fg">Homepage shortcuts</span>
 </button>
 
 <style>
@@ -78,13 +79,15 @@ const SHORTCUTS = [
         padding: 3px 9px;
         color: var(--fg);
         font-family: var(--font-mono);
-        font-size: 0.6875rem;
+        font-size: 0.75rem;
         line-height: 1.4;
         letter-spacing: 0.06em;
         text-align: center;
     }
 
     .kbd-switch {
+        min-width: 44px;
+        min-height: 44px;
         transition:
             color 200ms,
             border-color 200ms;
@@ -96,65 +99,10 @@ const SHORTCUTS = [
     }
 
     .kbd-hint {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(10px);
-        pointer-events: none;
-        transition:
-            opacity 450ms var(--ease-out-strong),
-            transform 450ms var(--ease-out-strong),
-            visibility 450ms,
-            color 200ms,
-            border-color 200ms;
+        transition: color 200ms;
     }
-
-    .kbd-hint.is-shown {
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        pointer-events: auto;
-    }
-
-    .kbd-hint.is-away:not(:focus-visible) {
-        opacity: 0;
-        transform: translateY(10px);
-        pointer-events: none;
-    }
-
-    .kbd-hint::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        border-radius: 9999px;
-        border: 1px solid var(--accent);
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .kbd-hint.is-pulse::after {
-        animation: kbd-ping 2.6s var(--ease-out-strong) 1;
-    }
-
-    @keyframes kbd-ping {
-        0% {
-            opacity: 0.7;
-            transform: scale(1);
-        }
-        70%,
-        100% {
-            opacity: 0;
-            transform: scale(1.7);
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .kbd-hint {
-            transition: opacity 200ms linear;
-            transform: none;
-        }
-        .kbd-hint.is-pulse::after {
-            animation: none;
-        }
+    .kbd-hint[hidden] {
+        display: none;
     }
 
     .kbd-dialog,
@@ -167,6 +115,7 @@ const SHORTCUTS = [
     }
 
     .kbd-dialog {
+        overscroll-behavior: contain;
         opacity: 0;
         transform: translateY(8px) scale(0.98);
     }
@@ -226,28 +175,33 @@ const SHORTCUTS = [
     if (dialog && stops.length) {
         const HEADER_OFFSET = 88;
 
-        const wrappers = stops.filter((s) => s.hasAttribute('data-card-wrapper'));
         let targets: number[] = [];
 
-        // Land each stop where an anchor jump would: cards at their sticky offset, sections by their scroll margin.
         const offsetOf = (el: HTMLElement) => {
-            const offset = parseFloat(
-                el.hasAttribute('data-card-wrapper') ? el.style.top : getComputedStyle(el).scrollMarginTop,
-            );
+            const offset = parseFloat(getComputedStyle(el).scrollMarginTop);
 
             return Number.isNaN(offset) ? HEADER_OFFSET : offset;
         };
 
         const measure = () => {
-            const saved = wrappers.map((w) => w.style.position);
+            const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
-            for (const w of wrappers) w.style.position = 'static';
-            targets = stops.map((el) => Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el)));
-            wrappers.forEach((w, i) => (w.style.position = saved[i]));
+            targets = stops.map((el) =>
+                Math.max(
+                    0,
+                    Math.min(maxScroll, Math.round(el.getBoundingClientRect().top + window.scrollY - offsetOf(el))),
+                ),
+            );
         };
 
         const currentIndex = () => {
-            const line = targetScrollY() + 8;
+            const scroll = targetScrollY();
+            const active = document.activeElement;
+            const focusedCard = active?.closest('[data-card-wrapper]');
+            const focused = stops.findIndex((stop) => stop === active || stop === focusedCard);
+
+            if (focused >= 0 && Math.abs(targets[focused] - scroll) <= 8) return focused;
+            const line = scroll + 8;
             let idx = 0;
             targets.forEach((t, i) => {
                 if (t <= line) idx = i;
@@ -261,8 +215,12 @@ const SHORTCUTS = [
             const stop = stops[j];
             scrollToTarget(targets[j], { immediate: reduce() });
 
-            if (!stop.hasAttribute('tabindex')) stop.setAttribute('tabindex', '-1');
-            stop.focus({ preventScroll: true });
+            const focusTarget = stop.hasAttribute('data-card-wrapper')
+                ? (stop.querySelector<HTMLElement>('a[href]') ?? stop)
+                : stop;
+
+            if (focusTarget === stop && !stop.hasAttribute('tabindex')) stop.setAttribute('tabindex', '-1');
+            focusTarget.focus({ preventScroll: true });
         };
 
         measure();
@@ -301,7 +259,7 @@ const SHORTCUTS = [
             toggle?.setAttribute('aria-checked', String(enabled));
 
             if (toggleText) toggleText.textContent = enabled ? 'On' : 'Off';
-            // With shortcuts off, the pill is the only way back to this switch, so it renders on touch screens too.
+            // With shortcuts off, the button is the only way back to this switch, so it renders on touch screens too.
             hint?.toggleAttribute('data-off', !enabled);
         };
 
@@ -379,43 +337,9 @@ const SHORTCUTS = [
         }
 
         if (hint) {
-            hint.addEventListener('click', () => {
-                open();
-                hint.classList.remove('is-pulse');
-            });
-
-            // Past the hero the pill would sit over body text in the left gutter.
-            const hero = document.querySelector('[data-hero]');
-
-            if (hero) {
-                new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting)).observe(
-                    hero,
-                );
-            }
-
-            // Ping once per session.
-            const PULSE_KEY = 'kbd-hint-pulsed';
-            let pulsed = false;
-
-            try {
-                pulsed = sessionStorage.getItem(PULSE_KEY) === '1';
-            } catch {
-                /* storage blocked */
-            }
-
-            setTimeout(() => {
-                hint.classList.add('is-shown');
-
-                if (pulsed) return;
-
-                try {
-                    sessionStorage.setItem(PULSE_KEY, '1');
-                } catch {
-                    /* storage blocked */
-                }
-
-                setTimeout(() => hint.classList.add('is-pulse'), reduce() ? 0 : 520);
-            }, 5000);
+            hint.addEventListener('click', open);
+            document.querySelector('[data-shortcut-tools]')?.append(hint);
+            hint.hidden = false;
         }
     }
 </script>

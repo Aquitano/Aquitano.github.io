@@ -4,18 +4,12 @@ import ExperienceRow from './ExperienceRow.astro';
 import SectionHeading from './SectionHeading.astro';
 ---
 
-<section data-experience data-minimap="Experience" data-nav="about" class="section-x section-y">
-    <SectionHeading index="02" title="Experience" />
+<section id="experience" data-experience data-minimap="Experience" data-nav="about" class="section-x section-y">
+    <SectionHeading index="04" title="Experience" />
     <div>
-        {experience.map((job, i) => (
-            <div data-row class="invert-row relative border-b border-line first:border-t">
-                <ExperienceRow job={job} index={i} />
-                <div
-                    class="invert-layer absolute -inset-x-4 -inset-y-px overflow-hidden bg-accent px-4 py-px text-black"
-                    aria-hidden="true"
-                >
-                    <ExperienceRow job={job} index={i} inverted />
-                </div>
+        {experience.map((job) => (
+            <div data-row class="relative border-b border-line">
+                <ExperienceRow job={job} />
             </div>
         ))}
     </div>
@@ -37,16 +31,3 @@ import SectionHeading from './SectionHeading.astro';
         }
     }
 </script>
-
-<style>
-    .invert-row .invert-layer {
-        clip-path: inset(100% 0 0 0);
-        transition: clip-path 420ms var(--ease-out-strong);
-    }
-
-    @media (hover: hover) and (pointer: fine) {
-        .invert-row:hover .invert-layer {
-            clip-path: inset(0 0 0 0);
-        }
-    }
-</style>

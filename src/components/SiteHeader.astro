@@ -9,7 +9,7 @@ const NAV = [
 
 <header
     data-header
-    class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent mix-blend-difference backdrop-blur-none transition-[background-color,border-color,backdrop-filter] duration-300"
+    class="fixed inset-x-0 top-0 z-50 border-b border-transparent bg-transparent mix-blend-difference transition-[background-color,border-color] duration-300"
 >
     <div
         data-header-inner
@@ -17,21 +17,21 @@ const NAV = [
     >
         <a
             href="/#top"
-            class="touch-target min-w-11 font-mono text-xs font-medium tracking-[0.14em] text-white uppercase"
+            class="touch-target flex min-h-11 min-w-11 items-center font-mono text-xs font-medium tracking-[0.14em] text-fg uppercase"
         >
             TB
-            <span aria-hidden="true" class="text-white/50 max-[359px]:hidden">
+            <span aria-hidden="true" class="ml-1 text-fg/50 max-[400px]:hidden">
                 ©2026
             </span>
             <span class="sr-only">home</span>
         </a>
         <div class="flex items-center gap-6 md:gap-10">
-            <nav class="flex items-center gap-4 md:gap-6">
+            <nav aria-label="Main navigation" class="flex items-center gap-3 min-[360px]:gap-4 md:gap-6">
                 {NAV.map((item) => (
                     <a
                         href={item.href}
                         data-nav-link
-                        class="link-line touch-target font-mono text-xs tracking-[0.14em] text-white uppercase"
+                        class="nav-link link-line touch-target flex min-h-11 min-w-11 items-center justify-center font-mono text-xs tracking-[0.14em] text-fg uppercase transition-colors duration-200"
                     >
                         {item.label}
                     </a>
@@ -49,11 +49,9 @@ const NAV = [
     if (header && inner) {
         const apply = (scrolled: boolean) => {
             header.classList.toggle('border-line/70', scrolled);
-            header.classList.toggle('bg-bg/65', scrolled);
-            header.classList.toggle('backdrop-blur-md', scrolled);
+            header.classList.toggle('bg-bg', scrolled);
             header.classList.toggle('border-transparent', !scrolled);
             header.classList.toggle('bg-transparent', !scrolled);
-            header.classList.toggle('backdrop-blur-none', !scrolled);
             header.classList.toggle('mix-blend-difference', !scrolled);
             inner.classList.toggle('py-3', scrolled);
             inner.classList.toggle('md:py-3.5', scrolled);
@@ -99,7 +97,7 @@ const NAV = [
 
         const update = () => {
             queued = false;
-            const line = window.scrollY + window.innerHeight / 2;
+            const line = window.scrollY + (header?.getBoundingClientRect().height ?? 72) + 32;
             const atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
             let id = '';
 
@@ -107,13 +105,15 @@ const NAV = [
                 if (contentTop(el) + window.scrollY <= line) id = navId;
             }
 
-            // The last sections can't reach the centre line. At the end, honour a jump to one still on screen, else the last.
             if (atEnd) {
-                const jumpedTo = sections.find(
-                    ({ el }) => el.id && `#${el.id}` === location.hash && contentTop(el) >= 0,
+                const anchored = sections.find(
+                    ({ el }) =>
+                        el.id &&
+                        `#${el.id}` === location.hash &&
+                        contentTop(el) >= (header?.getBoundingClientRect().height ?? 72),
                 );
 
-                id = (jumpedTo ?? sections.at(-1))?.navId ?? id;
+                id = anchored?.navId ?? 'contact';
             }
 
             if (id === current) return;
@@ -131,8 +131,15 @@ const NAV = [
             { passive: true },
         );
         window.addEventListener('hashchange', update);
+        window.addEventListener('resize', update);
         update();
     } else if (location.pathname.startsWith('/work')) {
         setActive('work');
     }
 </script>
+
+<style>
+    .nav-link::after {
+        bottom: 0.5rem;
+    }
+</style>

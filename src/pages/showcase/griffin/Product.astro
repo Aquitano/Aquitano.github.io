@@ -1,4 +1,5 @@
 ---
+import DemoNotice from '../../../components/GriffinDemoNotice.astro';
 import "font-awesome/css/font-awesome.min.css";
 import "@fontsource/yantramanav/300.css";
 import "@fontsource/yantramanav/400.css";
@@ -9,10 +10,11 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
         <link rel="shortcut icon" type="image/x-icon" href={getGriffinAsset('favicon.jpg')} />
@@ -20,10 +22,11 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
             name="keywords"
             content="Brummselbeere, Griffin, GreenGriffin, Griffin Energy, ASG, ASG Passau, GriffinEnergy, Onlineshop, Energy Drink"
         />
-        <title>Unser Produkt - Griffin Energy</title>
+        <title>Griffin Energy | Produkt-Demo</title>
         {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
     </head>
     <body>
+        <DemoNotice />
         <!-- ==== Start header --><!-- header-desktop -->
         <header class="header home2">
             <!-- header-main -->
@@ -34,12 +37,14 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         <div class="navbar-header">
                             <!-- Logo -->
                             <div class="navbar-brand">
-                                <a class="logo" href="../">
+                                <a class="logo" href="/showcase/griffin/">
                                     <img
                                         src={getGriffinAsset('images/2logo.png')}
                                         alt="Griffin Energy Drink Markenlogo"
                                         style="width: 73%"
                                         loading="lazy"
+                                        width="225"
+                                        height="115"
                                     />
                                 </a>
                             </div>
@@ -48,10 +53,10 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         <!-- Main navigation -->
                         <div class="otf-flex-item"></div>
                         <ul class="main-nav nav navbar-nav navbar-right">
-                            <li class="dropdown"><a href="../" rel="prefetch">Home</a></li>
-                            <li class="dropdown active"><a href="/" rel="prefetch">Product</a></li>
+                            <li class="dropdown"><a href="/showcase/griffin/" rel="prefetch">Home</a></li>
+                            <li class="dropdown active"><a aria-current="page" href="/showcase/griffin/Product/" rel="prefetch">Product</a></li>
                             <li class="dropdown">
-                                <a href="../Donation-Code/" rel="prefetch">Donation-Code</a>
+                                <a href="/showcase/griffin/Donation-Code/" rel="prefetch">Donation-Code</a>
                             </li>
                         </ul>
                         <!-- /Main navigation -->
@@ -92,16 +97,17 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         class="navbar-toggle collapsed"
                         data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1"
+                        aria-controls="bs-example-navbar-collapse-1"
                         aria-expanded="false"
                     >
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">Navigation öffnen</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span></button
                     ><!-- logo -->
                     <div class="navbar-brand">
-                        <a class="logo" href="../"
-                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Logo" loading="lazy" /></a
+                        <a class="logo" href="/showcase/griffin/"
+                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Logo" loading="lazy" width="225" height="115" /></a
                         >
                     </div>
                     <!-- logo -->
@@ -109,21 +115,18 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                 <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="../" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                            <a href="/showcase/griffin/" rel="prefetch"
                                 >Home</a
                             >
                         </li>
                         <li class="active">
-                            <a href="./" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                            <a aria-current="page" href="./" rel="prefetch"
                                 >Product</a
                             >
                         </li>
                         <li>
                             <a
-                                href="../Donation-Code/"
-                                role="button"
-                                aria-haspopup="true"
-                                aria-expanded="false"
+                                href="/showcase/griffin/Donation-Code/"
                                 rel="prefetch">Donation-Code</a
                             >
                         </li>
@@ -132,6 +135,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
             </nav>
         </div>
         <!-- End header ==== ======================================= --><!-- ===================================== ==== Start breadcrumb -->
+        <main id="demo-content" tabindex="-1">
         <div class="breadcrumb">
             <!-- container -->
             <div class="container">
@@ -153,7 +157,9 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                         <img
                                             src={getGriffinAsset('images/untitled5-min.png')}
                                             alt="Dose Griffin Energy Drink Vorderansicht"
-                                            style="margin-left: 40px"
+                                            class="demo-product-image"
+                                            width="275"
+                                            height="372"
                                         />
                                     </li>
                                 </ul>
@@ -170,9 +176,9 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         <div class="col-md-6">
                             <div class="product-meta clearfix">
                                 <!-- end rating -->
-                                <h4 class="product-name">
-                                    <a href="#" title="">Griffin Energy</a>
-                                </h4>
+                                <h2 class="product-name">
+                                    <span>Griffin Energy</span>
+                                </h2>
                                 <!-- /.product-product -->
                                 <div class="product-price">
                                     <span class="amout"><span><span class="money">1.19€</span></span></span>
@@ -207,10 +213,8 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                                     id="size_selector"
                                                     data-attribute_name="attribute_pa_size"
                                                 >
-                                                    <a
-                                                        style="font-size: 25px; font-weight:bold; border-bottom: 2px solid #e41a1e"
-                                                        href="#">Energy</a
-                                                    ><br /><a style="font-size: 25px" href="../Product2/">No Caffeine</a
+                                                    <span class="demo-variant" aria-current="true">Energy</span
+                                                    ><br /><a style="font-size: 25px" href="/showcase/griffin/Product2/">No Caffeine</a
                                                     >
                                                 </div>
                                             </td>
@@ -219,15 +223,15 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                 </table>
                                 <div class="product-footer">
                                     <form action="#" class="add-to-cart" method="post" enctype="multipart/form-data">
-                                        <input class="cart-qty-box" type="number" name="qtybutton" value="0" /><input
+                                        <input class="cart-qty-box" type="number" name="qtybutton" value="1" min="1" aria-label="Anzahl (Demo)" disabled /><input
                                             type="hidden"
                                             name="id"
                                             value=""
                                         />
                                     </form>
-                                    <a href="#" class="btn btn-primary"
-                                        >Zum Warenkorb hinzufügen<i class="fa fa-shopping-bag" aria-hidden="true"
-                                        ></i></a
+                                    <button type="button" class="btn btn-primary" disabled
+                                        >Warenkorb (nur Demo)<i class="fa fa-shopping-bag" aria-hidden="true"
+                                        ></i></button
                                     >
                                     <div class="product-actions"></div>
                                 </div>
@@ -246,8 +250,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                             <div id="tab_description" class="tab-pane fade in active col-md-10">
                                 <span id="Spenden">
                                     <p>
-                                        Der auf jeder Dose enthaltene
-                                        <span style="font-weight: bold">Donation-Code mit QR-Code</span>
+                                        Der auf jeder Dose enthaltene{' '}<span style="font-weight: bold">Donation-Code mit QR-Code</span>{' '}
                                         kann dazu verwendet werden, ein von dir ausgewähltes Projekt zu den Themen Kinderhilfe,
                                         Tierschutz oder Umweltschutz verwendet werden.<br />Wird kein Projekt nach 12
                                         Tagen ab dem Kaufzeitpunkt ausgewählt, werden wir zufällig ein Projekt
@@ -272,16 +275,14 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                 </span>
                                 <span id="Dosen">
                                     <p>
-                                        Die zu
-                                        <span style="font-weight: bold">100% recyclebare Aluminium-Dosen</span>
+                                        Die zu{' '}<span style="font-weight: bold">100% recyclebare Aluminium-Dosen</span>{' '}
                                         spart bis zu 95% an Energie im Vergleich zur Primärproduktion. <br />Sogar
                                         beliebiges Einschmelzen führt zu keinem Qualitätsverlust.
                                     </p>
                                 </span>
                                 <span id="Transport">
                                     <p>
-                                        Durch
-                                        <span style="font-weight: bold">umweltfreundliche Transportlogistik</span>
+                                        Durch{' '}<span style="font-weight: bold">umweltfreundliche Transportlogistik</span>{' '}
                                         vermeiden wir bis zu 40% CO2-Ausstoß.<br />Wir verwenden nur Kühlschränke der
                                         höchsten Energieeffizienzklasse<br />Außerdem versuchen wir die Transportwege so
                                         stark wie möglich zu minimieren.<br />Zudem verwenden wir großteils nur Zutaten
@@ -304,12 +305,13 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
             </div>
         </div>
         <!-- ===================================== ==== End single-product --><!-- ==== Start footer -->
+        </main>
         <footer class="site-footer site-footer-2 clearfix">
             <div class="site-footer__main">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" />
+                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Wortmarke" width="196" height="122" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke.<br />
                                 <a href="/privacy" style="text-decoration: underline">Datenschutz / Privacy</a>
@@ -322,17 +324,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                 <div class="container">
                     <div class="copyright_container">
                         <div class="col-md-4 col-sm-6">
-                            <ul class="social">
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-google"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                            </ul>
+
                         </div>
                         <div class="copyright col-md-4 col-sm-6">GreenGriffin © 2021. All rights reserved</div>
                     </div>
@@ -341,10 +333,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
         </footer>
         <!-- ==== End footer -->
         <!-- Back to top -->
-        <div id="back-to-top"></div>
-        <!-- /Back to to -->
-        <!-- Back to top -->
-        <div id="back-to-top"></div>
+        <button id="back-to-top" type="button" aria-label="Nach oben"></button>
         <!-- /Back to to -->
         <div id="preloader">
             <div class="preloader"><span></span> <span></span> <span></span> <span></span></div>

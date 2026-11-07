@@ -11,6 +11,7 @@ const work = defineCollection({
             subtitle: z.string(),
             year: z.string(),
             description: z.string(),
+            summary: z.string(),
             tags: z.array(z.string()),
             tasks: z.array(z.string()),
             links: z
@@ -18,6 +19,7 @@ const work = defineCollection({
                 .default([]),
             accent: z.string(),
             image: image().optional(),
+            imageAlt: z.string().optional(),
             order: z.number(),
         }),
 });

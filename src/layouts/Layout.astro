@@ -153,10 +153,10 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         <script is:inline type="application/ld+json" set:html={safeJsonLd}></script>
     </head>
 
-    <body class="min-h-svh bg-bg text-fg antialiased">
+    <body class="flex min-h-svh flex-col bg-bg text-fg antialiased">
         <a
-            href="#top"
-            class="sr-only rounded-full bg-accent px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100"
+            href="#main-content"
+            class="sr-only rounded-full bg-accent px-4 py-2 font-mono text-xs text-black focus:not-sr-only focus:fixed focus:top-24 focus:left-4 focus:z-100 focus:inline-flex focus:min-h-11 focus:items-center focus:px-4 focus:py-3.5"
         >
             Skip to content
         </a>
@@ -227,13 +227,17 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
 </html>
 
 <style>
+    :global(body > main) {
+        flex: 1;
+    }
+
     /* The noise tile repeats every 160px, so a one-tile overscan and sub-tile jumps give every distinct offset. */
     .grain {
         position: fixed;
         inset: -160px;
         z-index: 60;
         pointer-events: none;
-        opacity: 0.1;
+        opacity: 0.035;
         will-change: transform;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         animation: grain-jitter 0.7s steps(1, end) infinite paused;

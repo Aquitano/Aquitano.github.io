@@ -5,7 +5,8 @@ wrap:
     - Gaming
 subtitle: E-Commerce Platform
 year: '2021'
-description: 'An e-commerce platform for video games with Ajax-powered live search, sorting, and dynamic product data served by PHP and MySQL. User management built on hashed & salted passwords with client-side validation for secure registration and login.'
+description: 'An e-commerce platform for video games with Ajax-powered live search, sorting, and dynamic product data served by PHP and MySQL. Account passwords are hashed and salted. Client-side HTML5 validation gives input feedback.'
+summary: 'An early full-stack game store with live search and account management.'
 tags:
     - PHP
     - MySQL
@@ -15,19 +16,24 @@ tasks:
     - Frontend
     - Backend
 links:
-    - label: Live Site
+    - label: Website
       href: https://bettergaming.thomasbreindl.me
     - label: GitHub
       href: https://github.com/Aquitano/BetterGaming
 accent: '#5ee9b5'
-image: ../../assets/work/bettergaming.webp
+image: ../../assets/work/bettergaming-interface.webp
+imageAlt: Game catalogue filtered to three matching games and sorted by price.
 order: 5
 ---
 
+## The project
+
 BetterGaming is an e-commerce platform for video games. The application uses server-side PHP and a MySQL database to load and display product data dynamically.
 
-The frontend uses JavaScript ES6, PaceJS and scroll-based animations for a smooth user experience.
+## Search without a reload
 
-A core feature is the live search: Ajax requests display search results in real time, with sorting options to refine them further.
+Typing in the search field sends Ajax requests and updates matching games without reloading the page. Sorting then orders those results by name, price, or date added. The capture above shows three matching games ordered from lowest to highest price.
 
-User management relies on hashed and salted passwords along with client-side HTML5 validation for secure registration and login.
+## Accounts
+
+Account passwords are hashed and salted. HTML5 form validation gives users immediate feedback about their input.

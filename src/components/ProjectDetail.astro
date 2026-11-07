@@ -1,8 +1,9 @@
 ---
 import { Picture } from 'astro:assets';
+import ReconciliationDemo from './ReconciliationDemo.astro';
+import RestoreRecord from './RestoreRecord.astro';
 import type { CollectionEntry } from 'astro:content';
 import { isExternalHref } from '../lib/links';
-import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
     project: CollectionEntry<'work'>['data'];
@@ -13,143 +14,186 @@ interface Props {
 
 const { project, index, total, next } = Astro.props;
 
-const title = displayTitle(project.title, project.wrap);
-
-const nextTitle = displayTitle(next.title, next.wrap);
-
 const opensNewTab = (link: (typeof project.links)[number]) => link.external || isExternalHref(link.href);
 
-const LINE_STAGGER = 80;
+const titleParts = project.title.includes(' ')
+    ? [project.title]
+    : (project.wrap ?? project.title.split(/(?<=[a-z])(?=[A-Z])/));
 
-const FADE_STAGGER = 60;
-
-const fadeStart = 700 + (title.lines.length - 1) * LINE_STAGGER;
-
-const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
+const nextParts = next.title.includes(' ') ? [next.title] : (next.wrap ?? next.title.split(/(?<=[a-z])(?=[A-Z])/));
 ---
 
-<div id="top" data-detail class="relative overflow-x-clip">
-    {/* per-project glow */}
-    <div
-        class="pointer-events-none absolute top-0 -right-1/4 h-[60svh] w-[70%] rounded-full opacity-[0.1] blur-3xl"
-        style={`background: ${project.accent}`}
-        aria-hidden="true"
-    ></div>
-
-    <header class="section-x relative pt-28 pb-12 md:pt-40 md:pb-16">
-        <div class="intro-fade" style={fadeDelay(0)}>
-            <a href="/#work" class="link-line pressable touch-target meta inline-block text-fg">
-                <span aria-hidden="true">←</span> All Work
+<div id="top" data-detail>
+    <div class:list={[['Griffin Energy', 'ChillFlow', 'FrontiersToSpace'].includes(project.title) && 'split-intro']}>
+        <header class="section-x pt-28 pb-10 md:pt-36 md:pb-12">
+            <a href="/#work" class="link-line touch-target text-sm text-muted hover:text-fg">
+                <span aria-hidden="true">←</span> All work
             </a>
-        </div>
-
-        <div class="mt-10 flex items-baseline justify-between gap-4 md:mt-14">
-            <p class="intro-fade meta flex items-baseline gap-2" style={fadeDelay(1)}>
-                <span
-                    class="inline-block h-1.5 w-1.5 shrink-0 self-center rounded-full"
-                    style={`background: ${project.accent}`}
-                    aria-hidden="true"
-                ></span>
-                {project.subtitle}
-            </p>
-            <p class="intro-fade meta whitespace-nowrap" style={fadeDelay(2)}>
-                ©{project.year}
-                <span class="max-[359px]:hidden">
-                    {' '}
-                    · 0{index + 1}/0{total}
-                </span>
-            </p>
-        </div>
-
-        <h1 class="display mt-4 text-[clamp(2.25rem,11.5vw,11rem)]">
-            {title.lines.map((words, i) => (
-                <span class="block overflow-y-clip pb-[0.06em]">
-                    <span
-                        class="intro-rise block"
-                        style={`--intro-delay: ${100 + i * LINE_STAGGER}ms; ${opticalIndent(words[0].text)}`}
-                    >
-                        {words.map(({ text, outline }) => (
-                            <span class:list={{ 'display-outline': outline }}>{text}</span>
-                        ))}
+            <div class="mt-8 flex items-baseline justify-between gap-4 md:mt-10">
+                <p class="text-sm text-muted">{project.subtitle}</p>
+                <p class="shrink-0 font-mono text-[0.8125rem] text-muted">
+                    {project.year}{' '}
+                    <span class="max-[359px]:hidden">
+                        · {index + 1}/{total}
                     </span>
-                </span>
-            ))}
-        </h1>
-
-        <p class="intro-fade mt-8 max-w-2xl text-base leading-relaxed text-muted md:text-xl" style={fadeDelay(3)}>
-            {project.description}
-        </p>
-    </header>
-    {project.image && (
-        <div data-detail-banner class="section-x relative pt-2 pb-10 md:pb-16">
-            <div class="relative overflow-hidden rounded-2xl border border-line">
-                <div
-                    class="pointer-events-none absolute -top-1/3 -right-1/4 h-[70%] w-[70%] rounded-full opacity-[0.08] blur-3xl"
-                    style={`background: ${project.accent}`}
-                    aria-hidden="true"
-                />
-                <div class="relative aspect-[16/9] w-full">
-                    <Picture
-                        src={project.image}
-                        formats={['avif', 'webp']}
-                        alt={`${project.title} — ${project.subtitle}`}
-                        widths={[640, 960, 1280, 1600, 2400]}
-                        sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
-                        priority
-                        class="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover"
-                    />
-                </div>
+                </p>
             </div>
+            <h1 class="heading case-title mt-5" aria-label={project.title}>
+                {titleParts.map((part, i) => (
+                    <Fragment>
+                        {i > 0 && <wbr />}
+                        {part}
+                    </Fragment>
+                ))}
+            </h1>
+            <p class="mt-6 max-w-3xl text-base leading-relaxed text-muted md:text-xl">{project.summary}</p>
+        </header>
+        <div class="section-x pb-12 md:pb-16">
+            {project.title === 'aqt-sync' ? (
+                <RestoreRecord />
+            ) : project.title === 'aqt-health' ? (
+                <ReconciliationDemo />
+            ) : project.title === 'Griffin Energy' ? (
+                <figure class="historical-interface product-render overflow-hidden rounded-xl border border-line">
+                    <div class="bg-[#f6f6f3] p-6 md:p-10">
+                        <img
+                            src="/showcase/griffin/images/untitled2.png"
+                            alt="Original Blender render of both Griffin Energy variants."
+                            width="826"
+                            height="1002"
+                            class="mx-auto max-h-[32rem] w-full object-contain"
+                        />
+                    </div>
+                    <figcaption class="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 border-t border-line bg-bg-raise px-5 py-3 text-[0.8125rem] text-muted">
+                        <span>Original product render, created in Blender.</span>
+                        <a
+                            class="link-line touch-target text-sm"
+                            href="/showcase/griffin/images/untitled2.png"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Full image <span aria-hidden="true">↗</span>
+                            <span class="sr-only"> of {project.title} (opens in new tab)</span>
+                        </a>
+                    </figcaption>
+                </figure>
+            ) : (
+                project.image && (
+                    <figure
+                        class:list={[
+                            'historical-interface overflow-hidden rounded-xl border border-line',
+                            project.title === 'ChillFlow' && 'landing-interface',
+                            project.title === 'FrontiersToSpace' && 'mission-interface',
+                            project.title === 'BetterGaming' && 'catalogue-interface',
+                        ]}
+                    >
+                        <div
+                            class:list={[
+                                project.title === 'ChillFlow' && 'interface-crop',
+                                project.title === 'BetterGaming' && 'bg-white',
+                            ]}
+                        >
+                            <Picture
+                                src={project.image}
+                                formats={['avif', 'webp']}
+                                alt={project.imageAlt ?? `${project.title}: ${project.subtitle}`}
+                                widths={[640, 960, 1280, 1920, 2400]}
+                                sizes={
+                                    project.title === 'ChillFlow'
+                                        ? '(max-width:767px) 380vw, 2400px'
+                                        : project.title === 'FrontiersToSpace'
+                                          ? '(min-width:1408px) 640px, (min-width:1024px) calc(50vw - 4rem), (min-width:768px) calc(100vw - 5rem), calc(100vw - 2.5rem)'
+                                          : '(min-width:1264px) 928px, (min-width:1024px) calc(100vw - 21rem), (min-width:768px) calc(100vw - 5rem), calc(100vw - 2.5rem)'
+                                }
+                                priority
+                                class="block h-auto w-full"
+                            />
+                        </div>
+                        <figcaption class="border-t border-line bg-bg-raise px-5 py-3 text-[0.8125rem] text-muted">
+                            {project.title === 'ChillFlow' && (
+                                <p>
+                                    Original 2025 landing page, cropped to its focus prompt. The hosted demo is
+                                    unavailable.
+                                </p>
+                            )}
+                            {project.title === 'BetterGaming' && (
+                                <>
+                                    Search for “Assassin”, sorted by price in the public demo. Captured results:
+                                    <ol
+                                        aria-label="Captured results in ascending price order"
+                                        class="mt-4 grid gap-3 text-sm text-fg sm:grid-cols-3 sm:gap-x-6"
+                                    >
+                                        {[
+                                            { title: 'Assassins Creed Origins', price: '9.89€' },
+                                            { title: 'Assassins Creed Odyssey', price: '11.99€' },
+                                            { title: 'Assassins Creed Valhalla', price: '34.78€' },
+                                        ].map((result) => (
+                                            <li class="flex justify-between gap-4 sm:flex-col sm:gap-1">
+                                                <span>{result.title}</span>
+                                                <span class="font-mono text-[0.8125rem] text-muted">
+                                                    {result.price}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ol>
+                                </>
+                            )}
+                            {project.title === 'FrontiersToSpace' && (
+                                <p>Original 2023 dashboard, in German. The map is framed around the recorded route.</p>
+                            )}
+                            <div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
+                                <a
+                                    class="link-line touch-target text-sm"
+                                    href={project.image.src}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {project.title === 'ChillFlow' ? 'Full mockup' : 'Full image'}{' '}
+                                    <span aria-hidden="true">↗</span>
+                                    <span class="sr-only"> of {project.title} (opens in new tab)</span>
+                                </a>
+                                {project.title === 'FrontiersToSpace' && (
+                                    <a
+                                        class="link-line touch-target text-sm"
+                                        href="https://www.openstreetmap.org/copyright"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Map data © OpenStreetMap contributors <span aria-hidden="true">↗</span>
+                                        <span class="sr-only"> (opens in new tab)</span>
+                                    </a>
+                                )}
+                            </div>
+                        </figcaption>
+                    </figure>
+                )
+            )}
         </div>
-    )}
-
-    <div
-        data-detail-body
-        class="section-x relative grid gap-12 border-t border-line py-16 md:py-24 lg:grid-cols-[minmax(16rem,1fr)_2fr] lg:gap-8"
-    >
-        <aside class="lg:sticky lg:top-28 lg:self-start">
-            <dl class="space-y-8">
-                <div data-detail-para>
-                    <dt class="meta mb-2">Scope</dt>
-                    <dd class="overflow-hidden">
-                        {/* Each item carries its own separator; pulling the list left clips the one starting each line. */}
-                        <ul class="-ml-6 flex flex-wrap font-mono text-sm leading-relaxed text-fg/85">
-                            {project.tasks.map((task) => (
-                                <li class="relative pl-6 whitespace-nowrap">
-                                    <span aria-hidden="true" class="absolute left-0 w-6 text-center text-muted">
-                                        ·
-                                    </span>
-                                    {task}
-                                </li>
-                            ))}
-                        </ul>
-                    </dd>
+    </div>
+    <div class="section-x case-body border-t border-line py-12 md:py-16">
+        <aside>
+            <dl class="grid grid-cols-2 gap-6 lg:sticky lg:top-28 lg:grid-cols-1">
+                <div>
+                    <dt class="mb-2 text-[0.8125rem] text-muted">Scope</dt>
+                    <dd class="text-sm leading-relaxed text-fg/85">{project.tasks.join(', ')}</dd>
                 </div>
-                <div data-detail-para>
-                    <dt class="meta mb-3">Stack</dt>
-                    <dd>
-                        <ul class="flex flex-wrap gap-2">
-                            {project.tags.map((tag) => (
-                                <li class="rounded-full border border-line px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] text-fg/70 uppercase">
-                                    {tag}
-                                </li>
-                            ))}
-                        </ul>
-                    </dd>
+                <div>
+                    <dt class="mb-2 text-[0.8125rem] text-muted">Stack</dt>
+                    <dd class="text-sm leading-relaxed text-fg/85">{project.tags.join(', ')}</dd>
                 </div>
                 {project.links.length > 0 && (
-                    <div data-detail-para>
-                        <dt class="meta mb-3">Links</dt>
-                        <dd class="flex flex-col items-start gap-3 pointer-coarse:gap-7">
+                    <div class="col-span-2 lg:col-span-1">
+                        <dt class="mb-2 text-[0.8125rem] text-muted">Explore</dt>
+                        <dd class="flex flex-wrap items-start gap-x-5 gap-y-1">
                             {project.links.map((link) => (
                                 <a
                                     href={link.href}
                                     target={opensNewTab(link) ? '_blank' : undefined}
                                     rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
-                                    class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] text-fg uppercase"
+                                    class="link-line touch-target text-sm text-fg hover:text-accent"
                                 >
-                                    {link.label} <span aria-hidden="true">↗</span>
-                                    {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
+                                    {link.label} <span aria-hidden="true">{opensNewTab(link) ? '↗' : '→'}</span>
+                                    {opensNewTab(link) && <span class="sr-only"> (opens in new tab)</span>}
                                 </a>
                             ))}
                         </dd>
@@ -157,102 +201,151 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                 )}
             </dl>
         </aside>
-
-        <div
-            data-detail-prose
-            class="max-w-xl space-y-6 [&_code]:rounded [&_code]:border [&_code]:border-line [&_code]:bg-bg-raise [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.85em] [&>p]:text-base [&>p]:leading-relaxed [&>p]:text-fg/85 md:[&>p]:text-lg"
-        >
+        <article class="case-prose">
             <slot />
-        </div>
+        </article>
     </div>
-
+    <slot name="evidence" />
     <a
         href={`/work/${next.slug}`}
-        data-detail-next
-        class="group section-x relative block overflow-hidden border-t border-line py-16 focus-visible:-outline-offset-4 md:py-24"
+        class="group section-x block border-t border-line py-12 focus-visible:-outline-offset-4 md:py-16"
     >
-        <div
-            class="pointer-events-none absolute -top-1/2 -right-1/4 h-[140%] w-[60%] rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-[0.12] group-focus-visible:opacity-[0.12]"
-            style={`background: ${next.accent}`}
-            aria-hidden="true"
-        ></div>
-        <p class="meta relative mb-4">Next Project</p>
-        <p class="display relative text-[clamp(1.9rem,8vw,7rem)] transition-colors duration-300 group-hover:text-accent group-focus-visible:text-accent">
-            {nextTitle.lines.map((words, j) => (
+        <p class="mb-4 text-xs text-muted">Next project</p>
+        <p
+            class="heading text-[clamp(1.9rem,5vw,4rem)] transition-colors group-hover:text-accent group-focus-visible:text-accent"
+            aria-label={next.title}
+        >
+            {nextParts.map((part, i) => (
                 <Fragment>
-                    {j > 0 && (nextTitle.joiner || <wbr />)}
-                    {words.map(({ text, outline }, k) => {
-                        const word = (
-                            <span
-                                class:list={{ 'display-outline': outline }}
-                                style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
-                            >
-                                {text}
-                            </span>
-                        );
-                        if (j < nextTitle.lines.length - 1 || k < words.length - 1) return word;
-                        // Bind only the last word to the arrow so a long title can still wrap.
-                        return (
-                            <span class="whitespace-nowrap">
-                                {word}
-                                <span
-                                    aria-hidden="true"
-                                    class="ml-[0.15em] inline-block align-baseline text-[0.55em] transition-transform duration-300 ease-out-strong group-hover:translate-x-[0.1em] group-hover:-translate-y-[0.1em] group-focus-visible:translate-x-[0.1em] group-focus-visible:-translate-y-[0.1em]"
-                                >
-                                    →
-                                </span>
-                            </span>
-                        );
-                    })}
+                    {i > 0 && <wbr />}
+                    {part}
                 </Fragment>
-            ))}
+            ))}{' '}
+            <span aria-hidden="true" class="inline-block text-[0.65em]">
+                →
+            </span>
         </p>
     </a>
 </div>
-
-<script>
-    import { gsap, ScrollTrigger, offscreen, prefersReducedMotion } from '../lib/gsap';
-
-    const root = document.querySelector<HTMLElement>('[data-detail]');
-
-    if (root && !prefersReducedMotion()) {
-        const banner = root.querySelector<HTMLElement>('[data-detail-banner]');
-
-        if (banner) {
-            const [frame] = offscreen([...banner.children]);
-
-            if (frame) {
-                gsap.from(frame, {
-                    opacity: 0,
-                    y: 48,
-                    duration: 1,
-                    ease: 'power3.out',
-                    scrollTrigger: { trigger: banner, start: 'top 90%', once: true },
-                });
-            }
-
-            gsap.fromTo(
-                banner.querySelector('img'),
-                { yPercent: -6 },
-                {
-                    yPercent: 6,
-                    ease: 'none',
-                    scrollTrigger: { trigger: banner, start: 'top bottom', end: 'bottom top', scrub: true },
-                },
-            );
+<style>
+    @media (min-width: 1024px) {
+        .split-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 9rem max(2.5rem, calc((100% - 96rem) / 2)) 4rem;
         }
-
-        const revealItems = offscreen([
-            ...root.querySelectorAll('[data-detail-para]'),
-            ...root.querySelectorAll('[data-detail-prose] > *'),
-            ...root.querySelectorAll('[data-detail-next]'),
-        ]);
-
-        gsap.set(revealItems, { opacity: 0, y: 32 });
-        ScrollTrigger.batch(revealItems, {
-            start: 'top 88%',
-            once: true,
-            onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }),
-        });
+        .split-intro > header,
+        .split-intro > div {
+            padding: 0;
+        }
+        .split-intro .product-render {
+            max-width: none;
+        }
     }
-</script>
+    .historical-interface {
+        max-width: 58rem;
+        margin-inline: 0;
+    }
+    .split-intro .historical-interface {
+        margin-left: auto;
+    }
+    .landing-interface {
+        max-width: 36rem;
+    }
+    .mission-interface {
+        max-width: 40rem;
+    }
+    .catalogue-interface {
+        max-width: none;
+    }
+    @media (min-width: 1024px) {
+        .catalogue-interface {
+            display: grid;
+            grid-template-columns: minmax(0, 58rem) minmax(16rem, 1fr);
+        }
+        .catalogue-interface figcaption {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-top: 0;
+            border-left: 1px solid var(--line);
+            padding: 1.5rem;
+        }
+        .catalogue-interface ol {
+            grid-template-columns: 1fr;
+        }
+    }
+    .interface-crop {
+        position: relative;
+        aspect-ratio: 630 / 280;
+        overflow: hidden;
+    }
+    .interface-crop :global(img) {
+        position: absolute;
+        width: 380.952%;
+        max-width: none;
+        height: auto;
+        left: -159.048%;
+        top: -182.143%;
+    }
+    @media (max-width: 1023px) {
+        .historical-interface {
+            max-width: none;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .interface-crop {
+            aspect-ratio: 915 / 400;
+        }
+        .interface-crop :global(img) {
+            width: 262.3%;
+            left: -93.77%;
+            top: -97.5%;
+        }
+    }
+    .case-title {
+        font-size: clamp(2.5rem, 7vw, 6rem);
+        letter-spacing: -0.04em;
+    }
+    .case-body {
+        display: grid;
+        gap: 2.5rem;
+    }
+    .case-prose {
+        font-size: 1rem;
+        line-height: 1.75;
+        color: color-mix(in oklch, var(--fg) 85%, transparent);
+    }
+    .case-prose :global(h2) {
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--fg);
+        font-size: 1.5rem;
+        line-height: 1.25;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+    }
+    .case-prose :global(h2:first-child) {
+        margin-top: 0;
+    }
+    .case-prose :global(p + p) {
+        margin-top: 1.25rem;
+    }
+    .case-prose :global(code) {
+        border-radius: 0.25rem;
+        border: 1px solid var(--line);
+        background: var(--bg-raise);
+        padding: 0.125rem 0.375rem;
+        font-size: 0.85em;
+    }
+    @media (min-width: 1024px) {
+        .case-body {
+            grid-template-columns: 16rem minmax(0, 42rem);
+            gap: 4rem;
+        }
+        .case-prose {
+            font-size: 1.125rem;
+        }
+    }
+</style>

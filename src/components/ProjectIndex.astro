@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeading from './SectionHeading.astro';
+
+interface Props {
+    work: CollectionEntry<'work'>[];
+}
+
+const { work } = Astro.props;
+---
+
+<section id="more-work" data-minimap="More projects" data-nav="work" class="section-x section-y">
+    <SectionHeading index="02" title="More projects" />
+    <div
+        aria-hidden="true"
+        class="hidden grid-cols-[1.4fr_1fr_4rem_1rem] gap-6 border-b border-line pb-4 text-[0.8125rem] text-muted md:grid"
+    >
+        <span>Project</span>
+        <span>Project type</span>
+        <span>Year</span>
+        <span></span>
+    </div>
+    <div>
+        {work.map(({ id, data }) => (
+            <a
+                href={`/work/${id}`}
+                class="group grid grid-cols-[1fr_auto] items-baseline gap-x-6 gap-y-2 border-b border-line py-6 transition-colors hover:text-accent focus-visible:text-accent md:grid-cols-[1.4fr_1fr_4rem_1rem] md:py-7"
+            >
+                <h3 class="text-xl font-medium tracking-tight md:text-2xl">{data.title}</h3>
+                <p class="col-start-1 row-start-2 text-sm text-muted md:col-auto md:row-auto">{data.subtitle}</p>
+                <p class="col-start-2 row-start-1 font-mono text-[0.8125rem] text-muted md:col-auto md:row-auto">
+                    {data.year}
+                </p>
+                <span aria-hidden="true" class="hidden text-muted transition-colors group-hover:text-accent md:block">
+                    →
+                </span>
+            </a>
+        ))}
+    </div>
+</section>

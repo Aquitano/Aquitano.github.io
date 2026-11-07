@@ -6,6 +6,7 @@ wrap:
 subtitle: Product Concept
 year: '2020'
 description: 'A fictional product built from scratch: brand concept, packaging designed in Photoshop, a photorealistic 3D can modeled and rendered in Blender, and a responsive website integrating the renders through animation.'
+summary: 'An imagined energy drink, from 3D can renders to a product website.'
 tags:
     - Blender
     - Photoshop
@@ -16,18 +17,25 @@ tasks:
     - Frontend
     - 3D Modeling
 links:
-    - label: Demo
+    - label: Archived demo (German)
       href: /showcase/griffin/
-      external: true
 accent: '#ff7a5c'
 image: ../../assets/work/griffin-energy.webp
 order: 6
 ---
 
+## The brief
+
 As part of a school project, I created Griffin Energy as a fictional product from scratch, taking it from the brand concept and design to a finished website.
+
+## Packaging
 
 The product packaging was designed in Adobe Photoshop and conveys the Griffin Energy brand identity visually.
 
+## 3D product renders
+
 For realistic product shots, I built a 3D model of the can in Blender and rendered it photorealistically.
 
-The accompanying website is built with modern JavaScript, optimized for different screen sizes, and integrates the 3D renders through animations.
+## The website
+
+The accompanying website is built with JavaScript, optimized for different screen sizes, and integrates the 3D renders through animations.

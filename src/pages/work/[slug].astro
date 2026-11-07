@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import ProjectEvidence from '../../components/ProjectEvidence.astro';
 import ProjectDetail from '../../components/ProjectDetail.astro';
 import { site } from '../../lib/data';
 
@@ -45,9 +46,12 @@ const ogImage =
     description={project.description}
     image={ogImage && { src: ogImage.src, alt: `${project.title} — ${project.subtitle}` }}
 >
-    <main>
+    <main id="main-content" tabindex="-1">
         <ProjectDetail project={project} index={index} total={total} next={nextData}>
             <Content />
+            <Fragment slot="evidence">
+                <ProjectEvidence projectId={entry.id} />
+            </Fragment>
         </ProjectDetail>
     </main>
 </Layout>

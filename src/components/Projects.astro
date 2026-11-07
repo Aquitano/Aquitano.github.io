@@ -1,281 +1,110 @@
 ---
+import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import SectionHeading from './SectionHeading.astro';
+import HealthFlow from './HealthFlow.astro';
+import RestorePreview from './RestorePreview.astro';
 import { isExternalHref } from '../lib/links';
-import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
     work: CollectionEntry<'work'>[];
 }
 
 const { work } = Astro.props;
-
-const STICKY_TOP = 88;
-
-const CASCADE = 14;
 ---
 
-<section id="work" data-projects data-minimap="Work" class="section-x section-y section-y--major">
-    <SectionHeading index="03" title="Selected Work" />
-    <div class="flex flex-col gap-6 md:gap-10">
-        {work.map((entry, i) => {
+<section id="work" data-projects data-minimap="Work" class="section-x section-y section-y--lead">
+    <SectionHeading index="01" title="Selected work" />
+    <div class="grid gap-x-8 gap-y-14 md:grid-cols-2 md:gap-y-16">
+        {work.map((entry) => {
             const p = entry.data;
-            const title = displayTitle(p.title, p.wrap);
+            const titleId = `project-${entry.id}`;
             return (
-                <div data-card-wrapper class="sticky" style={`top: ${STICKY_TOP + i * CASCADE}px`}>
-                    <article
-                        data-card
-                        class="relative flex min-h-[70svh] flex-col justify-between overflow-hidden rounded-2xl border border-line bg-bg-raise p-6 transition-colors duration-300 hover:border-fg/25 has-[>a:active]:border-fg/25 md:min-h-[min(72svh,44rem)] md:p-12"
-                    >
-                        <a href={`/work/${entry.id}`} tabindex="-1" aria-hidden="true" class="absolute inset-0 z-10" />
-                        {/* per-project glow */}
-                        <div
-                            class="pointer-events-none absolute -top-1/3 -right-1/4 h-[80%] w-[80%] rounded-full opacity-[0.13] blur-3xl"
-                            style={`background: ${p.accent}`}
-                            aria-hidden="true"
-                        />
-
-                        <span
-                            data-num={`0${i + 1}`}
-                            class="display pointer-events-none absolute right-4 -bottom-6 text-[clamp(8rem,22vw,20rem)] opacity-[0.045] select-none before:content-[attr(data-num)] md:-bottom-12"
-                            aria-hidden="true"
-                        />
-
-                        <header class="relative flex items-start justify-between gap-4">
-                            <span class="meta">©{p.year}</span>
-                            <span class="meta hidden text-right sm:block">{p.tasks.join(' · ')}</span>
-                        </header>
-
-                        <div class="relative my-8 md:my-10">
-                            <p class="mb-4 flex items-center gap-2 font-mono text-xs tracking-[0.14em] uppercase md:text-sm">
-                                <span
-                                    class="inline-block h-1.5 w-1.5 shrink-0 rounded-full"
-                                    style={`background: ${p.accent}`}
-                                    aria-hidden="true"
+                <article data-card-wrapper data-card class="project-entry min-w-0">
+                    <a href={`/work/${entry.id}`} aria-labelledby={titleId} class="project-link group block rounded-lg">
+                        <div class="project-image overflow-hidden rounded-lg border border-line bg-bg-raise">
+                            {entry.id === 'aqt-sync' ? (
+                                <RestorePreview />
+                            ) : entry.id === 'aqt-health' ? (
+                                <HealthFlow />
+                            ) : p.image ? (
+                                <Picture
+                                    src={p.image}
+                                    alt={p.imageAlt ?? `${p.title} website preview`}
+                                    formats={['avif', 'webp']}
+                                    widths={[480, 720, 960, 1280]}
+                                    sizes="(min-width: 1616px) 752px, (min-width: 768px) calc((100vw - 7rem) / 2), calc(100vw - 2.5rem)"
+                                    loading="lazy"
+                                    class="h-full w-full object-cover transition-transform duration-500 ease-out-strong motion-safe:group-hover:scale-[1.025] motion-safe:group-focus-visible:scale-[1.025]"
                                 />
-                                {p.subtitle}
-                            </p>
-                            <h3 class="display text-[clamp(1.9rem,5.8vw,5.8rem)]">
-                                {title.lines.map((words, j) => (
-                                    <Fragment>
-                                        {j > 0 && (title.joiner || <wbr />)}
-                                        {words.map(({ text, outline }, k) => (
-                                            <span
-                                                class:list={{ 'display-outline': outline }}
-                                                style={j === 0 && k === 0 ? opticalIndent(text) : undefined}
-                                            >
-                                                {text}
-                                            </span>
-                                        ))}
-                                    </Fragment>
-                                ))}
-                            </h3>
-                            <p class="mt-6 max-w-lg text-sm leading-relaxed text-muted max-md:line-clamp-5 md:text-base">
-                                {p.description}
-                            </p>
+                            ) : (
+                                <div class="grid h-full place-items-center p-8 text-center text-2xl text-muted">
+                                    {p.subtitle}
+                                </div>
+                            )}
                         </div>
-
-                        <footer class="relative z-20 flex flex-col gap-6 border-t border-line pt-6 xl:flex-row xl:items-center xl:justify-between">
-                            <ul class="flex flex-wrap gap-2">
-                                {p.tags.map((tag) => (
-                                    <li class="rounded-full border border-line px-3 py-1 font-mono text-[0.625rem] tracking-[0.14em] text-fg/70 uppercase">
-                                        {tag}
-                                    </li>
-                                ))}
-                            </ul>
-                            <div class="flex flex-wrap gap-x-6 gap-y-2">
-                                <a
-                                    href={`/work/${entry.id}`}
-                                    class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-accent uppercase"
-                                >
-                                    Case Study <span aria-hidden="true">→</span>
-                                </a>
-                                {p.links.map((link) => (
+                        <div class="mt-5 flex items-baseline justify-between gap-4">
+                            <h3
+                                id={titleId}
+                                class="heading text-2xl leading-tight transition-colors group-hover:text-accent group-focus-visible:text-accent md:text-3xl"
+                            >
+                                <span class="sr-only">Case study: </span>
+                                {p.title}
+                            </h3>
+                            <span
+                                aria-hidden="true"
+                                class="text-xl text-muted transition-colors group-hover:text-accent group-focus-visible:text-accent"
+                            >
+                                →
+                            </span>
+                        </div>
+                        <p class="mt-2 max-w-xl text-sm leading-relaxed text-muted md:text-base">{p.summary}</p>
+                    </a>
+                    <footer class="mt-4 grid gap-x-4 gap-y-3 border-t border-line pt-4 lg:flex lg:flex-wrap lg:items-center lg:justify-between">
+                        <p class="text-[0.8125rem] text-muted">
+                            {p.tags.slice(0, 3).join(' / ')} <span aria-hidden="true">·</span> {p.year}
+                        </p>
+                        <div class="flex flex-wrap gap-x-5 gap-y-7">
+                            {p.links.map((link) => {
+                                const external = link.external || isExternalHref(link.href);
+                                return (
                                     <a
                                         href={link.href}
-                                        target={link.external || isExternalHref(link.href) ? '_blank' : undefined}
-                                        rel={
-                                            link.external || isExternalHref(link.href)
-                                                ? 'noopener noreferrer'
-                                                : undefined
-                                        }
-                                        class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
+                                        target={external ? '_blank' : undefined}
+                                        rel={external ? 'noopener noreferrer' : undefined}
+                                        class="link-line touch-target inline-flex min-h-11 items-center gap-1 text-sm text-fg/80 transition-colors hover:text-accent"
                                     >
-                                        {link.label} <span aria-hidden="true">↗</span>
-                                        {(link.external || isExternalHref(link.href)) && (
-                                            <span class="sr-only">(opens in new tab)</span>
-                                        )}
+                                        {link.label}
+                                        <span class="sr-only"> for {p.title}</span>{' '}
+                                        <span aria-hidden="true">{external ? '↗' : '→'}</span>
+                                        {external && <span class="sr-only">(opens in new tab)</span>}
                                     </a>
-                                ))}
-                            </div>
-                        </footer>
-
-                        <div
-                            data-card-chip
-                            class="pointer-events-none absolute top-0 left-0 z-30 hidden rounded-full bg-accent px-4 py-2 font-mono text-[0.6875rem] font-medium tracking-[0.14em] whitespace-nowrap text-black uppercase opacity-0 md:block"
-                            aria-hidden="true"
-                        >
-                            View Case ↗
+                                );
+                            })}
                         </div>
-
-                        <div
-                            data-card-veil
-                            class="pointer-events-none absolute inset-0 rounded-2xl bg-bg opacity-0"
-                            aria-hidden="true"
-                        />
-                    </article>
-                </div>
+                    </footer>
+                </article>
             );
         })}
     </div>
 </section>
 
-<script>
-    import { gsap, ScrollTrigger, prefersReducedMotion, supportsHover } from '../lib/gsap';
-    import { scrollToTarget } from '../lib/lenis';
-
-    const STICKY_TOP = 88;
-
-    const CASCADE = 14;
-
-    const VIEWPORT_MARGIN = 16;
-
-    const naturalTop = (el: HTMLElement) => {
-        el.style.position = 'static';
-        const top = el.getBoundingClientRect().top + window.scrollY;
-        el.style.position = '';
-
-        return top;
-    };
-
-    const root = document.querySelector<HTMLElement>('[data-projects]');
-
-    if (root) {
-        const wrappers = gsap.utils.toArray<HTMLElement>('[data-card-wrapper]');
-
-        // Measured in svh so mobile toolbars collapsing mid-scroll don't move cards that are already stuck.
-        const viewport = document.createElement('div');
-        viewport.style.cssText = 'position:fixed;top:0;height:100svh;width:0;visibility:hidden;pointer-events:none';
-        document.body.append(viewport);
-
-        // If any card is taller than the space below its offset, its links would stick below the fold,
-        // so the whole stack scrolls as a plain list instead.
-        const placeCards = () => {
-            const fits = wrappers.every(
-                (w, i) => STICKY_TOP + i * CASCADE + w.offsetHeight + VIEWPORT_MARGIN <= viewport.offsetHeight,
-            );
-
-            wrappers.forEach((w, i) => (w.style.top = fits ? `${STICKY_TOP + i * CASCADE}px` : 'auto'));
-        };
-
-        placeCards();
-        window.addEventListener('resize', placeCards);
-        new ResizeObserver(() => {
-            placeCards();
-            ScrollTrigger.refresh();
-        }).observe(root);
-
-        // Returning to the tab re-focuses the last element; that is not a reason to scroll.
-        let focusedAtBlur: Element | null = null;
-        window.addEventListener('blur', () => (focusedAtBlur = document.activeElement));
-
-        // Chrome carries a keyboard scroll that is still animating (PageDown, then a quick Tab) on past any
-        // programmatic jump, so the focused card is held in place for a moment or until the next input.
-        const HOLD_MS = 600;
-        let heldCard: HTMLElement | null = null;
-        let holdUntil = 0;
-
-        const holdCard = () => {
-            if (!heldCard || heldCard.style.top === 'auto' || performance.now() > holdUntil) {
-                heldCard = null;
-
-                return;
-            }
-
-            scrollToTarget(naturalTop(heldCard) - parseFloat(heldCard.style.top), { immediate: true });
-        };
-
-        window.addEventListener('scroll', holdCard, { passive: true });
-
-        for (const type of ['keydown', 'wheel', 'pointerdown']) {
-            window.addEventListener(type, () => (heldCard = null), { capture: true, passive: true });
-        }
-
-        root.addEventListener('focusin', (e) => {
-            const restored = e.target === focusedAtBlur;
-            focusedAtBlur = null;
-
-            if (restored || !(e.target instanceof HTMLElement) || !e.target.matches(':focus-visible')) return;
-            const wrapper = e.target.closest<HTMLElement>('[data-card-wrapper]');
-
-            if (!wrapper || wrapper === e.target || wrapper.style.top === 'auto') return;
-            heldCard = wrapper;
-            holdUntil = performance.now() + HOLD_MS;
-            holdCard();
-        });
-
-        if (supportsHover() && !prefersReducedMotion()) {
-            for (const card of root.querySelectorAll<HTMLElement>('[data-card]')) {
-                const chip = card.querySelector<HTMLElement>('[data-card-chip]');
-
-                if (!chip) continue;
-                gsap.set(chip, { xPercent: -50, yPercent: -140, autoAlpha: 0, scale: 0.6 });
-                const xTo = gsap.quickTo(chip, 'x', { duration: 0.35, ease: 'power3.out' });
-                const yTo = gsap.quickTo(chip, 'y', { duration: 0.35, ease: 'power3.out' });
-
-                // Keep the chip inside the card, which clips it.
-                const chipAt = (e: MouseEvent) => {
-                    const rect = card.getBoundingClientRect();
-                    const half = chip.offsetWidth / 2 + 12;
-
-                    return {
-                        x: gsap.utils.clamp(half, rect.width - half, e.clientX - rect.left),
-                        y: Math.max(chip.offsetHeight * 1.4 + 12, e.clientY - rect.top),
-                    };
-                };
-
-                const place = (e: MouseEvent) => {
-                    const { x, y } = chipAt(e);
-                    xTo(x);
-                    yTo(y);
-                };
-
-                const show = () => gsap.to(chip, { autoAlpha: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' });
-                const hide = () => gsap.to(chip, { autoAlpha: 0, scale: 0.6, duration: 0.25 });
-
-                card.addEventListener('mouseenter', (e) => {
-                    gsap.set(chip, chipAt(e));
-                    show();
-                });
-                card.addEventListener('mousemove', place);
-                card.addEventListener('mouseleave', hide);
-
-                const footer = card.querySelector('footer');
-                footer?.addEventListener('mouseenter', hide);
-                footer?.addEventListener('mouseleave', show);
-            }
-        }
-
-        if (!prefersReducedMotion()) {
-            wrappers.forEach((wrapper, i) => {
-                if (i === wrappers.length - 1) return;
-                const card = wrapper.querySelector('[data-card]');
-                const next = wrappers[i + 1];
-
-                const trigger = {
-                    trigger: next,
-                    start: 'top bottom',
-                    end: () => `top ${wrapper.style.top === 'auto' ? '0px' : wrapper.style.top}`,
-                    scrub: true,
-                };
-
-                gsap.to(card, { scale: 0.94, ease: 'none', transformOrigin: 'center top', scrollTrigger: trigger });
-                gsap.to(wrapper.querySelector('[data-card-veil]'), {
-                    opacity: 0.55,
-                    ease: 'none',
-                    scrollTrigger: trigger,
-                });
-            });
-        }
+<style>
+    [data-projects] {
+        --section-lead: 2rem;
     }
-</script>
+
+    .project-entry {
+        scroll-margin-top: 6rem;
+    }
+
+    footer .link-line::after {
+        bottom: 0.75rem;
+    }
+
+    .project-image {
+        width: 100%;
+        aspect-ratio: 8 / 5;
+        min-height: 20rem;
+    }
+</style>

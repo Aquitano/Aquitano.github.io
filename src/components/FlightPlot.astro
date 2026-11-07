@@ -1,0 +1,200 @@
+---
+import measurements from '../data/flight.json';
+
+interface Props {
+    metric?: 'altitude' | 'temperature' | 'pressure';
+}
+
+const { metric = 'altitude' } = Astro.props;
+
+const scales = {
+    altitude: { title: 'Altitude', unit: 'km', divisor: 1000, min: 0, max: 40, ticks: [0, 20, 40], color: '#bbacff' },
+    temperature: {
+        title: 'Temperature',
+        unit: '°C',
+        divisor: 1,
+        min: -60,
+        max: 50,
+        ticks: [-60, 0, 50],
+        color: '#f3bc8a',
+    },
+    pressure: {
+        title: 'Air pressure',
+        unit: 'hPa',
+        divisor: 1,
+        min: 0,
+        max: 1000,
+        ticks: [0, 500, 1000],
+        color: '#8bc9dd',
+    },
+};
+
+const scale = scales[metric];
+
+const start = measurements[0].time;
+
+const end = measurements[measurements.length - 1].time;
+
+const axisStart = Math.floor(start / 3600) * 3600;
+
+const axisEnd = Math.ceil(end / 600) * 600;
+
+const x = (time: number) => ((time - axisStart) / (axisEnd - axisStart)) * 1000;
+
+const y = (value: number) => 1000 - ((value / scale.divisor - scale.min) / (scale.max - scale.min)) * 1000;
+
+const path = measurements
+    .map((point, i) => `${i === 0 ? 'M' : 'L'}${x(point.time).toFixed(2)},${y(point[metric]).toFixed(2)}`)
+    .join(' ');
+
+const ticks = Array.from(
+    { length: Math.floor((axisEnd - axisStart) / 3600) + 1 },
+    (_, i) => axisStart + i * 3600,
+).filter((time) => end - time >= 30 * 60);
+
+const timeLabel = (time: number) => new Date(time * 1000).toISOString().slice(11, 16);
+
+const values = measurements.map((point) => point[metric] / scale.divisor);
+
+const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values);
+---
+
+<figure class:list={['flight-plot', metric === 'altitude' && 'plot-overview']}>
+    <figcaption class="plot-caption">
+        <div>
+            <h3 class="text-xl font-medium tracking-tight md:text-2xl">{scale.title}</h3>
+        </div>
+        <p class="text-right">
+            <span class="block text-xl font-medium tabular-nums md:text-3xl">
+                {extreme.toFixed(metric === 'altitude' ? 2 : 1)} <span class="text-sm text-muted">{scale.unit}</span>
+            </span>
+            <span class="text-xs text-muted">{metric === 'altitude' ? 'highest recorded' : 'lowest recorded'}</span>
+        </p>
+    </figcaption>
+    <div class="plot-area">
+        <svg
+            viewBox="0 0 1000 1000"
+            preserveAspectRatio="none"
+            role="img"
+            aria-label={`${scale.title} in ${scale.unit} from ${timeLabel(start)} to ${timeLabel(end)} UTC, plotted from ${measurements.length} timestamped measurements.`}
+        >
+            <title>{scale.title} over the recorded flight timeline</title>
+            {scale.ticks.map((value) => (
+                <line
+                    x1="0"
+                    x2="1000"
+                    y1={y(value * scale.divisor)}
+                    y2={y(value * scale.divisor)}
+                    stroke="#353244"
+                    vector-effect="non-scaling-stroke"
+                />
+            ))}
+            <path
+                d={path}
+                fill="none"
+                stroke={scale.color}
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                vector-effect="non-scaling-stroke"
+            />
+        </svg>
+        {scale.ticks.map((value) => (
+            <span aria-hidden="true" class="y-label" style={`top:${y(value * scale.divisor) / 10}%`}>
+                {value.toLocaleString('en-US')}
+            </span>
+        ))}
+        {ticks.map((time, i) => (
+            <Fragment>
+                <span
+                    aria-hidden="true"
+                    class:list={['x-tick', i !== 0 && i !== 2 && 'intermediate-tick']}
+                    style={`left:${x(time) / 10}%`}
+                ></span>
+                <span
+                    aria-hidden="true"
+                    class:list={['x-label', i === 0 && 'first-tick', i !== 0 && i !== 2 && 'intermediate-tick']}
+                    style={`left:${x(time) / 10}%`}
+                >
+                    {timeLabel(time)}
+                </span>
+            </Fragment>
+        ))}
+        <span aria-hidden="true" class="x-tick" style={`left:${x(end) / 10}%`}></span>
+        <span aria-hidden="true" class="y-label axis-unit">
+            {scale.unit}
+        </span>
+        <span aria-hidden="true" class="x-label last-tick" style={`left:${x(end) / 10}%`}>
+            {timeLabel(end)}
+        </span>
+    </div>
+</figure>
+<style>
+    .flight-plot {
+        border: 1px solid #353244;
+        border-radius: 0.75rem;
+        padding: clamp(1rem, 3vw, 2.5rem);
+        background: #14131c;
+    }
+    .plot-caption {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        gap: 1rem;
+    }
+    .plot-caption > p {
+        flex-shrink: 0;
+    }
+    .plot-area {
+        position: relative;
+        height: 14rem;
+        margin: 2rem 0.25rem 3rem 4rem;
+    }
+    .plot-overview .plot-area {
+        height: clamp(14rem, 28vw, 24rem);
+    }
+    .plot-area svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+    .x-label,
+    .y-label {
+        position: absolute;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: #b5b1c6;
+        white-space: nowrap;
+    }
+    .x-tick {
+        position: absolute;
+        top: 100%;
+        width: 1px;
+        height: 5px;
+        background: #777183;
+    }
+    .x-label {
+        top: calc(100% + 0.75rem);
+        transform: translateX(-50%);
+    }
+    .y-label {
+        right: calc(100% + 0.75rem);
+        transform: translateY(-50%);
+    }
+    .axis-unit {
+        top: -1.5rem;
+    }
+    .first-tick {
+        transform: none;
+    }
+    .last-tick {
+        transform: translateX(-100%);
+    }
+    @media (max-width: 640px) {
+        .intermediate-tick {
+            display: none;
+        }
+    }
+</style>

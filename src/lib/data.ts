@@ -22,7 +22,7 @@ export const socials = [
 ];
 
 export const manifesto =
-    'I build software end to end, from outage handling inside a 100M events/s analytics pipeline to Java services rewritten from legacy COBOL and web interfaces I design myself.';
+    'My projects tend to start with something I need: encrypted backups for my notes, one API for my health data, or a place to focus. I work across the service and the interface so I can shape how the whole thing behaves.';
 
 export const experience = [
     {
