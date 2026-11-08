@@ -84,7 +84,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
         </p>
     </header>
     {project.image && (
-        <div data-detail-banner class="section-x relative pt-2 pb-10 md:pb-16">
+        <div data-detail-banner class="section-x relative z-36 pt-2 pb-10 md:pb-16">
             <div class="relative overflow-hidden rounded-2xl border border-line">
                 <div
                     class="pointer-events-none absolute -top-1/3 -right-1/4 h-[70%] w-[70%] rounded-full opacity-[0.08] blur-3xl"
@@ -95,6 +95,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     <Picture
                         src={project.image}
                         formats={['avif', 'webp']}
+                        quality={80}
                         alt={project.imageAlt ?? `${project.title} — ${project.subtitle}`}
                         widths={[640, 960, 1280, 1600, 2400]}
                         sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
