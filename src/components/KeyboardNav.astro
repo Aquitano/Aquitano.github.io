@@ -399,13 +399,13 @@ const SHORTCUTS = [
                 hint.classList.remove('is-pulse');
             });
 
-            // Past the hero the pill would sit over body text in the left gutter.
+            // Once anything below the hero reaches the bottom strip, the pill would sit over body text.
             const hero = document.querySelector('[data-hero]');
 
             if (hero) {
-                new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting)).observe(
-                    hero,
-                );
+                new IntersectionObserver(([entry]) => hint.classList.toggle('is-away', !entry.isIntersecting), {
+                    rootMargin: '-90% 0px 0px 0px',
+                }).observe(hero);
             }
 
             // Ping once per session.

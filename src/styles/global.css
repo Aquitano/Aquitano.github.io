@@ -247,6 +247,11 @@ body {
         .touch-target.link-line::after {
             bottom: calc(var(--touch-pad) - 2px);
         }
+
+        /* The header's tap padding reaches past the top of the screen, which would clip an outside ring. */
+        [data-header] .touch-target:focus-visible {
+            outline-offset: -4px;
+        }
     }
 
     @media (prefers-reduced-motion: no-preference) {
