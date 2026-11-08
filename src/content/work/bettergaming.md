@@ -20,7 +20,9 @@ links:
     - label: GitHub
       href: https://github.com/Aquitano/BetterGaming
 accent: '#5ee9b5'
-image: ../../assets/work/bettergaming.webp
+image: ../../assets/work/bettergaming-interface.webp
+imageAlt: 'Game catalogue filtered to three Assassin’s Creed titles and sorted from cheapest to most expensive.'
+imageCaption: 'The live demo: a search for “Assassin”, sorted by price.'
 order: 5
 ---
 

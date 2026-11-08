@@ -5,10 +5,10 @@ import SectionHeading from './SectionHeading.astro';
 
 <section id="stack" data-stack-section data-minimap="Stack" class="section-x section-y">
     <SectionHeading index="04" title="Stack" />
-    <div class="grid grid-cols-2 gap-px overflow-hidden border border-line bg-line lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-px overflow-hidden border border-line bg-line min-[360px]:grid-cols-2 lg:grid-cols-4">
         {stack.map((group) => (
-            <div data-stack-col class="bg-bg px-5 py-6 md:p-8">
-                <h3 class="meta mb-5 text-accent">{group.label}</h3>
+            <div data-stack-col class="min-w-0 bg-bg px-5 py-6 md:p-8">
+                <h3 class="meta mb-5 wrap-break-word text-accent">{group.label}</h3>
                 <ul class="space-y-2">
                     {group.items.map((item) => (
                         <li class="group/item flex items-center text-sm text-fg/85 transition-colors duration-200 hover:text-fg md:text-base">

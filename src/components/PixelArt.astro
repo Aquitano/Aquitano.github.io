@@ -1,0 +1,179 @@
+---
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+    art: ImageMetadata;
+}
+
+const { art } = Astro.props;
+---
+
+<div data-pixel-art class="pixel-art">
+    <img src={art.src} width={art.width} height={art.height} alt="" decoding="async" />
+    <canvas aria-hidden="true"></canvas>
+</div>
+
+<style>
+    .pixel-art {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+    }
+
+    /* Without the script the source still shows, scaled without smoothing. */
+    .pixel-art img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: pixelated;
+    }
+
+    /* With the script and motion on, the art first appears by decoding, so the fallback must not flash in first. */
+    @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+        .pixel-art img {
+            visibility: hidden;
+        }
+    }
+
+    .pixel-art canvas {
+        display: none;
+    }
+
+    .pixel-art[data-ready] img {
+        display: none;
+    }
+
+    .pixel-art[data-ready] canvas {
+        display: block;
+    }
+</style>
+
+<script>
+    import { ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
+
+    type Cell = { x: number; y: number; color: string | null };
+
+    const UNLIT_ALPHA = 0.07;
+
+    const DECODE_MS = 1400;
+
+    const NOISE_MS = 70;
+
+    const setUp = async (root: HTMLElement) => {
+        const img = root.querySelector('img');
+        const canvas = root.querySelector('canvas');
+        const ctx = canvas?.getContext('2d');
+
+        if (!img || !canvas || !ctx) return;
+        await img.decode().catch(() => undefined);
+
+        const cols = img.naturalWidth;
+        const rows = img.naturalHeight;
+        const source = document.createElement('canvas');
+        source.width = cols;
+        source.height = rows;
+        const sourceCtx = source.getContext('2d', { willReadFrequently: true });
+
+        if (!sourceCtx || !cols || !rows) return;
+        sourceCtx.drawImage(img, 0, 0);
+        const { data } = sourceCtx.getImageData(0, 0, cols, rows);
+
+        const cells: Cell[] = [];
+
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < cols; x++) {
+                const i = (y * cols + x) * 4;
+                cells.push({ x, y, color: data[i + 3] ? `rgb(${data[i]} ${data[i + 1]} ${data[i + 2]})` : null });
+            }
+        }
+
+        const palette = [...new Set(cells.flatMap((cell) => (cell.color ? [cell.color] : [])))];
+
+        // Unlit cells fade out toward the panel's edges, so the grid has no hard rectangle around the art.
+        const unlitAlpha = cells.map(({ x, y }) => {
+            const distance = Math.hypot((x + 0.5) / cols - 0.5, (y + 0.5) / rows - 0.5) * 2;
+
+            return UNLIT_ALPHA * Math.min(1, Math.max(0, (1 - distance) / 0.5));
+        });
+
+        const unlit = getComputedStyle(root).getPropertyValue('--project').trim() || '#888';
+        let size = 0;
+
+        // Whole device pixels per cell keep every gap the same width at any panel size.
+        const fit = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const box = root.getBoundingClientRect();
+            size = Math.max(2, Math.floor(Math.min(box.width / cols, box.height / rows) * dpr));
+            canvas.width = cols * size;
+            canvas.height = rows * size;
+            canvas.style.width = `${(cols * size) / dpr}px`;
+            canvas.style.height = `${(rows * size) / dpr}px`;
+        };
+
+        const draw = (colorOf: (cell: Cell, index: number) => string | null) => {
+            // Below 4 device pixels a 1px gap would eat a third of each cell and wash the art out.
+            const gapX = size < 4 ? 0 : Math.max(1, Math.round(size * 0.2));
+            const gapY = size < 4 ? 0 : Math.max(1, Math.round(size * 0.1));
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            cells.forEach((cell, index) => {
+                const color = colorOf(cell, index);
+                ctx.globalAlpha = color ? 1 : unlitAlpha[index];
+                ctx.fillStyle = color ?? unlit;
+                ctx.fillRect(cell.x * size, cell.y * size, size - gapX, size - gapY);
+            });
+            ctx.globalAlpha = 1;
+        };
+
+        const settled = (cell: Cell) => cell.color;
+
+        // Until the panel scrolls in it shows only the empty grid, so the art appears once, by decoding.
+        let colorOf: (cell: Cell, index: number) => string | null = prefersReducedMotion() ? settled : () => null;
+
+        // Cells show noise until their own settle time, sweeping left to right.
+        const decode = () => {
+            const settle = cells.map((cell) => (cell.x / cols) * 0.55 + Math.random() * 0.45);
+            // Noise is dense on the art and thins toward the edges like the grid, so no rectangle flashes up.
+            const noiseChance = cells.map((cell, i) => (cell.color ? 0.85 : (unlitAlpha[i] / UNLIT_ALPHA) * 0.3));
+            const start = performance.now();
+            let tick = -1;
+            let noise: (string | null)[] = [];
+
+            const frame = (now: number) => {
+                const elapsed = now - start;
+                const t = elapsed / DECODE_MS;
+
+                // Fresh noise on every frame would strobe at the display's refresh rate.
+                if (Math.floor(elapsed / NOISE_MS) !== tick) {
+                    tick = Math.floor(elapsed / NOISE_MS);
+                    noise = noiseChance.map((chance) =>
+                        Math.random() < chance ? palette[Math.floor(Math.random() * palette.length)] : null,
+                    );
+                }
+
+                colorOf = t < 1 ? (cell, i) => (t >= settle[i] ? cell.color : noise[i]) : settled;
+                draw(colorOf);
+
+                if (t < 1) requestAnimationFrame(frame);
+            };
+
+            requestAnimationFrame(frame);
+        };
+
+        fit();
+        draw(colorOf);
+        root.toggleAttribute('data-ready', true);
+        new ResizeObserver(() => {
+            fit();
+            draw(colorOf);
+        }).observe(root);
+
+        if (!prefersReducedMotion()) {
+            ScrollTrigger.create({ trigger: root, start: 'top bottom', once: true, onEnter: decode });
+        }
+    };
+
+    for (const root of document.querySelectorAll<HTMLElement>('[data-pixel-art]')) void setUp(root);
+</script>

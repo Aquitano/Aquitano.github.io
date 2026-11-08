@@ -1,4 +1,5 @@
 ---
+import DemoNotice from '../../../components/GriffinDemoNotice.astro';
 import "font-awesome/css/font-awesome.min.css";
 import "@fontsource/yantramanav/300.css";
 import "@fontsource/yantramanav/400.css";
@@ -13,6 +14,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="robots" content="noindex, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="Der originale Griffin Energy Drink mit Brummselbeere! Schulprojekt" />
         <link rel="shortcut icon" type="image/x-icon" href={getGriffinAsset('favicon.jpg')} />
@@ -21,11 +23,12 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
             name="keywords"
             content="Brummselbeere, Griffin, GreenGriffin, Griffin Energy, ASG, ASG Passau, GriffinEnergy, Onlineshop, Energy Drink"
         />
-        <title>Griffin Energy - Donation-Code</title>
+        <title>Donation-Code | Griffin Energy Demo</title>
         {griffinStylesheets.map((href) => <link rel="stylesheet" href={href} />)}
     </head>
 
     <body>
+        <DemoNotice />
         <!-- ===================================== ==== Start header -->
         <!-- Header desktop -->
         <header class="header home2">
@@ -37,12 +40,14 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         <div class="navbar-header">
                             <!-- Logo -->
                             <div class="navbar-brand">
-                                <a class="logo" href="../">
+                                <a class="logo" href="/showcase/griffin/">
                                     <img
                                         src={getGriffinAsset('images/2logo.png')}
                                         alt="Griffin Energy Drink"
                                         style="width: 73%"
                                         loading="lazy"
+                                        width="225"
+                                        height="115"
                                     />
                                 </a>
                             </div>
@@ -51,10 +56,10 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         <!-- Main navigation -->
                         <div class="otf-flex-item"></div>
                         <ul class="main-nav nav navbar-nav navbar-right">
-                            <li class="dropdown"><a href="../" rel="prefetch">Home</a></li>
-                            <li class="dropdown"><a href="../Product/" rel="prefetch">Product</a></li>
+                            <li class="dropdown"><a href="/showcase/griffin/" rel="prefetch">Home</a></li>
+                            <li class="dropdown"><a href="/showcase/griffin/Product/" rel="prefetch">Product</a></li>
                             <li class="dropdown active">
-                                <a href="/" rel="prefetch">Donation-Code</a>
+                                <a aria-current="page" href="/showcase/griffin/Donation-Code/" rel="prefetch">Donation-Code</a>
                             </li>
                         </ul>
                         <!-- /Main navigation -->
@@ -95,16 +100,17 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                         class="navbar-toggle collapsed"
                         data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1"
+                        aria-controls="bs-example-navbar-collapse-1"
                         aria-expanded="false"
                     >
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">Navigation öffnen</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span></button
                     ><!-- logo -->
                     <div class="navbar-brand">
-                        <a class="logo" href="../"
-                            ><img src={getGriffinAsset('images/2logo.png')} alt="Logo" loading="lazy" /></a
+                        <a class="logo" href="/showcase/griffin/"
+                            ><img src={getGriffinAsset('images/2logo.png')} alt="Griffin Energy Markenlogo" loading="lazy" width="225" height="115" /></a
                         >
                     </div>
                     <!-- logo -->
@@ -112,21 +118,18 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                 <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="../" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                            <a href="/showcase/griffin/" rel="prefetch"
                                 >Home</a
                             >
                         </li>
                         <li>
                             <a
-                                href="../Product/"
-                                role="button"
-                                aria-haspopup="true"
-                                aria-expanded="false"
+                                href="/showcase/griffin/Product/"
                                 rel="prefetch">Product</a
                             >
                         </li>
                         <li class="active">
-                            <a href="/" role="button" aria-haspopup="true" aria-expanded="false" rel="prefetch"
+                            <a aria-current="page" href="/showcase/griffin/Donation-Code/" rel="prefetch"
                                 >Donation-Code</a
                             >
                         </li>
@@ -137,11 +140,12 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
         <!-- /header-mobile -->
         <!-- End header ==== ======================================= -->
         <!-- ===================================== ==== Start breadcrumb -->
+        <main id="demo-content" tabindex="-1">
         <div class="breadcrumb">
             <!-- container -->
             <div class="container">
-                <h1>Hier deinen Donation-Code eintragen!</h1>
-                <ol class="item-breadcrumb">
+                <h1>Donation-Code (Demo)</h1>
+                <div class="item-breadcrumb">
                     <div class="coupon pull-left">
                         <input
                             type="text"
@@ -149,36 +153,13 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                             class="input-text TTT"
                             id="DC"
                             value=""
-                            placeholder="Donation-Code"
-                            required
+                            placeholder="Donation-Code (Demo)"
+                            aria-label="Donation-Code (Demo)"
+                            disabled
                         />
-                        <script defer is:inline>
-                            document.addEventListener('input', (e) => {
-                                const t = e.target;
-                                if (t && t instanceof HTMLInputElement && t.id === 'DC') {
-                                    t.value = t.value.toUpperCase();
-                                }
-                            });
-                            window.onload = function () {
-                                function querySt(ji) {
-                                    const hu = window.location.search.substring(1);
-                                    const gy = hu.split('&');
-                                    for (i = 0; i < gy.length; i++) {
-                                        ft = gy[i].split('=');
-                                        if (ft[0] == ji) {
-                                            return ft[1];
-                                        }
-                                    }
-                                }
-                                var DC = querySt('DC');
-                                if (DC == null) {
-                                } else {
-                                    document.getElementById('DC').value = DC;
-                                }
-                            };
-                        </script>
+
                     </div>
-                </ol>
+                </div>
             </div>
             <!-- /container -->
         </div>
@@ -189,7 +170,7 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
             <div class="container">
                 <!-- tab-content -->
                 <div class="tab-content">
-                    <h3>An wen willst du spenden?</h3>
+                    <h2>Spendenkonzept</h2>
                     <div id="grid-view" class="tab-pane fade in active">
                         <div class="product products-grid">
                             <div class="row row-products">
@@ -200,9 +181,11 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                                 <a href="https://www.arborday.org/" title=""
                                                     ><img
                                                         src={getGriffinAsset('images/ArborDayFoundatiion.png')}
-                                                        alt=""
+                                                        alt="Arbor Day Foundation"
                                                         style="width: 132px"
                                                         class="product-featured-image"
+                                                        width="487"
+                                                        height="487"
                                                     /></a
                                                 >
                                             </div>
@@ -210,49 +193,10 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                         <!-- /.product-image -->
                                         <div class="product-meta">
                                             <!-- end rating -->
-                                            <h4 class="product-name">
-                                                <a href="https://www.arborday.org/" title="">Arbor Day Foundation |</a
-                                                ><a href="#myModal" class="trigger-btn" data-toggle="modal"
-                                                    >Jetzt Spenden</a
-                                                >
-                                                <div id="myModal" class="modal fade">
-                                                    <div class="modal-dialog modal-confirm">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header flex-column">
-                                                                <div class="icon-box">
-                                                                    <i class="fa fa-question" aria-hidden="true"></i>
-                                                                </div>
-                                                                <h4 class="modal-title w-100">Bist du dir sicher?</h4>
-                                                                <button
-                                                                    type="button"
-                                                                    class="close"
-                                                                    data-dismiss="modal"
-                                                                    aria-hidden="true"
-                                                                >
-                                                                    &times;
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-center">
-                                                                <button
-                                                                    type="button"
-                                                                    class="btn btn-secondary"
-                                                                    data-dismiss="modal"
-                                                                >
-                                                                    Nein
-                                                                </button>
-                                                                <button
-                                                                    type="button"
-                                                                    class="btn btn-primary"
-                                                                    data-dismiss="modal"
-                                                                >
-                                                                    Ja
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Modal HTML -->
-                                            </h4>
+                                            <h3 class="product-name">
+                                                <a href="https://www.arborday.org/" title="">Arbor Day Foundation</a
+                                                ><button type="button" class="demo-donation" disabled>Spenden (nur Demo)</button>
+                                            </h3>
                                         </div>
                                         <!-- /.product-meta -->
                                     </div>
@@ -264,9 +208,11 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                                 <a href="https://www.ifaw.org/de" title=""
                                                     ><img
                                                         src={getGriffinAsset('images/ifaw.jpg')}
-                                                        alt=""
+                                                        alt="International Fund for Animal Welfare"
                                                         style="width: 250px"
                                                         class="product-featured-image"
+                                                        width="1200"
+                                                        height="630"
                                                     /></a
                                                 >
                                             </div>
@@ -275,12 +221,10 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                         <div class="product-meta">
                                             <span></span>
                                             <!-- end rating -->
-                                            <h4 class="product-name">
-                                                <a href="https://www.ifaw.org/de" title="">Fonds for Animal Welfare |</a
-                                                ><a href="#myModal" class="trigger-btn" data-toggle="modal"
-                                                    >Jetzt Spenden</a
-                                                >
-                                            </h4>
+                                            <h3 class="product-name">
+                                                <a href="https://www.ifaw.org/de" title="">International Fund for Animal Welfare</a
+                                                ><button type="button" class="demo-donation" disabled>Spenden (nur Demo)</button>
+                                            </h3>
                                         </div>
                                         <!-- /.product-meta -->
                                     </div>
@@ -292,9 +236,11 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                                 <a href="https://www.savethechildren.org/" title=""
                                                     ><img
                                                         src={getGriffinAsset('images/SaveTheChildren.jpg')}
-                                                        alt=""
+                                                        alt="Save the Children"
                                                         style="width: 130px"
                                                         class="product-featured-image"
+                                                        width="1900"
+                                                        height="1900"
                                                     /></a
                                                 >
                                             </div>
@@ -302,49 +248,10 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
                                         <!-- /.product-image -->
                                         <div class="product-meta">
                                             <!-- end rating -->
-                                            <h4 class="product-name">
+                                            <h3 class="product-name">
                                                 <a href="https://www.savethechildren.org/" title=""
-                                                    >Save the Children |
-                                                </a><a href="#myModal" class="trigger-btn" data-toggle="modal"
-                                                    >Jetzt Spenden</a
-                                                >
-                                                <div id="myModal" class="modal fade">
-                                                    <div class="modal-dialog modal-confirm">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header flex-column">
-                                                                <div class="icon-box">
-                                                                    <i class="fa fa-question" aria-hidden="true"></i>
-                                                                </div>
-                                                                <h4 class="modal-title w-100">Bist du dir sicher?</h4>
-                                                                <button
-                                                                    type="button"
-                                                                    class="close"
-                                                                    data-dismiss="modal"
-                                                                    aria-hidden="true"
-                                                                >
-                                                                    &times;
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-center">
-                                                                <button
-                                                                    type="button"
-                                                                    class="btn btn-secondary"
-                                                                    data-dismiss="modal"
-                                                                >
-                                                                    Nein
-                                                                </button>
-                                                                <button
-                                                                    type="button"
-                                                                    class="btn btn-primary"
-                                                                    data-dismiss="modal"
-                                                                >
-                                                                    Ja
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </h4>
+                                                    >Save the Children
+                                                </a><button type="button" class="demo-donation" disabled>Spenden (nur Demo)</button></h3>
                                         </div>
                                         <!-- /.product-meta -->
                                     </div>
@@ -358,12 +265,13 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
         </div>
         <!-- ===================================== ====End archive-product -->
         <!-- ===================================================================== ==== Start footer -->
+        </main>
         <footer class="site-footer site-footer-2 clearfix">
             <div class="site-footer__main">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12 footer-block">
-                            <img src={getGriffinAsset('images/logo.png')} alt="Logo" />
+                            <img src={getGriffinAsset('images/logo.png')} alt="Griffin Energy Markenlogo" width="196" height="122" />
                             <p class="address pt-30">
                                 *Dies ist ein fiktives Produkt und dient nur für schulische Zwecke. <br />
                                 <a href="/privacy" style="text-decoration: underline">Datenschutz / Privacy</a>
@@ -375,27 +283,14 @@ import { getGriffinAsset, griffinPageScripts, griffinStylesheets } from './_demo
             <div class="site-footer__copyright">
                 <div class="container">
                     <div class="copyright_container">
-                        <div class="col-md-4 col-sm-6">
-                            <ul class="social">
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-google"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="copyright col-md-4 col-sm-6">GreenGriffin © 2021. All rights reserved</div>
+                        <div class="copyright col-xs-12 text-center">GreenGriffin © 2021. All rights reserved</div>
                     </div>
                 </div>
             </div>
         </footer>
         <!-- ===================================================================== ==== End footer -->
         <!-- Back to top -->
-        <div id="back-to-top"></div>
+        <button id="back-to-top" type="button" aria-label="Nach oben"></button>
         <!-- / Back to to -->
         <!-- ===================================================================== ====Start Preloader -->
         <div id="preloader">
