@@ -25,9 +25,9 @@ links:
     - label: Press
       href: https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html
 accent: '#9b8cff'
-image: ../../assets/work/frontiers-dashboard.webp
-imageAlt: 'Original mission dashboard with telemetry charts above a map of the recorded flight route.'
-imageCaption: 'The original 2023 mission dashboard, in German, framed around the recorded route.'
+image: ../../assets/work/frontiers-route.webp
+imageAlt: 'Map of the recorded flight path: from Passau east into Upper Austria, back west to the burst point near Arnstorf, and down to the landing near Ortenburg.'
+imageCaption: 'The recorded flight path, drawn from the mission’s 429 telemetry positions. The ring marks the burst.'
 imageCredit:
     label: © OpenStreetMap contributors
     href: https://www.openstreetmap.org/copyright
