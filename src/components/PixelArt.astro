@@ -42,6 +42,10 @@ const { art } = Astro.props;
         display: none;
     }
 
+    .pixel-art[data-fallback] img {
+        visibility: visible;
+    }
+
     .pixel-art[data-ready] img {
         display: none;
     }
@@ -62,12 +66,12 @@ const { art } = Astro.props;
 
     const NOISE_MS = 70;
 
-    const setUp = async (root: HTMLElement) => {
+    const setUp = async (root: HTMLElement): Promise<boolean> => {
         const img = root.querySelector('img');
         const canvas = root.querySelector('canvas');
         const ctx = canvas?.getContext('2d');
 
-        if (!img || !canvas || !ctx) return;
+        if (!img || !canvas || !ctx) return false;
         await img.decode().catch(() => undefined);
 
         const cols = img.naturalWidth;
@@ -77,7 +81,7 @@ const { art } = Astro.props;
         source.height = rows;
         const sourceCtx = source.getContext('2d', { willReadFrequently: true });
 
-        if (!sourceCtx || !cols || !rows) return;
+        if (!sourceCtx || !cols || !rows) return false;
         sourceCtx.drawImage(img, 0, 0);
         const { data } = sourceCtx.getImageData(0, 0, cols, rows);
 
@@ -173,7 +177,17 @@ const { art } = Astro.props;
         if (!prefersReducedMotion()) {
             ScrollTrigger.create({ trigger: root, start: 'top bottom', once: true, onEnter: decode });
         }
+
+        return true;
     };
 
-    for (const root of document.querySelectorAll<HTMLElement>('[data-pixel-art]')) void setUp(root);
+    // Phones hide the art, so it is set up only once it has a box, such as after resizing to desktop.
+    for (const root of document.querySelectorAll<HTMLElement>('[data-pixel-art]')) {
+        new ResizeObserver(async (_, observer) => {
+            if (!root.getClientRects().length) return;
+            observer.disconnect();
+
+            if (!(await setUp(root))) root.toggleAttribute('data-fallback', true);
+        }).observe(root);
+    }
 </script>
