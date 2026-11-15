@@ -71,13 +71,14 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
         const { width } = stage;
         const ceiling = (header?.offsetHeight ?? 0) + 12;
         const roleLine = below(status, stage.height * 0.3);
-        const floor = below(ledge, stage.height) - 48;
+        const divider = below(ledge, stage.height);
+        const floor = divider - 48;
         const sky = roleLine - ceiling;
 
         const inSky = (): Spot => {
-            const y = random(ceiling + sky * 0.45, roleLine - 24);
+            const y = ceiling + sky * random(0.45, 0.7);
 
-            return { x: random(width * 0.12, width * 0.88), y, reach: Math.min(MAX_REACH, y - ceiling) };
+            return { x: random(width * 0.12, width * 0.88), y, reach: Math.min(MAX_REACH, y - ceiling, sky - 12) };
         };
 
         if (sky >= 140) return inSky();
@@ -97,11 +98,16 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
             return { x: left + room / 2, y, reach: Math.min(reach, y - ceiling) };
         }
 
-        if (sky >= 60 && Math.random() < 0.5) return inSky();
+        if (sky >= 30 && Math.random() < 0.5) return inSky();
 
-        const y = random(roleLine + 40, Math.max(roleLine + 40, floor));
+        // Gravity carries sparks further down than up, so a burst behind the name keeps well clear of the divider.
+        const y = random(roleLine + 40, Math.max(roleLine + 40, divider - 80));
 
-        return { x: random(width * 0.12, width * 0.88), y, reach: Math.min(MAX_REACH, y - ceiling) };
+        return {
+            x: random(width * 0.12, width * 0.88),
+            y,
+            reach: Math.min(MAX_REACH, y - ceiling, (divider - y) * 0.6),
+        };
     };
 
     const clickSpot = (e: MouseEvent): Spot => {
