@@ -70,6 +70,8 @@ export function styleUntil(signal: AbortSignal, el: HTMLElement, styles: Record<
     });
 }
 
+export const GOLD = '#f6c177';
+
 export const cssVar = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 export const random = (min: number, max: number) => min + Math.random() * (max - min);

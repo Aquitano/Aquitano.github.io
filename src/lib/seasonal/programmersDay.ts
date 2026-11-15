@@ -1,5 +1,5 @@
 import { prefersReducedMotion } from '../gsap';
-import { EASE_OUT_STRONG } from './stage';
+import { EASE_OUT_STRONG, styleUntil } from './stage';
 
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -38,14 +38,21 @@ function decoder(surname: HTMLElement, signal: AbortSignal) {
     return () => {
         if (timer !== undefined) return;
 
-        // Screen readers keep the real name while the visible one is noise.
+        // The hidden name keeps its width in the layout, so a wider string of digits overflows instead of wrapping.
+        const placeholder = document.createElement('span');
+        placeholder.setAttribute('aria-hidden', 'true');
+        placeholder.style.visibility = 'hidden';
+        placeholder.textContent = word;
+
         const shown = document.createElement('span');
         shown.setAttribute('aria-hidden', 'true');
+        Object.assign(shown.style, { position: 'absolute', top: '0', left: '0', whiteSpace: 'nowrap' });
 
+        // Screen readers keep the real name while the visible one is noise.
         const spoken = document.createElement('span');
         spoken.className = 'sr-only';
         spoken.textContent = word;
-        surname.replaceChildren(shown, spoken);
+        surname.replaceChildren(placeholder, shown, spoken);
 
         const began = performance.now();
 
@@ -93,6 +100,7 @@ export function start(signal: AbortSignal) {
         fill: 'backwards',
     });
 
+    styleUntil(signal, surname, { position: 'relative' });
     const decode = decoder(surname, signal);
     const first = setTimeout(decode, INTRO_MS);
     signal.addEventListener('abort', () => clearTimeout(first));

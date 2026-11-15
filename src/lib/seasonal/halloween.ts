@@ -66,9 +66,21 @@ function flickerSurname(hero: HTMLElement, signal: AbortSignal) {
 
 // Under reduced motion the spider hangs still and vanishes instead of climbing.
 function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
+    // The web hangs from below the fixed header, so the thread never runs through the nav links.
+    const ceiling = document.querySelector<HTMLElement>('[data-header]')?.offsetHeight ?? 0;
+    const web = document.createElement('div');
+    web.setAttribute('aria-hidden', 'true');
+    Object.assign(web.style, {
+        position: 'absolute',
+        inset: `${ceiling}px 0 0`,
+        zIndex: '5',
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        maskImage: 'linear-gradient(transparent, #000 48px)',
+    });
+
     const anchor = document.createElement('div');
-    anchor.setAttribute('aria-hidden', 'true');
-    Object.assign(anchor.style, { position: 'absolute', top: '0', left: '78%', zIndex: '5', pointerEvents: 'none' });
+    Object.assign(anchor.style, { position: 'absolute', top: '0', left: '78%' });
 
     const drop = document.createElement('div');
     drop.style.color = 'color-mix(in oklch, var(--fg) 85%, transparent)';
@@ -87,7 +99,8 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
 
     drop.prepend(thread);
     anchor.append(drop);
-    hero.append(anchor);
+    web.append(anchor);
+    hero.append(web);
 
     if (!still) {
         anchor.animate([{ transform: 'rotate(-4deg)' }, { transform: 'rotate(4deg)' }], {
@@ -105,8 +118,8 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
     // Hang just above the role line and name, wherever the viewport puts them.
     const restingY = () =>
         heading
-            ? Math.max(24, heading.getBoundingClientRect().top - hero.getBoundingClientRect().top - SPIDER_HEIGHT - 28)
-            : Math.round(hero.clientHeight * 0.28);
+            ? Math.max(56, heading.getBoundingClientRect().top - web.getBoundingClientRect().top - SPIDER_HEIGHT - 28)
+            : Math.round(web.clientHeight * 0.28);
 
     const moveTo = (y: number, options: KeyframeAnimationOptions) => {
         const from = getComputedStyle(drop).transform;
@@ -141,7 +154,7 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
     hero.addEventListener('pointerdown', fleeFrom, { passive: true, signal });
     signal.addEventListener('abort', () => {
         clearTimeout(returning);
-        anchor.remove();
+        web.remove();
     });
     descend(1800);
 }

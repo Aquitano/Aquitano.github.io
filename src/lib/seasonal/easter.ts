@@ -1,11 +1,20 @@
 import { prefersReducedMotion } from '../gsap';
 import { placeOnLedge } from './ledge';
-import { EASE_OUT_STRONG } from './stage';
+import { EASE_OUT_STRONG, GOLD } from './stage';
 
 export const icon = `
 <svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
     <path d="M9 1C4.5 1 1 8 1 13.5 1 18 4.6 21 9 21s8-3 8-7.5C17 8 13.5 1 9 1Z" fill="var(--bg-raise)" />
     <path d="M1.4 12.5 4 10.5l2.5 2 2.5-2 2.5 2 2.5-2 2.6 2" />
+</svg>`;
+
+// Sits behind the bottom shell, so only its head shows above the crack.
+const CHICK = `
+<svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke-linecap="round">
+    <path d="M9 5.6c-.3-1.3.4-2.2 1.4-2.4" stroke="${GOLD}" stroke-width="1.1" />
+    <circle cx="9" cy="10.4" r="4.8" fill="${GOLD}" />
+    <circle cx="10.7" cy="9.4" r="0.75" fill="var(--bg)" />
+    <path d="M13.4 10.2 15.6 11l-2.2.8Z" fill="var(--accent)" />
 </svg>`;
 
 const CRACK = ['0 48%', '12% 56%', '26% 44%', '40% 56%', '54% 44%', '68% 56%', '82% 44%', '100% 52%'];
@@ -30,8 +39,12 @@ export function start(signal: AbortSignal) {
         transformOrigin: '50% 100%',
     });
 
+    const chick = document.createElement('span');
+    Object.assign(chick.style, { position: 'absolute', inset: '0', opacity: '0' });
+    chick.innerHTML = CHICK;
+
     const lid = half(`polygon(0 0, 100% 0, ${CRACK.toReversed().join(', ')})`);
-    egg.append(lid, half(`polygon(${CRACK.join(', ')}, 100% 100%, 0 100%)`));
+    egg.append(chick, lid, half(`polygon(${CRACK.join(', ')}, 100% 100%, 0 100%)`));
 
     // Reduced motion keeps the reveal but swaps the lid's flight for a plain fade.
     const lidOff = still ? { opacity: 0 } : { transform: 'translate(-6px, -22px) rotate(-40deg)', opacity: 0 };
@@ -49,6 +62,16 @@ export function start(signal: AbortSignal) {
                 easing: EASE_OUT_STRONG,
                 fill: 'forwards',
             });
+            chick.animate(
+                still
+                    ? [{ opacity: 0 }, { opacity: 1 }]
+                    : [
+                          { opacity: 0, transform: 'translateY(7px)' },
+                          { opacity: 1, transform: 'translateY(-2px)', offset: 0.6 },
+                          { opacity: 1, transform: 'none' },
+                      ],
+                { duration: still ? 200 : 520, delay: still ? 0 : 160, easing: EASE_OUT_STRONG, fill: 'both' },
+            );
         },
     });
 

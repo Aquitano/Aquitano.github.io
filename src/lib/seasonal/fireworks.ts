@@ -1,5 +1,5 @@
 import { gsap, prefersReducedMotion } from '../gsap';
-import { createStage, cssVar, everyFrame, random } from './stage';
+import { GOLD, createStage, cssVar, everyFrame, random } from './stage';
 
 type Particle = { x: number; y: number; vx: number; vy: number; age: number; ttl: number; color: string };
 
@@ -11,8 +11,6 @@ export const icon = `
 const GRAVITY = 140;
 
 const FLIGHT_S = 1.1;
-
-const GOLD = '#f6c177';
 
 // Where reduced motion shows its still bursts, as fractions of the hero: the empty band above the role line.
 const STILL_BURSTS = [
@@ -121,6 +119,7 @@ export function start(signal: AbortSignal) {
 
     let heroVisible = true;
     let nextLaunch = 1.2;
+    let painted = false;
 
     const observer = new IntersectionObserver(([entry]) => (heroVisible = entry.isIntersecting));
     observer.observe(hero);
@@ -148,9 +147,15 @@ export function start(signal: AbortSignal) {
             nextLaunch = random(0.6, 2.2);
         }
 
-        if (!rockets.length && !sparks.length) return;
+        if (!rockets.length && !sparks.length) {
+            if (painted) ctx.clearRect(0, 0, width, height);
+            painted = false;
+
+            return;
+        }
 
         prepare();
+        painted = true;
 
         for (let i = rockets.length - 1; i >= 0; i--) {
             const rocket = rockets[i];
