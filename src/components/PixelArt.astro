@@ -187,7 +187,7 @@ const { art } = Astro.props;
             if (!root.getClientRects().length) return;
             observer.disconnect();
 
-            if (!(await setUp(root))) root.toggleAttribute('data-fallback', true);
+            if (!(await setUp(root).catch(() => false))) root.toggleAttribute('data-fallback', true);
         }).observe(root);
     }
 </script>
