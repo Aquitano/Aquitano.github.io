@@ -1,6 +1,7 @@
 import { prefersReducedMotion } from '../gsap';
 import type { EffectRun } from '../seasons';
 import { placeOnLedge } from './ledge';
+import { captionRoleLine } from './roleLine';
 import { EASE_OUT_STRONG } from './stage';
 
 export const icon = `
@@ -103,7 +104,11 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
         },
     });
 
-    if (!placed || still) return;
+    if (!placed) return;
+
+    captionRoleLine(signal, "It's my birthday", onLoad);
+
+    if (still) return;
 
     // Two loops of unrelated lengths, so the flame never settles into an obvious beat.
     flicker = [

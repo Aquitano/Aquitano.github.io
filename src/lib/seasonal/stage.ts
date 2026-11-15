@@ -74,8 +74,6 @@ export function everyFrame(signal: AbortSignal, frame: (time: number, dt: number
 
 /** Sets inline styles until the signal aborts, then puts back whatever inline values they replaced. */
 export function styleUntil(signal: AbortSignal, el: HTMLElement, styles: Record<string, string>) {
-    const hadStyle = el.hasAttribute('style');
-
     const previous = Object.keys(styles).map(
         (property) => [property, el.style.getPropertyValue(property), el.style.getPropertyPriority(property)] as const,
     );
@@ -88,7 +86,7 @@ export function styleUntil(signal: AbortSignal, el: HTMLElement, styles: Record<
             else el.style.removeProperty(property);
         }
 
-        if (!hadStyle && !el.style.length) el.removeAttribute('style');
+        if (!el.style.length) el.removeAttribute('style');
     });
 }
 

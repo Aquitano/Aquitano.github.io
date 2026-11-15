@@ -163,9 +163,9 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         </a>
 
         <SiteHeader />
-        <SeasonToggle />
         <slot />
         <SiteFooter />
+        <SeasonToggle />
 
         {/* Browsers follow a URL fragment only after the module scripts run; reloads keep their restored scroll. */}
         <script is:inline>

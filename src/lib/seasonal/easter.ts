@@ -99,13 +99,15 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     wobble = toy.animate(
         [
             { rotate: '0deg' },
-            { rotate: '0deg', offset: 0.82 },
-            { rotate: '-12deg', offset: 0.86 },
-            { rotate: '10deg', offset: 0.9 },
-            { rotate: '-6deg', offset: 0.94 },
-            { rotate: '3deg', offset: 0.97 },
+            { rotate: '0deg', offset: 0.94 },
+            { rotate: '-12deg', offset: 0.952 },
+            { rotate: '10deg', offset: 0.964 },
+            { rotate: '-6deg', offset: 0.976 },
+            { rotate: '3deg', offset: 0.988 },
             { rotate: '0deg' },
         ],
-        { duration: 4200, delay: onLoad ? 1500 : 600, iterations: Infinity },
+        // A short wobble every twelve seconds hints at what is inside without fidgeting beside the intro text. The
+        // negative delay starts partway through the cycle, so the first wobble comes soon after the egg appears.
+        { duration: 12_000, delay: onLoad ? -9000 : -10_800, iterations: Infinity },
     );
 }

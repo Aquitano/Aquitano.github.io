@@ -112,10 +112,23 @@ export function start(signal: AbortSignal) {
 
     document.documentElement.addEventListener('pointerleave', () => (pointerX = -Infinity), { signal });
 
-    everyFrame(signal, (time, dt) => {
+    let skipped = 0;
+
+    // Slow snow looks the same at half the frame rate, which halves its cost. Scrolling moves the flakes with the
+    // page, so every frame is drawn while the page moves.
+    everyFrame(signal, (time, frameDt) => {
         const { width, height } = stage;
 
         if (!width) return;
+
+        if (!skipped && window.scrollY === lastScrollY) {
+            skipped = frameDt;
+
+            return;
+        }
+
+        const dt = frameDt + skipped;
+        skipped = 0;
 
         populate(flakeCount(width, height), width, height);
 

@@ -1,6 +1,6 @@
 import { prefersReducedMotion } from '../gsap';
 import type { EffectRun } from '../seasons';
-import { EASE_OUT_STRONG, fadeOutOnAbort, styleUntil } from './stage';
+import { INTRO_MS, captionRoleLine } from './roleLine';
 
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -19,10 +19,51 @@ const LOCK_STAGGER_MS = 70;
 
 const HOVER_COOLDOWN_MS = 3000;
 
-/** The surname's intro rise ends around here. */
-const INTRO_MS = 1400;
-
 const pick = (chars: string) => chars[Math.floor(Math.random() * chars.length)];
+
+// Each character gets a box as wide as the letter it stands in for, so the surname keeps its exact width while the
+// noise plays. A digit wider than its box is squeezed to fit rather than spilling into its neighbours.
+function cellsFor(surname: HTMLElement, word: string) {
+    const text = [...surname.childNodes].find((node): node is Text => node instanceof Text && node.data.includes(word));
+
+    if (!text) return undefined;
+
+    const offset = text.data.indexOf(word);
+    const range = document.createRange();
+
+    const widths = Array.from({ length: word.length }, (_, i) => {
+        range.setStart(text, offset + i);
+        range.setEnd(text, offset + i + 1);
+
+        return range.getBoundingClientRect().width;
+    });
+
+    const probe = document.createElement('span');
+    Object.assign(probe.style, { position: 'absolute', visibility: 'hidden', whiteSpace: 'pre' });
+    surname.append(probe);
+
+    const glyphWidths = new Map(
+        [...new Set(BITS + HEX)].map((char) => {
+            probe.textContent = char;
+
+            return [char, probe.getBoundingClientRect().width] as const;
+        }),
+    );
+
+    probe.remove();
+
+    return widths.map((width) => {
+        const cell = document.createElement('span');
+        Object.assign(cell.style, { display: 'inline-block', width: `${width}px`, textAlign: 'center' });
+
+        const show = (char: string) => {
+            cell.textContent = char;
+            cell.style.transform = `scaleX(${Math.min(1, width / (glyphWidths.get(char) ?? width))})`;
+        };
+
+        return { cell, show };
+    });
+}
 
 function decoder(surname: HTMLElement, signal: AbortSignal) {
     const original = [...surname.childNodes];
@@ -40,21 +81,20 @@ function decoder(surname: HTMLElement, signal: AbortSignal) {
     return () => {
         if (timer !== undefined) return;
 
-        // The hidden name keeps its width in the layout, so a wider string of digits overflows instead of wrapping.
-        const placeholder = document.createElement('span');
-        placeholder.setAttribute('aria-hidden', 'true');
-        placeholder.style.visibility = 'hidden';
-        placeholder.textContent = word;
+        const cells = cellsFor(surname, word);
+
+        if (!cells) return;
 
         const shown = document.createElement('span');
         shown.setAttribute('aria-hidden', 'true');
-        Object.assign(shown.style, { position: 'absolute', top: '0', left: '0', whiteSpace: 'nowrap' });
+        shown.style.whiteSpace = 'nowrap';
+        shown.append(...cells.map(({ cell }) => cell));
 
         // Screen readers keep the real name while the visible one is noise.
         const spoken = document.createElement('span');
         spoken.className = 'sr-only';
         spoken.textContent = word;
-        surname.replaceChildren(placeholder, shown, spoken);
+        surname.replaceChildren(shown, spoken);
 
         const began = performance.now();
 
@@ -67,10 +107,9 @@ function decoder(surname: HTMLElement, signal: AbortSignal) {
                 return;
             }
 
-            shown.textContent = word.replace(/./g, (letter, i: number) => {
-                if (elapsed < BINARY_MS) return pick(BITS);
-
-                return elapsed < BINARY_MS + (i + 1) * LOCK_STAGGER_MS ? pick(HEX) : letter;
+            cells.forEach(({ show }, i) => {
+                if (elapsed < BINARY_MS) show(pick(BITS));
+                else show(elapsed < BINARY_MS + (i + 1) * LOCK_STAGGER_MS ? pick(HEX) : word[i]);
             });
         };
 
@@ -80,34 +119,14 @@ function decoder(surname: HTMLElement, signal: AbortSignal) {
 }
 
 export function start(signal: AbortSignal, { onLoad }: EffectRun) {
-    const hero = document.querySelector<HTMLElement>('[data-hero]');
-    const surname = hero?.querySelector<HTMLElement>('h1 .display-outline');
-    const status = hero?.querySelector<HTMLElement>('[data-hero-status]');
+    const surname = document.querySelector<HTMLElement>('[data-hero] h1 .display-outline');
 
-    if (!surname || !status) return;
-
-    const caption = document.createElement('span');
-    caption.className = 'text-accent';
-    // On phones the caption wraps onto its own line, where a leading separator would dangle.
-    caption.innerHTML =
-        '<span class="max-md:hidden" aria-hidden="true">· </span>Day <span class="normal-case">0x100</span>';
-    status.append(caption);
-    fadeOutOnAbort(signal, caption);
+    if (!surname || !captionRoleLine(signal, 'Day <span class="normal-case">0x100</span>', onLoad)) return;
 
     if (prefersReducedMotion()) return;
 
-    const introMs = onLoad ? INTRO_MS : 0;
-
-    caption.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: 600,
-        delay: introMs,
-        easing: EASE_OUT_STRONG,
-        fill: 'backwards',
-    });
-
-    styleUntil(signal, surname, { position: 'relative' });
     const decode = decoder(surname, signal);
-    const first = setTimeout(decode, introMs);
+    const first = setTimeout(decode, onLoad ? INTRO_MS : 0);
     signal.addEventListener('abort', () => clearTimeout(first));
 
     // Swapping the letters under a resting cursor fires pointerenter again, so a hover replays only after the cursor

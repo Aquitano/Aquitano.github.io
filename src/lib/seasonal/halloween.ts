@@ -66,7 +66,7 @@ function torchlight(hero: HTMLElement, signal: AbortSignal) {
     fadeOutOnAbort(signal, torch);
 
     // Fading the grid with an animation rather than a style lets switching off play it back to where it was.
-    const dim = grid.animate([{ opacity: getComputedStyle(grid).opacity }, { opacity: 0 }], {
+    const dim = grid.animate([{ opacity: 0 }], {
         duration: 600,
         easing: 'ease-out',
         fill: 'forwards',
@@ -214,7 +214,8 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean, onL
         if (returning || !body || !nearPointer({ x: body.left + body.width / 2, y: body.top + body.height / 2 }))
             return;
 
-        moveTo(HIDDEN_Y, { duration: 420, easing: 'cubic-bezier(0.7, 0, 0.84, 0)' });
+        // A startled spider leaves at once, so the climb starts fast instead of easing in.
+        moveTo(HIDDEN_Y, { duration: 300, easing: 'cubic-bezier(0.2, 0.9, 0.3, 1)' });
         returnLater(RETURN_MS);
     };
 

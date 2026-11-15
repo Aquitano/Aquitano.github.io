@@ -48,6 +48,7 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const status = hero.querySelector<HTMLElement>('[data-hero-status]');
     const ledge = hero.querySelector<HTMLElement>('[data-hero-ledge]');
     const nameLines = hero.querySelectorAll<HTMLElement>('h1 .intro-rise');
+    const minimap = document.querySelector<HTMLElement>('[data-minimap-root]');
     const range = document.createRange();
 
     const below = (el: HTMLElement | null, fallback: number) =>
@@ -64,28 +65,39 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
         );
 
     // Sparks never reach the nav or open on the role line. Bursts use the sky above the role line; on short screens,
-    // where that sky is a sliver, the open space beside the name; failing both, the space behind the name, which is
-    // drawn over them.
+    // where that sky is a sliver, the open space beside the name. Where neither fits, small bursts in the sliver
+    // alternate with large ones behind the name, which is drawn over them.
     const burstSpot = (): Spot => {
         const { width } = stage;
         const ceiling = (header?.offsetHeight ?? 0) + 12;
         const roleLine = below(status, stage.height * 0.3);
         const floor = below(ledge, stage.height) - 48;
+        const sky = roleLine - ceiling;
 
-        if (roleLine - ceiling >= 140) {
-            const y = random(ceiling + (roleLine - ceiling) * 0.45, roleLine - 24);
+        const inSky = (): Spot => {
+            const y = random(ceiling + sky * 0.45, roleLine - 24);
 
             return { x: random(width * 0.12, width * 0.88), y, reach: Math.min(MAX_REACH, y - ceiling) };
-        }
+        };
+
+        if (sky >= 140) return inSky();
+
+        // On wide screens the minimap floats at the right edge, so the open space ends where it starts.
+        const right = minimap?.offsetWidth
+            ? minimap.getBoundingClientRect().left - hero.getBoundingClientRect().left - 16
+            : width;
 
         const left = nameRight() + 40;
-        const room = width - left;
+        const room = right - left;
 
-        if (room >= 220 && floor - roleLine > 60) {
-            const y = random(roleLine + 20, floor);
+        if (room >= 140 && floor - roleLine > 60) {
+            const reach = Math.min(MAX_REACH, room / 2 - 12);
+            const y = random(roleLine + 20, Math.max(roleLine + 20, floor - reach * 0.5));
 
-            return { x: left + room / 2, y, reach: Math.min(MAX_REACH, room / 2 - 12, y - ceiling) };
+            return { x: left + room / 2, y, reach: Math.min(reach, y - ceiling) };
         }
+
+        if (sky >= 60 && Math.random() < 0.5) return inSky();
 
         const y = random(roleLine + 40, Math.max(roleLine + 40, floor));
 

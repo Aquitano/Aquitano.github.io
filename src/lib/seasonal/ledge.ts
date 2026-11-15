@@ -19,6 +19,7 @@ export function placeOnLedge(signal: AbortSignal, { label, toy, note, still, onL
 
     const button = document.createElement('button');
     button.type = 'button';
+    button.className = 'transition-transform duration-150 ease-out active:scale-96';
     button.setAttribute('aria-label', label);
     Object.assign(button.style, {
         position: 'absolute',
