@@ -1,11 +1,7 @@
 ---
 import RestoreRecord from './RestoreRecord.astro';
 import SectionHeading from './SectionHeading.astro';
-
-const linkClass =
-    'link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase';
-
-const leadClass = 'mb-10 max-w-3xl text-base leading-relaxed text-fg/85 md:mb-14 md:text-lg lg:ml-22';
+import { evidenceLeadClass, evidenceLinkClass } from '../lib/evidenceClasses';
 
 const restoreSteps = [
     'Back up a test server.',
@@ -25,7 +21,7 @@ const serverSees = ['Ciphertext', 'Wrapped keys & public keys', 'Sizes, timing &
 
 <section class="section-x border-t border-line py-16 md:py-24">
     <SectionHeading index="01" title="Recovery, verified" ruled={false} />
-    <p data-detail-reveal class={leadClass}>
+    <p data-detail-reveal class={evidenceLeadClass}>
         A backup is only useful if it restores. The repository’s restore drill runs real binaries and checks a
         clean-machine recovery, not just whether a backup command exits successfully.
     </p>
@@ -40,7 +36,7 @@ const serverSees = ['Ciphertext', 'Wrapped keys & public keys', 'Sizes, timing &
                 ))}
             </ol>
             <a
-                class:list={[linkClass, 'mt-4 inline-block']}
+                class:list={[evidenceLinkClass, 'mt-4 inline-block']}
                 href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/scripts/restore-drill.sh"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -54,7 +50,7 @@ const serverSees = ['Ciphertext', 'Wrapped keys & public keys', 'Sizes, timing &
 </section>
 <section class="section-x border-t border-line py-16 md:py-24">
     <SectionHeading index="02" title="What the server sees" ruled={false} />
-    <p data-detail-reveal class={leadClass}>
+    <p data-detail-reveal class={evidenceLeadClass}>
         The server stores bytes it cannot read. This is the client-to-server boundary, including the operational
         metadata that remains visible.
     </p>

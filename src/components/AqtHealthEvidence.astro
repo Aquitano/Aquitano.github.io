@@ -1,5 +1,6 @@
 ---
 import SectionHeading from './SectionHeading.astro';
+import { evidenceLinkClass } from '../lib/evidenceClasses';
 ---
 
 <section class="section-x border-t border-line py-16 md:py-24">
@@ -10,7 +11,7 @@ import SectionHeading from './SectionHeading.astro';
             test is isolated.
         </p>
         <a
-            class="link-line pressable touch-target mt-4 inline-block font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
+            class:list={[evidenceLinkClass, 'mt-4 inline-block']}
             href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
             target="_blank"
             rel="noopener noreferrer"

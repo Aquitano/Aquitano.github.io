@@ -1,7 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import AqtHealthEvidence from './AqtHealthEvidence.astro';
 import AqtSyncEvidence from './AqtSyncEvidence.astro';
 import FrontiersToSpaceEvidence from './FrontiersToSpaceEvidence.astro';
@@ -20,7 +19,9 @@ const { project, index, total, next } = Astro.props;
 
 type Evidence = NonNullable<CollectionEntry<'work'>['data']['evidence']>;
 
-const evidenceViews: Record<Evidence, { banner?: AstroComponentFactory; sections: AstroComponentFactory }> = {
+type AstroComponent = typeof AqtSyncEvidence;
+
+const evidenceViews: Record<Evidence, { banner?: AstroComponent; sections: AstroComponent }> = {
     'aqt-sync': { sections: AqtSyncEvidence },
     'aqt-health': { banner: ReconciliationDemo, sections: AqtHealthEvidence },
     'frontiers-to-space': { sections: FrontiersToSpaceEvidence },

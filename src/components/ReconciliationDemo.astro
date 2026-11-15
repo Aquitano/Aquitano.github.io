@@ -1,6 +1,7 @@
 ---
 import { reconciliationRules as rules } from '../lib/reconciliation';
 import ProviderTracks from './ProviderTracks.astro';
+import { evidenceLinkClass } from '../lib/evidenceClasses';
 ---
 
 <figure class="policy-demo" data-detail-reveal>
@@ -36,7 +37,7 @@ import ProviderTracks from './ProviderTracks.astro';
     <div class="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-line pt-5 md:mt-8">
         <p class="meta">Schematic records, not real health data</p>
         <a
-            class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
+            class={evidenceLinkClass}
             href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#canonical-metrics"
             target="_blank"
             rel="noopener noreferrer"

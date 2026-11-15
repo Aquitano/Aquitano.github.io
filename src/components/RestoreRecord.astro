@@ -1,13 +1,12 @@
 ---
+import { evidenceLinkClass } from '../lib/evidenceClasses';
+
 const output = [
     'cloned 12 files into /tmp/aqt-restore-drill.p733mX/restore',
     '==> diffing the restored tree against the original',
     '==> verifying the restored encrypted Git remote',
     '==> PASS: backup restore reproduced the folder and encrypted Git remote',
 ];
-
-const linkClass =
-    'link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase';
 ---
 
 <figure data-detail-reveal data-terminal class="overflow-hidden rounded-2xl border border-line bg-bg-raise">
@@ -20,11 +19,11 @@ const linkClass =
     </figcaption>
     <pre class="px-5 py-8 font-mono text-[0.8125rem] leading-[2] wrap-anywhere whitespace-pre-wrap text-fg/70 md:px-8 md:py-10 md:text-sm"><code>{output.map((line, i) => <span data-terminal-line class:list={['record-line block', i === output.length - 1 && 'mt-4 text-(--project)']}>{line}</span>)}</code></pre>
     <div class="flex flex-wrap gap-x-6 gap-y-4 border-t border-line px-5 py-4 md:px-8 pointer-coarse:gap-y-7 pointer-coarse:py-6">
-        <a class={linkClass} href="/evidence/aqt-restore-2026-11-01.txt">
+        <a class={evidenceLinkClass} href="/evidence/aqt-restore-2026-11-01.txt">
             Archived excerpt <span aria-hidden="true">→</span>
         </a>
         <a
-            class={linkClass}
+            class={evidenceLinkClass}
             href="https://github.com/Aquitano/aqt-sync/actions/runs/41282154931"
             target="_blank"
             rel="noopener noreferrer"
