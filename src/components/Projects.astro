@@ -3,7 +3,7 @@ import type { ImageMetadata } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import PixelArt from './PixelArt.astro';
 import SectionHeading from './SectionHeading.astro';
-import { isExternalHref } from '../lib/links';
+import { opensNewTab } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
@@ -108,22 +108,14 @@ const pixelArt = import.meta.glob<{ default: ImageMetadata }>('../assets/pixel/*
                                 {p.links.map((link) => (
                                     <a
                                         href={link.href}
-                                        target={link.external || isExternalHref(link.href) ? '_blank' : undefined}
-                                        rel={
-                                            link.external || isExternalHref(link.href)
-                                                ? 'noopener noreferrer'
-                                                : undefined
-                                        }
+                                        target={opensNewTab(link) ? '_blank' : undefined}
+                                        rel={opensNewTab(link) ? 'noopener noreferrer' : undefined}
                                         class="link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
                                     >
                                         {link.label}
                                         <span class="sr-only"> for {p.title}</span>{' '}
-                                        <span aria-hidden="true">
-                                            {link.external || isExternalHref(link.href) ? '↗' : '→'}
-                                        </span>
-                                        {(link.external || isExternalHref(link.href)) && (
-                                            <span class="sr-only">(opens in new tab)</span>
-                                        )}
+                                        <span aria-hidden="true">{opensNewTab(link) ? '↗' : '→'}</span>
+                                        {opensNewTab(link) && <span class="sr-only">(opens in new tab)</span>}
                                     </a>
                                 ))}
                             </div>

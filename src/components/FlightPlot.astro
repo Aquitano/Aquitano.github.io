@@ -60,6 +60,8 @@ const ticks = Array.from(
     (_, i) => axisStart + i * 3600,
 ).filter((time) => end - time >= 30 * 60);
 
+const hiddenOnPhones = (time: number, i: number) => i % 2 === 1 || end - time < 90 * 60;
+
 const timeLabel = (time: number) => new Date(time * 1000).toISOString().slice(11, 16);
 
 const values = measurements.map((point) => point[metric] / scale.divisor);
@@ -86,7 +88,6 @@ const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values
             role="img"
             aria-label={`${scale.title} in ${scale.unit} from ${timeLabel(start)} to ${timeLabel(end)} UTC, plotted from ${measurements.length} timestamped measurements.`}
         >
-            <title>{scale.title} over the recorded flight timeline</title>
             {scale.ticks.map((value) => (
                 <line
                     x1="0"
@@ -116,12 +117,12 @@ const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values
             <Fragment>
                 <span
                     aria-hidden="true"
-                    class:list={['x-tick', i !== 0 && i !== 2 && 'intermediate-tick']}
+                    class:list={['x-tick', hiddenOnPhones(time, i) && 'phone-hidden']}
                     style={`left:${x(time) / 10}%`}
                 ></span>
                 <span
                     aria-hidden="true"
-                    class:list={['x-label', i === 0 && 'first-tick', i !== 0 && i !== 2 && 'intermediate-tick']}
+                    class:list={['x-label', i === 0 && 'first-tick', hiddenOnPhones(time, i) && 'phone-hidden']}
                     style={`left:${x(time) / 10}%`}
                 >
                     {timeLabel(time)}
@@ -201,7 +202,7 @@ const extreme = metric === 'altitude' ? Math.max(...values) : Math.min(...values
         transform: translateX(-100%);
     }
     @media (max-width: 640px) {
-        .intermediate-tick {
+        .phone-hidden {
             display: none;
         }
     }

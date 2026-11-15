@@ -3,7 +3,7 @@ import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import ProjectEvidence from './ProjectEvidence.astro';
 import ReconciliationDemo from './ReconciliationDemo.astro';
-import { isExternalHref } from '../lib/links';
+import { opensNewTab } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
@@ -18,8 +18,6 @@ const { project, index, total, next } = Astro.props;
 const title = displayTitle(project.title, project.wrap);
 
 const nextTitle = displayTitle(next.title, next.wrap);
-
-const opensNewTab = (link: (typeof project.links)[number]) => link.external || isExternalHref(link.href);
 
 const LINE_STAGGER = 80;
 

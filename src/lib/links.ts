@@ -2,4 +2,6 @@
 // Bare paths, hash fragments, and query strings stay internal.
 const isExternalHref = (href: string) => /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(href);
 
-export { isExternalHref };
+const opensNewTab = (link: { href: string; external?: boolean }) => link.external || isExternalHref(link.href);
+
+export { isExternalHref, opensNewTab };
