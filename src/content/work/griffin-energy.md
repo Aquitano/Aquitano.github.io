@@ -21,6 +21,7 @@ links:
 accent: '#ff7a5c'
 image: ../../assets/work/griffin-hand.webp
 imagePosition: right center
+imageQuality: 50
 imageAlt: 'A hand holding a Griffin Energy can against a dark gym.'
 imageCaption: 'Blender render and photo composite from the original 2020 site.'
 order: 6
