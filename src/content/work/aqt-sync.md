@@ -22,6 +22,7 @@ accent: '#5cc8ff'
 image: ../../assets/work/aqt-sync-site.webp
 imageAlt: 'The aqt website: an “Every file. Only yours.” headline beside the aqt logo and a sync command.'
 imageCaption: 'The aqt website, captured live on 7 November 2026.'
+evidence: aqt-sync
 order: 1
 ---
 

@@ -1,13 +1,14 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import FlightPlot from './FlightPlot.astro';
 import RestoreRecord from './RestoreRecord.astro';
 import SectionHeading from './SectionHeading.astro';
 
 interface Props {
-    projectId: string;
+    evidence: CollectionEntry<'work'>['data']['evidence'];
 }
 
-const { projectId } = Astro.props;
+const { evidence } = Astro.props;
 
 const linkClass =
     'link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase';
@@ -53,7 +54,7 @@ const policies = [
 ];
 ---
 
-{projectId === 'aqt-sync' && (
+{evidence === 'aqt-sync' && (
     <Fragment>
         <section class="section-x border-t border-line py-16 md:py-24">
             <SectionHeading index="01" title="Recovery, verified" ruled={false} />
@@ -139,7 +140,7 @@ const policies = [
     </Fragment>
 )}
 
-{projectId === 'aqt-health' && (
+{evidence === 'aqt-health' && (
     <section class="section-x border-t border-line py-16 md:py-24">
         <SectionHeading index="01" title="Source priorities" ruled={false} />
         <p data-detail-reveal class={leadClass}>
@@ -186,7 +187,7 @@ const policies = [
     </section>
 )}
 
-{projectId === 'frontiers-to-space' && (
+{evidence === 'frontiers-to-space' && (
     <section class="section-x border-t border-line py-16 md:py-24">
         <SectionHeading index="01" title="Flight telemetry" ruled={false} />
         <p data-detail-reveal class={leadClass}>

@@ -7,14 +7,13 @@ import { isExternalHref } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
 
 interface Props {
-    id: string;
     project: CollectionEntry<'work'>['data'];
     index: number;
     total: number;
     next: { title: string; wrap?: string[]; slug: string; accent: string };
 }
 
-const { id, project, index, total, next } = Astro.props;
+const { project, index, total, next } = Astro.props;
 
 const title = displayTitle(project.title, project.wrap);
 
@@ -123,7 +122,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             )}
         </div>
     )}
-    {id === 'aqt-health' && (
+    {project.evidence === 'aqt-health' && (
         <div class="section-x relative pt-2 pb-10 md:pb-16">
             <ReconciliationDemo />
         </div>
@@ -192,7 +191,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
         </div>
     </div>
 
-    <ProjectEvidence projectId={id} />
+    <ProjectEvidence evidence={project.evidence} />
 
     <a
         href={`/work/${next.slug}`}

@@ -24,6 +24,7 @@ const work = defineCollection({
             imageWidths: z.array(z.number().int().positive()).default([640, 960, 1280, 1600, 2400]),
             imageCaption: z.string().optional(),
             imageCredit: z.object({ label: z.string(), href: z.string() }).optional(),
+            evidence: z.enum(['aqt-sync', 'aqt-health', 'frontiers-to-space']).optional(),
             order: z.number(),
         }),
 });
