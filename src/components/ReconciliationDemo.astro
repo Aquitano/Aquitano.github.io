@@ -8,30 +8,28 @@ import ProviderTracks from './ProviderTracks.astro';
         <h2 class="display text-[clamp(1.75rem,4.2vw,3rem)] leading-[1.05]">Two sources, one read</h2>
         <p class="meta">Canonical metrics</p>
     </figcaption>
-    <div class="policy-content">
-        <fieldset class="policy-selector">
-            <legend class="sr-only">Metric policy</legend>
-            {rules.map((rule, i) => (
-                <label class="policy-option">
-                    <input
-                        type="radio"
-                        name="canonical-policy"
-                        value={rule.id}
-                        checked={i === 0}
-                        aria-controls={`${rule.id}-policy-panel`}
-                    />
-                    <span>{rule.label}</span>
+    <div class="policy-content" role="group" aria-label="Metric policy" style={`--rules: ${rules.length}`}>
+        {rules.map((rule, i) => (
+            <Fragment>
+                <input
+                    type="radio"
+                    name="canonical-policy"
+                    id={`${rule.id}-policy`}
+                    value={rule.id}
+                    checked={i === 0}
+                    aria-controls={`${rule.id}-policy-panel`}
+                />
+                <label class="policy-option" for={`${rule.id}-policy`}>
+                    {rule.label}
                 </label>
-            ))}
-        </fieldset>
-        {rules.map((rule) => (
-            <div class="policy-panel" data-policy={rule.id} id={`${rule.id}-policy-panel`}>
-                <ProviderTracks rule={rule} compact />
-                <div class="policy-result" id={`${rule.id}-policy-result`}>
-                    <h3 class="display text-[clamp(1.1rem,1.9vw,1.6rem)] leading-[1.1]">{rule.result}</h3>
-                    <p class="mt-3 text-sm leading-relaxed text-fg/85 md:text-base">{rule.policy}</p>
+                <div class="policy-panel" id={`${rule.id}-policy-panel`}>
+                    <ProviderTracks rule={rule} compact />
+                    <div class="policy-result" id={`${rule.id}-policy-result`}>
+                        <h3 class="display text-[clamp(1.1rem,1.9vw,1.6rem)] leading-[1.1]">{rule.result}</h3>
+                        <p class="mt-3 text-sm leading-relaxed text-fg/85 md:text-base">{rule.policy}</p>
+                    </div>
                 </div>
-            </div>
+            </Fragment>
         ))}
     </div>
     <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-policy-announcement></p>
@@ -56,26 +54,19 @@ import ProviderTracks from './ProviderTracks.astro';
         background: var(--bg-raise);
     }
     .policy-content {
-        display: grid;
-    }
-    .policy-selector {
-        grid-area: 1 / 1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
-    }
-    .policy-option {
         position: relative;
-        cursor: pointer;
+        display: grid;
+        grid-template-columns: repeat(var(--rules), max-content) 1fr;
+        gap: 2rem 0.5rem;
     }
-    .policy-option input {
+    .policy-content > input {
         position: absolute;
         opacity: 0;
         width: 1px;
         height: 1px;
     }
-    .policy-option > span {
+    .policy-option {
+        grid-row: 1;
         display: grid;
         min-height: 44px;
         place-items: center;
@@ -86,37 +77,37 @@ import ProviderTracks from './ProviderTracks.astro';
         font-size: 0.6875rem;
         letter-spacing: 0.14em;
         text-transform: uppercase;
+        cursor: pointer;
         transition:
             background-color 200ms,
             border-color 200ms,
             color 200ms;
     }
     @media (hover: hover) {
-        .policy-option:hover input:not(:checked) + span {
+        input:not(:checked) + .policy-option:hover {
             border-color: color-mix(in oklch, var(--fg) 35%, transparent);
             color: var(--fg);
         }
     }
 
-    .policy-option input:checked + span {
+    input:checked + .policy-option {
         border-color: var(--project);
         background: var(--project);
         color: #0a0a0b;
     }
-    .policy-option input:focus-visible + span {
+    input:focus-visible + .policy-option {
         outline: 2px solid var(--accent);
         outline-offset: 3px;
     }
     .policy-panel {
         display: grid;
-        grid-area: 2 / 1;
+        grid-row: 2;
+        grid-column: 1 / -1;
         visibility: hidden;
         gap: 2rem;
         align-items: center;
     }
-    .policy-content:has(input[value='steps']:checked) [data-policy='steps'],
-    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'],
-    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] {
+    input:checked + .policy-option + .policy-panel {
         visibility: visible;
     }
     .policy-result {
@@ -132,34 +123,25 @@ import ProviderTracks from './ProviderTracks.astro';
         opacity: 0;
         transition: opacity 400ms 120ms;
     }
-    .policy-content:has(input[value='steps']:checked) [data-policy='steps'] :global(.record-segment),
-    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'] :global(.record-segment),
-    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] :global(.record-segment) {
+    input:checked + .policy-option + .policy-panel :global(.record-segment) {
         transform: none;
     }
-    .policy-content:has(input[value='steps']:checked) [data-policy='steps'] .policy-result,
-    .policy-content:has(input[value='sleep']:checked) [data-policy='sleep'] .policy-result,
-    .policy-content:has(input[value='heart']:checked) [data-policy='heart'] .policy-result {
+    input:checked + .policy-option + .policy-panel .policy-result {
         opacity: 1;
     }
     @media (prefers-reduced-motion: reduce) {
         .policy-panel :global(.record-segment),
         .policy-panel .policy-result,
-        .policy-option > span {
+        .policy-option {
             transition: none;
         }
     }
     @media (max-width: 767px) {
-        .policy-selector {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.375rem;
-            margin-bottom: 1rem;
+        .policy-content {
+            grid-template-columns: repeat(var(--rules), minmax(0, 1fr));
+            gap: 1rem 0.375rem;
         }
         .policy-option {
-            display: grid;
-        }
-        .policy-option > span {
             padding-inline: 0.375rem;
             line-height: 1.25;
             text-align: center;
