@@ -295,6 +295,15 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             onEnter: (batch) => gsap.to(batch, { opacity: 1, y: 0, duration: 0.9, stagger: 0.1 }),
         });
 
+        // Focus can scroll an item only into the bottom strip below the batch start, which would leave a focused link invisible.
+        root.addEventListener('focusin', ({ target }) => {
+            if (!(target instanceof Node)) return;
+            gsap.set(
+                revealItems.filter((item) => item.contains(target)),
+                { opacity: 1, y: 0, overwrite: true },
+            );
+        });
+
         for (const plot of offscreen([...root.querySelectorAll<HTMLElement>('[data-plot-line]')])) {
             gsap.fromTo(
                 plot,
