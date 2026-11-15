@@ -80,7 +80,10 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
             });
             chick.animate(
                 still
-                    ? [{ opacity: 0 }, { opacity: 1 }]
+                    ? [
+                          { opacity: 0, transform: 'translateY(-3px)' },
+                          { opacity: 1, transform: 'translateY(-3px)' },
+                      ]
                     : [
                           { opacity: 0, transform: 'translateY(9px)' },
                           { opacity: 1, transform: 'translateY(-5px)', offset: 0.6 },

@@ -55,17 +55,33 @@ export function start(signal: AbortSignal, { reveal }: EffectRun) {
     });
 
     // Animating `translate` leaves `transform` to the Magnetic wrapper's own pointer tracking.
-    const slideTo = (x: number, duration: number) => {
+    // A dodge hops, so a jump back past the cursor reads as leaping over it rather than sliding through.
+    const slideTo = (x: number, duration: number, hop = 0) => {
         leap?.cancel();
-        leap = cta.animate([{ translate: `${offsetX}px 0` }, { translate: `${x}px 0` }], {
-            duration: still ? 0 : duration,
-            easing: EASE_OUT_STRONG,
-            fill: 'forwards',
-        });
+        leap = cta.animate(
+            [
+                { translate: `${offsetX}px 0` },
+                { translate: `${(offsetX + x) / 2}px ${-hop}px`, offset: 0.45 },
+                { translate: `${x}px 0` },
+            ],
+            { duration: still ? 0 : duration, easing: EASE_OUT_STRONG, fill: 'forwards' },
+        );
         offsetX = x;
 
         return leap;
     };
+
+    // A click that lands mid-leap would follow a link the visitor never aimed at.
+    cta.addEventListener(
+        'click',
+        (e) => {
+            if (!leaping) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        { capture: true, signal },
+    );
 
     const giveUp = () => {
         slideTo(0, 700);
@@ -89,7 +105,7 @@ export function start(signal: AbortSignal, { reveal }: EffectRun) {
         const dy = rect.top + rect.height / 2 - e.clientY;
         const distance = Math.hypot(dx, dy) || 1;
 
-        if (distance > rect.width * 0.85) return;
+        if (distance > rect.width * 1.3) return;
 
         // Jumps stay in the row, between the intro text and the button's own spot, so they never land on the scroll link.
         const text = intro?.getBoundingClientRect();
@@ -102,7 +118,7 @@ export function start(signal: AbortSignal, { reveal }: EffectRun) {
 
         leaping = true;
         dodges += 1;
-        slideTo(offsetX + stepX, 380).addEventListener('finish', () => (leaping = false), { once: true });
+        slideTo(offsetX + stepX, 420, 18).addEventListener('finish', () => (leaping = false), { once: true });
 
         if (dodges < DODGES) return;
 

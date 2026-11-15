@@ -60,10 +60,11 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
         flexDirection: 'column',
         alignItems: 'center',
         color: 'color-mix(in oklch, var(--fg) 75%, transparent)',
-        // Phones leave about 40px between the surname and the divider, which the larger candle would overflow.
-        scale: matchMedia('(min-width: 768px)').matches ? '1.35' : '1',
         transformOrigin: '50% 100%',
     });
+
+    // Phones leave about 40px between the surname and the divider, which the larger candle would overflow.
+    candle.classList.add('md:scale-135');
 
     candle.prepend(flame, smoke);
 

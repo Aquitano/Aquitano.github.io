@@ -46,9 +46,17 @@ function torchlight(hero: HTMLElement, signal: AbortSignal) {
     });
 
     // The hero writes the eased position inline, or leaves the stylesheet's 70% 30% on touch and reduced motion.
+    let position = '';
+
     const follow = () => {
-        torch.style.setProperty('--mx', grid.style.getPropertyValue('--mx') || '70%');
-        torch.style.setProperty('--my', grid.style.getPropertyValue('--my') || '30%');
+        const x = grid.style.getPropertyValue('--mx') || '70%';
+        const y = grid.style.getPropertyValue('--my') || '30%';
+
+        if (`${x} ${y}` === position) return;
+
+        position = `${x} ${y}`;
+        torch.style.setProperty('--mx', x);
+        torch.style.setProperty('--my', y);
     };
 
     follow();

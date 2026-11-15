@@ -55,7 +55,7 @@
 
     const mount = (season: Season, effect: SeasonalEffect, toggle: HTMLButtonElement) => {
         const config: SeasonConfig = seasons[season];
-        const { label, scope } = config;
+        const { label } = config;
         let running: AbortController | undefined;
         let shown = false;
 
@@ -81,7 +81,18 @@
 
         if (icon) icon.innerHTML = effect.icon;
 
-        if (name) name.textContent = label;
+        // The pill's labels are set in capitals, but hex like 0x100 reads wrong as 0X100.
+        name?.replaceChildren(
+            ...label.split(/(0x\w+)/).map((part) => {
+                if (!part.startsWith('0x')) return part;
+
+                const hex = document.createElement('span');
+                hex.className = 'normal-case';
+                hex.textContent = part;
+
+                return hex;
+            }),
+        );
 
         toggle.setAttribute('aria-label', `Seasonal effect: ${label}`);
 
@@ -96,13 +107,17 @@
             track('seasonal_effects_toggled', { season, enabled: on });
         });
 
-        // A hero effect has nothing to switch once the hero is gone, so the pill steps aside like the shortcuts hint.
+        // Past the first screen the pill steps aside like the shortcuts hint, so it never covers the text below.
         const hero = document.querySelector('[data-hero]');
 
-        if (scope === 'hero' && hero) {
+        if (hero) {
             new IntersectionObserver(([entry]) => toggle.classList.toggle('is-away', !entry.isIntersecting)).observe(
                 hero,
             );
+        } else {
+            const stepAside = () => toggle.classList.toggle('is-away', window.scrollY > window.innerHeight);
+            window.addEventListener('scroll', stepAside, { passive: true });
+            stepAside();
         }
 
         // Waits out the hero intro so the pill arrives after the page has settled. A surprise waits for its reveal,

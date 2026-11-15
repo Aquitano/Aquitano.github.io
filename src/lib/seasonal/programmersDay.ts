@@ -17,6 +17,8 @@ const BINARY_MS = 350;
 
 const LOCK_STAGGER_MS = 70;
 
+const HOVER_COOLDOWN_MS = 3000;
+
 /** The surname's intro rise ends around here. */
 const INTRO_MS = 1400;
 
@@ -86,7 +88,9 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     const caption = document.createElement('span');
     caption.className = 'text-accent';
-    caption.innerHTML = 'Day <span class="normal-case">0x100</span>';
+    // On phones the caption wraps onto its own line, where a leading separator would dangle.
+    caption.innerHTML =
+        '<span class="max-md:hidden" aria-hidden="true">· </span>Day <span class="normal-case">0x100</span>';
     status.append(caption);
     fadeOutOnAbort(signal, caption);
 
@@ -106,14 +110,17 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const first = setTimeout(decode, introMs);
     signal.addEventListener('abort', () => clearTimeout(first));
 
-    // Swapping the letters under a resting cursor fires pointerenter again, so a hover replays only after the cursor leaves.
+    // Swapping the letters under a resting cursor fires pointerenter again, so a hover replays only after the cursor
+    // leaves. The surname spans the screen, so a cooldown keeps a cursor passing over it from replaying every time.
     let armed = true;
+    let lastHover = -Infinity;
     surname.addEventListener(
         'pointerenter',
         () => {
-            if (!armed) return;
+            if (!armed || performance.now() - lastHover < HOVER_COOLDOWN_MS) return;
 
             armed = false;
+            lastHover = performance.now();
             decode();
         },
         { signal },

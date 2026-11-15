@@ -163,9 +163,9 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
         </a>
 
         <SiteHeader />
+        <SeasonToggle />
         <slot />
         <SiteFooter />
-        <SeasonToggle />
 
         {/* Browsers follow a URL fragment only after the module scripts run; reloads keep their restored scroll. */}
         <script is:inline>
@@ -190,13 +190,15 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             trackLinkClicks();
         </script>
         <script>
-            import { isSwitchedOff, seasonForThisPage, seasons } from '../lib/seasons';
+            import { seasonForThisPage, seasons } from '../lib/seasons';
 
             const season = seasonForThisPage();
 
-            // Read when the tab hides, so switching the season off also retires its title.
+            // Read from the pill when the tab hides, so switching the season off also retires its title.
             const awayTitle = () =>
-                season && !isSwitchedOff(season) ? seasons[season].awayTitle : '[ still shipping ] — TB';
+                season && document.querySelector('[data-season-toggle]')?.getAttribute('aria-pressed') === 'true'
+                    ? seasons[season].awayTitle
+                    : '[ still shipping ] — TB';
 
             // Restore the title the current page shipped with, not a hardcoded home title.
             const onPageTitle = document.title;
