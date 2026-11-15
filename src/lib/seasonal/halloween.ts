@@ -130,7 +130,7 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean, onL
     });
 
     const anchor = document.createElement('div');
-    Object.assign(anchor.style, { position: 'absolute', top: '0', left: '72%' });
+    Object.assign(anchor.style, { position: 'absolute', top: '0', left: '68%' });
 
     const drop = document.createElement('div');
     drop.style.color = 'color-mix(in oklch, var(--fg) 85%, transparent)';
