@@ -95,7 +95,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
                     <Picture
                         src={project.image}
                         formats={['avif', 'webp']}
-                        quality={80}
+                        quality={project.imageQuality}
                         alt={project.imageAlt ?? `${project.title} — ${project.subtitle}`}
                         widths={[640, 960, 1280, 1600, 2400]}
                         sizes="(min-width: 1616px) 1770px, (min-width: 768px) calc((100vw - 5rem) * 1.15), calc((100vw - 2.5rem) * 1.15)"
