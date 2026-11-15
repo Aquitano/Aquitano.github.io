@@ -1,0 +1,22 @@
+---
+import SectionHeading from './SectionHeading.astro';
+---
+
+<section class="section-x border-t border-line py-16 md:py-24">
+    <SectionHeading index="01" title="Integration tests" ruled={false} />
+    <div data-detail-reveal class="max-w-3xl lg:ml-22">
+        <p class="text-base leading-relaxed text-fg/85 md:text-lg">
+            The integration suite runs the application’s Flyway migrations against temporary PostgreSQL databases. Each
+            test is isolated.
+        </p>
+        <a
+            class="link-line pressable touch-target mt-4 inline-block font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase"
+            href="https://github.com/Aquitano/aqt-health/blob/6e4f4ea48a3b7616042a1f8e16c80abc2b5838e7/README.md#tests"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Test setup <span aria-hidden="true">↗</span>
+            <span class="sr-only">(opens in new tab)</span>
+        </a>
+    </div>
+</section>

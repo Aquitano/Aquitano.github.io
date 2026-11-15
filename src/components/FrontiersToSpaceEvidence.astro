@@ -1,0 +1,38 @@
+---
+import FlightPlot from './FlightPlot.astro';
+import SectionHeading from './SectionHeading.astro';
+
+const linkClass =
+    'link-line pressable touch-target font-mono text-xs tracking-[0.14em] whitespace-nowrap text-fg uppercase';
+
+const leadClass = 'mb-10 max-w-3xl text-base leading-relaxed text-fg/85 md:mb-14 md:text-lg lg:ml-22';
+---
+
+<section class="section-x border-t border-line py-16 md:py-24">
+    <SectionHeading index="01" title="Flight telemetry" ruled={false} />
+    <p data-detail-reveal class={leadClass}>
+        Five hours of measurements from 8 July 2023. These English plots are redrawn from the mission’s 429 filtered
+        telemetry records. Times are UTC. The horizontal axis uses the original Unix timestamps, including gaps between
+        packets.
+    </p>
+    <FlightPlot />
+    <div class="mt-4 grid gap-4 md:mt-6 md:gap-6 lg:grid-cols-2">
+        <FlightPlot metric="temperature" />
+        <FlightPlot metric="pressure" />
+    </div>
+    <div class="mt-8 flex flex-wrap gap-x-6 gap-y-4 pointer-coarse:gap-y-7">
+        <a
+            class={linkClass}
+            href="https://github.com/Aquitano/FrontiersToSpace/blob/2fb1b9a35821a83a70aa6f4bb118f472eaba2ae5/data/filtered_data.json"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Original measurements <span aria-hidden="true">↗</span>
+            <span class="sr-only">(opens in new tab)</span>
+        </a>
+        <a class={linkClass} href="https://space.thomasbreindl.me/dashboard" target="_blank" rel="noopener noreferrer">
+            Interactive mission dashboard <span aria-hidden="true">↗</span>
+            <span class="sr-only">(opens in new tab)</span>
+        </a>
+    </div>
+</section>

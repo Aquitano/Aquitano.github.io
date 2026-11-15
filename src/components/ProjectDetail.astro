@@ -1,7 +1,10 @@
 ---
 import { Picture } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import ProjectEvidence from './ProjectEvidence.astro';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import AqtHealthEvidence from './AqtHealthEvidence.astro';
+import AqtSyncEvidence from './AqtSyncEvidence.astro';
+import FrontiersToSpaceEvidence from './FrontiersToSpaceEvidence.astro';
 import ReconciliationDemo from './ReconciliationDemo.astro';
 import { opensNewTab } from '../lib/links';
 import { displayTitle, opticalIndent } from '../lib/displayTitle';
@@ -14,6 +17,16 @@ interface Props {
 }
 
 const { project, index, total, next } = Astro.props;
+
+type Evidence = NonNullable<CollectionEntry<'work'>['data']['evidence']>;
+
+const evidenceViews: Record<Evidence, { banner?: AstroComponentFactory; sections: AstroComponentFactory }> = {
+    'aqt-sync': { sections: AqtSyncEvidence },
+    'aqt-health': { banner: ReconciliationDemo, sections: AqtHealthEvidence },
+    'frontiers-to-space': { sections: FrontiersToSpaceEvidence },
+};
+
+const { banner: EvidenceBanner, sections: EvidenceSections } = project.evidence ? evidenceViews[project.evidence] : {};
 
 const title = displayTitle(project.title, project.wrap);
 
@@ -120,9 +133,9 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
             )}
         </div>
     )}
-    {project.evidence === 'aqt-health' && (
+    {EvidenceBanner && (
         <div class="section-x relative pt-2 pb-10 md:pb-16">
-            <ReconciliationDemo />
+            <EvidenceBanner />
         </div>
     )}
 
@@ -189,7 +202,7 @@ const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}
         </div>
     </div>
 
-    <ProjectEvidence evidence={project.evidence} />
+    {EvidenceSections && <EvidenceSections />}
 
     <a
         href={`/work/${next.slug}`}
