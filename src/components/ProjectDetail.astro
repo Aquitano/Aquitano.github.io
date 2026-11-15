@@ -28,7 +28,7 @@ const fadeStart = 700 + (title.lines.length - 1) * LINE_STAGGER;
 const fadeDelay = (i: number) => `--intro-delay: ${fadeStart + i * FADE_STAGGER}ms`;
 ---
 
-<div id="top" data-detail style={`--project: ${project.accent}`} class="relative overflow-x-clip">
+<div data-detail style={`--project: ${project.accent}`} class="relative overflow-x-clip">
     {/* per-project glow */}
     <div
         class="pointer-events-none absolute top-0 -right-1/4 h-[60svh] w-[70%] rounded-full opacity-[0.1] blur-3xl"

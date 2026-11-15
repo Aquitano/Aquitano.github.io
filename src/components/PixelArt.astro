@@ -21,7 +21,6 @@ const { art } = Astro.props;
         place-items: center;
     }
 
-    /* Without the script the source still shows, scaled without smoothing. */
     .pixel-art img {
         max-width: 100%;
         max-height: 100%;
@@ -136,7 +135,6 @@ const { art } = Astro.props;
         // Until the panel scrolls in it shows only the empty grid, so the art appears once, by decoding.
         let colorOf: (cell: Cell, index: number) => string | null = prefersReducedMotion() ? settled : () => null;
 
-        // Cells show noise until their own settle time, sweeping left to right.
         const decode = () => {
             const settle = cells.map((cell) => (cell.x / cols) * 0.55 + Math.random() * 0.45);
             // Noise is dense on the art and thins toward the edges like the grid, so no rectangle flashes up.
