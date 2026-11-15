@@ -1,16 +1,25 @@
+export type EffectRun = {
+    /** False when the visitor switches the season back on, so the effect skips the delays that wait out the hero intro. */
+    onLoad: boolean;
+    /** Shows the toggle of a `surprise` season, once the surprise is out. */
+    reveal: () => void;
+};
+
 export type SeasonalEffect = {
     icon: string;
     /** Runs until the signal aborts, then leaves the page as it found it. */
-    start: (signal: AbortSignal) => void;
+    start: (signal: AbortSignal, run: EffectRun) => void;
 };
 
-type SeasonConfig = {
+export type SeasonConfig = {
     label: string;
     awayTitle: string;
     /** Hero effects have nothing to decorate on pages without the home page hero. */
     scope: 'hero' | 'site';
     /** Only a mouse can trigger the effect, so touch screens skip it. */
     mouseOnly?: boolean;
+    /** The toggle would give the joke away, so it waits for the effect to call `reveal`. */
+    surprise?: boolean;
     loadEffect: () => Promise<SeasonalEffect>;
 };
 
@@ -22,32 +31,33 @@ export const seasons = {
         loadEffect: () => import('./seasonal/fireworks'),
     },
     'april-fools': {
-        label: 'April Fools prank',
+        label: 'April Fools',
         awayTitle: '[ totally shipping ] — TB',
         scope: 'hero',
         mouseOnly: true,
+        surprise: true,
         loadEffect: () => import('./seasonal/aprilFools'),
     },
     'programmers-day': {
-        label: "Programmer's Day",
+        label: 'Day 0x100',
         awayTitle: '[ day 0x100 ] — TB',
         scope: 'hero',
         loadEffect: () => import('./seasonal/programmersDay'),
     },
     birthday: {
-        label: 'Birthday candle',
+        label: 'Candle',
         awayTitle: '[ a year older ] — TB',
         scope: 'hero',
         loadEffect: () => import('./seasonal/birthday'),
     },
     easter: {
-        label: 'Easter egg',
+        label: 'Egg',
         awayTitle: '[ hiding eggs ] — TB',
         scope: 'hero',
         loadEffect: () => import('./seasonal/easter'),
     },
     halloween: {
-        label: 'Halloween effects',
+        label: 'Spider',
         awayTitle: '[ still haunting ] — TB',
         scope: 'hero',
         loadEffect: () => import('./seasonal/halloween'),

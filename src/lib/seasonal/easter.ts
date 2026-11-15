@@ -1,16 +1,27 @@
 import { prefersReducedMotion } from '../gsap';
+import type { EffectRun } from '../seasons';
 import { placeOnLedge } from './ledge';
 import { EASE_OUT_STRONG, GOLD } from './stage';
 
-export const icon = `
-<svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
-    <path d="M9 1C4.5 1 1 8 1 13.5 1 18 4.6 21 9 21s8-3 8-7.5C17 8 13.5 1 9 1Z" fill="var(--bg-raise)" />
-    <path d="M1.4 12.5 4 10.5l2.5 2 2.5-2 2.5 2 2.5-2 2.6 2" />
+const SHELL = '<path d="M9 1C4.5 1 1 8 1 13.5 1 18 4.6 21 9 21s8-3 8-7.5C17 8 13.5 1 9 1Z" fill="var(--bg-raise)" />';
+
+const CRACK_LINE = '<path d="M1.4 12.5 4 10.5l2.5 2 2.5-2 2.5 2 2.5-2 2.6 2" />';
+
+const DOTS = `<g fill="currentColor" stroke="none">
+    <circle cx="6" cy="15.5" r=".9" /><circle cx="9" cy="16.5" r=".9" /><circle cx="12" cy="15.5" r=".9" />
+    <circle cx="7.5" cy="6.5" r=".8" /><circle cx="10.5" cy="6.5" r=".8" />
+</g>`;
+
+const egg = (inner: string) => `
+<svg width="100%" height="100%" viewBox="0 0 18 22" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
+    ${SHELL}${inner}
 </svg>`;
+
+export const icon = egg(CRACK_LINE);
 
 // Sits behind the bottom shell, so only its head shows above the crack.
 const CHICK = `
-<svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke-linecap="round">
+<svg width="100%" height="100%" viewBox="0 0 18 22" fill="none" stroke-linecap="round">
     <path d="M9 5.6c-.3-1.3.4-2.2 1.4-2.4" stroke="${GOLD}" stroke-width="1.1" />
     <circle cx="9" cy="10.4" r="4.8" fill="${GOLD}" />
     <circle cx="10.7" cy="9.4" r="0.75" fill="var(--bg)" />
@@ -19,44 +30,49 @@ const CHICK = `
 
 const CRACK = ['0 48%', '12% 56%', '26% 44%', '40% 56%', '54% 44%', '68% 56%', '82% 44%', '100% 52%'];
 
-const half = (clipPath: string) => {
+const layer = (svg: string, clipPath = 'none') => {
     const el = document.createElement('span');
     Object.assign(el.style, { position: 'absolute', inset: '0', clipPath });
-    el.innerHTML = icon;
+    el.innerHTML = svg;
 
     return el;
 };
 
-export function start(signal: AbortSignal) {
+export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const still = prefersReducedMotion();
 
-    const egg = document.createElement('span');
-    Object.assign(egg.style, {
+    const toy = document.createElement('span');
+    Object.assign(toy.style, {
         position: 'relative',
-        width: '18px',
-        height: '22px',
+        width: '24px',
+        height: '29px',
         color: 'var(--accent)',
         transformOrigin: '50% 100%',
     });
 
-    const chick = document.createElement('span');
-    Object.assign(chick.style, { position: 'absolute', inset: '0', opacity: '0' });
-    chick.innerHTML = CHICK;
+    const chick = layer(CHICK);
+    chick.style.opacity = '0';
 
-    const lid = half(`polygon(0 0, 100% 0, ${CRACK.toReversed().join(', ')})`);
-    egg.append(chick, lid, half(`polygon(${CRACK.join(', ')}, 100% 100%, 0 100%)`));
+    // The painted egg shows no crack until it is pressed, so the toy does not give its surprise away.
+    const lid = layer(egg(DOTS), `polygon(0 0, 100% 0, ${CRACK.toReversed().join(', ')})`);
+    const base = layer(egg(DOTS), `polygon(${CRACK.join(', ')}, 100% 100%, 0 100%)`);
+    toy.append(chick, lid, base);
 
     // Reduced motion keeps the reveal but swaps the lid's flight for a plain fade.
-    const lidOff = still ? { opacity: 0 } : { transform: 'translate(-6px, -22px) rotate(-40deg)', opacity: 0 };
+    const lidOff = still ? { opacity: 0 } : { transform: 'translate(-6px, -26px) rotate(-40deg)', opacity: 0 };
     let wobble: Animation | undefined;
 
     const placed = placeOnLedge(signal, {
         label: 'Crack open the Easter egg',
-        toy: egg,
+        toy,
         note: 'Happy Easter',
         still,
+        onLoad,
         onPress: () => {
             wobble?.cancel();
+
+            for (const half of [lid, base]) half.querySelector('svg')?.insertAdjacentHTML('beforeend', CRACK_LINE);
+
             lid.animate([{ transform: 'none', opacity: 1 }, lidOff], {
                 duration: still ? 200 : 900,
                 easing: EASE_OUT_STRONG,
@@ -66,7 +82,7 @@ export function start(signal: AbortSignal) {
                 still
                     ? [{ opacity: 0 }, { opacity: 1 }]
                     : [
-                          { opacity: 0, transform: 'translateY(7px)' },
+                          { opacity: 0, transform: 'translateY(9px)' },
                           { opacity: 1, transform: 'translateY(-2px)', offset: 0.6 },
                           { opacity: 1, transform: 'none' },
                       ],
@@ -77,7 +93,7 @@ export function start(signal: AbortSignal) {
 
     if (!placed || still) return;
 
-    wobble = egg.animate(
+    wobble = toy.animate(
         [
             { rotate: '0deg' },
             { rotate: '0deg', offset: 0.82 },
@@ -87,6 +103,6 @@ export function start(signal: AbortSignal) {
             { rotate: '3deg', offset: 0.97 },
             { rotate: '0deg' },
         ],
-        { duration: 4200, delay: 1500, iterations: Infinity },
+        { duration: 4200, delay: onLoad ? 1500 : 600, iterations: Infinity },
     );
 }

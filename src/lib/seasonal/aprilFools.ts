@@ -1,5 +1,6 @@
 import { prefersReducedMotion } from '../gsap';
-import { EASE_OUT_STRONG, styleUntil } from './stage';
+import type { EffectRun } from '../seasons';
+import { EASE_OUT_STRONG, fadeOutOnAbort, styleUntil } from './stage';
 
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
@@ -7,22 +8,23 @@ export const icon = `
     <path d="M5.2 6.4h1.6M9.6 6.6l1.2-.8M5.4 9.6c1.4 1.5 3.8 1.5 5.2 0" />
 </svg>`;
 
-const DODGES = 3;
+const DODGES = 2;
 
-const LEAP_PX = 160;
+const LEAP_PX = 180;
 
 const EDGE_PX = 16;
 
 const GIVE_UP_MS = 900;
 
-// The first step along an axis that keeps the button inside [min, max]: away, back the other way, or not at all.
+// The first sideways step that keeps the button inside [min, max]: away, back the other way, or not at all.
 const fitStep = (from: number, size: number, step: number, min: number, max: number) =>
     [step, -step].find((s) => from + s >= min && from + size + s <= max) ?? 0;
 
-// The "View Work" button jumps away from the mouse a few times, then slides home and owns up.
-export function start(signal: AbortSignal) {
+// The "View Work" button jumps away from the mouse twice, then slides home and owns up.
+export function start(signal: AbortSignal, { reveal }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
     const cta = hero?.querySelector<HTMLElement>('[data-magnetic]');
+    const intro = hero?.querySelector<HTMLElement>('[data-hero-ledge] > p');
 
     if (!hero || !cta) return;
 
@@ -31,7 +33,6 @@ export function start(signal: AbortSignal) {
     let dodges = 0;
     let leaping = false;
     let offsetX = 0;
-    let offsetY = 0;
     let leap: Animation | undefined;
     let givingUp: ReturnType<typeof setTimeout> | undefined;
 
@@ -48,30 +49,38 @@ export function start(signal: AbortSignal) {
 
     styleUntil(signal, cta, { position: 'relative' });
     cta.append(note);
+    fadeOutOnAbort(signal, note);
     signal.addEventListener('abort', () => {
         clearTimeout(givingUp);
         leap?.cancel();
-        note.remove();
     });
 
     // Animating `translate` leaves `transform` to the Magnetic wrapper's own pointer tracking.
-    const slideTo = (x: number, y: number, duration: number) => {
+    const slideTo = (x: number, duration: number) => {
         leap?.cancel();
-        leap = cta.animate([{ translate: `${offsetX}px ${offsetY}px` }, { translate: `${x}px ${y}px` }], {
+        leap = cta.animate([{ translate: `${offsetX}px 0` }, { translate: `${x}px 0` }], {
             duration: still ? 0 : duration,
             easing: EASE_OUT_STRONG,
             fill: 'forwards',
         });
         offsetX = x;
-        offsetY = y;
 
         return leap;
     };
 
     const giveUp = () => {
-        slideTo(0, 0, 700);
+        slideTo(0, 700);
         note.textContent = 'April Fools';
-        note.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: still ? 0 : 500, fill: 'backwards' });
+        note.animate(
+            [still ? { opacity: 0 } : { opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }],
+            {
+                duration: 500,
+                delay: still ? 0 : 500,
+                easing: EASE_OUT_STRONG,
+                fill: 'backwards',
+            },
+        );
+        reveal();
     };
 
     const dodge = (e: PointerEvent) => {
@@ -84,20 +93,18 @@ export function start(signal: AbortSignal) {
 
         if (distance > rect.width * 0.85) return;
 
-        // The hero clips its overflow, so a jump must land where the hero is both visible and on screen.
-        const area = hero.getBoundingClientRect();
-        const minX = Math.max(area.left, 0) + EDGE_PX;
-        const maxX = Math.min(area.right, window.innerWidth) - EDGE_PX;
-        const minY = Math.max(area.top, 0) + EDGE_PX;
-        const maxY = Math.min(area.bottom, window.innerHeight) - EDGE_PX;
-        const stepX = fitStep(rect.left, rect.width, (dx / distance) * LEAP_PX, minX, maxX);
-        const stepY = fitStep(rect.top, rect.height, (dy / distance) * LEAP_PX, minY, maxY);
+        // Jumps stay in the row, between the intro text and the button's own spot, so they never land on the scroll link.
+        const text = intro?.getBoundingClientRect();
+        const textBeside = text && text.bottom > rect.top && text.top < rect.bottom;
+        const minX = Math.max(textBeside ? text.right : 0, hero.getBoundingClientRect().left) + EDGE_PX;
+        const maxX = rect.right - offsetX;
+        const stepX = fitStep(rect.left, rect.width, Math.sign(dx || -1) * LEAP_PX, minX, maxX);
+
+        if (!stepX) return;
 
         leaping = true;
         dodges += 1;
-        slideTo(offsetX + stepX, offsetY + stepY, 380).addEventListener('finish', () => (leaping = false), {
-            once: true,
-        });
+        slideTo(offsetX + stepX, 380).addEventListener('finish', () => (leaping = false), { once: true });
 
         if (dodges < DODGES) return;
 

@@ -1,17 +1,18 @@
-import { EASE_OUT_STRONG, styleUntil } from './stage';
+import { EASE_OUT_STRONG, fadeOutOnAbort, styleUntil } from './stage';
 
 type LedgeToy = {
-    /** Names what pressing the toy does. */
     label: string;
     toy: HTMLElement;
-    /** Answers the press. */
     note: string;
     still: boolean;
+    onLoad: boolean;
     onPress: () => void;
 };
 
+const TOY_PX = 44;
+
 /** Stands a toy on the hero's divider line that can be pressed once. Returns false when the page has no ledge. */
-export function placeOnLedge(signal: AbortSignal, { label, toy, note, still, onPress }: LedgeToy) {
+export function placeOnLedge(signal: AbortSignal, { label, toy, note, still, onLoad, onPress }: LedgeToy) {
     const ledge = document.querySelector<HTMLElement>('[data-hero-ledge]');
 
     if (!ledge) return false;
@@ -22,12 +23,12 @@ export function placeOnLedge(signal: AbortSignal, { label, toy, note, still, onP
     Object.assign(button.style, {
         position: 'absolute',
         bottom: 'calc(100% + 1px)',
-        left: '56%',
+        right: '0',
         display: 'flex',
         alignItems: 'end',
         justifyContent: 'center',
-        width: '44px',
-        height: '44px',
+        width: `${TOY_PX}px`,
+        height: `${TOY_PX}px`,
         cursor: 'pointer',
     });
     button.append(toy);
@@ -35,22 +36,29 @@ export function placeOnLedge(signal: AbortSignal, { label, toy, note, still, onP
     const status = document.createElement('span');
     status.setAttribute('role', 'status');
     status.className = 'meta text-accent';
+    // Beside the toy rather than above it, where a phone's surname leaves no room.
     Object.assign(status.style, {
         position: 'absolute',
         whiteSpace: 'nowrap',
-        bottom: 'calc(100% + 36px)',
-        left: 'calc(56% + 22px)',
-        translate: '-50% 0',
+        bottom: 'calc(100% + 8px)',
+        right: `${TOY_PX + 4}px`,
     });
 
     styleUntil(signal, ledge, { position: 'relative' });
     ledge.append(button, status);
-    signal.addEventListener('abort', () => {
-        button.remove();
-        status.remove();
-    });
+    fadeOutOnAbort(signal, button, status);
 
-    const noteIn = still ? { opacity: 0 } : { opacity: 0, transform: 'translateY(8px)' };
+    button.animate(
+        [still ? { opacity: 0 } : { opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }],
+        {
+            duration: 600,
+            delay: onLoad ? 1200 : 0,
+            easing: EASE_OUT_STRONG,
+            fill: 'backwards',
+        },
+    );
+
+    const noteIn = still ? { opacity: 0 } : { opacity: 0, transform: 'translateX(8px)' };
 
     button.addEventListener(
         'click',

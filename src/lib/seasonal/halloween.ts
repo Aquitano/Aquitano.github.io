@@ -1,5 +1,6 @@
 import { prefersReducedMotion } from '../gsap';
-import { EASE_OUT_STRONG, styleUntil } from './stage';
+import type { EffectRun } from '../seasons';
+import { EASE_OUT_STRONG, fadeOutOnAbort, random, styleUntil } from './stage';
 
 const SPIDER_HEIGHT = 29;
 
@@ -9,8 +10,8 @@ const SPIDER = `
     <path d="M2 2.5 8 -1 11 -6M2.5 3.5 9 2 13 -1M2.5 5 9 6 12 10M2 6 7 9.5 8 14" />
     <ellipse cy="-3" rx="4.5" ry="5.5" fill="currentColor" stroke="none" />
     <circle cy="4.5" r="3" fill="currentColor" stroke="none" />
-    <circle cx="-1.1" cy="5.8" r="0.7" fill="var(--accent)" stroke="none" />
-    <circle cx="1.1" cy="5.8" r="0.7" fill="var(--accent)" stroke="none" />
+    <circle cx="-1.2" cy="5.8" r="1" fill="var(--accent)" stroke="none" />
+    <circle cx="1.2" cy="5.8" r="1" fill="var(--accent)" stroke="none" />
 </svg>`;
 
 export const icon = SPIDER;
@@ -47,25 +48,39 @@ function darkenGrid(hero: HTMLElement, signal: AbortSignal) {
 }
 
 function flickerSurname(hero: HTMLElement, signal: AbortSignal) {
-    const flicker = hero
-        .querySelector('h1 .display-outline')
-        ?.animate(
-            [
-                { opacity: 1 },
-                { opacity: 1, offset: 0.9 },
-                { opacity: 0.15, offset: 0.91 },
-                { opacity: 1, offset: 0.925 },
-                { opacity: 0.3, offset: 0.94 },
-                { opacity: 1, offset: 0.97 },
-            ],
-            { duration: 7000, delay: 2500, iterations: Infinity },
-        );
+    const surname = hero.querySelector('h1 .display-outline');
 
-    signal.addEventListener('abort', () => flicker?.cancel());
+    if (!surname) return;
+
+    let flicker: Animation | undefined;
+    let next: ReturnType<typeof setTimeout> | undefined;
+
+    // At random moments rather than on a beat, like a failing bulb.
+    const schedule = (seconds: number) => {
+        next = setTimeout(() => {
+            flicker = surname.animate(
+                [
+                    { opacity: 1 },
+                    { opacity: 0.15, offset: 0.1 },
+                    { opacity: 1, offset: 0.25 },
+                    { opacity: 0.3, offset: 0.4 },
+                    { opacity: 1, offset: 0.7 },
+                ],
+                { duration: 700 },
+            );
+            schedule(random(12, 25));
+        }, seconds * 1000);
+    };
+
+    schedule(random(5, 9));
+    signal.addEventListener('abort', () => {
+        clearTimeout(next);
+        flicker?.cancel();
+    });
 }
 
 // Under reduced motion the spider hangs still and vanishes instead of climbing.
-function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
+function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean, onLoad: boolean) {
     // The web hangs from below the fixed header, so the thread never runs through the nav links.
     const ceiling = document.querySelector<HTMLElement>('[data-header]')?.offsetHeight ?? 0;
     const web = document.createElement('div');
@@ -134,32 +149,63 @@ function lowerSpider(hero: HTMLElement, signal: AbortSignal, still: boolean) {
 
     const descend = (delay: number) => moveTo(restingY(), { duration: 2600, delay, easing: EASE_OUT_STRONG });
 
-    const fleeFrom = (e: PointerEvent) => {
-        const body = drop.querySelector('svg')?.getBoundingClientRect();
+    let pointerX = -Infinity;
+    let pointerY = -Infinity;
 
-        if (returning || !body) return;
+    // Where the spider's body hangs once it has come down, in viewport coordinates.
+    const restingCentre = () => {
+        const box = anchor.getBoundingClientRect();
 
-        const distance = Math.hypot(e.clientX - (body.left + body.width / 2), e.clientY - (body.top + body.height / 2));
+        return { x: box.left + box.width / 2, y: web.getBoundingClientRect().top + restingY() + SPIDER_HEIGHT / 2 };
+    };
 
-        if (distance > FLEE_RADIUS) return;
+    const nearPointer = ({ x, y }: { x: number; y: number }) => Math.hypot(pointerX - x, pointerY - y) < FLEE_RADIUS;
 
-        moveTo(HIDDEN_Y, { duration: 420, easing: 'cubic-bezier(0.7, 0, 0.84, 0)' });
+    // Waits until the cursor has moved off the spot, so the spider does not drop straight onto it again.
+    const returnLater = (ms: number) => {
         returning = setTimeout(() => {
+            if (nearPointer(restingCentre())) return returnLater(1500);
+
             returning = undefined;
             descend(0);
-        }, RETURN_MS);
+        }, ms);
+    };
+
+    const fleeFrom = (e: PointerEvent) => {
+        pointerX = e.clientX;
+        pointerY = e.clientY;
+        const body = drop.querySelector('svg')?.getBoundingClientRect();
+
+        if (returning || !body || !nearPointer({ x: body.left + body.width / 2, y: body.top + body.height / 2 }))
+            return;
+
+        moveTo(HIDDEN_Y, { duration: 420, easing: 'cubic-bezier(0.7, 0, 0.84, 0)' });
+        returnLater(RETURN_MS);
     };
 
     hero.addEventListener('pointermove', fleeFrom, { passive: true, signal });
     hero.addEventListener('pointerdown', fleeFrom, { passive: true, signal });
+    hero.addEventListener('pointerleave', () => (pointerX = pointerY = -Infinity), { signal });
+    // A rotated phone or resized window moves the name, so a hanging spider follows it. The first call is the initial layout.
+    let laidOut = false;
+
+    const relayout = new ResizeObserver(() => {
+        if (laidOut && !returning) moveTo(restingY(), { duration: 400, easing: EASE_OUT_STRONG });
+
+        laidOut = true;
+    });
+
+    relayout.observe(hero);
+
     signal.addEventListener('abort', () => {
         clearTimeout(returning);
-        web.remove();
+        relayout.disconnect();
     });
-    descend(1800);
+    fadeOutOnAbort(signal, web);
+    descend(onLoad ? 1800 : 300);
 }
 
-export function start(signal: AbortSignal) {
+export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
 
     if (!hero) return;
@@ -167,7 +213,7 @@ export function start(signal: AbortSignal) {
     const still = prefersReducedMotion();
 
     darkenGrid(hero, signal);
-    lowerSpider(hero, signal, still);
+    lowerSpider(hero, signal, still, onLoad);
 
     // A flickering title is a flash, which reduced motion opts out of.
     if (!still) flickerSurname(hero, signal);

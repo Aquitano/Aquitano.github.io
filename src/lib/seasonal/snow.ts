@@ -1,7 +1,7 @@
 import { gsap, prefersReducedMotion } from '../gsap';
 import { createStage, cssVar, everyFrame, random, styleUntil } from './stage';
 
-type Flake = { x: number; y: number; vx: number; vy: number; phase: number };
+type Flake = { x: number; y: number; vx: number; vy: number; phase: number; size: number };
 
 type Layer = { near: number; radius: number; alpha: number; share: number; flakes: Flake[] };
 
@@ -15,14 +15,29 @@ const REPEL_RADIUS = 110;
 
 const clampScroll = gsap.utils.clamp(-60, 60);
 
-const flakeCount = (width: number, height: number) => gsap.utils.clamp(24, 120, Math.round((width * height) / 12_000));
+const flakeCount = (width: number, height: number) => gsap.utils.clamp(40, 120, Math.round((width * height) / 12_000));
+
+/** A flake with a soft edge, drawn once and stamped for every flake. */
+function flakeSprite(color: string) {
+    const sprite = document.createElement('canvas');
+    sprite.width = sprite.height = 32;
+    const ctx = sprite.getContext('2d');
+
+    if (ctx) {
+        const glow = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+        glow.addColorStop(0, color);
+        glow.addColorStop(0.35, color);
+        glow.addColorStop(1, 'transparent');
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, 32, 32);
+    }
+
+    return sprite;
+}
 
 export function start(signal: AbortSignal) {
     // 100lvh keeps the canvas from resizing whenever a mobile URL bar shows or hides.
-    const stage = createStage(document.body, signal, {
-        placement: { position: 'fixed', zIndex: '-1', height: '100lvh' },
-        maxDpr: 1,
-    });
+    const stage = createStage(document.body, signal, { position: 'fixed', zIndex: '-1', height: '100lvh' });
 
     if (!stage) return;
 
@@ -32,11 +47,11 @@ export function start(signal: AbortSignal) {
     const { ctx } = stage;
     const color = cssVar('--fg');
 
-    // Three depths, batched so each frame costs one fill per layer rather than one per flake.
+    // Three depths: far flakes are smaller, fainter and slower.
     const layers: Layer[] = [
         { near: 0.4, radius: 0.9, alpha: 0.35, share: 0.5, flakes: [] },
         { near: 0.7, radius: 1.5, alpha: 0.55, share: 0.3, flakes: [] },
-        { near: 1, radius: 2.3, alpha: 0.8, share: 0.2, flakes: [] },
+        { near: 1, radius: 2.3, alpha: 0.6, share: 0.2, flakes: [] },
     ];
 
     const populate = (total: number, width: number, height: number) => {
@@ -44,27 +59,33 @@ export function start(signal: AbortSignal) {
             const count = Math.round(total * layer.share);
 
             while (layer.flakes.length < count) {
-                layer.flakes.push({ x: random(0, width), y: random(0, height), vx: 0, vy: 0, phase: random(0, 7) });
+                layer.flakes.push({
+                    x: random(0, width),
+                    y: random(0, height),
+                    vx: 0,
+                    vy: 0,
+                    phase: random(0, 7),
+                    size: random(0.6, 1.4),
+                });
             }
 
             layer.flakes.length = count;
         }
     };
 
+    const sprite = flakeSprite(color);
+
     const paint = (scaleX: number, scaleY: number) => {
         ctx.clearRect(0, 0, stage.width, stage.height);
-        ctx.fillStyle = color;
 
         for (const { radius, alpha, flakes } of layers) {
             ctx.globalAlpha = alpha;
-            ctx.beginPath();
 
-            for (const { x, y } of flakes) {
-                ctx.moveTo(x * scaleX + radius, y * scaleY);
-                ctx.arc(x * scaleX, y * scaleY, radius, 0, Math.PI * 2);
+            // The sprite's solid core is about a third of its width, so it is stamped at three times the flake's size.
+            for (const { x, y, size } of flakes) {
+                const d = radius * size * 6;
+                ctx.drawImage(sprite, x * scaleX - d / 2, y * scaleY - d / 2, d, d);
             }
-
-            ctx.fill();
         }
     };
 
@@ -121,7 +142,7 @@ export function start(signal: AbortSignal) {
                 flake.vx *= damping;
                 flake.vy *= damping;
                 flake.x += (Math.sin(time * 0.7 + flake.phase) * 16 * near + flake.vx) * dt;
-                flake.y += ((16 + 40 * near) * near + flake.vy) * dt - scrolled * near * 0.4;
+                flake.y += (5 + 50 * near + flake.vy) * dt - scrolled * near * 0.4;
 
                 if (flake.y > height + 4) Object.assign(flake, { y: -4, x: random(0, width) });
                 else if (flake.y < -4) Object.assign(flake, { y: height + 4, x: random(0, width) });

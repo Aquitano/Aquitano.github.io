@@ -1,5 +1,6 @@
 import { prefersReducedMotion } from '../gsap';
-import { EASE_OUT_STRONG, styleUntil } from './stage';
+import type { EffectRun } from '../seasons';
+import { EASE_OUT_STRONG, fadeOutOnAbort, styleUntil } from './stage';
 
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
@@ -12,9 +13,9 @@ const HEX = '0123456789abcdef';
 
 const FRAME_MS = 55;
 
-const BINARY_MS = 450;
+const BINARY_MS = 350;
 
-const LOCK_STAGGER_MS = 110;
+const LOCK_STAGGER_MS = 70;
 
 /** The surname's intro rise ends around here. */
 const INTRO_MS = 1400;
@@ -78,7 +79,7 @@ function decoder(surname: HTMLElement, signal: AbortSignal) {
 }
 
 // Day 256 decodes the surname from hex and marks the day in the hero's status line.
-export function start(signal: AbortSignal) {
+export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
     const surname = hero?.querySelector<HTMLElement>('h1 .display-outline');
     const status = hero?.querySelector<HTMLElement>('[data-hero-status]');
@@ -89,20 +90,35 @@ export function start(signal: AbortSignal) {
     caption.className = 'text-accent';
     caption.innerHTML = 'Day <span class="normal-case">0x100</span>';
     status.append(caption);
-    signal.addEventListener('abort', () => caption.remove());
+    fadeOutOnAbort(signal, caption);
 
     if (prefersReducedMotion()) return;
 
+    const introMs = onLoad ? INTRO_MS : 0;
+
     caption.animate([{ opacity: 0 }, { opacity: 1 }], {
         duration: 600,
-        delay: INTRO_MS,
+        delay: introMs,
         easing: EASE_OUT_STRONG,
         fill: 'backwards',
     });
 
     styleUntil(signal, surname, { position: 'relative' });
     const decode = decoder(surname, signal);
-    const first = setTimeout(decode, INTRO_MS);
+    const first = setTimeout(decode, introMs);
     signal.addEventListener('abort', () => clearTimeout(first));
-    surname.addEventListener('pointerenter', decode, { signal });
+
+    // Swapping the letters under a resting cursor fires pointerenter again, so a hover replays only after the cursor leaves.
+    let armed = true;
+    surname.addEventListener(
+        'pointerenter',
+        () => {
+            if (!armed) return;
+
+            armed = false;
+            decode();
+        },
+        { signal },
+    );
+    surname.addEventListener('pointerleave', () => (armed = true), { signal });
 }

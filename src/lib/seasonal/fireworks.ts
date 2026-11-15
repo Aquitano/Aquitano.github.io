@@ -1,7 +1,12 @@
 import { gsap, prefersReducedMotion } from '../gsap';
+import type { EffectRun } from '../seasons';
 import { GOLD, createStage, cssVar, everyFrame, random } from './stage';
 
 type Particle = { x: number; y: number; vx: number; vy: number; age: number; ttl: number; color: string };
+
+type Rocket = Particle & { trail: { x: number; y: number }[] };
+
+type Flash = { x: number; y: number; age: number };
 
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
@@ -12,6 +17,15 @@ const GRAVITY = 140;
 
 const FLIGHT_S = 1.1;
 
+/** A click should pay off quickly, so its rocket flies a shorter fuse than the ones the show launches itself. */
+const CLICK_FLIGHT_S = 0.6;
+
+const SPARK_SPEED = 380;
+
+const TRAIL_POINTS = 9;
+
+const FLASH_S = 0.12;
+
 // Where reduced motion shows its still bursts, as fractions of the hero: the empty band above the role line.
 const STILL_BURSTS = [
     [0.18, 0.12],
@@ -19,22 +33,25 @@ const STILL_BURSTS = [
     [0.8, 0.14],
 ];
 
-export function start(signal: AbortSignal) {
+export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
-    const stage = hero && createStage(hero, signal, { placement: { position: 'absolute', zIndex: '0' }, maxDpr: 1 });
+    const stage = hero && createStage(hero, signal, { position: 'absolute', zIndex: '0' });
 
     if (!hero || !stage) return;
 
     const { ctx } = stage;
     const white = cssVar('--fg');
     const palette = [cssVar('--accent'), GOLD, white];
-    const rockets: Particle[] = [];
+    const rockets: Rocket[] = [];
     const sparks: Particle[] = [];
+    const flashes: Flash[] = [];
 
     const burst = (x: number, y: number, color: string) => {
-        for (let i = 0; i < 72; i++) {
+        flashes.push({ x, y, age: 0 });
+
+        for (let i = 0; i < 90; i++) {
             const angle = random(0, Math.PI * 2);
-            const speed = Math.sqrt(Math.random()) * 230;
+            const speed = Math.sqrt(Math.random()) * SPARK_SPEED;
             sparks.push({
                 x,
                 y,
@@ -118,36 +135,69 @@ export function start(signal: AbortSignal) {
     }
 
     let heroVisible = true;
-    let nextLaunch = 1.2;
+    let nextLaunch = onLoad ? 1.2 : 0.2;
     let painted = false;
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const status = hero.querySelector<HTMLElement>('[data-hero-status]');
+
+    // The show bursts in the open band between the header and the role line, never behind the name.
+    const skyBand = () => {
+        const top = (header?.offsetHeight ?? 0) + 40;
+        const bottom = status ? status.getBoundingClientRect().top - hero.getBoundingClientRect().top - 60 : 0;
+
+        return bottom - top > 80 ? [top, bottom] : [stage.height * 0.08, stage.height * 0.3];
+    };
 
     const observer = new IntersectionObserver(([entry]) => (heroVisible = entry.isIntersecting));
     observer.observe(hero);
     signal.addEventListener('abort', () => observer.disconnect());
 
     // Solves the launch velocity so the rocket peaks out exactly at the target when its fuse ends.
-    const launch = (toX: number, toY: number) => {
+    const launch = (toX: number, toY: number, flight: number) => {
         const x = toX + random(-60, 60);
         const y = stage.height + 8;
-        const vy = (toY - y - 0.5 * GRAVITY * FLIGHT_S ** 2) / FLIGHT_S;
-        rockets.push({ x, y, vx: (toX - x) / FLIGHT_S, vy, age: 0, ttl: FLIGHT_S, color: gsap.utils.random(palette) });
+        const vy = (toY - y - 0.5 * GRAVITY * flight ** 2) / flight;
+        const color = gsap.utils.random(palette);
+        rockets.push({ x, y, vx: (toX - x) / flight, vy, age: 0, ttl: flight, color, trail: [] });
     };
 
     onEmptyClick((e) => {
         const { x, y } = pointInHero(e);
-        launch(x, y);
+        launch(x, y, CLICK_FLIGHT_S);
     });
+
+    const drawTrail = ({ trail, color }: Rocket) => {
+        ctx.strokeStyle = color;
+
+        for (let i = 1; i < trail.length; i++) {
+            ctx.globalAlpha = (i / trail.length) * 0.9;
+            ctx.beginPath();
+            ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+            ctx.lineTo(trail[i].x, trail[i].y);
+            ctx.stroke();
+        }
+    };
+
+    const drawFlash = ({ x, y, age }: Flash) => {
+        const glow = ctx.createRadialGradient(x, y, 0, x, y, 70);
+        glow.addColorStop(0, white);
+        glow.addColorStop(1, 'transparent');
+        ctx.globalAlpha = 0.3 * (1 - age / FLASH_S);
+        ctx.fillStyle = glow;
+        ctx.fillRect(x - 70, y - 70, 140, 140);
+    };
 
     everyFrame(signal, (_, dt) => {
         const { width, height } = stage;
         nextLaunch -= dt;
 
         if (heroVisible && width && nextLaunch <= 0) {
-            launch(random(width * 0.15, width * 0.85), random(height * 0.1, height * 0.4));
+            const [top, bottom] = skyBand();
+            launch(random(width * 0.12, width * 0.88), random(top, bottom), FLIGHT_S);
             nextLaunch = random(0.6, 2.2);
         }
 
-        if (!rockets.length && !sparks.length) {
+        if (!rockets.length && !sparks.length && !flashes.length) {
             if (painted) ctx.clearRect(0, 0, width, height);
             painted = false;
 
@@ -157,15 +207,26 @@ export function start(signal: AbortSignal) {
         prepare();
         painted = true;
 
+        for (let i = flashes.length - 1; i >= 0; i--) {
+            const flash = flashes[i];
+            flash.age += dt;
+
+            if (flash.age >= FLASH_S) flashes.splice(i, 1);
+            else drawFlash(flash);
+        }
+
         for (let i = rockets.length - 1; i >= 0; i--) {
             const rocket = rockets[i];
             step(rocket, dt, 1);
+            rocket.trail.push({ x: rocket.x, y: rocket.y });
+
+            if (rocket.trail.length > TRAIL_POINTS) rocket.trail.shift();
 
             if (rocket.age >= rocket.ttl) {
                 burst(rocket.x, rocket.y, rocket.color);
                 rockets.splice(i, 1);
             } else {
-                streak(rocket, 0.9, 0.04);
+                drawTrail(rocket);
             }
         }
 

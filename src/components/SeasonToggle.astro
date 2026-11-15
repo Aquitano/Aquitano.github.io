@@ -21,6 +21,10 @@
         color: var(--accent);
     }
 
+    .season-toggle[aria-pressed='false'] [data-season-label] {
+        opacity: 0.5;
+    }
+
     /* Off strikes through the season's icon. */
     .season-toggle[aria-pressed='false'] .season-icon::after {
         content: '';
@@ -43,18 +47,28 @@
         seasonForThisPage,
         seasons,
         type Season,
+        type SeasonConfig,
         type SeasonalEffect,
     } from '../lib/seasons';
 
     const mount = (season: Season, effect: SeasonalEffect, toggle: HTMLButtonElement) => {
-        const { label, scope } = seasons[season];
+        const config: SeasonConfig = seasons[season];
+        const { label, scope } = config;
         let running: AbortController | undefined;
+        let shown = false;
 
-        const turn = (on: boolean) => {
+        const show = (delay: number) => {
+            if (shown) return;
+
+            shown = true;
+            setTimeout(() => toggle.classList.add('is-shown'), delay);
+        };
+
+        const turn = (on: boolean, onLoad: boolean) => {
             running?.abort();
             running = on ? new AbortController() : undefined;
 
-            if (running) effect.start(running.signal);
+            if (running) effect.start(running.signal, { onLoad, reveal: () => show(0) });
 
             toggle.setAttribute('aria-pressed', String(on));
             toggle.title = `${label}: ${on ? 'on' : 'off'}`;
@@ -67,10 +81,11 @@
 
         if (name) name.textContent = label;
 
-        turn(!isSwitchedOff(season));
+        const onAtLoad = !isSwitchedOff(season);
+        turn(onAtLoad, true);
         toggle.addEventListener('click', () => {
             const on = toggle.getAttribute('aria-pressed') !== 'true';
-            turn(on);
+            turn(on, false);
             rememberSwitch(season, on);
             track('seasonal_effects_toggled', { season, enabled: on });
         });
@@ -84,8 +99,9 @@
             );
         }
 
-        // Waits out the hero intro so the pill arrives after the page has settled.
-        setTimeout(() => toggle.classList.add('is-shown'), 1600);
+        // Waits out the hero intro so the pill arrives after the page has settled. A surprise waits for its reveal,
+        // unless the visitor switched it off before and it never plays.
+        if (!config.surprise || !onAtLoad) show(1600);
     };
 
     const season = seasonForThisPage();

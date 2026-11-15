@@ -1,4 +1,5 @@
 import { prefersReducedMotion } from '../gsap';
+import type { EffectRun } from '../seasons';
 import { placeOnLedge } from './ledge';
 import { EASE_OUT_STRONG } from './stage';
 
@@ -22,8 +23,9 @@ const BODY = `
 </svg>`;
 
 const SMOKE = `
-<svg width="7" height="13" viewBox="0 0 10 18" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
-    <path d="M5 18c-3-3 3-5 0-8s3-5 0-8" />
+<svg width="10" height="22" viewBox="0 0 10 22" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+    <path d="M4 22c-3-3 3-5 0-8s3-5 0-8-2-4 0-6" />
+    <path d="M6 22c2.5-2.5-2-4.5 0-7.5s-2-4 0-7" opacity=".6" />
 </svg>`;
 
 const part = (svg: string, styles: Partial<CSSStyleDeclaration>) => {
@@ -35,7 +37,7 @@ const part = (svg: string, styles: Partial<CSSStyleDeclaration>) => {
 };
 
 // A candle on the hero's divider line that a visitor can blow out on 4 October.
-export function start(signal: AbortSignal) {
+export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const still = prefersReducedMotion();
 
     const flame = part(FLAME, {
@@ -59,6 +61,9 @@ export function start(signal: AbortSignal) {
         flexDirection: 'column',
         alignItems: 'center',
         color: 'color-mix(in oklch, var(--fg) 75%, transparent)',
+        // Phones leave about 40px between the surname and the divider, which the larger candle would overflow.
+        scale: matchMedia('(min-width: 768px)').matches ? '1.35' : '1',
+        transformOrigin: '50% 100%',
     });
 
     candle.prepend(flame, smoke);
@@ -68,8 +73,9 @@ export function start(signal: AbortSignal) {
     const placed = placeOnLedge(signal, {
         label: 'Blow out the birthday candle',
         toy: candle,
-        note: "It's my birthday",
+        note: 'Thanks for the birthday wish',
         still,
+        onLoad,
         onPress: () => {
             flicker?.cancel();
 
@@ -89,10 +95,10 @@ export function start(signal: AbortSignal) {
             smoke.animate(
                 [
                     { opacity: 0, transform: 'translateY(2px)' },
-                    { opacity: 0.7, offset: 0.2 },
-                    { opacity: 0, transform: 'translateY(-6px)' },
+                    { opacity: 0.5, offset: 0.2 },
+                    { opacity: 0, transform: 'translateY(-14px)' },
                 ],
-                { duration: 1200, delay: 120, easing: 'ease-out' },
+                { duration: 1800, delay: 120, easing: 'ease-out' },
             );
         },
     });
