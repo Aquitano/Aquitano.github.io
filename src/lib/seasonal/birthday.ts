@@ -36,7 +36,6 @@ const part = (svg: string, styles: Partial<CSSStyleDeclaration>) => {
     return el;
 };
 
-// A candle on the hero's divider line that a visitor can blow out on 4 October.
 export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const still = prefersReducedMotion();
 
@@ -68,7 +67,7 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     candle.prepend(flame, smoke);
 
-    let flicker: Animation | undefined;
+    let flicker: Animation[] = [];
 
     const placed = placeOnLedge(signal, {
         label: 'Blow out the birthday candle',
@@ -77,7 +76,7 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
         still,
         onLoad,
         onPress: () => {
-            flicker?.cancel();
+            for (const animation of flicker) animation.cancel();
 
             // Reduced motion keeps the flame going out but drops the lean and the rising smoke.
             const out = still
@@ -105,14 +104,25 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     if (!placed || still) return;
 
-    flicker = flame.animate(
-        [
-            { transform: 'none' },
-            { transform: 'scale(0.92, 1.08) rotate(-3deg)' },
-            { transform: 'scale(1.04, 0.94) rotate(2deg)' },
-            { transform: 'scale(0.96, 1.05) rotate(-1deg)' },
-            { transform: 'none' },
-        ],
-        { duration: 1100, iterations: Infinity, easing: 'ease-in-out' },
-    );
+    // Two loops of unrelated lengths, so the flame never settles into an obvious beat.
+    flicker = [
+        flame.animate(
+            [
+                { transform: 'none' },
+                { transform: 'scale(0.92, 1.08)' },
+                { transform: 'scale(1.04, 0.94)' },
+                { transform: 'scale(0.96, 1.05)' },
+                { transform: 'none' },
+            ],
+            { duration: 1100, iterations: Infinity, easing: 'ease-in-out' },
+        ),
+        flame.animate(
+            [{ rotate: '0deg' }, { rotate: '-4deg' }, { rotate: '2deg' }, { rotate: '-1deg' }, { rotate: '0deg' }],
+            {
+                duration: 1700,
+                iterations: Infinity,
+                easing: 'ease-in-out',
+            },
+        ),
+    ];
 }

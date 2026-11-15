@@ -8,8 +8,8 @@ const SHELL = '<path d="M9 1C4.5 1 1 8 1 13.5 1 18 4.6 21 9 21s8-3 8-7.5C17 8 13
 const CRACK_LINE = '<path d="M1.4 12.5 4 10.5l2.5 2 2.5-2 2.5 2 2.5-2 2.6 2" />';
 
 const DOTS = `<g fill="currentColor" stroke="none">
-    <circle cx="6" cy="15.5" r=".9" /><circle cx="9" cy="16.5" r=".9" /><circle cx="12" cy="15.5" r=".9" />
-    <circle cx="7.5" cy="6.5" r=".8" /><circle cx="10.5" cy="6.5" r=".8" />
+    <circle cx="4.6" cy="15.6" r=".85" /><circle cx="7.5" cy="15.9" r=".85" />
+    <circle cx="10.5" cy="15.9" r=".85" /><circle cx="13.4" cy="15.6" r=".85" />
 </g>`;
 
 const egg = (inner: string) => `
@@ -83,8 +83,8 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
                     ? [{ opacity: 0 }, { opacity: 1 }]
                     : [
                           { opacity: 0, transform: 'translateY(9px)' },
-                          { opacity: 1, transform: 'translateY(-2px)', offset: 0.6 },
-                          { opacity: 1, transform: 'none' },
+                          { opacity: 1, transform: 'translateY(-5px)', offset: 0.6 },
+                          { opacity: 1, transform: 'translateY(-3px)' },
                       ],
                 { duration: still ? 200 : 520, delay: still ? 0 : 160, easing: EASE_OUT_STRONG, fill: 'both' },
             );

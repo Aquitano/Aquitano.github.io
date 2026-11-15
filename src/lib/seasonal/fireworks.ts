@@ -8,6 +8,9 @@ type Rocket = Particle & { trail: { x: number; y: number }[] };
 
 type Flash = { x: number; y: number; age: number };
 
+/** Clicked bursts keep where they landed; the starting ones sit mid-sky, wherever the layout puts it. */
+type StillBurst = { fx: number; fy?: number; color: string };
+
 export const icon = `
 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
     <path d="M8 1.5v3M8 11.5v3M1.5 8h3M11.5 8h3M3.4 3.4l2.1 2.1M10.5 10.5l2.1 2.1M3.4 12.6l2.1-2.1M10.5 5.5l2.1-2.1" />
@@ -26,12 +29,8 @@ const TRAIL_POINTS = 9;
 
 const FLASH_S = 0.12;
 
-// Where reduced motion shows its still bursts, as fractions of the hero: the empty band above the role line.
-const STILL_BURSTS = [
-    [0.18, 0.12],
-    [0.5, 0.08],
-    [0.8, 0.14],
-];
+// Where reduced motion shows its still bursts, as fractions of the hero's width, in the open sky above the role line.
+const STILL_BURSTS = [0.26, 0.72];
 
 export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
@@ -45,13 +44,29 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const rockets: Rocket[] = [];
     const sparks: Particle[] = [];
     const flashes: Flash[] = [];
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const status = hero.querySelector<HTMLElement>('[data-hero-status]');
+    const ledge = hero.querySelector<HTMLElement>('[data-hero-ledge]');
+
+    const below = (el: HTMLElement | null, fallback: number) =>
+        el ? el.getBoundingClientRect().top - hero.getBoundingClientRect().top : fallback;
+
+    // Bursts stay in the open sky between the header and the role line, never behind the name.
+    const skyBand = () => {
+        const top = (header?.offsetHeight ?? 0) + 16;
+
+        return [top, Math.max(top + 20, below(status, stage.height * 0.3) - 24)];
+    };
+
+    // A phone's sky is narrow, so its bursts spread less to stay clear of the nav.
+    const sparkSpeed = () => SPARK_SPEED * (stage.width < 768 ? 0.6 : 1);
 
     const burst = (x: number, y: number, color: string) => {
         flashes.push({ x, y, age: 0 });
 
         for (let i = 0; i < 90; i++) {
             const angle = random(0, Math.PI * 2);
-            const speed = Math.sqrt(Math.random()) * SPARK_SPEED;
+            const speed = Math.sqrt(Math.random()) * sparkSpeed();
             sparks.push({
                 x,
                 y,
@@ -105,12 +120,15 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     // Reduced motion gets a still frame of bursts caught mid-air; a click adds one where it lands.
     if (prefersReducedMotion()) {
-        const bursts = STILL_BURSTS.map(([fx, fy]) => ({ fx, fy, color: gsap.utils.random(palette) }));
+        const bursts: StillBurst[] = STILL_BURSTS.map((fx) => ({ fx, color: gsap.utils.random(palette) }));
 
         const develop = () => {
+            const [top, bottom] = skyBand();
             sparks.length = 0;
 
-            for (const { fx, fy, color } of bursts) burst(fx * stage.width, fy * stage.height, color);
+            for (const { fx, fy, color } of bursts) {
+                burst(fx * stage.width, fy === undefined ? (top + bottom) / 2 : fy * stage.height, color);
+            }
 
             for (const spark of sparks) {
                 for (let i = 0; i < 30; i++) step(spark, 1 / 60, Math.exp(-1.6 / 60));
@@ -137,16 +155,6 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     let heroVisible = true;
     let nextLaunch = onLoad ? 1.2 : 0.2;
     let painted = false;
-    const header = document.querySelector<HTMLElement>('[data-header]');
-    const status = hero.querySelector<HTMLElement>('[data-hero-status]');
-
-    // The show bursts in the open band between the header and the role line, never behind the name.
-    const skyBand = () => {
-        const top = (header?.offsetHeight ?? 0) + 40;
-        const bottom = status ? status.getBoundingClientRect().top - hero.getBoundingClientRect().top - 60 : 0;
-
-        return bottom - top > 80 ? [top, bottom] : [stage.height * 0.08, stage.height * 0.3];
-    };
 
     const observer = new IntersectionObserver(([entry]) => (heroVisible = entry.isIntersecting));
     observer.observe(hero);
@@ -154,8 +162,9 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     // Solves the launch velocity so the rocket peaks out exactly at the target when its fuse ends.
     const launch = (toX: number, toY: number, flight: number) => {
+        // Rockets rise from the divider, so their trails never cross the intro text or the buttons below it.
         const x = toX + random(-60, 60);
-        const y = stage.height + 8;
+        const y = below(ledge, stage.height);
         const vy = (toY - y - 0.5 * GRAVITY * flight ** 2) / flight;
         const color = gsap.utils.random(palette);
         rockets.push({ x, y, vx: (toX - x) / flight, vy, age: 0, ttl: flight, color, trail: [] });
@@ -163,7 +172,7 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     onEmptyClick((e) => {
         const { x, y } = pointInHero(e);
-        launch(x, y, CLICK_FLIGHT_S);
+        launch(x, Math.min(y, below(ledge, stage.height) - 40), CLICK_FLIGHT_S);
     });
 
     const drawTrail = ({ trail, color }: Rocket) => {

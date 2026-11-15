@@ -31,7 +31,7 @@ export const seasons = {
         loadEffect: () => import('./seasonal/fireworks'),
     },
     'april-fools': {
-        label: 'April Fools',
+        label: 'Prank',
         awayTitle: '[ totally shipping ] — TB',
         scope: 'hero',
         mouseOnly: true,
@@ -45,7 +45,7 @@ export const seasons = {
         loadEffect: () => import('./seasonal/programmersDay'),
     },
     birthday: {
-        label: 'Candle',
+        label: 'Birthday',
         awayTitle: '[ a year older ] — TB',
         scope: 'hero',
         loadEffect: () => import('./seasonal/birthday'),
@@ -122,10 +122,18 @@ export function seasonOn(date: Date): Season | undefined {
     return undefined;
 }
 
+const previewed = () => {
+    const preview = new URLSearchParams(location.search).get('season');
+
+    return isSeason(preview) ? preview : undefined;
+};
+
+/** A preview always starts on, and switching it off is not remembered for the real day. */
+export const isPreview = () => previewed() !== undefined;
+
 /** The season whose effect can run on this page and device; `?season=christmas` previews one on any day. */
 export function seasonForThisPage() {
-    const preview = new URLSearchParams(location.search).get('season');
-    const season = isSeason(preview) ? preview : seasonOn(new Date());
+    const season = previewed() ?? seasonOn(new Date());
 
     if (!season) return undefined;
 

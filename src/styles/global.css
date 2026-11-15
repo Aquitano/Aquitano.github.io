@@ -85,6 +85,8 @@ body {
     color: var(--fg);
     font-family: var(--font-sans);
     overflow-x: clip;
+    /* Lets the snow canvas sit at z-index -1, behind the text but above the page background. */
+    isolation: isolate;
 }
 
 @layer base {

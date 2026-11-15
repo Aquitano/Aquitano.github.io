@@ -1,6 +1,6 @@
 import { prefersReducedMotion } from '../gsap';
 import type { EffectRun } from '../seasons';
-import { EASE_OUT_STRONG, fadeOutOnAbort, random, styleUntil } from './stage';
+import { EASE_OUT_STRONG, everyFrame, fadeOutOnAbort, random } from './stage';
 
 const SPIDER_HEIGHT = 29;
 
@@ -22,29 +22,56 @@ const FLEE_RADIUS = 110;
 
 const RETURN_MS = 5000;
 
-// The dot grid only shows inside a torch beam that follows the pointer, using the --mx/--my the hero already tracks.
-function darkenGrid(hero: HTMLElement, signal: AbortSignal) {
+// The dot grid only shows inside a torch beam, which follows the --mx/--my the hero already eases towards the pointer.
+function torchlight(hero: HTMLElement, signal: AbortSignal) {
     const grid = hero.querySelector<HTMLElement>('.hero-bg');
-    const glow = grid?.querySelector<HTMLElement>('.hero-glow');
 
     if (!grid) return;
 
     const beam = 'radial-gradient(circle 280px at var(--mx) var(--my), #000 25%, transparent 100%)';
-
-    styleUntil(signal, grid, {
-        '-webkit-mask-image': beam,
-        'mask-image': beam,
-        opacity: '1',
-        'background-image':
+    const torch = document.createElement('div');
+    torch.setAttribute('aria-hidden', 'true');
+    Object.assign(torch.style, {
+        position: 'absolute',
+        inset: '0',
+        pointerEvents: 'none',
+        backgroundImage: [
+            'radial-gradient(300px 300px at var(--mx) var(--my), color-mix(in oklch, var(--accent) 28%, transparent), transparent 70%)',
             'radial-gradient(circle, color-mix(in oklch, var(--fg) 55%, transparent) 1px, transparent 1.5px)',
+        ].join(', '),
+        backgroundSize: 'auto, 26px 26px',
+        backgroundPosition: 'center',
+        maskImage: beam,
+        webkitMaskImage: beam,
     });
 
-    if (glow) {
-        styleUntil(signal, glow, {
-            background:
-                'radial-gradient(300px 300px at var(--mx) var(--my), color-mix(in oklch, var(--accent) 28%, transparent), transparent 70%)',
-        });
-    }
+    // The hero writes the eased position inline, or leaves the stylesheet's 70% 30% on touch and reduced motion.
+    const follow = () => {
+        torch.style.setProperty('--mx', grid.style.getPropertyValue('--mx') || '70%');
+        torch.style.setProperty('--my', grid.style.getPropertyValue('--my') || '30%');
+    };
+
+    follow();
+    everyFrame(signal, follow);
+    grid.after(torch);
+    torch.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, easing: 'ease-out' });
+    fadeOutOnAbort(signal, torch);
+
+    // Fading the grid with an animation rather than a style lets switching off play it back to where it was.
+    const dim = grid.animate([{ opacity: getComputedStyle(grid).opacity }, { opacity: 0 }], {
+        duration: 600,
+        easing: 'ease-out',
+        fill: 'forwards',
+    });
+
+    signal.addEventListener('abort', () => {
+        dim.updatePlaybackRate(2.4);
+        dim.reverse();
+        dim.finished.then(
+            () => dim.cancel(),
+            () => {},
+        );
+    });
 }
 
 function flickerSurname(hero: HTMLElement, signal: AbortSignal) {
@@ -212,7 +239,7 @@ export function start(signal: AbortSignal, { onLoad }: EffectRun) {
 
     const still = prefersReducedMotion();
 
-    darkenGrid(hero, signal);
+    torchlight(hero, signal);
     lowerSpider(hero, signal, still, onLoad);
 
     // A flickering title is a flash, which reduced motion opts out of.

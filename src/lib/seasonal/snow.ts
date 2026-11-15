@@ -1,5 +1,5 @@
 import { gsap, prefersReducedMotion } from '../gsap';
-import { createStage, cssVar, everyFrame, random, styleUntil } from './stage';
+import { createStage, cssVar, everyFrame, random } from './stage';
 
 type Flake = { x: number; y: number; vx: number; vy: number; phase: number; size: number };
 
@@ -41,9 +41,6 @@ export function start(signal: AbortSignal) {
 
     if (!stage) return;
 
-    // Snow falls behind the text. Without its own stacking context, body paints its background over a negative z-index.
-    styleUntil(signal, document.body, { isolation: 'isolate' });
-
     const { ctx } = stage;
     const color = cssVar('--fg');
 
@@ -75,11 +72,11 @@ export function start(signal: AbortSignal) {
 
     const sprite = flakeSprite(color);
 
-    const paint = (scaleX: number, scaleY: number) => {
+    const paint = (scaleX: number, scaleY: number, strength = 1) => {
         ctx.clearRect(0, 0, stage.width, stage.height);
 
         for (const { radius, alpha, flakes } of layers) {
-            ctx.globalAlpha = alpha;
+            ctx.globalAlpha = alpha * strength;
 
             // The sprite's solid core is about a third of its width, so it is stamped at three times the flake's size.
             for (const { x, y, size } of flakes) {
@@ -152,6 +149,7 @@ export function start(signal: AbortSignal) {
             }
         }
 
-        paint(1, 1);
+        // Past the first screen the snow thins to half, so it stays out of the way of body copy.
+        paint(1, 1, 1 - 0.5 * Math.min(1, window.scrollY / window.innerHeight));
     });
 }

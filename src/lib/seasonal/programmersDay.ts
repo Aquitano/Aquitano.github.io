@@ -22,7 +22,6 @@ const INTRO_MS = 1400;
 
 const pick = (chars: string) => chars[Math.floor(Math.random() * chars.length)];
 
-// Every letter flickers in binary, then the letters lock in left to right through hex.
 function decoder(surname: HTMLElement, signal: AbortSignal) {
     const original = [...surname.childNodes];
     const word = surname.textContent.trim();
@@ -78,7 +77,6 @@ function decoder(surname: HTMLElement, signal: AbortSignal) {
     };
 }
 
-// Day 256 decodes the surname from hex and marks the day in the hero's status line.
 export function start(signal: AbortSignal, { onLoad }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
     const surname = hero?.querySelector<HTMLElement>('h1 .display-outline');

@@ -58,6 +58,24 @@ export function placeOnLedge(signal: AbortSignal, { label, toy, note, still, onL
         },
     );
 
+    if (!still) {
+        const lift = toy.animate([{ translate: '0 0' }, { translate: '0 -2px' }], {
+            duration: 150,
+            easing: EASE_OUT_STRONG,
+            fill: 'both',
+        });
+
+        lift.pause();
+
+        const hover = (rate: number) => () => {
+            lift.updatePlaybackRate(rate);
+            lift.play();
+        };
+
+        button.addEventListener('pointerenter', hover(1), { signal });
+        button.addEventListener('pointerleave', hover(-1), { signal });
+    }
+
     const noteIn = still ? { opacity: 0 } : { opacity: 0, transform: 'translateX(8px)' };
 
     button.addEventListener(

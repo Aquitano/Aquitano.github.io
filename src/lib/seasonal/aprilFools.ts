@@ -20,7 +20,6 @@ const GIVE_UP_MS = 900;
 const fitStep = (from: number, size: number, step: number, min: number, max: number) =>
     [step, -step].find((s) => from + s >= min && from + size + s <= max) ?? 0;
 
-// The "View Work" button jumps away from the mouse twice, then slides home and owns up.
 export function start(signal: AbortSignal, { reveal }: EffectRun) {
     const hero = document.querySelector<HTMLElement>('[data-hero]');
     const cta = hero?.querySelector<HTMLElement>('[data-magnetic]');
@@ -79,8 +78,7 @@ export function start(signal: AbortSignal, { reveal }: EffectRun) {
                 easing: EASE_OUT_STRONG,
                 fill: 'backwards',
             },
-        );
-        reveal();
+        ).finished.then(reveal, () => {});
     };
 
     const dodge = (e: PointerEvent) => {
