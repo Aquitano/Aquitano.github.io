@@ -21,6 +21,7 @@ const work = defineCollection({
             imageAlt: z.string().optional(),
             imagePosition: z.string().default('left top'),
             imageQuality: z.number().int().min(1).max(100).default(80),
+            imageWidths: z.array(z.number().int().positive()).default([640, 960, 1280, 1600, 2400]),
             imageCaption: z.string().optional(),
             imageCredit: z.object({ label: z.string(), href: z.string() }).optional(),
             order: z.number(),
