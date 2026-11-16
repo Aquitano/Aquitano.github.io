@@ -45,7 +45,7 @@ const ogImage =
     description={project.description}
     image={ogImage && { src: ogImage.src, alt: `${project.title} — ${project.subtitle}` }}
 >
-    <main>
+    <main id="main-content" tabindex="-1">
         <ProjectDetail project={project} index={index} total={total} next={nextData}>
             <Content />
         </ProjectDetail>

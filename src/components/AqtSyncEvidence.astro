@@ -1,0 +1,102 @@
+---
+import RestoreRecord from './RestoreRecord.astro';
+import SectionHeading from './SectionHeading.astro';
+import { evidenceLeadClass, evidenceLinkClass } from '../lib/evidenceClasses';
+
+const restoreSteps = [
+    'Back up a test server.',
+    'Start a fresh server from the copy.',
+    'Recover with an email and passphrase on a clean client profile.',
+    'Compare file contents, executable bits, symlinks, and encrypted Git refs.',
+];
+
+const deviceSteps = [
+    { label: 'Passphrase', detail: 'Argon2id derives the unlock key' },
+    { label: 'Random root key', detail: 'Wraps per-resource content keys' },
+    { label: 'Files & filenames', detail: 'XChaCha20-Poly1305 encryption' },
+];
+
+const serverSees = ['Ciphertext', 'Wrapped keys & public keys', 'Sizes, timing & operational metadata'];
+---
+
+<section class="section-x border-t border-line py-16 md:py-24">
+    <SectionHeading index="01" title="Recovery, verified" ruled={false} />
+    <p data-detail-reveal class={evidenceLeadClass}>
+        A backup is only useful if it restores. The repository’s restore drill runs real binaries and checks a
+        clean-machine recovery, not just whether a backup command exits successfully.
+    </p>
+    <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:gap-14">
+        <div data-detail-reveal>
+            <ol>
+                {restoreSteps.map((step, i) => (
+                    <li class="flex gap-5 border-t border-line py-4 text-sm leading-relaxed text-fg/85 md:text-base">
+                        <span class="meta pt-1 tabular-nums">0{i + 1}</span>
+                        {step}
+                    </li>
+                ))}
+            </ol>
+            <a
+                class:list={[evidenceLinkClass, 'mt-4 inline-block']}
+                href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/scripts/restore-drill.sh"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Drill source <span aria-hidden="true">↗</span>
+                <span class="sr-only">(opens in new tab)</span>
+            </a>
+        </div>
+        <RestoreRecord />
+    </div>
+</section>
+<section class="section-x border-t border-line py-16 md:py-24">
+    <SectionHeading index="02" title="What the server sees" ruled={false} />
+    <p data-detail-reveal class={evidenceLeadClass}>
+        The server stores bytes it cannot read. This is the client-to-server boundary, including the operational
+        metadata that remains visible.
+    </p>
+    <figure data-detail-reveal class="overflow-hidden rounded-2xl border border-line">
+        <div class="grid gap-px bg-line lg:grid-cols-[1fr_minmax(9rem,0.45fr)_1fr]">
+            <div class="bg-bg-raise p-6 md:p-10">
+                <p class="meta mb-6 text-(--project)">On the device</p>
+                <ul>
+                    {deviceSteps.map((step) => (
+                        <li class="border-t border-line py-4">
+                            <span class="block text-base md:text-lg">{step.label}</span>
+                            <span class="mt-1 block font-mono text-xs text-muted">{step.detail}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div class="flex items-center gap-4 bg-bg-raise p-6 lg:flex-col lg:justify-center lg:text-center">
+                <span class="text-3xl text-(--project) max-lg:rotate-90" aria-hidden="true">
+                    →
+                </span>
+                <p class="meta">Contents and filenames are sealed before upload</p>
+            </div>
+            <div class="flex flex-col bg-bg-raise p-6 md:p-10">
+                <p class="meta mb-6">On the server</p>
+                <ul>
+                    {serverSees.map((item) => (
+                        <li class="border-t border-line py-4 text-base md:text-lg">{item}</li>
+                    ))}
+                </ul>
+                <p class="display mt-auto border-t border-line pt-6 text-[clamp(1.1rem,1.9vw,1.6rem)] leading-[1.1]">
+                    No passphrase. No plaintext decryption keys.
+                </p>
+            </div>
+        </div>
+        <figcaption class="border-t border-line bg-bg-raise px-6 py-4 font-mono text-xs text-muted md:px-10 pointer-coarse:py-6">
+            Architecture diagram, based on the project’s{' '}
+            <a
+                class="link-line touch-target text-fg"
+                href="https://github.com/Aquitano/aqt-sync/blob/31e965a9d28250ff5f29f7cb768ed5867e048dd9/docs/threat-model.md"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                threat model <span aria-hidden="true">↗</span>
+                <span class="sr-only">(opens in new tab)</span>
+            </a>
+            .
+        </figcaption>
+    </figure>
+</section>

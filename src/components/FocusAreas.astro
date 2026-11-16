@@ -9,7 +9,7 @@ const ROWS = [focusAreas.slice(0, 3), focusAreas.slice(3)];
         <div>
             <div data-kw-row class:list={['flex w-max items-center', { 'mt-3 md:mt-5': i }]}>
                 {[0, 1, 2].map((copy) => (
-                    <div class="flex items-center" aria-hidden={copy > 0 ? 'true' : undefined}>
+                    <div data-kw-copy class="flex items-center" aria-hidden={copy > 0 ? 'true' : undefined}>
                         {items.map((item, j) => (
                             <span class="flex items-center">
                                 <span
@@ -54,6 +54,24 @@ const ROWS = [focusAreas.slice(0, 3), focusAreas.slice(3)];
 </script>
 
 <style>
+    @media (prefers-reduced-motion: reduce) {
+        [data-kw-row],
+        [data-kw-copy] {
+            width: auto;
+            flex-wrap: wrap;
+            row-gap: 1rem;
+        }
+
+        [data-kw-copy][aria-hidden='true'] {
+            display: none;
+        }
+
+        .kw {
+            font-size: clamp(1.125rem, 3vw, 2.5rem);
+            white-space: normal;
+        }
+    }
+
     /* Keyword outline fills accent on hover */
     .kw {
         transition:

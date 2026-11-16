@@ -25,7 +25,17 @@ links:
     - label: Press
       href: https://www.darc-u30.de/news/2023-07-08_hab_asg/index.html
 accent: '#9b8cff'
-image: ../../assets/work/frontiers-to-space.webp
+image: ../../assets/work/frontiers-route.webp
+# Map tiles hold far more fine detail than UI captures. At quality 35 the 2400w AVIF stays small and keeps labels sharper than 1600w at 50.
+# 1600w at 35 smears small labels, so it is skipped and 1x laptops get 2400w as well.
+imageQuality: 35
+imageWidths: [640, 960, 1280, 2400]
+imageAlt: 'Map of the recorded flight path: from Passau east into Upper Austria, back west to the burst point near Arnstorf, and down to the landing near Ortenburg.'
+imageCaption: 'The recorded flight path, drawn from the mission’s 429 telemetry positions. The ring marks the burst.'
+imageCredit:
+    label: © OpenStreetMap contributors
+    href: https://www.openstreetmap.org/copyright
+evidence: frontiers-to-space
 order: 4
 ---
 
