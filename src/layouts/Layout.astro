@@ -21,16 +21,16 @@ const defaultKeywords = [
     'Breindl',
     'Portfolio',
     'Aquitano',
-    'Software Developer',
     'Software Engineer',
-    'Designer',
+    'Backend Engineer',
+    'Distributed Systems',
     'Passau',
     'Germany',
 ];
 
 const {
     title = `${site.name} | ${site.role}`,
-    description = 'Software developer, designer and CS student in Passau, Germany. Building robust backend systems, event pipelines and interfaces people enjoy using.',
+    description = 'Software engineer and CS student in Passau, Germany. Backend systems, data pipelines and distributed systems in Go, Java and Kotlin.',
     ogTitle,
     image,
     noindex = false,
@@ -62,8 +62,10 @@ const jsonLd = {
             '@id': personID,
             name: site.name,
             url: homeURL.toString(),
-            jobTitle: 'Software Developer',
-            description: 'Software developer, designer and computer science student in Passau, Germany.',
+            alternateName: 'Aquitano',
+            jobTitle: site.role,
+            description: 'Software engineer and computer science student in Passau, Germany.',
+            knowsAbout: ['Backend engineering', 'Distributed systems', 'Data pipelines', 'Go', 'Java', 'Kotlin'],
             address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Passau',
@@ -74,7 +76,7 @@ const jsonLd = {
         {
             '@type': 'WebSite',
             '@id': websiteID,
-            name: `${site.name} | Portfolio`,
+            name: site.name,
             url: homeURL.toString(),
             inLanguage: 'en',
             publisher: {
@@ -207,7 +209,7 @@ const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
             });
 
             const signature = [
-                '%cThomas Breindl%c  Software Developer & Designer\n',
+                '%cThomas Breindl%c  Software Engineer\n',
                 '%cYou opened the console — good instinct.\n',
                 'Hand-built, no template: Astro · GSAP · Tailwind · no framework runtime.\n',
                 'Like the build? %ccontact@thomasbreindl.me',

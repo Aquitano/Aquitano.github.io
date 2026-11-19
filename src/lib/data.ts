@@ -1,6 +1,6 @@
 export const site = {
     name: 'Thomas Breindl',
-    role: 'Software Developer & Designer',
+    role: 'Software Engineer',
     status: 'CS Student',
     location: 'Passau, Germany',
     email: 'contact@thomasbreindl.me',
