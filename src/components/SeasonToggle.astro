@@ -1,0 +1,151 @@
+<button
+    data-season-toggle
+    type="button"
+    aria-pressed="false"
+    class="season-toggle corner-pill group fixed right-4 bottom-4 z-40 flex cursor-pointer items-center gap-2 rounded-full border border-line bg-bg-raise/80 p-3 text-muted backdrop-blur-sm hover:border-fg/25 hover:text-fg pointer-coarse:top-20 pointer-coarse:bottom-auto pointer-fine:px-3 pointer-fine:py-2 short:top-20 short:bottom-auto"
+>
+    <span data-season-icon aria-hidden="true" class="season-icon relative grid size-4.5 place-items-center"></span>
+    <span
+        data-season-label
+        class="meta sr-only transition-colors duration-200 group-hover:text-fg pointer-fine:not-sr-only"
+    ></span>
+</button>
+
+<style>
+    .season-icon :global(svg) {
+        width: 100%;
+        height: 100%;
+    }
+
+    .season-toggle[aria-pressed='true'] .season-icon {
+        color: var(--accent);
+    }
+
+    .season-toggle[aria-pressed='false'] [data-season-label] {
+        opacity: 0.5;
+    }
+
+    /* Off strikes through the season's icon, drawn across it rather than snapping in. */
+    .season-icon::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        width: 1.125rem;
+        height: 1.5px;
+        border-radius: 9999px;
+        background: currentColor;
+        box-shadow: 0 0 0 1.5px var(--bg-raise);
+        rotate: -45deg;
+        scale: 0 1;
+        transition: scale 150ms var(--ease-out-strong);
+    }
+
+    .season-toggle[aria-pressed='false'] .season-icon::after {
+        scale: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .season-icon::after {
+            transition: none;
+        }
+    }
+</style>
+
+<script>
+    import { track } from '../lib/analytics';
+    import {
+        isPreview,
+        isSwitchedOff,
+        rememberSwitch,
+        seasonForThisPage,
+        seasons,
+        type Season,
+        type SeasonConfig,
+        type SeasonalEffect,
+    } from '../lib/seasons';
+
+    const mount = (season: Season, effect: SeasonalEffect, toggle: HTMLButtonElement) => {
+        const config: SeasonConfig = seasons[season];
+        const { label } = config;
+        let running: AbortController | undefined;
+        let shown = false;
+
+        const show = (delay: number) => {
+            if (shown) return;
+
+            shown = true;
+            setTimeout(() => toggle.classList.add('is-shown'), delay);
+        };
+
+        const turn = (on: boolean, onLoad: boolean) => {
+            running?.abort();
+            running = on ? new AbortController() : undefined;
+
+            if (running) effect.start(running.signal, { onLoad, reveal: () => show(0) });
+
+            toggle.setAttribute('aria-pressed', String(on));
+            toggle.title = `${label}: ${on ? 'on' : 'off'}`;
+        };
+
+        const icon = toggle.querySelector('[data-season-icon]');
+        const name = toggle.querySelector('[data-season-label]');
+
+        if (icon) icon.innerHTML = effect.icon;
+
+        // The pill's labels are set in capitals, but hex like 0x100 reads wrong as 0X100.
+        name?.replaceChildren(
+            ...label.split(/(0x\w+)/).map((part) => {
+                if (!part.startsWith('0x')) return part;
+
+                const hex = document.createElement('span');
+                hex.className = 'normal-case';
+                hex.textContent = part;
+
+                return hex;
+            }),
+        );
+
+        toggle.setAttribute('aria-label', `Seasonal effect: ${label}`);
+
+        const onAtLoad = isPreview() || !isSwitchedOff(season);
+        turn(onAtLoad, true);
+        toggle.addEventListener('click', () => {
+            const on = toggle.getAttribute('aria-pressed') !== 'true';
+            turn(on, false);
+
+            if (!isPreview()) rememberSwitch(season, on);
+
+            track('seasonal_effects_toggled', { season, enabled: on });
+        });
+
+        // Past the first screen the pill steps aside like the shortcuts hint, so it never covers the text below.
+        const hero = document.querySelector('[data-hero]');
+
+        if (hero) {
+            new IntersectionObserver(([entry]) => toggle.classList.toggle('is-away', !entry.isIntersecting)).observe(
+                hero,
+            );
+        } else {
+            const stepAside = () => toggle.classList.toggle('is-away', window.scrollY > window.innerHeight);
+            window.addEventListener('scroll', stepAside, { passive: true });
+            stepAside();
+        }
+
+        // Waits out the hero intro so the pill arrives after the page has settled. A surprise waits for its reveal,
+        // unless the visitor switched it off before and it never plays.
+        if (!config.surprise || !onAtLoad) show(1600);
+    };
+
+    const season = seasonForThisPage();
+
+    const toggle = document.querySelector<HTMLButtonElement>('[data-season-toggle]');
+
+    if (season && toggle) {
+        // A chunk that fails to load (offline, or a deploy replaced it) only costs the visitor the seasonal extras.
+        seasons[season].loadEffect().then(
+            (effect) => mount(season, effect, toggle),
+            () => {},
+        );
+    }
+</script>
