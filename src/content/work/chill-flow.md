@@ -3,22 +3,20 @@ title: ChillFlow
 wrap:
     - Chill
     - Flow
-subtitle: Focus Workspace
-year: '2025'
-description: 'A focus workspace that pairs lo‑fi music and an ambient sound mixer with a task list and focus and Pomodoro timers. Built with Next.js, Drizzle on Postgres, Clerk, and Cloudflare R2 for audio.'
+subtitle: Terminal Focus Player
+year: '2026'
+description: 'A terminal player for focused work, written in Rust. It plays lo‑fi from a hosted catalog or from YouTube, layers ambient sound underneath, and runs a focus timer that tracks the time actually spent focusing. It ships as one binary for macOS and Windows.'
 tags:
-    - Next.js
-    - TypeScript
-    - Drizzle
-    - PostgreSQL
-    - Tailwind
+    - Rust
+    - Ratatui
+    - SQLite
+    - Cloudflare Workers
+    - Cloudflare R2
 tasks:
-    - Frontend
-    - Backend
+    - CLI
+    - Audio
     - Product
 links:
-    - label: Live Site
-      href: https://chill-flow-roan.vercel.app
     - label: GitHub
       href: https://github.com/Aquitano/chill-flow
 accent: '#4fd1c5'
@@ -26,10 +24,14 @@ image: ../../assets/work/chill-flow.webp
 order: 3
 ---
 
-I built ChillFlow, a focus workspace that pairs lo‑fi music and ambient sound with a task list and a timer. You start a session, mix a soundscape, and work through tasks while the timer tracks focused time.
+I built ChillFlow as a terminal player for focused work. It plays lo‑fi from a hosted catalog or from YouTube, layers ambient sound underneath, and runs a focus timer. It is written in Rust with Ratatui and ships as a single `chill` binary for macOS and Windows, with installers and an in-place `chill update`.
 
-Lo‑fi tracks come from a database-backed catalog with liked tracks per account, and switching tracks crossfades instead of cutting. An ambient mixer layers sound loops over the music and saves named mixes.
+Music and ambience are separate layers with a balance slider between them, so a loud stream can sit under quiet rain without touching the volume. White, pink, and brown noise are generated in the app and play offline. A scene saves the source, ambience, balance, and timer together, and `chill "rainy study"` loads one by name.
 
-The timers run against a wall-clock deadline, so they keep correct time in a background tab and survive a reload. A focus block can target a single task, and when the block ends the app offers to check that task off. Tasks have priorities and natural-language due dates, and each one shows the focus time logged against it. Stats track focused minutes, completed sessions, full Pomodoro cycles, and day streaks.
+The timer counts every minute a focus block ran, including blocks stopped early, and never counts breaks. The header shows today's total and a seven-day sparkline.
 
-The app runs on Next.js with Hono API routes, Drizzle on Postgres hosted on Neon in production, Clerk for authentication, and Cloudflare R2 for audio files. Accounts can export all their data as JSON, or their focus sessions as CSV.
+Everything lives in a local SQLite database, so the app works offline. Optional sync carries the library, likes, scenes, mixes, focus history, and settings between machines through a Cloudflare Worker. A sync space has no account: one key opens it, and when the same item changed on two machines, the later change wins.
+
+The catalog is a JSON file that lists tracks stored in Cloudflare R2. A companion tool normalizes new audio to a fixed loudness, uploads it, and updates the catalog. The app keeps the last copy it fetched for offline starts and falls back to the copy compiled into the binary.
+
+The first version of ChillFlow was a Next.js web app. This one replaces it.

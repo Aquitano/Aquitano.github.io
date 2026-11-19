@@ -20,7 +20,7 @@ Thomas Breindl is a software engineer and computer science student in Passau, Ge
 
 - [aqt-sync](/work/aqt-sync): self-hosted, zero-knowledge encrypted file and folder sync in Go.
 - [aqt-health](/work/aqt-health): Kotlin/Ktor health data service with idempotent ingestion and cross-provider reconciliation.
-- [ChillFlow](/work/chill-flow): Next.js focus workspace with lo-fi music, an ambient mixer, tasks, and timers.
+- [ChillFlow](/work/chill-flow): terminal focus player in Rust with lo-fi music, an ambient mixer, a focus timer, and sync.
 - [FrontiersToSpace](/work/frontiers-to-space): stratospheric mission data, maps, charts, sensors, and APRS transmission.
 - [BetterGaming](/work/bettergaming): PHP/MySQL e-commerce application with live search.
 - [Griffin Energy](/work/griffin-energy): brand, packaging, 3D rendering, and responsive frontend concept.

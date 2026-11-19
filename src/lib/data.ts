@@ -72,7 +72,7 @@ export const experience = [
 const yearsSince = (year: number) => new Date().getFullYear() - year;
 
 export const stats = [
-    { value: yearsSince(2020), suffix: '+', label: 'Years writing JavaScript' },
+    { value: yearsSince(2020), suffix: '+', label: 'Years building software' },
     { value: yearsSince(2021), suffix: '+', label: 'Years shipping Java' },
     { value: experience.length, suffix: '', label: 'Professional roles' },
 ];
