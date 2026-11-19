@@ -1,6 +1,6 @@
 # About Thomas Breindl
 
-Thomas Breindl is a software developer, designer, and computer science student in Passau, Germany. He works across backend engineering, distributed systems, and interface design.
+Thomas Breindl is a software engineer and computer science student in Passau, Germany. He works across backend engineering, distributed systems, and interface design.
 
 At Cloudflare he shipped a compaction path for an analytics pipeline processing 100 million events per second, which raised data retention during downstream outages from 51% to 77% in controlled outage tests. At itestra he moved health-insurance software from COBOL to Java and Quarkus. At CHECK24 he cut P95 initial response latency by half by moving non-critical provider calls off the request path onto ActiveMQ/JMS.
 

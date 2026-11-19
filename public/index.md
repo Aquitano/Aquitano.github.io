@@ -1,6 +1,6 @@
 # Thomas Breindl
 
-Thomas Breindl is a software developer, designer, and computer science student in Passau, Germany. He works on distributed data pipelines, Go and Java services, and web interfaces.
+Thomas Breindl is a software engineer and computer science student in Passau, Germany. He works on distributed data pipelines, Go and Java services, and web interfaces.
 
 ## Stack
 

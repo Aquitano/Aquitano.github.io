@@ -1,6 +1,6 @@
 # Thomas Breindl
 
-> Portfolio of a software developer and designer in Passau, Germany.
+> Portfolio of a software engineer in Passau, Germany, working on backend and distributed systems.
 
 ## When to use this site
 
